@@ -26,7 +26,7 @@ OF SUCH DAMAGE.
 #include "sampler.h"
 #include "node.h"
 #include "kdtree.h"
-#include "custom_logger.h"
+// #include "custom_logger.h"
 #include <ros/ros.h>
 #include <utility>
 #include <queue>
@@ -379,7 +379,7 @@ namespace path_plan
     }
     bool brrt_optimize(const Eigen::Vector3d &s, const Eigen::Vector3d &g)
     {
-      CustomLogger logger("/home/x/brrt_optimize/logger_time.txt");
+      // CustomLogger logger("/home/x/brrt_optimize/logger_time.txt");
       ros::Time rrt_start_time = ros::Time::now();
       bool tree_connected = false;
       bool path_reverse = false;
