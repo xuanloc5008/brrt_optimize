@@ -1,5 +1,20 @@
 {
     "files.associations": {
-        "utility": "cpp"
+        "utility": "cpp",
+        "ranges": "cpp",
+        "streambuf": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "vector": "cpp",
+        "hash_map": "cpp",
+        "hash_set": "cpp",
+        "istream": "c",
+        "variant": "c",
+        "memory": "cpp",
+        "functional": "cpp",
+        "tuple": "cpp"
     }
 }

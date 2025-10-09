@@ -135,7 +135,12 @@ struct HeapEntry {
 };
 
 // Main cache class
-
+struct GuidePairInfo {
+    RRTNode3DPtr nodeA;
+    RRTNode3DPtr nodeB;
+    double h_value;
+    double prob; // Boltzmann probability
+};
 class HeuristicCache {
     private:
         std::unordered_map<NodePairKey, double, NodePairHasher> cache;
@@ -165,7 +170,7 @@ class HeuristicCache {
         std::size_t size() const {
             return cache.size();
         }
-    
+
         void insert(TreeNode* a, void* treeA, TreeNode* b, void* treeB, double h) {
             NodePairKey key(a, treeA, b, treeB);
             if (cache.count(key) == 0 || cache[key] > h) {
@@ -203,6 +208,19 @@ class HeuristicCache {
             return false;
         }
     
+        double getMinHeuristic() {
+            while (!minHeap.empty()) {
+                const HeapEntry& top = minHeap.top();
+                const NodePairKey& key = top.key;
+                auto it = cache.find(key);
+                if (it != cache.end() && it->second == top.heuristic) {
+                    return top.heuristic;
+                }
+                minHeap.pop();
+            }
+            return std::numeric_limits<double>::infinity();
+        }
+
         void remove(TreeNode* a, void* treeA, TreeNode* b, void* treeB) {
             NodePairKey key(a, treeA, b, treeB);
             cache.erase(key);
@@ -258,5 +276,23 @@ class HeuristicCache {
             outH = std::numeric_limits<double>::infinity();
             return false;
         }
+        //Bolztmann distribution block
+        void getAllHeuristic(std::vector<GuidePairInfo>& pairs) {
+            pairs.clear();
+            pairs.reserve(cache.size());
+            for (const auto& entry : cache) {
+                const NodePairKey& key = entry.first;
+                double h = entry.second;
+
+                GuidePairInfo info;
+                info.nodeA = key.node1;
+                info.nodeB = key.node2;
+                info.h_value = h;
+                info.prob = 0.0; // sẽ được tính sau
+                pairs.push_back(info);
+            }
+        }
+
+        //----------------------------------
     };
 #endif

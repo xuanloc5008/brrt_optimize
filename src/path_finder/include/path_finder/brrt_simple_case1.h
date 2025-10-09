@@ -286,7 +286,7 @@ namespace path_plan
     }
     
 
-    void update_cache_nearest_heuristic(RRTNode3DPtr nodeSi,kdtree *treeA, kdtree *treeB)
+    void update_cache_nearest_heuristic(RRTNode3DPtr nodeSi,kdtree *treeA, kdtree *treeB, bool isTrapped, double threshold)
     {
 
       // Iterate through all nodes in treeA
@@ -298,10 +298,21 @@ namespace path_plan
       {
         RRTNode3DPtr nodeGi = (RRTNode3DPtr)kd_res_item_data(nodesB);
         double h = computeH(nodeSi->x, nodeGi->x);
-        cache.insert(nodeSi, treeA, nodeGi, treeB, h);  // same as insert(nodeB, treeB_ptr, nodeA, treeA_ptr, 1.23)
-        kd_res_next(nodesB);
+        //TRAP STATE DETECTION
+        double min_h = cache.getMinHeuristic();
+        double cur_h = h;
+        if (h < min_h){
+          double delta = abs(cur_h - min_h);
+          if (delta < threshold){
+            isTrapped = true;
+          }
+          if (!isTrapped){          
+            cache.insert(nodeSi, treeA, nodeGi, treeB, h);  // same as insert(nodeB, treeB_ptr, nodeA, treeA_ptr, 1.23)
+            kd_res_next(nodesB);
+          }
+        }
       }
-      kd_res_free(nodesB);
+      if (!isTrapped) kd_res_free(nodesB);
     }
     Eigen::Vector3d get_sample_valid()
     {
@@ -377,13 +388,60 @@ namespace path_plan
       double Pbias = Pinit * std::exp(-ratio);
       return Pbias;
     }
-    bool brrt_optimize(const Eigen::Vector3d &s, const Eigen::Vector3d &g)
+    // // TODO: BOLZTMANN DISTRIBUTION
+    // std::tuple<RRTNode3DPtr, RRTNode3DPtr> Bolztmann_distribution_selection(HeuristicCache &cache, kdtree *treeA, kdtree *treeB, double beta)
+    // {
+    //   // Placeholder for Boltzmann distribution implementation
+    //   // This function should modify the sampling strategy based on the Boltzmann distribution
+    //   // to escape local minima or trapped states.
+    //   // The actual implementation will depend on the specific requirements and design of the algorithm.
+    //   std::vector<std::tuple<RRTNode3DPtr, RRTNode3DPtr, double>> node_pairs;
+    GuidePairInfo BoltzmannSelect(std::vector<GuidePairInfo>& guidePairs, double beta = 1.0)
+    {
+        GuidePairInfo chosen;
+
+        if (guidePairs.empty()) 
+            return chosen; 
+
+        double minH = std::numeric_limits<double>::infinity();
+        for (const auto& g : guidePairs)
+            if (g.h_value < minH) 
+                minH = g.h_value;
+
+        double sumExp = 0.0;
+        for (auto& g : guidePairs) {
+            g.prob = std::exp(-beta * (g.h_value - minH));
+            sumExp += g.prob;
+        }
+
+        for (auto& g : guidePairs)
+            g.prob /= sumExp;
+
+        double rand_val = ((double) rand() / RAND_MAX);
+        double cum_sum = 0.0;
+
+        for (const auto& g : guidePairs) {
+            cum_sum += g.prob;
+            if (rand_val <= cum_sum) {
+                chosen = g;
+                break;
+            }
+        }
+
+        return chosen;
+    }
+
+    //   // Collect all node pairs and their heuristics
+    //   for (auto)
+    // }
+
+    bool brrt_optimize(const Eigen::Vector3d &s, const Eigen::Vector3d &g, int max_trials = 10)
     {
       // CustomLogger logger("/home/x/brrt_optimize/logger_time.txt");
       ros::Time rrt_start_time = ros::Time::now();
       bool tree_connected = false;
       bool path_reverse = false;
-
+      
       double h_start_goal = computeH(start_node_->x, goal_node_->x);
 
       // insert start and goal node to cache
@@ -407,7 +465,9 @@ namespace path_plan
      
 
       cache.insert(start_node_, treeA, goal_node_, treeB, h_start_goal); // insert start and goal node to cache
+      bool isTrapped = false;
 
+      int trapcount = 0;
       for (number_of_iterations_ = 0; number_of_iterations_ < max_iteration_; ++number_of_iterations_)
       {    
         /* random sampling */
@@ -477,16 +537,38 @@ namespace path_plan
            valid_tree_node_nums_ = max_tree_node_nums_; // max_node_num reached
           break;
         }
+        
+        update_cache_nearest_heuristic(new_nodeA, treeA, treeB, isTrapped, 0.05);
+; // update cache with new node
+        if (isTrapped) trapcount++;
+        if (trapcount >= 10) 
+        {
+          if (max_trials > 0){
+            std::vector<GuidePairInfo> guidePairs;
+            cache.getAllHeuristic(guidePairs);
+
+            GuidePairInfo chosen = BoltzmannSelect(guidePairs, 1.0);
+
+            if (chosen.nodeA && chosen.nodeB) {
+                selected_SI = chosen.nodeA;
+                selected_SI = chosen.nodeB;
+                ROS_INFO_STREAM("[Boltzmann] Selected pair with h = " 
+                                << chosen.h_value << ", prob = " << chosen.prob);
+            }
+            max_trials--;        
+          }
+          else {
+            break; // exit if max trials reached
+          }
+        }
+        
         new_nodeA = addTreeNode(nearest_nodeA, x_new, dist_from_A, steer_length_);
     
         kd_insert3(treeA, x_new[0], x_new[1], x_new[2], new_nodeA);
-        update_cache_nearest_heuristic(new_nodeA, treeA, treeB); // update cache with new node
-
         /* request x_new's nearest node in treeB */
         /* Greedy steer & check connection */
         vector<Eigen::Vector3d> x_connects;
         bool isConnected = greedySteer(nearest_nodeB->x, x_new, x_connects, steer_length_);
-
         /* Add the steered nodes to treeB */
         RRTNode3DPtr new_nodeB = nearest_nodeB;
         if (!x_connects.empty())
@@ -500,13 +582,14 @@ namespace path_plan
           for (auto x_connect : x_connects)
           {
             new_nodeB = addTreeNode(new_nodeB, x_connect, new_nodeB->cost_from_start + steer_length_, steer_length_);
-
+            
             kd_insert3(treeB, x_connect[0], x_connect[1], x_connect[2], new_nodeB);
             
           }
-          update_cache_nearest_heuristic(new_nodeB,treeB,treeA);
+          update_cache_nearest_heuristic(new_nodeA, treeA, treeB, isTrapped, 0.05);
+ // update cache with new node
         }
-
+        isTrapped = false;
         /* If connected, trace the connected path */
         if (isConnected)
         {
