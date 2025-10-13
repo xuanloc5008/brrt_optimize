@@ -337,7 +337,7 @@ namespace path_plan
       // std::cout << "[BRRT_Optimize_case2] randomPointInCircle: A: " << A.transpose() << " B: " << B.transpose() << std::endl;
       Eigen::Vector3d normal = (B - A).normalized();
       double radius = (B - A).norm();
-      #ifdef DEBUG
+#ifdef DEBUG
       if (vis_ptr_)
       {
         vis_ptr_->visualize_a_ball(B, radius, "/brrt_optimize/guide", visualization::Color::yellow, 0.3);
@@ -451,7 +451,9 @@ namespace path_plan
         struct kdres *p_nearestA = nullptr, *p_nearestB = nullptr;
         RRTNode3DPtr nearest_nodeA, nearest_nodeB;
         double h_tmp;
+        // get min node corresponding to min heuristic
         cache.getMinByTree(treeA, treeB, selected_SI, selected_GI,h_tmp);
+        // compute the bias
         double pbias = computePbias(
             brrt_optimize_p1_,
             h_start_goal,
@@ -459,9 +461,12 @@ namespace path_plan
             selected_GI->x);
         if (random01 < pbias)
         {
-          
+          /*if random < bias then sampling in the circle regio with the selected S_I node from the guided node pair*/
           Eigen::Vector3d x_tmp = randomPointInCircle(selected_SI->x, selected_GI->x);
+          //random and returned a point in the circle region
+          // then assume that nearest_nodeA is selected_SI
           nearest_nodeA = selected_SI;
+          // Steer from nearest_nodeA to x_tmp to find the new node x_new
           x_new = steer(nearest_nodeA->x, x_tmp, steer_length_);
           if ((!map_ptr_->isStateValid(x_new)) || (!map_ptr_->isSegmentValid(nearest_nodeA->x, x_new)))
           {
@@ -477,9 +482,10 @@ namespace path_plan
         }
         else
         {
+          // get the randomn node globally in the map
           Eigen::Vector3d x_rand = get_sample_valid();
 // x_new = map_ptr_->getFreeNodeInLine(nearest_nodeA->x, x_rand, brrt_optimize_step_);
-
+          // find the nearest point in treeA to x_rand
           p_nearestA = kd_nearest3(treeA, x_rand[0], x_rand[1], x_rand[2]);
 
           if (p_nearestA == nullptr)
@@ -491,6 +497,7 @@ namespace path_plan
           }
           nearest_nodeA = (RRTNode3DPtr)kd_res_item_data(p_nearestA);
           kd_res_free(p_nearestA);
+          // steer from nearest_nodeA to x_rand to get the new node x_new
           x_new = steer(nearest_nodeA->x, x_rand, steer_length_);
           if ((!map_ptr_->isStateValid(x_new)) || (!map_ptr_->isSegmentValid(nearest_nodeA->x, x_new)))
           {
@@ -498,7 +505,7 @@ namespace path_plan
             path_reverse = !path_reverse;
             continue;
           }
-
+          // find the nearest point in treeB to x_new
           p_nearestB = kd_nearest3(treeB, x_new[0], x_new[1], x_new[2]);
           if (p_nearestB == nullptr)
           {
@@ -507,6 +514,7 @@ namespace path_plan
 #endif
             continue;
           }
+          // find the data of nearest node in treeB to x_new after get x_new and swapped the tree
           nearest_nodeB = (RRTNode3DPtr)kd_res_item_data(p_nearestB);
           kd_res_free(p_nearestB);
         }
