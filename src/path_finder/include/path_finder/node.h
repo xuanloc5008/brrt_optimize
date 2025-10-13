@@ -202,6 +202,20 @@ class HeuristicCache {
             }
             return false;
         }
+
+        bool getByH(TreeNode*& outA, void*& outTreeA, TreeNode*& outB, void*& outTreeB, double h) {
+            for (const auto& entry : cache) {
+                if (entry.second == h) {
+                    const NodePairKey& key = entry.first;
+                    outA = key.node1;
+                    outTreeA = key.tree1;
+                    outB = key.node2;
+                    outTreeB = key.tree2;
+                    return true;
+                }
+            }
+            return false;
+        }
     
         void remove(TreeNode* a, void* treeA, TreeNode* b, void* treeB) {
             NodePairKey key(a, treeA, b, treeB);
@@ -225,6 +239,17 @@ class HeuristicCache {
                     a = is_direct ? minA : minB;
                     b = is_direct ? minB : minA;
                     outH = minH;
+                    return true;
+                }
+            }
+            a = b = nullptr;
+            outH = std::numeric_limits<double>::infinity();
+            return false;
+        }
+
+        bool getPairsByHeuristic(void* treeA, void* treeB, TreeNode*& a, TreeNode*& b, double& outH){
+            while (getByH(a, treeA, b, treeB, outH)) {
+                if ((a && b) && ((treeA == treeA && treeB == treeB) || (treeA == treeB && treeB == treeA))) {
                     return true;
                 }
             }

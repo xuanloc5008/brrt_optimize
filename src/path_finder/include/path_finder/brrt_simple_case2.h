@@ -442,6 +442,7 @@ namespace path_plan
       std::cout << "[BRRT_Optimize_case2] Start sampling..." << std::endl;
 #endif
       cache.insert(start_node_, treeA, goal_node_, treeB, h_start_goal); // insert start and goal node to cache
+      
       for (number_of_iterations_ = 0; number_of_iterations_ < max_iteration_; ++number_of_iterations_)
       {
         /* random sampling */
