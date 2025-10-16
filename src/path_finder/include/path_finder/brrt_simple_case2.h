@@ -20,6 +20,9 @@ OF SUCH DAMAGE.
 */
 #ifndef BRRT_SIMPLE_CASE2_H
 #define BRRT_SIMPLE_CASE2_H
+// #ifndef DEBUG
+// #define DEBUG
+// #endif
 
 #include "occ_grid/occ_map.h"
 #include "visualization/visualization.hpp"
@@ -31,6 +34,8 @@ OF SUCH DAMAGE.
 #include <utility>
 #include <queue>
 #include <algorithm>
+double smallestDecrease = 5.0;
+
 namespace path_plan
 {
   class BRRT_Simple_Case2
@@ -286,7 +291,7 @@ namespace path_plan
     }
     
 
-    void update_cache_nearest_heuristic(RRTNode3DPtr nodeSi,kdtree *treeA, kdtree *treeB)
+    void update_cache_nearest_heuristic(RRTNode3DPtr nodeSi,kdtree *treeA, kdtree *treeB, int &count)
     {
 
       // Iterate through all nodes in treeA
@@ -295,13 +300,27 @@ namespace path_plan
       // struct kdres *nodesB = kd_nearest_range3(treeB, nodeSi->x[0], nodeSi->x[1], nodeSi->x[2], DBL_MAX);
       struct kdres *nodesB = kd_nearest_n(treeB, nodeSi->x.data(), 30);
       // std::cout << "size of nodesB: " << kd_res_size(nodesB) << std::endl;
+      double distance;
+      double pre_distance = smallestDecrease;
       while (!kd_res_end(nodesB))
       {
         RRTNode3DPtr nodeGi = (RRTNode3DPtr)kd_res_item_data(nodesB);
         double h = computeH(nodeSi->x, nodeGi->x);
-        cache.insert(nodeSi, treeA, nodeGi, treeB, h);  // same as insert(nodeB, treeB_ptr, nodeA, treeA_ptr, 1.23)
+        double cached_h = cache.getMinHeuristic();
+        distance = abs(h - cached_h);
+        if (distance > smallestDecrease) {
+            cache.insert(nodeSi, treeA, nodeGi, treeB, h);  // same as insert(nodeB, treeB_ptr, nodeA, treeA_ptr, 1.23)
+        }
+        else {
+            smallestDecrease = distance;    
+        }
         kd_res_next(nodesB);
       }
+      if (pre_distance != smallestDecrease){
+        cout << "BRRT_Optimize_case2: smallestDecrease: " << smallestDecrease << endl;
+        count++;
+      }
+      else cout << "[BRRT_Optimize_case2] current heuristic distance compared to the min value in cache: " << distance << endl;
       kd_res_free(nodesB);
     }
     Eigen::Vector3d get_sample_valid()
@@ -442,11 +461,11 @@ namespace path_plan
       std::cout << "[BRRT_Optimize_case2] Start sampling..." << std::endl;
 #endif
       cache.insert(start_node_, treeA, goal_node_, treeB, h_start_goal); // insert start and goal node to cache
-      
+      int count_h = 0;
       for (number_of_iterations_ = 0; number_of_iterations_ < max_iteration_; ++number_of_iterations_)
       {
         /* random sampling */
-        
+        if (count_h > 50) break; // break if the heuristic is not updated for a long time
         Eigen::Vector3d x_new;
         double random01 = dis(gen);
         struct kdres *p_nearestA = nullptr, *p_nearestB = nullptr;
@@ -468,6 +487,9 @@ namespace path_plan
           // then assume that nearest_nodeA is selected_SI
           nearest_nodeA = selected_SI;
           // Steer from nearest_nodeA to x_tmp to find the new node x_new
+// #ifdef DEBUG
+//           cout << "[BRRT_Optimize_case2] sampling with bias" << std::endl;
+// #endif
           x_new = steer(nearest_nodeA->x, x_tmp, steer_length_);
           if ((!map_ptr_->isStateValid(x_new)) || (!map_ptr_->isSegmentValid(nearest_nodeA->x, x_new)))
           {
@@ -477,9 +499,9 @@ namespace path_plan
           }
 
           nearest_nodeB = selected_GI;
-#ifdef DEBUG
-          vis_ptr_->visualize_a_ball(x_tmp, 0.5, "/brrt_optimize/x_tmp", visualization::Color::red);
-#endif
+// #ifdef DEBUG
+//           vis_ptr_->visualize_a_ball(x_tmp, 0.5, "/brrt_optimize/x_tmp", visualization::Color::red);
+// #endif
         }
         else
         {
@@ -488,7 +510,9 @@ namespace path_plan
 // x_new = map_ptr_->getFreeNodeInLine(nearest_nodeA->x, x_rand, brrt_optimize_step_);
           // find the nearest point in treeA to x_rand
           p_nearestA = kd_nearest3(treeA, x_rand[0], x_rand[1], x_rand[2]);
-
+// #ifdef DEBUG
+//           cout << "[BRRT_Optimize_case2] sampling globally " << std::endl;
+// #endif
           if (p_nearestA == nullptr)
           {
 #ifdef DEBUG
@@ -530,7 +554,7 @@ namespace path_plan
         new_nodeA = addTreeNode(nearest_nodeA, x_new, dist_from_A, steer_length_);
     
         kd_insert3(treeA, x_new[0], x_new[1], x_new[2], new_nodeA);
-        update_cache_nearest_heuristic(new_nodeA, treeA, treeB); // update cache with new node
+        update_cache_nearest_heuristic(new_nodeA, treeA, treeB, count_h); // update cache with new node
 
         /* request x_new's nearest node in treeB */
         /* Greedy steer & check connection */
@@ -553,7 +577,7 @@ namespace path_plan
 
             kd_insert3(treeB, x_connect[0], x_connect[1], x_connect[2], new_nodeB);
           }
-          update_cache_nearest_heuristic(new_nodeB,treeB,treeA);
+          update_cache_nearest_heuristic(new_nodeB,treeB,treeA, count_h);
         }
 
         /* If connected, trace the connected path */
@@ -594,8 +618,10 @@ namespace path_plan
 #endif
 
         /* Swap treeA&B */
-
+      
       } // End of sampling iteration
+      cout << "[BRRT_Optimize_case2] current h_count value: " << count_h << endl;
+      smallestDecrease = 5.0; // reset the smallestDecrease for next plan
 #ifdef DEBUG
       visualizeWholeTree();
 #endif

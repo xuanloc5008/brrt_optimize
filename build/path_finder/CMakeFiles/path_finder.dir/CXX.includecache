@@ -169,11 +169,15 @@ functional
 -
 unordered_set
 -
-queue
--
 vector
 -
 limits
+-
+cmath
+-
+numeric
+-
+algorithm
 -
 
 /home/xuanloc/DACN/ICIT/brrt_optimize/src/path_finder/include/path_finder/rrt.h
