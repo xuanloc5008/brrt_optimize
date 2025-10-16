@@ -1,7 +1,7 @@
 #ifndef _NODE_H_
 #define _NODE_H_
 
-#include <ros/ros.h>
+// #include <ros/ros.h>
 #include <Eigen/Eigen>
 #include <utility>
 
