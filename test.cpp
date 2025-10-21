@@ -15,6 +15,8 @@ int main() {
     cache.insert(&n3, treeA, &n4, treeB, 1.2);
     cache.insert(&n2, treeA, &n5, treeB, 4.0);
     cache.insert(&n1, treeA, &n3, treeB, 0.8);
+    // cache.insert(&n1, treeA, &n3, treeB, 0.5);
+    // cache.insert(&n1, treeA, &n3, treeB, 3.0);
 
     std::cout << "Cache size after inserts: " << cache.size() << "\n";
 

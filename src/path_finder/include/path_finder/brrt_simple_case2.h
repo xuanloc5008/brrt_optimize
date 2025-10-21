@@ -34,6 +34,15 @@ OF SUCH DAMAGE.
 #include <utility>
 #include <queue>
 #include <algorithm>
+#include <queue>
+#include <algorithm>
+// ADD THESE LINES
+#include <iostream> 
+#include <fstream>
+#include "nlohmann/json.hpp" // Assumes nlohmann/json.hpp is in your include path
+
+// Use nlohmann::json for convenience
+using json = nlohmann::json;
 double smallestDecrease = 5.0;
 
 namespace path_plan
@@ -58,10 +67,14 @@ namespace path_plan
       nh_.param("BRRT_Optimize/max_iteration", max_iteration_, 0);
       nh_.param("BRRT_Optimize/enable2d", brrt_enable_2d, true);
 
+      // ***** ADD THESE TWO LINES *****
+      nh_.param("BRRT_Optimize/slow_decrease_threshold", slow_decrease_threshold_, 0.05);
+      nh_.param("BRRT_Optimize/trap_log_file", trap_log_file_, std::string("/home/xuanloc/DACN/ICIT/brrt_optimize/src/path_finder/include/path_finder/trap_log.jsonl"));
+      // *******************************
       ROS_WARN_STREAM("[BRRT_Optimize_case2] param: steer_length: " << steer_length_);
       ROS_WARN_STREAM("[BRRT_Optimize_case2] param: search_time: " << search_time_);
       ROS_WARN_STREAM("[BRRT_Optimize_case2] param: max_tree_node_nums: " << max_tree_node_nums_);
-
+      ROS_WARN_STREAM("[BRRT_Optimize_case2] param: slow_decrease_threshold: " << slow_decrease_threshold_);
       sampler_.setSamplingRange(mapPtr->getOrigin(), mapPtr->getMapSize());
 
       valid_tree_node_nums_ = 0;
@@ -70,8 +83,20 @@ namespace path_plan
       {
         nodes_pool_[i] = new TreeNode;
       }
+      trap_log_stream_.open(trap_log_file_, std::ios::out | std::ios::app);
+      if (!trap_log_stream_.is_open())
+      {
+        ROS_ERROR_STREAM("[BRRT_Simple_Case2] Could not open trap log file: " << trap_log_file_);
+      }
     }
-    ~BRRT_Simple_Case2() {};
+    ~BRRT_Simple_Case2() 
+    {
+      // ADD THIS BLOCK
+      if (trap_log_stream_.is_open())
+      {
+        trap_log_stream_.close();
+      }
+    };
 
     bool plan(const Eigen::Vector3d &s, const Eigen::Vector3d &g)
     {
@@ -150,6 +175,9 @@ namespace path_plan
     double first_path_use_time_;
     double final_path_use_time_;
     bool brrt_enable_2d;
+    double slow_decrease_threshold_; // Threshold to define a "slow" decrease
+    std::string trap_log_file_;      // Name of the JSON log file
+    std::ofstream trap_log_stream_;  // File stream for logging
 
     double cost_best_;
     std::vector<TreeNode *> nodes_pool_;
@@ -176,6 +204,46 @@ namespace path_plan
         nodes_pool_[i]->children.clear();
       }
       valid_tree_node_nums_ = 0;
+    }
+    void logTrapStateToJson(double old_h, double new_h, double decrease,
+                            const Eigen::Vector3d& si, const Eigen::Vector3d& gi)
+    {
+        if (!trap_log_stream_.is_open()) return;
+
+        json log_entry;
+        log_entry["timestamp"] = ros::Time::now().toSec();
+        log_entry["event"] = "slow_heuristic_decrease";
+        log_entry["previous_best_h"] = old_h;
+        log_entry["new_best_h"] = new_h;
+        log_entry["decrease_amount"] = decrease;
+        log_entry["node_si"] = {si[0], si[1], si[2]};
+        log_entry["node_gi"] = {gi[0], gi[1], gi[2]};
+        log_entry["sampling_type"] = "guide_pair";  // ✅ thêm dòng này để hoàn thiện JSON
+
+        // Ghi từng object JSON trên 1 dòng riêng (JSONL format)
+        trap_log_stream_ << log_entry.dump() << std::endl;
+    }
+
+    void logSamplingPoint(const Eigen::Vector3d& sample, const std::string& type, 
+                      const Eigen::Vector3d* guide_start = nullptr, 
+                      const Eigen::Vector3d* guide_goal = nullptr)
+    {
+        if (!trap_log_stream_.is_open()) return;
+
+        json log_entry;
+        log_entry["timestamp"] = ros::Time::now().toSec();
+        log_entry["event"] = "sampling";
+        log_entry["type"] = type; // "biased" or "uniform"
+        log_entry["sample_point"] = { sample[0], sample[1], sample[2] };
+        log_entry["iteration"] = number_of_iterations_;
+
+        if (guide_start && guide_goal)
+        {
+            log_entry["guide_start"] = { (*guide_start)[0], (*guide_start)[1], (*guide_start)[2] };
+            log_entry["guide_goal"] = { (*guide_goal)[0], (*guide_goal)[1], (*guide_goal)[2] };
+        }
+
+        trap_log_stream_ << log_entry.dump() << std::endl;
     }
 
     double calDist(const Eigen::Vector3d &p1, const Eigen::Vector3d &p2)
@@ -300,27 +368,56 @@ namespace path_plan
       // struct kdres *nodesB = kd_nearest_range3(treeB, nodeSi->x[0], nodeSi->x[1], nodeSi->x[2], DBL_MAX);
       struct kdres *nodesB = kd_nearest_n(treeB, nodeSi->x.data(), 30);
       // std::cout << "size of nodesB: " << kd_res_size(nodesB) << std::endl;
-      double distance;
-      double pre_distance = smallestDecrease;
+      
+      // REMOVE THESE
+      // double distance;
+      // double pre_distance = smallestDecrease;
+      // int trapcount = 0;
+
       while (!kd_res_end(nodesB))
       {
         RRTNode3DPtr nodeGi = (RRTNode3DPtr)kd_res_item_data(nodesB);
         double h = computeH(nodeSi->x, nodeGi->x);
-        double cached_h = cache.getMinHeuristic();
-        distance = abs(h - cached_h);
-        if (distance > smallestDecrease) {
-            cache.insert(nodeSi, treeA, nodeGi, treeB, h);  // same as insert(nodeB, treeB_ptr, nodeA, treeA_ptr, 1.23)
+        double cached_h_before = cache.getMinHeuristic(); // Get best H *before* insert
+
+        cache.insert(nodeSi, treeA, nodeGi, treeB, h); // Insert the new heuristic
+
+        // *** START: REPLACEMENT LOGIC ***
+        // Check if this new 'h' is the new global minimum
+        if (h < cached_h_before) 
+        {
+            double decrease_amount = cached_h_before - h; // This is the positive improvement
+
+            // This is the logic you requested:
+            // Check if the decrease was "slow" (i.e., less than the threshold)
+            if (decrease_amount < slow_decrease_threshold_) 
+            {
+                // 1. Log to terminal
+                // std::cout << "[TRAP STATE DETECTED] Slow heuristic decrease detected." << std::endl;
+                // std::cout << "  Previous Best H: " << cached_h_before << std::endl;
+                // std::cout << "  New Best H: " << h << std::endl;
+                // std::cout << "  Decrease Amount: " << decrease_amount << " (Threshold: " << slow_decrease_threshold_ << ")" << std::endl;
+                // std::cout << "  Node Si: (" << nodeSi->x[0] << ", " << nodeSi->x[1] << ", " << nodeSi->x[2] << ")" << std::endl;
+                // std::cout << "  Node Gi: (" << nodeGi->x[0] << ", " << nodeGi->x[1] << ", " << nodeGi->x[2] << ")" << std::endl;
+                
+                // 2. Write to JSON file
+                logTrapStateToJson(cached_h_before, h, decrease_amount, nodeSi->x, nodeGi->x);
+                
+                count++; // Increment the counter
+            }
+            // else: The decrease was significant, so nothing happens.
         }
-        else {
-            smallestDecrease = distance;    
-        }
+        // *** END: REPLACEMENT LOGIC ***
+    
         kd_res_next(nodesB);
       }
-      if (pre_distance != smallestDecrease){
-        cout << "BRRT_Optimize_case2: smallestDecrease: " << smallestDecrease << endl;
-        count++;
-      }
-      else cout << "[BRRT_Optimize_case2] current heuristic distance compared to the min value in cache: " << distance << endl;
+      
+      // REMOVE THIS BLOCK
+      // if (pre_distance != smallestDecrease){
+      //   cout << "BRRT_Optimize_case2: smallestDecrease: " << smallestDecrease << endl;
+      //   count++;
+      // }
+      
       kd_res_free(nodesB);
     }
     Eigen::Vector3d get_sample_valid()
@@ -465,7 +562,7 @@ namespace path_plan
       for (number_of_iterations_ = 0; number_of_iterations_ < max_iteration_; ++number_of_iterations_)
       {
         /* random sampling */
-        if (count_h > 50) break; // break if the heuristic is not updated for a long time
+        // if (count_h > 50) break; // break if the heuristic is not updated for a long time
         Eigen::Vector3d x_new;
         double random01 = dis(gen);
         struct kdres *p_nearestA = nullptr, *p_nearestB = nullptr;
@@ -483,6 +580,7 @@ namespace path_plan
         {
           /*if random < bias then sampling in the circle regio with the selected S_I node from the guided node pair*/
           Eigen::Vector3d x_tmp = randomPointInCircle(selected_SI->x, selected_GI->x);
+          logSamplingPoint(x_new, "biased", &(selected_SI->x), &(selected_GI->x));
           //random and returned a point in the circle region
           // then assume that nearest_nodeA is selected_SI
           nearest_nodeA = selected_SI;
@@ -506,7 +604,11 @@ namespace path_plan
         else
         {
           // get the randomn node globally in the map
+          // #ifdef DEBUG
+          // cout << "[BRRT_Optimize_case2] sampling globally " << std::endl;
+          // #endif
           Eigen::Vector3d x_rand = get_sample_valid();
+          logSamplingPoint(x_new, "uniform");
 // x_new = map_ptr_->getFreeNodeInLine(nearest_nodeA->x, x_rand, brrt_optimize_step_);
           // find the nearest point in treeA to x_rand
           p_nearestA = kd_nearest3(treeA, x_rand[0], x_rand[1], x_rand[2]);
@@ -620,8 +722,10 @@ namespace path_plan
         /* Swap treeA&B */
       
       } // End of sampling iteration
-      cout << "[BRRT_Optimize_case2] current h_count value: " << count_h << endl;
-      smallestDecrease = 5.0; // reset the smallestDecrease for next plan
+    cout << "[BRRT_Optimize_case2] current h_count value: " << count_h << endl;
+      
+      // REMOVE THIS LINE
+      // smallestDecrease = 5.0; // reset the smallestDecrease for next plan
 #ifdef DEBUG
       visualizeWholeTree();
 #endif

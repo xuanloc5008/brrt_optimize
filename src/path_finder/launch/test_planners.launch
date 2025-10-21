@@ -33,6 +33,9 @@
   <arg name="brrt_gamma" value="2.0" />
   <arg name="brrt_max_iteration" value="100000" />
 
+  <arg name="brrt_slow_decrease_threshold" default="0.05" />
+  <arg name="brrt_trap_log_file" default="/home/xuanloc/DACN/ICIT/brrt_optimize/src/path_finder/include/path_finder/brrt_case2_log.jsonl" />
+  
   <arg name="input_param" default="/home/x/Develop/brrt_optimize/brrt_input.json" />
   <arg name="output_result" default="/home/x/Develop/evaluation/20250705/" />
 
@@ -99,6 +102,8 @@
     <param name="BRRT_Optimize/gamma" value="$(arg brrt_gamma)" type="double"/>
     <param name="BRRT_Optimize/max_iteration" value="$(arg brrt_max_iteration)" type="int"/>
     
-  </node>
+    <param name="BRRT_Optimize/slow_decrease_threshold" value="$(arg brrt_slow_decrease_threshold)" type="double"/>
+    <param name="BRRT_Optimize/trap_log_file" value="$(arg brrt_trap_log_file)" type="string"/>
 
+  </node>
 </launch>

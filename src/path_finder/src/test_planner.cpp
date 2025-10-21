@@ -33,6 +33,9 @@ OF SUCH DAMAGE.
 #include "path_finder/sampler.h"
 #include <ros/ros.h>
 #include <geometry_msgs/PoseStamped.h>
+#include "nlohmann/json.hpp"
+#include <fstream>
+using json = nlohmann::json;
 
 #define NUMBER_TEST_TIMES 100
 class TesterPathFinder
@@ -126,8 +129,8 @@ public:
         nh_.param("run_brrt", run_brrt_, false);
         nh_.param("run_brrt_star", run_brrt_star_, false);
         nh_.param("run_brrt_optimize", run_brrt_optimize_, false);
-        nh_.param("input_param", input_param_, std::string("/home/x/Develop/brrt_optimize/brrt_input.json"));
-        nh_.param("output_result", output_result_, std::string("/home/x/Develop/evaluation/20250705/"));
+        // nh_.param("input_param", input_param_, std::string("/home/x/Develop/brrt_optimize/brrt_input.json"));
+        nh_.param("output_result", output_result_, std::string("/home/xuanloc/DACN/ICIT/brrt_optimize/src/path_finder/include/path_finder"));
         std::cout <<"input_param: " << input_param_ << std::endl;
         std::cout <<"output_result: " << output_result_ << std::endl;
         manager = new BRRTExperimentMultiAlgo(
@@ -217,6 +220,7 @@ public:
 
         if (run_brrt_star_)
         {
+
             bool brrt_star_res = brrt_star_ptr_->plan(start_, goal_);
             if (brrt_star_res)
             {
@@ -247,15 +251,41 @@ public:
             //     vector<std::pair<double, double>> slns = brrt_simple_case1_ptr_->getSolutions();
             //     ROS_INFO_STREAM("[BRRTOpitmize*] final path len: " << slns.back().first);
             // }
+            std::ofstream json_log("brrt_case2_log.jsonl", std::ios::out | std::ios::app);
+
             bool brrt_optimize_case2_res = brrt_simple_case2_ptr_->plan(start_, goal_);
+
+            json log_entry;
+            log_entry["timestamp"] = ros::Time::now().toSec();
+            log_entry["planner"] = "BRRT_Optimize_Case2";
+            log_entry["start"] = {start_.x(), start_.y(), start_.z()};
+            log_entry["goal"] = {goal_.x(), goal_.y(), goal_.z()};
+            log_entry["success"] = brrt_optimize_case2_res;
+
             if (brrt_optimize_case2_res)
             {
                 vector<Eigen::Vector3d> final_path = brrt_simple_case2_ptr_->getPath();
+                vector<std::pair<double, double>> slns = brrt_simple_case2_ptr_->getSolutions();
+
                 vis_ptr_->visualize_path(final_path, "brrt_case2_final_path");
                 vis_ptr_->visualize_pointcloud(final_path, "brrt_case2_final_wpts");
-                vector<std::pair<double, double>> slns = brrt_simple_case2_ptr_->getSolutions();
-                ROS_INFO_STREAM("[BRRTOpitmize_case2] final path len: " << slns.back().first);
+
+                double final_length = slns.empty() ? -1.0 : slns.back().first;
+                ROS_INFO_STREAM("[BRRTOpitmize_case2] final path len: " << final_length);
+
+                // Add path info to JSON
+                log_entry["path_length"] = final_length;
+                log_entry["path_points"] = json::array();
+                for (const auto& p : final_path) {
+                    log_entry["path_points"].push_back({p[0], p[1], p[2]});
+                }
+            } 
+            else {
+                log_entry["path_length"] = nullptr;
+                log_entry["path_points"] = json::array();
             }
+
+            json_log << log_entry.dump() << std::endl;
         }
 
         start_ = goal_;
