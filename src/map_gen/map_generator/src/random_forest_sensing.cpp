@@ -58,12 +58,105 @@ pcl::search::KdTree<pcl::PointXYZ> kdtreeMap;
 vector<int> pointIdxSearch;
 vector<float> pointSquaredDistance;
 
+/**
+ * @brief Helper function to add a wall to the point cloud map.
+ * A wall is defined as a rectangular prism.
+ * @param x1 The starting x-coordinate of the wall's base.
+ * @param y1 The starting y-coordinate of the wall's base.
+ * @param x2 The ending x-coordinate of the wall's base.
+ * @param y2 The ending y-coordinate of the wall's base.
+ * @param height The height of the wall (goes from z=-1.0 to z=height).
+ */
+void addWall(double x1, double y1, double x2, double y2, double height)
+{
+   pcl::PointXYZ pt;
+   double z_start = -1.0; // Start from slightly below ground
+
+   // Iterate over the defined bounds with the given resolution
+   for (double x = x1; x <= x2; x += _resolution)
+   {
+      for (double y = y1; y <= y2; y += _resolution)
+      {
+         for (double z = z_start; z <= height; z += _resolution)
+         {
+            pt.x = x;
+            pt.y = y;
+            pt.z = z;
+            cloudMap.points.push_back(pt);
+         }
+      }
+   }
+}
+
+/**
+ * @brief Generates a fixed map with 5 L-shaped and U-shaped obstacles.
+ * This function replaces the random map generators.
+ */
+void GenerateFixedMap()
+{
+   ROS_INFO("Generating fixed L/U-shape map...");
+
+   double H = _h_h;       // Use the max height from parameters
+   double res = _resolution; // Use the resolution from parameters for wall thickness
+
+   // Ensure coordinates are within map bounds (e.g., -25 to 25 for a 50m map)
+   // Assume _x_size=50, _y_size=50, so bounds are -25 to 25.
+   // Assume _h_h = 7.0, _resolution = 0.2
+
+   // Obstacle 1: "L-shape" (Bottom-Left quadrant) - Made longer (10 units)
+   // Vertical part
+   addWall(-20.0, -25.0, -20.0 + res, -15.0, H);
+   // Horizontal part
+   addWall(-25.0, -15.0, -15.0, -15.0 + res, H);
+
+   // Obstacle 2: "U-shape" (Top-Left quadrant, opening upwards) - Made wider and taller (10 units)
+   // Left wall
+   addWall(-14.0, 10.0, -14.0 + res, 20.0, H);
+   // Right wall
+   addWall(-4.0, 10.0, -4.0 + res, 20.0, H);
+   // Bottom wall
+   addWall(-14.0, 10.0, -4.0, 10.0 + res, H);
+
+   // Obstacle 3: "L-shape" (Top-Right quadrant) - Made longer (12 and 10 units)
+   // Vertical part
+   addWall(15.0, 10.0, 15.0 + res, 22.0, H);
+   // Horizontal part
+   addWall(5.0, 10.0, 15.0, 10.0 + res, H);
+
+   // Obstacle 4: "U-shape" (Bottom-Right quadrant, opening leftwards) - Made wider and taller (10 units)
+   // Top wall
+   addWall(10.0, -10.0, 20.0, -10.0 + res, H);
+   // Bottom wall
+   addWall(10.0, -20.0, 20.0, -20.0 + res, H);
+   // Right wall
+   addWall(20.0 - res, -20.0, 20.0, -10.0, H);
+
+   // Obstacle 5: "L-shape" (Center, inverted) - Made longer (10 units)
+   // Vertical part
+   addWall(0.0, 0.0, 0.0 + res, 10.0, H);
+   // Horizontal part
+   addWall(-10.0, 0.0, 0.0, 0.0 + res, H);
+
+   // Finalize the cloud map
+   cloudMap.width = cloudMap.points.size();
+   cloudMap.height = 1;
+   cloudMap.is_dense = true;
+   std::cout << "Fixed map generated. Total points: " << cloudMap.points.size() << std::endl;
+   _has_map = true;
+
+   // Convert to ROS message
+   pcl::toROSMsg(cloudMap, globalMap_pcd);
+   globalMap_pcd.header.frame_id = "map";
+}
+
+// --- Original Random Generation Functions (Kept for reference) ---
+
 void RandomBRRTGenerate_Large(double size = 4)
 {
    pcl::PointXYZ pt_random;
    random_device rd;
    default_random_engine eng(rd());
-   float ramdom_ratio = 0.6;
+   float ramdom_ratio = 0.75;
    int number_ostacle = (_x_h - _x_l) * (_y_h - _y_l) / (size * size) * ramdom_ratio;
    std::cout << "number of ostacle" << number_ostacle;
 
@@ -80,36 +173,14 @@ void RandomBRRTGenerate_Large(double size = 4)
       double random_y = dis_y(gen);
       for (double i_x = random_x - half_size; i_x < random_x + half_size; i_x += 0.5)
          for (double i_y = random_y - half_size; i_y < random_y + half_size; i_y += 0.5)
-         for (float k = -1; k < _h_h; k+=0.5)
-         {
-            pt_random.x = i_x;
-            pt_random.y = i_y;
-            pt_random.z = k;
-            cloudMap.points.push_back(pt_random);
-         }
+            for (float k = -1; k < _h_h; k += 0.5)
+            {
+               pt_random.x = i_x;
+               pt_random.y = i_y;
+               pt_random.z = k;
+               cloudMap.points.push_back(pt_random);
+            }
    }
-
-   // pcl::PointXYZ pt_random;
-   // std::cout<<"size of map" << _x_l << " " << _x_h << " " << _y_l << " " << _y_h <<" " << _h_h <<std::endl;
-   // // generate  1000 points random with size 4
-   // for (float i = _x_l; i < _x_h; i += size)
-   // {
-   //    for (float j = _y_l; j < _y_h; j += size)
-   //    {
-   //       // get a random number between 0 and 1
-   //       float random_num = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
-   //       if (random_num < ramdom_ratio)
-   //       {
-   //          for (float k = -1; k < _h_h; k += size)
-   //          {
-   //             pt_random.x = i;
-   //             pt_random.y = j;
-   //             pt_random.z = k;
-   //             cloudMap.points.push_back(pt_random);
-   //          }
-   //       }
-   //    }
-   // }
 
    cloudMap.width = cloudMap.points.size();
    cloudMap.height = 1;
@@ -128,26 +199,25 @@ void RandomBRRTGenerate()
    float ramdom_ratio = 0.8;
 
    pcl::PointXYZ pt_random;
-   std::cout<<"size of map" << _x_l << " " << _x_h << " " << _y_l << " " << _y_h <<" " << _h_h <<std::endl;
-   for (float i = _x_l; i < _x_h; i+=0.5)
+   std::cout << "size of map" << _x_l << " " << _x_h << " " << _y_l << " " << _y_h << " " << _h_h << std::endl;
+   for (float i = _x_l; i < _x_h; i += 0.5)
    {
-     
-      for (float j = _y_l; j < _y_h; j+=0.5)
+
+      for (float j = _y_l; j < _y_h; j += 0.5)
       {
          // get a random number between 0 and 1
          float random_num = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
          if (random_num < ramdom_ratio)
-         for (float k = -1; k < _h_h; k+=0.5)
-         {
-            pt_random.x = i;
-            pt_random.y = j;
-            pt_random.z = k;
-            cloudMap.points.push_back(pt_random);
-         }
+            for (float k = -1; k < _h_h; k += 0.5)
+            {
+               pt_random.x = i;
+               pt_random.y = j;
+               pt_random.z = k;
+               cloudMap.points.push_back(pt_random);
+            }
       }
    }
 
-   
    cloudMap.width = cloudMap.points.size();
    cloudMap.height = 1;
    cloudMap.is_dense = true;
@@ -190,10 +260,6 @@ void RandomNarrowGenerate()
             pt_random.z = k;
             cloudMap.points.push_back(pt_random);
          }
-         // pt_random.x = i;
-         // pt_random.y = j;
-         // pt_random.z = -0.5;
-         // cloudMap.points.push_back(pt_random);
       }
    }
 
@@ -238,8 +304,6 @@ void RandomMapGenerate()
       double x0, y0, z0, R;
       std::vector<Vector3d> circle_set;
 
-      // x0 = rand_x_circle(eng);
-      // y0 = rand_y_circle(eng);
       z0 = rand_h(eng);
 
       // Halton sequence for x(0, 1)
@@ -332,8 +396,6 @@ void RandomMapGenerate()
    for (int i = 0; i < _obs_num; i++)
    {
       double x, y, w, h;
-      // x    = rand_x(eng);
-      // y    = rand_y(eng);
       w = rand_w(eng);
 
       // Halton sequence for x(0, 1)
@@ -379,6 +441,7 @@ void RandomMapGenerate()
                continue;
          }
       }
+
 
       x = floor(x / _resolution) * _resolution + _resolution / 2.0;
       y = floor(y / _resolution) * _resolution + _resolution / 2.0;
@@ -474,17 +537,15 @@ int main(int argc, char **argv)
    _y_l = -_y_size / 2.0;
    _y_h = +_y_size / 2.0;
 
+   // --- MODIFICATION ---
+   // Called the new fixed map generator instead of the random one
+   GenerateFixedMap();
    // RandomMapGenerate();
    // RandomNarrowGenerate();
-   RandomBRRTGenerate_Large();
+   // RandomBRRTGenerate_Large();
+   // --- END MODIFICATION ---
+
    // only pub map pointcloud on request
    ros::ServiceServer pub_glb_obs_service = n.advertiseService("/pub_glb_obs", pubGlbObs);
    ros::spin();
-
-   // ros::Rate loop_rate(_sense_rate);
-   // while (ros::ok())
-   // {
-   //    ros::spinOnce();
-   //    loop_rate.sleep();
-   // }
 }
