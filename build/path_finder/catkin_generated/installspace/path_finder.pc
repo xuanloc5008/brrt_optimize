@@ -1,4 +1,4 @@
-prefix=/home/phuong/DACN/test/brrt_optimize/install
+prefix=/home/phuong/DACN/brrt_optimize/install
 
 Name: path_finder
 Description: Description of path_finder

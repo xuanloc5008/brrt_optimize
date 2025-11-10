@@ -18,7 +18,7 @@ if not type -q bass
 end
 
 if test -z $_CATKIN_SETUP_DIR
-    set _CATKIN_SETUP_DIR /home/phuong/DACN/test/brrt_optimize/install
+    set _CATKIN_SETUP_DIR /home/phuong/DACN/brrt_optimize/install
 end
 
 set _SETUP_UTIL "$_CATKIN_SETUP_DIR/_setup_util.py"

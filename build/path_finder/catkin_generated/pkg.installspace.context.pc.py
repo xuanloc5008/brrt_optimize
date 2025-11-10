@@ -4,5 +4,5 @@ PROJECT_PKG_CONFIG_INCLUDE_DIRS = "${prefix}/include".split(';') if "${prefix}/i
 PROJECT_CATKIN_DEPENDS = "occ_grid".replace(';', ' ')
 PKG_CONFIG_LIBRARIES_WITH_PREFIX = "-lpath_finder".split(';') if "-lpath_finder" != "" else []
 PROJECT_NAME = "path_finder"
-PROJECT_SPACE_DIR = "/home/phuong/DACN/test/brrt_optimize/install"
+PROJECT_SPACE_DIR = "/home/phuong/DACN/brrt_optimize/install"
 PROJECT_VERSION = "0.0.0"

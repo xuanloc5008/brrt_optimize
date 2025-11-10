@@ -2,7 +2,7 @@
 
 message(STATUS "self_msgs_and_srvs: 2 messages, 2 services")
 
-set(MSG_I_FLAGS "-Iself_msgs_and_srvs:/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg;-Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg;-Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg")
+set(MSG_I_FLAGS "-Iself_msgs_and_srvs:/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg;-Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg;-Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg")
 
 # Find all generators
 find_package(gencpp REQUIRED)
@@ -17,24 +17,24 @@ add_custom_target(self_msgs_and_srvs_generate_messages ALL)
 
 
 
-get_filename_component(_filename "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg" NAME_WE)
+get_filename_component(_filename "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg" NAME_WE)
 add_custom_target(_self_msgs_and_srvs_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "self_msgs_and_srvs" "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg" "geometry_msgs/Point"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "self_msgs_and_srvs" "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg" "geometry_msgs/Point"
 )
 
-get_filename_component(_filename "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg" NAME_WE)
+get_filename_component(_filename "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg" NAME_WE)
 add_custom_target(_self_msgs_and_srvs_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "self_msgs_and_srvs" "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg" "geometry_msgs/Point"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "self_msgs_and_srvs" "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg" "geometry_msgs/Point"
 )
 
-get_filename_component(_filename "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/srv/GlbObsRcv.srv" NAME_WE)
+get_filename_component(_filename "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/GlbObsRcv.srv" NAME_WE)
 add_custom_target(_self_msgs_and_srvs_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "self_msgs_and_srvs" "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/srv/GlbObsRcv.srv" ""
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "self_msgs_and_srvs" "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/GlbObsRcv.srv" ""
 )
 
-get_filename_component(_filename "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv" NAME_WE)
+get_filename_component(_filename "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv" NAME_WE)
 add_custom_target(_self_msgs_and_srvs_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "self_msgs_and_srvs" "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv" "self_msgs_and_srvs/input_point:geometry_msgs/Point:self_msgs_and_srvs/output_point"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "self_msgs_and_srvs" "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv" "geometry_msgs/Point:self_msgs_and_srvs/output_point:self_msgs_and_srvs/input_point"
 )
 
 #
@@ -44,13 +44,13 @@ add_custom_target(_self_msgs_and_srvs_generate_messages_check_deps_${_filename}
 ### Section generating for lang: gencpp
 ### Generating Messages
 _generate_msg_cpp(self_msgs_and_srvs
-  "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg"
+  "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg"
   "${MSG_I_FLAGS}"
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/self_msgs_and_srvs
 )
 _generate_msg_cpp(self_msgs_and_srvs
-  "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg"
+  "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg"
   "${MSG_I_FLAGS}"
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/self_msgs_and_srvs
@@ -58,15 +58,15 @@ _generate_msg_cpp(self_msgs_and_srvs
 
 ### Generating Services
 _generate_srv_cpp(self_msgs_and_srvs
-  "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/srv/GlbObsRcv.srv"
+  "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/GlbObsRcv.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/self_msgs_and_srvs
 )
 _generate_srv_cpp(self_msgs_and_srvs
-  "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv"
+  "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv"
   "${MSG_I_FLAGS}"
-  "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg;/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/self_msgs_and_srvs
 )
 
@@ -82,13 +82,13 @@ add_custom_target(self_msgs_and_srvs_generate_messages_cpp
 add_dependencies(self_msgs_and_srvs_generate_messages self_msgs_and_srvs_generate_messages_cpp)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg" NAME_WE)
+get_filename_component(_filename "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg" NAME_WE)
 add_dependencies(self_msgs_and_srvs_generate_messages_cpp _self_msgs_and_srvs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg" NAME_WE)
+get_filename_component(_filename "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg" NAME_WE)
 add_dependencies(self_msgs_and_srvs_generate_messages_cpp _self_msgs_and_srvs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/srv/GlbObsRcv.srv" NAME_WE)
+get_filename_component(_filename "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/GlbObsRcv.srv" NAME_WE)
 add_dependencies(self_msgs_and_srvs_generate_messages_cpp _self_msgs_and_srvs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv" NAME_WE)
+get_filename_component(_filename "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv" NAME_WE)
 add_dependencies(self_msgs_and_srvs_generate_messages_cpp _self_msgs_and_srvs_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -101,13 +101,13 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS self_msgs_and_srvs_generate_message
 ### Section generating for lang: geneus
 ### Generating Messages
 _generate_msg_eus(self_msgs_and_srvs
-  "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg"
+  "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg"
   "${MSG_I_FLAGS}"
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/self_msgs_and_srvs
 )
 _generate_msg_eus(self_msgs_and_srvs
-  "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg"
+  "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg"
   "${MSG_I_FLAGS}"
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/self_msgs_and_srvs
@@ -115,15 +115,15 @@ _generate_msg_eus(self_msgs_and_srvs
 
 ### Generating Services
 _generate_srv_eus(self_msgs_and_srvs
-  "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/srv/GlbObsRcv.srv"
+  "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/GlbObsRcv.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/self_msgs_and_srvs
 )
 _generate_srv_eus(self_msgs_and_srvs
-  "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv"
+  "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv"
   "${MSG_I_FLAGS}"
-  "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg;/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/self_msgs_and_srvs
 )
 
@@ -139,13 +139,13 @@ add_custom_target(self_msgs_and_srvs_generate_messages_eus
 add_dependencies(self_msgs_and_srvs_generate_messages self_msgs_and_srvs_generate_messages_eus)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg" NAME_WE)
+get_filename_component(_filename "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg" NAME_WE)
 add_dependencies(self_msgs_and_srvs_generate_messages_eus _self_msgs_and_srvs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg" NAME_WE)
+get_filename_component(_filename "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg" NAME_WE)
 add_dependencies(self_msgs_and_srvs_generate_messages_eus _self_msgs_and_srvs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/srv/GlbObsRcv.srv" NAME_WE)
+get_filename_component(_filename "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/GlbObsRcv.srv" NAME_WE)
 add_dependencies(self_msgs_and_srvs_generate_messages_eus _self_msgs_and_srvs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv" NAME_WE)
+get_filename_component(_filename "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv" NAME_WE)
 add_dependencies(self_msgs_and_srvs_generate_messages_eus _self_msgs_and_srvs_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -158,13 +158,13 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS self_msgs_and_srvs_generate_message
 ### Section generating for lang: genlisp
 ### Generating Messages
 _generate_msg_lisp(self_msgs_and_srvs
-  "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg"
+  "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg"
   "${MSG_I_FLAGS}"
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/self_msgs_and_srvs
 )
 _generate_msg_lisp(self_msgs_and_srvs
-  "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg"
+  "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg"
   "${MSG_I_FLAGS}"
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/self_msgs_and_srvs
@@ -172,15 +172,15 @@ _generate_msg_lisp(self_msgs_and_srvs
 
 ### Generating Services
 _generate_srv_lisp(self_msgs_and_srvs
-  "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/srv/GlbObsRcv.srv"
+  "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/GlbObsRcv.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/self_msgs_and_srvs
 )
 _generate_srv_lisp(self_msgs_and_srvs
-  "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv"
+  "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv"
   "${MSG_I_FLAGS}"
-  "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg;/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/self_msgs_and_srvs
 )
 
@@ -196,13 +196,13 @@ add_custom_target(self_msgs_and_srvs_generate_messages_lisp
 add_dependencies(self_msgs_and_srvs_generate_messages self_msgs_and_srvs_generate_messages_lisp)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg" NAME_WE)
+get_filename_component(_filename "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg" NAME_WE)
 add_dependencies(self_msgs_and_srvs_generate_messages_lisp _self_msgs_and_srvs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg" NAME_WE)
+get_filename_component(_filename "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg" NAME_WE)
 add_dependencies(self_msgs_and_srvs_generate_messages_lisp _self_msgs_and_srvs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/srv/GlbObsRcv.srv" NAME_WE)
+get_filename_component(_filename "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/GlbObsRcv.srv" NAME_WE)
 add_dependencies(self_msgs_and_srvs_generate_messages_lisp _self_msgs_and_srvs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv" NAME_WE)
+get_filename_component(_filename "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv" NAME_WE)
 add_dependencies(self_msgs_and_srvs_generate_messages_lisp _self_msgs_and_srvs_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -215,13 +215,13 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS self_msgs_and_srvs_generate_message
 ### Section generating for lang: gennodejs
 ### Generating Messages
 _generate_msg_nodejs(self_msgs_and_srvs
-  "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg"
+  "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg"
   "${MSG_I_FLAGS}"
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/self_msgs_and_srvs
 )
 _generate_msg_nodejs(self_msgs_and_srvs
-  "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg"
+  "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg"
   "${MSG_I_FLAGS}"
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/self_msgs_and_srvs
@@ -229,15 +229,15 @@ _generate_msg_nodejs(self_msgs_and_srvs
 
 ### Generating Services
 _generate_srv_nodejs(self_msgs_and_srvs
-  "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/srv/GlbObsRcv.srv"
+  "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/GlbObsRcv.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/self_msgs_and_srvs
 )
 _generate_srv_nodejs(self_msgs_and_srvs
-  "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv"
+  "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv"
   "${MSG_I_FLAGS}"
-  "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg;/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/self_msgs_and_srvs
 )
 
@@ -253,13 +253,13 @@ add_custom_target(self_msgs_and_srvs_generate_messages_nodejs
 add_dependencies(self_msgs_and_srvs_generate_messages self_msgs_and_srvs_generate_messages_nodejs)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg" NAME_WE)
+get_filename_component(_filename "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg" NAME_WE)
 add_dependencies(self_msgs_and_srvs_generate_messages_nodejs _self_msgs_and_srvs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg" NAME_WE)
+get_filename_component(_filename "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg" NAME_WE)
 add_dependencies(self_msgs_and_srvs_generate_messages_nodejs _self_msgs_and_srvs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/srv/GlbObsRcv.srv" NAME_WE)
+get_filename_component(_filename "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/GlbObsRcv.srv" NAME_WE)
 add_dependencies(self_msgs_and_srvs_generate_messages_nodejs _self_msgs_and_srvs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv" NAME_WE)
+get_filename_component(_filename "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv" NAME_WE)
 add_dependencies(self_msgs_and_srvs_generate_messages_nodejs _self_msgs_and_srvs_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -272,13 +272,13 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS self_msgs_and_srvs_generate_message
 ### Section generating for lang: genpy
 ### Generating Messages
 _generate_msg_py(self_msgs_and_srvs
-  "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg"
+  "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg"
   "${MSG_I_FLAGS}"
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/self_msgs_and_srvs
 )
 _generate_msg_py(self_msgs_and_srvs
-  "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg"
+  "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg"
   "${MSG_I_FLAGS}"
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/self_msgs_and_srvs
@@ -286,15 +286,15 @@ _generate_msg_py(self_msgs_and_srvs
 
 ### Generating Services
 _generate_srv_py(self_msgs_and_srvs
-  "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/srv/GlbObsRcv.srv"
+  "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/GlbObsRcv.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/self_msgs_and_srvs
 )
 _generate_srv_py(self_msgs_and_srvs
-  "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv"
+  "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv"
   "${MSG_I_FLAGS}"
-  "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg;/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/self_msgs_and_srvs
 )
 
@@ -310,13 +310,13 @@ add_custom_target(self_msgs_and_srvs_generate_messages_py
 add_dependencies(self_msgs_and_srvs_generate_messages self_msgs_and_srvs_generate_messages_py)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg" NAME_WE)
+get_filename_component(_filename "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg" NAME_WE)
 add_dependencies(self_msgs_and_srvs_generate_messages_py _self_msgs_and_srvs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg" NAME_WE)
+get_filename_component(_filename "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg" NAME_WE)
 add_dependencies(self_msgs_and_srvs_generate_messages_py _self_msgs_and_srvs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/srv/GlbObsRcv.srv" NAME_WE)
+get_filename_component(_filename "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/GlbObsRcv.srv" NAME_WE)
 add_dependencies(self_msgs_and_srvs_generate_messages_py _self_msgs_and_srvs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv" NAME_WE)
+get_filename_component(_filename "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv" NAME_WE)
 add_dependencies(self_msgs_and_srvs_generate_messages_py _self_msgs_and_srvs_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility

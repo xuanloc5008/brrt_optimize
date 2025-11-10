@@ -1,4 +1,4 @@
-prefix=/home/phuong/DACN/test/brrt_optimize/devel
+prefix=/home/phuong/DACN/brrt_optimize/devel
 
 Name: map_generator
 Description: Description of map_generator

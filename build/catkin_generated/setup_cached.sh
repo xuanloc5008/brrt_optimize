@@ -7,8 +7,11 @@
 # new environment variables
 
 # modified environment variables
-export CMAKE_PREFIX_PATH="/home/phuong/DACN/test/brrt_optimize/devel:$CMAKE_PREFIX_PATH"
+export CMAKE_PREFIX_PATH="/home/phuong/DACN/brrt_optimize/devel:$CMAKE_PREFIX_PATH"
+export LD_LIBRARY_PATH="/home/phuong/DACN/brrt_optimize/devel/lib:$LD_LIBRARY_PATH"
 export PATH='/opt/ros/noetic/bin:/opt/jdk-23/bin:/home/phuong/.local/bin:/home/phuong/.local/bin:/home/phuong/.local/bin:/home/phuong/.local/bin:/home/xuanloc/miniconda3/bin:/opt/jdk-23/bin:/home/phuong/.local/bin:/home/phuong/.local/bin:/home/phuong/.local/bin:/home/phuong/.local/bin:/home/xuanloc/miniconda3/bin:/home/phuong/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/phuong/.config/Code/User/globalStorage/github.copilot-chat/debugCommand'
-export PWD='/home/phuong/DACN/test/brrt_optimize/build'
-export ROSLISP_PACKAGE_DIRECTORIES='/home/phuong/DACN/test/brrt_optimize/devel/share/common-lisp'
-export ROS_PACKAGE_PATH="/home/phuong/DACN/test/brrt_optimize/src:$ROS_PACKAGE_PATH"
+export PKG_CONFIG_PATH="/home/phuong/DACN/brrt_optimize/devel/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PWD='/home/phuong/DACN/brrt_optimize/build'
+export PYTHONPATH="/home/phuong/DACN/brrt_optimize/devel/lib/python3/dist-packages:$PYTHONPATH"
+export ROSLISP_PACKAGE_DIRECTORIES='/home/phuong/DACN/brrt_optimize/devel/share/common-lisp'
+export ROS_PACKAGE_PATH="/home/phuong/DACN/test/brrt_optimize/src:/home/phuong/DACN/brrt_optimize/src:$ROS_PACKAGE_PATH"
