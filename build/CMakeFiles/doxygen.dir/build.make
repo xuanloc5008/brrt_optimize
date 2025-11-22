@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/phuong/DACN/test/brrt_optimize/src
+CMAKE_SOURCE_DIR = /home/phuong/DACN/brrt_optimize/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/phuong/DACN/test/brrt_optimize/build
+CMAKE_BINARY_DIR = /home/phuong/DACN/brrt_optimize/build
 
 # Utility rule file for doxygen.
 
@@ -67,6 +67,6 @@ CMakeFiles/doxygen.dir/clean:
 .PHONY : CMakeFiles/doxygen.dir/clean
 
 CMakeFiles/doxygen.dir/depend:
-	cd /home/phuong/DACN/test/brrt_optimize/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/phuong/DACN/test/brrt_optimize/src /home/phuong/DACN/test/brrt_optimize/src /home/phuong/DACN/test/brrt_optimize/build /home/phuong/DACN/test/brrt_optimize/build /home/phuong/DACN/test/brrt_optimize/build/CMakeFiles/doxygen.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/phuong/DACN/brrt_optimize/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/phuong/DACN/brrt_optimize/src /home/phuong/DACN/brrt_optimize/src /home/phuong/DACN/brrt_optimize/build /home/phuong/DACN/brrt_optimize/build /home/phuong/DACN/brrt_optimize/build/CMakeFiles/doxygen.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/doxygen.dir/depend
 

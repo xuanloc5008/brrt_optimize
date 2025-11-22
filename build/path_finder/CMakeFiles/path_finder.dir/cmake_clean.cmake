@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder"
-  "/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder.pdb"
+  "/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder"
+  "/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder.pdb"
   "CMakeFiles/path_finder.dir/src/kdtree.c.o"
   "CMakeFiles/path_finder.dir/src/test_planner.cpp.o"
 )

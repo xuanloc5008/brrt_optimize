@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/phuong/DACN/test/brrt_optimize/devel/lib/librviz_plugins.pdb"
-  "/home/phuong/DACN/test/brrt_optimize/devel/lib/librviz_plugins.so"
+  "/home/phuong/DACN/brrt_optimize/devel/lib/librviz_plugins.pdb"
+  "/home/phuong/DACN/brrt_optimize/devel/lib/librviz_plugins.so"
   "CMakeFiles/rviz_plugins.dir/src/goal_tool.cpp.o"
   "CMakeFiles/rviz_plugins.dir/src/moc_goal_tool.cpp.o"
   "CMakeFiles/rviz_plugins.dir/src/pose_tool.cpp.o"

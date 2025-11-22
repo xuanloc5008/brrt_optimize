@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/phuong/DACN/test/brrt_optimize/src
+CMAKE_SOURCE_DIR = /home/phuong/DACN/brrt_optimize/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/phuong/DACN/test/brrt_optimize/build
+CMAKE_BINARY_DIR = /home/phuong/DACN/brrt_optimize/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -137,14 +137,14 @@ test/fast: test
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/phuong/DACN/test/brrt_optimize/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/phuong/DACN/test/brrt_optimize/build/CMakeFiles /home/phuong/DACN/test/brrt_optimize/build/path_finder/CMakeFiles/progress.marks
-	cd /home/phuong/DACN/test/brrt_optimize/build && $(MAKE) -f CMakeFiles/Makefile2 path_finder/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/phuong/DACN/test/brrt_optimize/build/CMakeFiles 0
+	cd /home/phuong/DACN/brrt_optimize/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/phuong/DACN/brrt_optimize/build/CMakeFiles /home/phuong/DACN/brrt_optimize/build/path_finder/CMakeFiles/progress.marks
+	cd /home/phuong/DACN/brrt_optimize/build && $(MAKE) -f CMakeFiles/Makefile2 path_finder/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/phuong/DACN/brrt_optimize/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/phuong/DACN/test/brrt_optimize/build && $(MAKE) -f CMakeFiles/Makefile2 path_finder/clean
+	cd /home/phuong/DACN/brrt_optimize/build && $(MAKE) -f CMakeFiles/Makefile2 path_finder/clean
 .PHONY : clean
 
 # The main clean target
@@ -154,22 +154,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/phuong/DACN/test/brrt_optimize/build && $(MAKE) -f CMakeFiles/Makefile2 path_finder/preinstall
+	cd /home/phuong/DACN/brrt_optimize/build && $(MAKE) -f CMakeFiles/Makefile2 path_finder/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/phuong/DACN/test/brrt_optimize/build && $(MAKE) -f CMakeFiles/Makefile2 path_finder/preinstall
+	cd /home/phuong/DACN/brrt_optimize/build && $(MAKE) -f CMakeFiles/Makefile2 path_finder/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/phuong/DACN/test/brrt_optimize/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/phuong/DACN/brrt_optimize/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 path_finder/CMakeFiles/path_finder.dir/rule:
-	cd /home/phuong/DACN/test/brrt_optimize/build && $(MAKE) -f CMakeFiles/Makefile2 path_finder/CMakeFiles/path_finder.dir/rule
+	cd /home/phuong/DACN/brrt_optimize/build && $(MAKE) -f CMakeFiles/Makefile2 path_finder/CMakeFiles/path_finder.dir/rule
 .PHONY : path_finder/CMakeFiles/path_finder.dir/rule
 
 # Convenience name for target.
@@ -179,7 +179,7 @@ path_finder: path_finder/CMakeFiles/path_finder.dir/rule
 
 # fast build rule for target.
 path_finder/fast:
-	cd /home/phuong/DACN/test/brrt_optimize/build && $(MAKE) -f path_finder/CMakeFiles/path_finder.dir/build.make path_finder/CMakeFiles/path_finder.dir/build
+	cd /home/phuong/DACN/brrt_optimize/build && $(MAKE) -f path_finder/CMakeFiles/path_finder.dir/build.make path_finder/CMakeFiles/path_finder.dir/build
 .PHONY : path_finder/fast
 
 src/kdtree.o: src/kdtree.c.o
@@ -188,7 +188,7 @@ src/kdtree.o: src/kdtree.c.o
 
 # target to build an object file
 src/kdtree.c.o:
-	cd /home/phuong/DACN/test/brrt_optimize/build && $(MAKE) -f path_finder/CMakeFiles/path_finder.dir/build.make path_finder/CMakeFiles/path_finder.dir/src/kdtree.c.o
+	cd /home/phuong/DACN/brrt_optimize/build && $(MAKE) -f path_finder/CMakeFiles/path_finder.dir/build.make path_finder/CMakeFiles/path_finder.dir/src/kdtree.c.o
 .PHONY : src/kdtree.c.o
 
 src/kdtree.i: src/kdtree.c.i
@@ -197,7 +197,7 @@ src/kdtree.i: src/kdtree.c.i
 
 # target to preprocess a source file
 src/kdtree.c.i:
-	cd /home/phuong/DACN/test/brrt_optimize/build && $(MAKE) -f path_finder/CMakeFiles/path_finder.dir/build.make path_finder/CMakeFiles/path_finder.dir/src/kdtree.c.i
+	cd /home/phuong/DACN/brrt_optimize/build && $(MAKE) -f path_finder/CMakeFiles/path_finder.dir/build.make path_finder/CMakeFiles/path_finder.dir/src/kdtree.c.i
 .PHONY : src/kdtree.c.i
 
 src/kdtree.s: src/kdtree.c.s
@@ -206,7 +206,7 @@ src/kdtree.s: src/kdtree.c.s
 
 # target to generate assembly for a file
 src/kdtree.c.s:
-	cd /home/phuong/DACN/test/brrt_optimize/build && $(MAKE) -f path_finder/CMakeFiles/path_finder.dir/build.make path_finder/CMakeFiles/path_finder.dir/src/kdtree.c.s
+	cd /home/phuong/DACN/brrt_optimize/build && $(MAKE) -f path_finder/CMakeFiles/path_finder.dir/build.make path_finder/CMakeFiles/path_finder.dir/src/kdtree.c.s
 .PHONY : src/kdtree.c.s
 
 src/test_planner.o: src/test_planner.cpp.o
@@ -215,7 +215,7 @@ src/test_planner.o: src/test_planner.cpp.o
 
 # target to build an object file
 src/test_planner.cpp.o:
-	cd /home/phuong/DACN/test/brrt_optimize/build && $(MAKE) -f path_finder/CMakeFiles/path_finder.dir/build.make path_finder/CMakeFiles/path_finder.dir/src/test_planner.cpp.o
+	cd /home/phuong/DACN/brrt_optimize/build && $(MAKE) -f path_finder/CMakeFiles/path_finder.dir/build.make path_finder/CMakeFiles/path_finder.dir/src/test_planner.cpp.o
 .PHONY : src/test_planner.cpp.o
 
 src/test_planner.i: src/test_planner.cpp.i
@@ -224,7 +224,7 @@ src/test_planner.i: src/test_planner.cpp.i
 
 # target to preprocess a source file
 src/test_planner.cpp.i:
-	cd /home/phuong/DACN/test/brrt_optimize/build && $(MAKE) -f path_finder/CMakeFiles/path_finder.dir/build.make path_finder/CMakeFiles/path_finder.dir/src/test_planner.cpp.i
+	cd /home/phuong/DACN/brrt_optimize/build && $(MAKE) -f path_finder/CMakeFiles/path_finder.dir/build.make path_finder/CMakeFiles/path_finder.dir/src/test_planner.cpp.i
 .PHONY : src/test_planner.cpp.i
 
 src/test_planner.s: src/test_planner.cpp.s
@@ -233,7 +233,7 @@ src/test_planner.s: src/test_planner.cpp.s
 
 # target to generate assembly for a file
 src/test_planner.cpp.s:
-	cd /home/phuong/DACN/test/brrt_optimize/build && $(MAKE) -f path_finder/CMakeFiles/path_finder.dir/build.make path_finder/CMakeFiles/path_finder.dir/src/test_planner.cpp.s
+	cd /home/phuong/DACN/brrt_optimize/build && $(MAKE) -f path_finder/CMakeFiles/path_finder.dir/build.make path_finder/CMakeFiles/path_finder.dir/src/test_planner.cpp.s
 .PHONY : src/test_planner.cpp.s
 
 # Help Target
@@ -267,6 +267,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/phuong/DACN/test/brrt_optimize/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/phuong/DACN/brrt_optimize/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

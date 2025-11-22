@@ -34,7 +34,7 @@ add_custom_target(_self_msgs_and_srvs_generate_messages_check_deps_${_filename}
 
 get_filename_component(_filename "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv" NAME_WE)
 add_custom_target(_self_msgs_and_srvs_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "self_msgs_and_srvs" "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv" "geometry_msgs/Point:self_msgs_and_srvs/output_point:self_msgs_and_srvs/input_point"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "self_msgs_and_srvs" "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv" "self_msgs_and_srvs/output_point:geometry_msgs/Point:self_msgs_and_srvs/input_point"
 )
 
 #
@@ -66,7 +66,7 @@ _generate_srv_cpp(self_msgs_and_srvs
 _generate_srv_cpp(self_msgs_and_srvs
   "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg;/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg"
+  "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/self_msgs_and_srvs
 )
 
@@ -123,7 +123,7 @@ _generate_srv_eus(self_msgs_and_srvs
 _generate_srv_eus(self_msgs_and_srvs
   "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg;/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg"
+  "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/self_msgs_and_srvs
 )
 
@@ -180,7 +180,7 @@ _generate_srv_lisp(self_msgs_and_srvs
 _generate_srv_lisp(self_msgs_and_srvs
   "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg;/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg"
+  "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/self_msgs_and_srvs
 )
 
@@ -237,7 +237,7 @@ _generate_srv_nodejs(self_msgs_and_srvs
 _generate_srv_nodejs(self_msgs_and_srvs
   "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg;/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg"
+  "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/self_msgs_and_srvs
 )
 
@@ -294,7 +294,7 @@ _generate_srv_py(self_msgs_and_srvs
 _generate_srv_py(self_msgs_and_srvs
   "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg;/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg"
+  "/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/self_msgs_and_srvs
 )
 

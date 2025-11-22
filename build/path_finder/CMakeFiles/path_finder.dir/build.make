@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/phuong/DACN/test/brrt_optimize/src
+CMAKE_SOURCE_DIR = /home/phuong/DACN/brrt_optimize/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/phuong/DACN/test/brrt_optimize/build
+CMAKE_BINARY_DIR = /home/phuong/DACN/brrt_optimize/build
 
 # Include any dependencies generated for this target.
 include path_finder/CMakeFiles/path_finder.dir/depend.make
@@ -58,30 +58,30 @@ include path_finder/CMakeFiles/path_finder.dir/progress.make
 include path_finder/CMakeFiles/path_finder.dir/flags.make
 
 path_finder/CMakeFiles/path_finder.dir/src/test_planner.cpp.o: path_finder/CMakeFiles/path_finder.dir/flags.make
-path_finder/CMakeFiles/path_finder.dir/src/test_planner.cpp.o: /home/phuong/DACN/test/brrt_optimize/src/path_finder/src/test_planner.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/phuong/DACN/test/brrt_optimize/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object path_finder/CMakeFiles/path_finder.dir/src/test_planner.cpp.o"
-	cd /home/phuong/DACN/test/brrt_optimize/build/path_finder && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/path_finder.dir/src/test_planner.cpp.o -c /home/phuong/DACN/test/brrt_optimize/src/path_finder/src/test_planner.cpp
+path_finder/CMakeFiles/path_finder.dir/src/test_planner.cpp.o: /home/phuong/DACN/brrt_optimize/src/path_finder/src/test_planner.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/phuong/DACN/brrt_optimize/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object path_finder/CMakeFiles/path_finder.dir/src/test_planner.cpp.o"
+	cd /home/phuong/DACN/brrt_optimize/build/path_finder && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/path_finder.dir/src/test_planner.cpp.o -c /home/phuong/DACN/brrt_optimize/src/path_finder/src/test_planner.cpp
 
 path_finder/CMakeFiles/path_finder.dir/src/test_planner.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/path_finder.dir/src/test_planner.cpp.i"
-	cd /home/phuong/DACN/test/brrt_optimize/build/path_finder && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/phuong/DACN/test/brrt_optimize/src/path_finder/src/test_planner.cpp > CMakeFiles/path_finder.dir/src/test_planner.cpp.i
+	cd /home/phuong/DACN/brrt_optimize/build/path_finder && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/phuong/DACN/brrt_optimize/src/path_finder/src/test_planner.cpp > CMakeFiles/path_finder.dir/src/test_planner.cpp.i
 
 path_finder/CMakeFiles/path_finder.dir/src/test_planner.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/path_finder.dir/src/test_planner.cpp.s"
-	cd /home/phuong/DACN/test/brrt_optimize/build/path_finder && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/phuong/DACN/test/brrt_optimize/src/path_finder/src/test_planner.cpp -o CMakeFiles/path_finder.dir/src/test_planner.cpp.s
+	cd /home/phuong/DACN/brrt_optimize/build/path_finder && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/phuong/DACN/brrt_optimize/src/path_finder/src/test_planner.cpp -o CMakeFiles/path_finder.dir/src/test_planner.cpp.s
 
 path_finder/CMakeFiles/path_finder.dir/src/kdtree.c.o: path_finder/CMakeFiles/path_finder.dir/flags.make
-path_finder/CMakeFiles/path_finder.dir/src/kdtree.c.o: /home/phuong/DACN/test/brrt_optimize/src/path_finder/src/kdtree.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/phuong/DACN/test/brrt_optimize/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object path_finder/CMakeFiles/path_finder.dir/src/kdtree.c.o"
-	cd /home/phuong/DACN/test/brrt_optimize/build/path_finder && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/path_finder.dir/src/kdtree.c.o   -c /home/phuong/DACN/test/brrt_optimize/src/path_finder/src/kdtree.c
+path_finder/CMakeFiles/path_finder.dir/src/kdtree.c.o: /home/phuong/DACN/brrt_optimize/src/path_finder/src/kdtree.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/phuong/DACN/brrt_optimize/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object path_finder/CMakeFiles/path_finder.dir/src/kdtree.c.o"
+	cd /home/phuong/DACN/brrt_optimize/build/path_finder && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/path_finder.dir/src/kdtree.c.o   -c /home/phuong/DACN/brrt_optimize/src/path_finder/src/kdtree.c
 
 path_finder/CMakeFiles/path_finder.dir/src/kdtree.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/path_finder.dir/src/kdtree.c.i"
-	cd /home/phuong/DACN/test/brrt_optimize/build/path_finder && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/phuong/DACN/test/brrt_optimize/src/path_finder/src/kdtree.c > CMakeFiles/path_finder.dir/src/kdtree.c.i
+	cd /home/phuong/DACN/brrt_optimize/build/path_finder && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/phuong/DACN/brrt_optimize/src/path_finder/src/kdtree.c > CMakeFiles/path_finder.dir/src/kdtree.c.i
 
 path_finder/CMakeFiles/path_finder.dir/src/kdtree.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/path_finder.dir/src/kdtree.c.s"
-	cd /home/phuong/DACN/test/brrt_optimize/build/path_finder && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/phuong/DACN/test/brrt_optimize/src/path_finder/src/kdtree.c -o CMakeFiles/path_finder.dir/src/kdtree.c.s
+	cd /home/phuong/DACN/brrt_optimize/build/path_finder && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/phuong/DACN/brrt_optimize/src/path_finder/src/kdtree.c -o CMakeFiles/path_finder.dir/src/kdtree.c.s
 
 # Object files for target path_finder
 path_finder_OBJECTS = \
@@ -91,201 +91,201 @@ path_finder_OBJECTS = \
 # External object files for target path_finder
 path_finder_EXTERNAL_OBJECTS =
 
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: path_finder/CMakeFiles/path_finder.dir/src/test_planner.cpp.o
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: path_finder/CMakeFiles/path_finder.dir/src/kdtree.c.o
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: path_finder/CMakeFiles/path_finder.dir/build.make
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /home/phuong/DACN/test/brrt_optimize/devel/lib/libocc_grid.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /opt/ros/noetic/lib/libroscpp.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpthread.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libboost_chrono.so.1.71.0
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libboost_filesystem.so.1.71.0
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /opt/ros/noetic/lib/librosconsole.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /opt/ros/noetic/lib/librosconsole_log4cxx.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /opt/ros/noetic/lib/librosconsole_backend_interface.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/liblog4cxx.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libboost_regex.so.1.71.0
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /opt/ros/noetic/lib/libxmlrpcpp.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /opt/ros/noetic/lib/libroscpp_serialization.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /opt/ros/noetic/lib/librostime.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libboost_date_time.so.1.71.0
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /opt/ros/noetic/lib/libcpp_common.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libboost_system.so.1.71.0
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libboost_thread.so.1.71.0
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libconsole_bridge.so.0.4
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_apps.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_outofcore.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_people.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libboost_system.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libboost_filesystem.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libboost_date_time.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libboost_iostreams.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libboost_regex.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libqhull.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/libOpenNI.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/libOpenNI2.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkChartsCore-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkInfovisCore-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libfreetype.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libz.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libjpeg.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpng.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libtiff.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libexpat.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOGeometry-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOLegacy-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOPLY-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingLOD-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkViewsContext2D-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkViewsCore-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingContextOpenGL2-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingOpenGL2-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libflann_cpp.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_apps.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_surface.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_keypoints.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_tracking.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_recognition.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_registration.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_stereo.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_outofcore.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_people.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_segmentation.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_features.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_filters.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_sample_consensus.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_ml.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_visualization.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_search.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_kdtree.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_io.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_octree.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_common.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkChartsCore-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkInfovisCore-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOGeometry-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOLegacy-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOPLY-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingLOD-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkViewsContext2D-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkViewsCore-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkInteractionWidgets-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersModeling-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkInteractionStyle-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersExtraction-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersStatistics-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkImagingFourier-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkalglib-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersHybrid-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkImagingGeneral-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkImagingSources-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkImagingHybrid-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingAnnotation-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkImagingColor-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingVolume-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOXML-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOXMLParser-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOCore-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingContextOpenGL2-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingContext2D-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingFreeType-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingOpenGL2-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkImagingCore-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingCore-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonColor-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersGeometry-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersSources-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersGeneral-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonComputationalGeometry-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersCore-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOImage-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonExecutionModel-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonDataModel-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonTransforms-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonMisc-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonMath-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonSystem-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonCore-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtksys-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkDICOMParser-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkmetaio-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libflann_cpp.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_surface.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_keypoints.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_tracking.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_recognition.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_registration.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_stereo.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_segmentation.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_features.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_filters.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_sample_consensus.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_ml.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_visualization.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_search.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_kdtree.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_io.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_octree.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_common.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkInteractionWidgets-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersModeling-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkInteractionStyle-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersExtraction-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersStatistics-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkImagingFourier-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkalglib-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersHybrid-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkImagingGeneral-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkImagingSources-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkImagingHybrid-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingAnnotation-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkImagingColor-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingVolume-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOXML-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOXMLParser-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOCore-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingContext2D-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingFreeType-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libfreetype.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkImagingCore-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingCore-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonColor-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersGeometry-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersSources-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersGeneral-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonComputationalGeometry-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersCore-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOImage-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonExecutionModel-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonDataModel-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonTransforms-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonMisc-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonMath-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonSystem-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonCore-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtksys-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkDICOMParser-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkmetaio-7.1.so.7.1p.1
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libz.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libGLEW.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libSM.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libICE.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libX11.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libXext.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libXt.so
-/home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder: path_finder/CMakeFiles/path_finder.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/phuong/DACN/test/brrt_optimize/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable /home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder"
-	cd /home/phuong/DACN/test/brrt_optimize/build/path_finder && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/path_finder.dir/link.txt --verbose=$(VERBOSE)
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: path_finder/CMakeFiles/path_finder.dir/src/test_planner.cpp.o
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: path_finder/CMakeFiles/path_finder.dir/src/kdtree.c.o
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: path_finder/CMakeFiles/path_finder.dir/build.make
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /home/phuong/DACN/brrt_optimize/devel/lib/libocc_grid.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /opt/ros/noetic/lib/libroscpp.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpthread.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libboost_chrono.so.1.71.0
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libboost_filesystem.so.1.71.0
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /opt/ros/noetic/lib/librosconsole.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /opt/ros/noetic/lib/librosconsole_log4cxx.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /opt/ros/noetic/lib/librosconsole_backend_interface.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/liblog4cxx.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libboost_regex.so.1.71.0
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /opt/ros/noetic/lib/libxmlrpcpp.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /opt/ros/noetic/lib/libroscpp_serialization.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /opt/ros/noetic/lib/librostime.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libboost_date_time.so.1.71.0
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /opt/ros/noetic/lib/libcpp_common.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libboost_system.so.1.71.0
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libboost_thread.so.1.71.0
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libconsole_bridge.so.0.4
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_apps.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_outofcore.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_people.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libboost_system.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libboost_filesystem.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libboost_date_time.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libboost_iostreams.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libboost_regex.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libqhull.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/libOpenNI.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/libOpenNI2.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkChartsCore-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkInfovisCore-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libfreetype.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libz.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libjpeg.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpng.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libtiff.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libexpat.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOGeometry-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOLegacy-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOPLY-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingLOD-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkViewsContext2D-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkViewsCore-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingContextOpenGL2-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingOpenGL2-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libflann_cpp.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_apps.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_surface.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_keypoints.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_tracking.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_recognition.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_registration.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_stereo.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_outofcore.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_people.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_segmentation.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_features.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_filters.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_sample_consensus.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_ml.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_visualization.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_search.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_kdtree.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_io.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_octree.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_common.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkChartsCore-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkInfovisCore-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOGeometry-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOLegacy-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOPLY-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingLOD-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkViewsContext2D-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkViewsCore-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkInteractionWidgets-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersModeling-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkInteractionStyle-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersExtraction-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersStatistics-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkImagingFourier-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkalglib-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersHybrid-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkImagingGeneral-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkImagingSources-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkImagingHybrid-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingAnnotation-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkImagingColor-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingVolume-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOXML-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOXMLParser-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOCore-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingContextOpenGL2-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingContext2D-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingFreeType-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingOpenGL2-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkImagingCore-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingCore-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonColor-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersGeometry-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersSources-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersGeneral-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonComputationalGeometry-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersCore-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOImage-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonExecutionModel-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonDataModel-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonTransforms-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonMisc-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonMath-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonSystem-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonCore-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtksys-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkDICOMParser-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkmetaio-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libflann_cpp.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_surface.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_keypoints.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_tracking.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_recognition.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_registration.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_stereo.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_segmentation.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_features.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_filters.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_sample_consensus.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_ml.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_visualization.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_search.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_kdtree.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_io.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_octree.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libpcl_common.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkInteractionWidgets-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersModeling-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkInteractionStyle-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersExtraction-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersStatistics-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkImagingFourier-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkalglib-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersHybrid-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkImagingGeneral-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkImagingSources-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkImagingHybrid-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingAnnotation-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkImagingColor-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingVolume-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOXML-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOXMLParser-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOCore-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingContext2D-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingFreeType-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libfreetype.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkImagingCore-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkRenderingCore-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonColor-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersGeometry-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersSources-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersGeneral-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonComputationalGeometry-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkFiltersCore-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkIOImage-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonExecutionModel-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonDataModel-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonTransforms-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonMisc-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonMath-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonSystem-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkCommonCore-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtksys-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkDICOMParser-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libvtkmetaio-7.1.so.7.1p.1
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libz.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libGLEW.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libSM.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libICE.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libX11.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libXext.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: /usr/lib/aarch64-linux-gnu/libXt.so
+/home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder: path_finder/CMakeFiles/path_finder.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/phuong/DACN/brrt_optimize/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable /home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder"
+	cd /home/phuong/DACN/brrt_optimize/build/path_finder && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/path_finder.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-path_finder/CMakeFiles/path_finder.dir/build: /home/phuong/DACN/test/brrt_optimize/devel/lib/path_finder/path_finder
+path_finder/CMakeFiles/path_finder.dir/build: /home/phuong/DACN/brrt_optimize/devel/lib/path_finder/path_finder
 
 .PHONY : path_finder/CMakeFiles/path_finder.dir/build
 
 path_finder/CMakeFiles/path_finder.dir/clean:
-	cd /home/phuong/DACN/test/brrt_optimize/build/path_finder && $(CMAKE_COMMAND) -P CMakeFiles/path_finder.dir/cmake_clean.cmake
+	cd /home/phuong/DACN/brrt_optimize/build/path_finder && $(CMAKE_COMMAND) -P CMakeFiles/path_finder.dir/cmake_clean.cmake
 .PHONY : path_finder/CMakeFiles/path_finder.dir/clean
 
 path_finder/CMakeFiles/path_finder.dir/depend:
-	cd /home/phuong/DACN/test/brrt_optimize/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/phuong/DACN/test/brrt_optimize/src /home/phuong/DACN/test/brrt_optimize/src/path_finder /home/phuong/DACN/test/brrt_optimize/build /home/phuong/DACN/test/brrt_optimize/build/path_finder /home/phuong/DACN/test/brrt_optimize/build/path_finder/CMakeFiles/path_finder.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/phuong/DACN/brrt_optimize/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/phuong/DACN/brrt_optimize/src /home/phuong/DACN/brrt_optimize/src/path_finder /home/phuong/DACN/brrt_optimize/build /home/phuong/DACN/brrt_optimize/build/path_finder /home/phuong/DACN/brrt_optimize/build/path_finder/CMakeFiles/path_finder.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : path_finder/CMakeFiles/path_finder.dir/depend
 

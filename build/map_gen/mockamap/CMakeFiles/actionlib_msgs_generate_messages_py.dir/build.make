@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/phuong/DACN/test/brrt_optimize/src
+CMAKE_SOURCE_DIR = /home/phuong/DACN/brrt_optimize/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/phuong/DACN/test/brrt_optimize/build
+CMAKE_BINARY_DIR = /home/phuong/DACN/brrt_optimize/build
 
 # Utility rule file for actionlib_msgs_generate_messages_py.
 
@@ -63,10 +63,10 @@ map_gen/mockamap/CMakeFiles/actionlib_msgs_generate_messages_py.dir/build: actio
 .PHONY : map_gen/mockamap/CMakeFiles/actionlib_msgs_generate_messages_py.dir/build
 
 map_gen/mockamap/CMakeFiles/actionlib_msgs_generate_messages_py.dir/clean:
-	cd /home/phuong/DACN/test/brrt_optimize/build/map_gen/mockamap && $(CMAKE_COMMAND) -P CMakeFiles/actionlib_msgs_generate_messages_py.dir/cmake_clean.cmake
+	cd /home/phuong/DACN/brrt_optimize/build/map_gen/mockamap && $(CMAKE_COMMAND) -P CMakeFiles/actionlib_msgs_generate_messages_py.dir/cmake_clean.cmake
 .PHONY : map_gen/mockamap/CMakeFiles/actionlib_msgs_generate_messages_py.dir/clean
 
 map_gen/mockamap/CMakeFiles/actionlib_msgs_generate_messages_py.dir/depend:
-	cd /home/phuong/DACN/test/brrt_optimize/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/phuong/DACN/test/brrt_optimize/src /home/phuong/DACN/test/brrt_optimize/src/map_gen/mockamap /home/phuong/DACN/test/brrt_optimize/build /home/phuong/DACN/test/brrt_optimize/build/map_gen/mockamap /home/phuong/DACN/test/brrt_optimize/build/map_gen/mockamap/CMakeFiles/actionlib_msgs_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/phuong/DACN/brrt_optimize/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/phuong/DACN/brrt_optimize/src /home/phuong/DACN/brrt_optimize/src/map_gen/mockamap /home/phuong/DACN/brrt_optimize/build /home/phuong/DACN/brrt_optimize/build/map_gen/mockamap /home/phuong/DACN/brrt_optimize/build/map_gen/mockamap/CMakeFiles/actionlib_msgs_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : map_gen/mockamap/CMakeFiles/actionlib_msgs_generate_messages_py.dir/depend
 

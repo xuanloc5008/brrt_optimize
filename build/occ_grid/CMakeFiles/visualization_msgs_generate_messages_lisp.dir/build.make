@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/phuong/DACN/test/brrt_optimize/src
+CMAKE_SOURCE_DIR = /home/phuong/DACN/brrt_optimize/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/phuong/DACN/test/brrt_optimize/build
+CMAKE_BINARY_DIR = /home/phuong/DACN/brrt_optimize/build
 
 # Utility rule file for visualization_msgs_generate_messages_lisp.
 
@@ -63,10 +63,10 @@ occ_grid/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/build: visuali
 .PHONY : occ_grid/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/build
 
 occ_grid/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/clean:
-	cd /home/phuong/DACN/test/brrt_optimize/build/occ_grid && $(CMAKE_COMMAND) -P CMakeFiles/visualization_msgs_generate_messages_lisp.dir/cmake_clean.cmake
+	cd /home/phuong/DACN/brrt_optimize/build/occ_grid && $(CMAKE_COMMAND) -P CMakeFiles/visualization_msgs_generate_messages_lisp.dir/cmake_clean.cmake
 .PHONY : occ_grid/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/clean
 
 occ_grid/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/depend:
-	cd /home/phuong/DACN/test/brrt_optimize/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/phuong/DACN/test/brrt_optimize/src /home/phuong/DACN/test/brrt_optimize/src/occ_grid /home/phuong/DACN/test/brrt_optimize/build /home/phuong/DACN/test/brrt_optimize/build/occ_grid /home/phuong/DACN/test/brrt_optimize/build/occ_grid/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/phuong/DACN/brrt_optimize/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/phuong/DACN/brrt_optimize/src /home/phuong/DACN/brrt_optimize/src/occ_grid /home/phuong/DACN/brrt_optimize/build /home/phuong/DACN/brrt_optimize/build/occ_grid /home/phuong/DACN/brrt_optimize/build/occ_grid/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : occ_grid/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/depend
 

@@ -33,6 +33,12 @@
   <arg name="brrt_gamma" value="2.0" />
   <arg name="brrt_max_iteration" value="100000" />
 
+  <arg name="brrt_slow_decrease_threshold" default="0.05" />
+  <arg name="brrt_trap_log_file" default="/home/xuanloc/DACN/ICIT/brrt_optimize/src/path_finder/include/path_finder/brrt_case2_log.jsonl" />
+  
+  <arg name="obstacle_percentage_topic"   value="/random_forest/obstacle_percentage" />
+  <arg name="base_trap_limit"             value="10" />
+  <arg name="trap_limit_scaling_factor"   value="0.5" />
   <arg name="input_param" default="/home/x/Develop/brrt_optimize/brrt_input.json" />
   <arg name="output_result" default="/home/x/Develop/evaluation/20250705/" />
 
@@ -99,6 +105,11 @@
     <param name="BRRT_Optimize/gamma" value="$(arg brrt_gamma)" type="double"/>
     <param name="BRRT_Optimize/max_iteration" value="$(arg brrt_max_iteration)" type="int"/>
     
-  </node>
+    <param name="BRRT_Optimize/slow_decrease_threshold" value="$(arg brrt_slow_decrease_threshold)" type="double"/>
+    <param name="BRRT_Optimize/trap_log_file" value="$(arg brrt_trap_log_file)" type="string"/>
 
+    <param name="BRRT_Optimize/obstacle_percentage_topic" value="$(arg obstacle_percentage_topic)" />
+    <param name="BRRT_Optimize/base_trap_limit"           value="$(arg base_trap_limit)" />
+    <param name="BRRT_Optimize/trap_limit_scaling_factor" value="$(arg trap_limit_scaling_factor)" />
+    </node>
 </launch>

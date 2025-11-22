@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/phuong/DACN/test/brrt_optimize/src
+CMAKE_SOURCE_DIR = /home/phuong/DACN/brrt_optimize/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/phuong/DACN/test/brrt_optimize/build
+CMAKE_BINARY_DIR = /home/phuong/DACN/brrt_optimize/build
 
 # Utility rule file for _self_msgs_and_srvs_generate_messages_check_deps_output_point.
 
@@ -54,7 +54,7 @@ CMAKE_BINARY_DIR = /home/phuong/DACN/test/brrt_optimize/build
 include self_msgs_and_srvs/CMakeFiles/_self_msgs_and_srvs_generate_messages_check_deps_output_point.dir/progress.make
 
 self_msgs_and_srvs/CMakeFiles/_self_msgs_and_srvs_generate_messages_check_deps_output_point:
-	cd /home/phuong/DACN/test/brrt_optimize/build/self_msgs_and_srvs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py self_msgs_and_srvs /home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg geometry_msgs/Point
+	cd /home/phuong/DACN/brrt_optimize/build/self_msgs_and_srvs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py self_msgs_and_srvs /home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg geometry_msgs/Point
 
 _self_msgs_and_srvs_generate_messages_check_deps_output_point: self_msgs_and_srvs/CMakeFiles/_self_msgs_and_srvs_generate_messages_check_deps_output_point
 _self_msgs_and_srvs_generate_messages_check_deps_output_point: self_msgs_and_srvs/CMakeFiles/_self_msgs_and_srvs_generate_messages_check_deps_output_point.dir/build.make
@@ -67,10 +67,10 @@ self_msgs_and_srvs/CMakeFiles/_self_msgs_and_srvs_generate_messages_check_deps_o
 .PHONY : self_msgs_and_srvs/CMakeFiles/_self_msgs_and_srvs_generate_messages_check_deps_output_point.dir/build
 
 self_msgs_and_srvs/CMakeFiles/_self_msgs_and_srvs_generate_messages_check_deps_output_point.dir/clean:
-	cd /home/phuong/DACN/test/brrt_optimize/build/self_msgs_and_srvs && $(CMAKE_COMMAND) -P CMakeFiles/_self_msgs_and_srvs_generate_messages_check_deps_output_point.dir/cmake_clean.cmake
+	cd /home/phuong/DACN/brrt_optimize/build/self_msgs_and_srvs && $(CMAKE_COMMAND) -P CMakeFiles/_self_msgs_and_srvs_generate_messages_check_deps_output_point.dir/cmake_clean.cmake
 .PHONY : self_msgs_and_srvs/CMakeFiles/_self_msgs_and_srvs_generate_messages_check_deps_output_point.dir/clean
 
 self_msgs_and_srvs/CMakeFiles/_self_msgs_and_srvs_generate_messages_check_deps_output_point.dir/depend:
-	cd /home/phuong/DACN/test/brrt_optimize/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/phuong/DACN/test/brrt_optimize/src /home/phuong/DACN/test/brrt_optimize/src/self_msgs_and_srvs /home/phuong/DACN/test/brrt_optimize/build /home/phuong/DACN/test/brrt_optimize/build/self_msgs_and_srvs /home/phuong/DACN/test/brrt_optimize/build/self_msgs_and_srvs/CMakeFiles/_self_msgs_and_srvs_generate_messages_check_deps_output_point.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/phuong/DACN/brrt_optimize/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/phuong/DACN/brrt_optimize/src /home/phuong/DACN/brrt_optimize/src/self_msgs_and_srvs /home/phuong/DACN/brrt_optimize/build /home/phuong/DACN/brrt_optimize/build/self_msgs_and_srvs /home/phuong/DACN/brrt_optimize/build/self_msgs_and_srvs/CMakeFiles/_self_msgs_and_srvs_generate_messages_check_deps_output_point.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : self_msgs_and_srvs/CMakeFiles/_self_msgs_and_srvs_generate_messages_check_deps_output_point.dir/depend
 

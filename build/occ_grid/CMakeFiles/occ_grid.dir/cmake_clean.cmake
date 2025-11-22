@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/phuong/DACN/test/brrt_optimize/devel/lib/libocc_grid.pdb"
-  "/home/phuong/DACN/test/brrt_optimize/devel/lib/libocc_grid.so"
+  "/home/phuong/DACN/brrt_optimize/devel/lib/libocc_grid.pdb"
+  "/home/phuong/DACN/brrt_optimize/devel/lib/libocc_grid.so"
   "CMakeFiles/occ_grid.dir/src/occ_map.cpp.o"
   "CMakeFiles/occ_grid.dir/src/raycast.cpp.o"
 )

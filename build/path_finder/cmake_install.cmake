@@ -1,8 +1,8 @@
-# Install script for directory: /home/phuong/DACN/test/brrt_optimize/src/path_finder
+# Install script for directory: /home/phuong/DACN/brrt_optimize/src/path_finder
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/phuong/DACN/test/brrt_optimize/install")
+  set(CMAKE_INSTALL_PREFIX "/home/phuong/DACN/brrt_optimize/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,17 +38,17 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/phuong/DACN/test/brrt_optimize/build/path_finder/catkin_generated/installspace/path_finder.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/phuong/DACN/brrt_optimize/build/path_finder/catkin_generated/installspace/path_finder.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/path_finder/cmake" TYPE FILE FILES
-    "/home/phuong/DACN/test/brrt_optimize/build/path_finder/catkin_generated/installspace/path_finderConfig.cmake"
-    "/home/phuong/DACN/test/brrt_optimize/build/path_finder/catkin_generated/installspace/path_finderConfig-version.cmake"
+    "/home/phuong/DACN/brrt_optimize/build/path_finder/catkin_generated/installspace/path_finderConfig.cmake"
+    "/home/phuong/DACN/brrt_optimize/build/path_finder/catkin_generated/installspace/path_finderConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/path_finder" TYPE FILE FILES "/home/phuong/DACN/test/brrt_optimize/src/path_finder/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/path_finder" TYPE FILE FILES "/home/phuong/DACN/brrt_optimize/src/path_finder/package.xml")
 endif()
 

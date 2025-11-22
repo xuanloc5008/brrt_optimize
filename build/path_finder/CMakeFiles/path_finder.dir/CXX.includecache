@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/phuong/DACN/test/brrt_optimize/devel/include/self_msgs_and_srvs/GlbObsRcv.h
+/home/phuong/DACN/brrt_optimize/devel/include/self_msgs_and_srvs/GlbObsRcv.h
 ros/service_traits.h
 -
 self_msgs_and_srvs/GlbObsRcvRequest.h
@@ -14,7 +14,7 @@ self_msgs_and_srvs/GlbObsRcvRequest.h
 self_msgs_and_srvs/GlbObsRcvResponse.h
 -
 
-/home/phuong/DACN/test/brrt_optimize/devel/include/self_msgs_and_srvs/GlbObsRcvRequest.h
+/home/phuong/DACN/brrt_optimize/devel/include/self_msgs_and_srvs/GlbObsRcvRequest.h
 string
 -
 vector
@@ -30,7 +30,7 @@ ros/builtin_message_traits.h
 ros/message_operations.h
 -
 
-/home/phuong/DACN/test/brrt_optimize/devel/include/self_msgs_and_srvs/GlbObsRcvResponse.h
+/home/phuong/DACN/brrt_optimize/devel/include/self_msgs_and_srvs/GlbObsRcvResponse.h
 string
 -
 vector
@@ -46,9 +46,9 @@ ros/builtin_message_traits.h
 ros/message_operations.h
 -
 
-/home/phuong/DACN/test/brrt_optimize/src/occ_grid/include/occ_grid/occ_map.h
+/home/phuong/DACN/brrt_optimize/src/occ_grid/include/occ_grid/occ_map.h
 raycast.h
-/home/phuong/DACN/test/brrt_optimize/src/occ_grid/include/occ_grid/raycast.h
+/home/phuong/DACN/brrt_optimize/src/occ_grid/include/occ_grid/raycast.h
 pcl/point_types.h
 -
 pcl_conversions/pcl_conversions.h
@@ -58,23 +58,23 @@ Eigen/Eigen
 ros/ros.h
 -
 
-/home/phuong/DACN/test/brrt_optimize/src/occ_grid/include/occ_grid/raycast.h
+/home/phuong/DACN/brrt_optimize/src/occ_grid/include/occ_grid/raycast.h
 Eigen/Eigen
 -
 vector
 -
 
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/brrt.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/brrt.h
 occ_grid/occ_map.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/occ_grid/occ_map.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/occ_grid/occ_map.h
 visualization/visualization.hpp
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/visualization/visualization.hpp
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/visualization/visualization.hpp
 sampler.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/sampler.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/sampler.h
 node.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/node.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/node.h
 kdtree.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/kdtree.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/kdtree.h
 ros/ros.h
 -
 utility
@@ -84,17 +84,17 @@ queue
 algorithm
 -
 
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/brrt_sample_gravity.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/brrt_sample_gravity.h
 occ_grid/occ_map.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/occ_grid/occ_map.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/occ_grid/occ_map.h
 visualization/visualization.hpp
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/visualization/visualization.hpp
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/visualization/visualization.hpp
 sampler.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/sampler.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/sampler.h
 node.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/node.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/node.h
 kdtree.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/kdtree.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/kdtree.h
 ros/ros.h
 -
 utility
@@ -104,17 +104,19 @@ queue
 algorithm
 -
 
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/brrt_simple_case1.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/brrt_simple_case1.h
+string
+-
 occ_grid/occ_map.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/occ_grid/occ_map.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/occ_grid/occ_map.h
 visualization/visualization.hpp
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/visualization/visualization.hpp
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/visualization/visualization.hpp
 sampler.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/sampler.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/sampler.h
 node.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/node.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/node.h
 kdtree.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/kdtree.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/kdtree.h
 ros/ros.h
 -
 utility
@@ -123,46 +125,22 @@ queue
 -
 algorithm
 -
-random
--
-limits
--
-cfloat
--
-cmath
+nlohmann/json.hpp
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/nlohmann/json.hpp
+std_msgs/Float64.h
 -
 
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/brrt_simple_case2.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/brrt_star.h
 occ_grid/occ_map.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/occ_grid/occ_map.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/occ_grid/occ_map.h
 visualization/visualization.hpp
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/visualization/visualization.hpp
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/visualization/visualization.hpp
 sampler.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/sampler.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/sampler.h
 node.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/node.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/node.h
 kdtree.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/kdtree.h
-ros/ros.h
--
-utility
--
-queue
--
-algorithm
--
-
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/brrt_star.h
-occ_grid/occ_map.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/occ_grid/occ_map.h
-visualization/visualization.hpp
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/visualization/visualization.hpp
-sampler.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/sampler.h
-node.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/node.h
-kdtree.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/kdtree.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/kdtree.h
 ros/ros.h
 -
 utility
@@ -172,9 +150,9 @@ queue
 algorithm
 -
 
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/kdtree.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/kdtree.h
 
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/node.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/node.h
 ros/ros.h
 -
 Eigen/Eigen
@@ -197,24 +175,30 @@ functional
 -
 unordered_set
 -
-queue
--
 vector
 -
 limits
 -
+cmath
+-
+numeric
+-
+algorithm
+-
+random
+-
 
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/rrt.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/rrt.h
 occ_grid/occ_map.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/occ_grid/occ_map.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/occ_grid/occ_map.h
 visualization/visualization.hpp
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/visualization/visualization.hpp
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/visualization/visualization.hpp
 sampler.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/sampler.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/sampler.h
 node.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/node.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/node.h
 kdtree.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/kdtree.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/kdtree.h
 ros/ros.h
 -
 utility
@@ -222,17 +206,17 @@ utility
 queue
 -
 
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/rrt_sharp.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/rrt_sharp.h
 occ_grid/occ_map.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/occ_grid/occ_map.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/occ_grid/occ_map.h
 visualization/visualization.hpp
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/visualization/visualization.hpp
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/visualization/visualization.hpp
 sampler.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/sampler.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/sampler.h
 node.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/node.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/node.h
 kdtree.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/kdtree.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/kdtree.h
 ros/ros.h
 -
 utility
@@ -242,17 +226,17 @@ queue
 algorithm
 -
 
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/rrt_star.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/rrt_star.h
 occ_grid/occ_map.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/occ_grid/occ_map.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/occ_grid/occ_map.h
 visualization/visualization.hpp
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/visualization/visualization.hpp
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/visualization/visualization.hpp
 sampler.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/sampler.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/sampler.h
 node.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/node.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/node.h
 kdtree.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/kdtree.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/kdtree.h
 ros/ros.h
 -
 utility
@@ -260,7 +244,7 @@ utility
 queue
 -
 
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/sampler.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/sampler.h
 ros/ros.h
 -
 Eigen/Eigen
@@ -268,7 +252,7 @@ Eigen/Eigen
 random
 -
 
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/path_finder/testcase.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/path_finder/testcase.h
 string
 -
 vector
@@ -282,7 +266,7 @@ iostream
 nlohmann/json.hpp
 -
 
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/include/visualization/visualization.hpp
+/home/phuong/DACN/brrt_optimize/src/path_finder/include/visualization/visualization.hpp
 nav_msgs/Path.h
 -
 pcl_conversions/pcl_conversions.h
@@ -300,36 +284,38 @@ iostream
 unordered_map
 -
 
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/src/test_planner.cpp
+/home/phuong/DACN/brrt_optimize/src/path_finder/src/test_planner.cpp
 self_msgs_and_srvs/GlbObsRcv.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/src/self_msgs_and_srvs/GlbObsRcv.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/src/self_msgs_and_srvs/GlbObsRcv.h
 occ_grid/occ_map.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/src/occ_grid/occ_map.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/src/occ_grid/occ_map.h
 path_finder/rrt_sharp.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/src/path_finder/rrt_sharp.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/src/path_finder/rrt_sharp.h
 path_finder/rrt_star.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/src/path_finder/rrt_star.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/src/path_finder/rrt_star.h
 path_finder/rrt.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/src/path_finder/rrt.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/src/path_finder/rrt.h
 path_finder/brrt.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/src/path_finder/brrt.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/src/path_finder/brrt.h
 path_finder/brrt_star.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/src/path_finder/brrt_star.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/src/path_finder/brrt_star.h
 path_finder/brrt_sample_gravity.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/src/path_finder/brrt_sample_gravity.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/src/path_finder/brrt_sample_gravity.h
 path_finder/brrt_simple_case1.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/src/path_finder/brrt_simple_case1.h
-path_finder/brrt_simple_case2.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/src/path_finder/brrt_simple_case2.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/src/path_finder/brrt_simple_case1.h
 path_finder/testcase.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/src/path_finder/testcase.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/src/path_finder/testcase.h
 visualization/visualization.hpp
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/src/visualization/visualization.hpp
+/home/phuong/DACN/brrt_optimize/src/path_finder/src/visualization/visualization.hpp
 path_finder/sampler.h
-/home/phuong/DACN/test/brrt_optimize/src/path_finder/src/path_finder/sampler.h
+/home/phuong/DACN/brrt_optimize/src/path_finder/src/path_finder/sampler.h
 ros/ros.h
 -
 geometry_msgs/PoseStamped.h
+-
+nlohmann/json.hpp
+/home/phuong/DACN/brrt_optimize/src/path_finder/src/nlohmann/json.hpp
+fstream
 -
 
 /opt/ros/noetic/include/geometry_msgs/Point.h
@@ -1265,6 +1251,22 @@ ros/message_operations.h
 -
 
 /opt/ros/noetic/include/std_msgs/ColorRGBA.h
+string
+-
+vector
+-
+memory
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+
+/opt/ros/noetic/include/std_msgs/Float64.h
 string
 -
 vector

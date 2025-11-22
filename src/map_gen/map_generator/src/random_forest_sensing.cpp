@@ -11,7 +11,8 @@ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
 WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
 MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
 EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT
 OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
 INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
 CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
@@ -39,10 +40,14 @@ OF SUCH DAMAGE.
 #include <math.h>
 #include <random>
 
+// NEW: Include message header for publishing the percentage
+#include <std_msgs/Float64.h> 
+
 using namespace std;
 using namespace Eigen;
 
 ros::Publisher _all_map_pub;
+ros::Publisher _obstacle_percentage_pub; // NEW: Publisher for the percentage
 ros::Subscriber _odom_sub;
 
 int _obs_num, _cir_num;
@@ -57,13 +62,12 @@ pcl::PointCloud<pcl::PointXYZ> cloudMap;
 pcl::search::KdTree<pcl::PointXYZ> kdtreeMap;
 vector<int> pointIdxSearch;
 vector<float> pointSquaredDistance;
-
+float ramdom_ratio = 0.5;
 void RandomBRRTGenerate_Large(double size = 4)
 {
    pcl::PointXYZ pt_random;
    random_device rd;
    default_random_engine eng(rd());
-   float ramdom_ratio = 0.8;
    int number_ostacle = (_x_h - _x_l) * (_y_h - _y_l) / (size * size) * ramdom_ratio;
    std::cout << "number of ostacle" << number_ostacle;
 
@@ -80,13 +84,13 @@ void RandomBRRTGenerate_Large(double size = 4)
       double random_y = dis_y(gen);
       for (double i_x = random_x - half_size; i_x < random_x + half_size; i_x += 0.5)
          for (double i_y = random_y - half_size; i_y < random_y + half_size; i_y += 0.5)
-         for (float k = -1; k < _h_h; k+=0.5)
-         {
-            pt_random.x = i_x;
-            pt_random.y = i_y;
-            pt_random.z = k;
-            cloudMap.points.push_back(pt_random);
-         }
+            for (float k = -1; k < _h_h; k += 0.5)
+            {
+               pt_random.x = i_x;
+               pt_random.y = i_y;
+               pt_random.z = k;
+               cloudMap.points.push_back(pt_random);
+            }
    }
 
    // pcl::PointXYZ pt_random;
@@ -128,26 +132,25 @@ void RandomBRRTGenerate()
    float ramdom_ratio = 0.8;
 
    pcl::PointXYZ pt_random;
-   std::cout<<"size of map" << _x_l << " " << _x_h << " " << _y_l << " " << _y_h <<" " << _h_h <<std::endl;
-   for (float i = _x_l; i < _x_h; i+=0.5)
+   std::cout << "size of map" << _x_l << " " << _x_h << " " << _y_l << " " << _y_h << " " << _h_h << std::endl;
+   for (float i = _x_l; i < _x_h; i += 0.5)
    {
-     
-      for (float j = _y_l; j < _y_h; j+=0.5)
+
+      for (float j = _y_l; j < _y_h; j += 0.5)
       {
          // get a random number between 0 and 1
          float random_num = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
          if (random_num < ramdom_ratio)
-         for (float k = -1; k < _h_h; k+=0.5)
-         {
-            pt_random.x = i;
-            pt_random.y = j;
-            pt_random.z = k;
-            cloudMap.points.push_back(pt_random);
-         }
+            for (float k = -1; k < _h_h; k += 0.5)
+            {
+               pt_random.x = i;
+               pt_random.y = j;
+               pt_random.z = k;
+               cloudMap.points.push_back(pt_random);
+            }
       }
    }
 
-   
    cloudMap.width = cloudMap.points.size();
    cloudMap.height = 1;
    cloudMap.is_dense = true;
@@ -427,6 +430,184 @@ void RandomMapGenerate()
    globalMap_pcd.header.frame_id = "map";
 }
 
+/**
+ * @brief Helper function to add a wall of obstacle points to the global cloudMap.
+ *
+ * @param x1 Start x-coordinate of the wall.
+ * @param y1 Start y-coordinate of the wall.
+ * @param x2 End x-coordinate of the wall.
+ * @param y2 End y-coordinate of the wall.
+ * @param z_min Minimum height of the wall.
+ * @param z_max Maximum height of the wall.
+ * @param resolution Resolution for sampling points along the wall.
+ */
+void addObstacleWall(double x1, double y1, double x2, double y2, double z_min, double z_max, double resolution)
+{
+   pcl::PointXYZ pt_obs;
+   double dist = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+   int num_points_xy = dist / resolution;
+
+   // Use num_points_xy + 1 to include both endpoints
+   if (num_points_xy == 0) num_points_xy = 1; // Ensure at least one point if start/end are close
+
+   double dx = (x2 - x1) / num_points_xy;
+   double dy = (y2 - y1) / num_points_xy;
+
+   for (double z = z_min; z <= z_max; z += resolution)
+   {
+      for (int i = 0; i <= num_points_xy; ++i)
+      {
+         pt_obs.x = x1 + i * dx;
+         pt_obs.y = y1 + i * dy;
+         pt_obs.z = z;
+         cloudMap.points.push_back(pt_obs);
+      }
+   }
+}
+
+/**
+ * @brief Generates a fixed map with L, H, and U shaped obstacles.
+ */
+void FixedMapGenerate()
+{
+   ROS_INFO("Generating fixed map with outer L/H/U shapes and new central obstacles.");
+   cloudMap.points.clear();
+
+   double wall_z_min = -1.0;
+   double wall_z_max = _h_h; // Use the parameter for height
+   double res = _resolution; // Use the parameter for resolution
+
+   // Ensure valid map boundaries
+   if (_x_l >= _x_h || _y_l >= _y_h) {
+      ROS_ERROR("Invalid map boundaries. Fixed map generation failed.");
+      return;
+   }
+
+   // --- OUTER OBSTACLES (Unchanged) ---
+
+   // 1. L-Shape (Bottom-Left)
+   double l_base_x = _x_l + 5.0;
+   double l_base_y = _y_l + 5.0;
+   double l_len = 8.0;
+   if (l_base_x + l_len < _x_h && l_base_y + l_len < _y_h) {
+      addObstacleWall(l_base_x, l_base_y, l_base_x + l_len, l_base_y, wall_z_min, wall_z_max, res); // Horizontal part
+      addObstacleWall(l_base_x, l_base_y, l_base_x, l_base_y + l_len, wall_z_min, wall_z_max, res); // Vertical part
+   } else {
+      ROS_WARN("L-Shape obstacle is outside map boundaries, skipping.");
+   }
+
+   // 2. H-Shape (Top-Right)
+   double h_base_x = _x_h - 15.0;
+   double h_base_y = _y_h - 15.0;
+   double h_len = 8.0;
+   double h_width = 6.0;
+   if (h_base_x + h_width < _x_h && h_base_y + h_len < _y_h) {
+      addObstacleWall(h_base_x, h_base_y, h_base_x, h_base_y + h_len, wall_z_min, wall_z_max, res); // Left bar
+      addObstacleWall(h_base_x + h_width, h_base_y, h_base_x + h_width, h_base_y + h_len, wall_z_min, wall_z_max, res); // Right bar
+      addObstacleWall(h_base_x, h_base_y + h_len / 2.0, h_base_x + h_width, h_base_y + h_len / 2.0, wall_z_min, wall_z_max, res); // Middle bar
+   } else {
+      ROS_WARN("H-Shape obstacle is outside map boundaries, skipping.");
+   }
+
+   // 3. U-Shape (Bottom-Right)
+   double u_base_x = _x_h - 15.0;
+   double u_base_y = _y_l + 5.0;
+   double u_len = 8.0;
+   double u_width = 6.0;
+    if (u_base_x + u_width < _x_h && u_base_y + u_len < _y_h) {
+      addObstacleWall(u_base_x, u_base_y, u_base_x, u_base_y + u_len, wall_z_min, wall_z_max, res); // Left bar
+      addObstacleWall(u_base_x + u_width, u_base_y, u_base_x + u_width, u_base_y + u_len, wall_z_min, wall_z_max, res); // Right bar
+      addObstacleWall(u_base_x, u_base_y, u_base_x + u_width, u_base_y, wall_z_min, wall_z_max, res); // Bottom bar
+   } else {
+      ROS_WARN("U-Shape obstacle is outside map boundaries, skipping.");
+   }
+
+   // 4. New H-Shape (Top-Left)
+   double h2_base_x = _x_l + 5.0;
+   double h2_base_y = _y_h - 15.0;
+   double h2_len = 6.0;
+   double h2_width = 5.0;
+   if (h2_base_x + h2_width < _x_h && h2_base_y + h2_len < _y_h) {
+      addObstacleWall(h2_base_x, h2_base_y, h2_base_x, h2_base_y + h2_len, wall_z_min, wall_z_max, res); // Left bar
+      addObstacleWall(h2_base_x + h2_width, h2_base_y, h2_base_x + h2_width, h2_base_y + h2_len, wall_z_min, wall_z_max, res); // Right bar
+      addObstacleWall(h2_base_x, h2_base_y + h2_len / 2.0, h2_base_x + h2_width, h2_base_y + h2_len / 2.0, wall_z_min, wall_z_max, res); // Middle bar
+   } else {
+      ROS_WARN("New H-Shape obstacle is outside map boundaries, skipping.");
+   }
+
+   // 5. New U-Shape (Inverted "n-shape", Top-Left)
+   double u2_base_x = _x_l + 12.0; 
+   double u2_base_y = _y_h - 10.0; 
+   double u2_len = 6.0;
+   double u2_width = 5.0;
+   if (u2_base_x + u2_width < _x_h && u2_base_y + u2_len < _y_h) {
+      addObstacleWall(u2_base_x, u2_base_y, u2_base_x, u2_base_y + u2_len, wall_z_min, wall_z_max, res); // Left bar
+      addObstacleWall(u2_base_x + u2_width, u2_base_y, u2_base_x + u2_width, u2_base_y + u2_len, wall_z_min, wall_z_max, res); // Right bar
+      addObstacleWall(u2_base_x, u2_base_y + u2_len, u2_base_x + u2_width, u2_base_y + u2_len, wall_z_min, wall_z_max, res); // Top bar
+   } else {
+       ROS_WARN("New U-Shape obstacle is outside map boundaries, skipping.");
+   }
+
+   // 6. New L-Shape (Inverted, near Bottom-Right)
+   double l2_base_x = 5.0;
+   double l2_base_y = -15.0;
+   double l2_len = 6.0;
+   if (l2_base_x - l2_len > _x_l && l2_base_y + l2_len < _y_h) {
+       addObstacleWall(l2_base_x, l2_base_y, l2_base_x - l2_len, l2_base_y, wall_z_min, wall_z_max, res); // Horizontal bar (left)
+       addObstacleWall(l2_base_x, l2_base_y, l2_base_x, l2_base_y + l2_len, wall_z_min, wall_z_max, res); // Vertical bar (up)
+   } else {
+       ROS_WARN("New L-Shape is outside map boundaries, skipping.");
+   }
+
+   // --- NEW: CENTRAL OBSTACLES ---
+
+   // 7. Central Vertical Wall (Positive X)
+   double v_wall_x = 2.0;
+   double v_wall_y_start = -5.0;
+   double v_wall_y_end = 5.0;
+   if (v_wall_x > _x_l && v_wall_x < _x_h && v_wall_y_end < _y_h && v_wall_y_start > _y_l) {
+      addObstacleWall(v_wall_x, v_wall_y_start, v_wall_x, v_wall_y_end, wall_z_min, wall_z_max, res);
+   } else {
+       ROS_WARN("Central Vertical Wall is outside map boundaries, skipping.");
+   }
+   
+   // 8. Central Horizontal Wall (Positive Y)
+   double h_wall_x_start = -5.0;
+   double h_wall_x_end = 5.0;
+   double h_wall_y = 2.0;
+   if (h_wall_x_end < _x_h && h_wall_x_start > _x_l && h_wall_y < _y_h && h_wall_y > _y_l) {
+      addObstacleWall(h_wall_x_start, h_wall_y, h_wall_x_end, h_wall_y, wall_z_min, wall_z_max, res);
+   } else {
+       ROS_WARN("Central Horizontal Wall is outside map boundaries, skipping.");
+   }
+
+   // 9. Small Box (Negative X, Negative Y)
+   double box_x = -8.0;
+   double box_y = -8.0;
+   double box_size = 3.0;
+   if (box_x + box_size < _x_h && box_y + box_size < _y_h) {
+      addObstacleWall(box_x, box_y, box_x + box_size, box_y, wall_z_min, wall_z_max, res); // Bottom
+      addObstacleWall(box_x + box_size, box_y, box_x + box_size, box_y + box_size, wall_z_min, wall_z_max, res); // Right
+      addObstacleWall(box_x, box_y + box_size, box_x + box_size, box_y + box_size, wall_z_min, wall_z_max, res); // Top
+   } else {
+      ROS_WARN("Central Small Box is outside map boundaries, skipping.");
+   }
+
+   // --- End of Added Obstacles ---
+
+
+   // Set cloud properties and convert to ROS message
+   cloudMap.width = cloudMap.points.size();
+   cloudMap.height = 1;
+   cloudMap.is_dense = true;
+
+   _has_map = true;
+   ROS_INFO("Fixed map generated with %zu points.", cloudMap.points.size());
+
+   pcl::toROSMsg(cloudMap, globalMap_pcd);
+   globalMap_pcd.header.frame_id = "map";
+}
+
 void pubSensedPoints()
 {
    if (!_has_map)
@@ -446,6 +627,8 @@ int main(int argc, char **argv)
    ros::NodeHandle n("~");
 
    _all_map_pub = n.advertise<sensor_msgs::PointCloud2>("all_map", 1);
+   // NEW: Advertise the percentage topic as latched
+   _obstacle_percentage_pub = n.advertise<std_msgs::Float64>("obstacle_percentage", 1, true);
 
    n.param("init_state_x", _init_x, 0.0);
    n.param("init_state_y", _init_y, 0.0);
@@ -474,11 +657,75 @@ int main(int argc, char **argv)
    _y_l = -_y_size / 2.0;
    _y_h = +_y_size / 2.0;
 
-   // RandomMapGenerate();
-   // RandomNarrowGenerate();
-   RandomBRRTGenerate_Large();
+   // === Map Generation Selection ===
+   std::string map_type;
+   n.param("map/map_type", map_type, std::string("fixed"));
+
+   ROS_INFO("Selected map type: %s", map_type.c_str());
+
+   if (map_type == "fixed")
+   {
+      FixedMapGenerate();
+   }
+   else if (map_type == "random_large") // chinrh dc % obstacle
+   {
+      RandomBRRTGenerate_Large();
+   }
+   else if (map_type == "random_narrow") // map hep
+   {
+      RandomNarrowGenerate();
+   }
+   else if (map_type == "random")
+   {
+      RandomMapGenerate();
+   }
+   else if (map_type == "random_brrt")
+   {
+      RandomBRRTGenerate();
+   }
+   else
+   {
+      ROS_ERROR("Unknown map type: '%s'. Defaulting to 'random_large'.", map_type.c_str());
+      RandomBRRTGenerate_Large();
+   }
+   // =================================
+   double obstacle_percentage = 0.0;
+   if(map_type == "random_large"){
+      obstacle_percentage = ramdom_ratio * 100.0;
+      ROS_INFO("  Obstacle Percentage: %.2f %%", obstacle_percentage);
+   }
+   else {
+         // === NEW: Calculate and Publish Obstacle Percentage ===
+         ROS_INFO("Calculating obstacle percentage...");
+         double total_volume = _x_size * _y_size * _z_size;
+         double obstacle_points = static_cast<double>(cloudMap.points.size());
+         double single_voxel_volume = pow(_resolution, 3);
+         double obstacle_volume = obstacle_points * single_voxel_volume;
+         
+         if (total_volume > 1e-6) // Avoid division by zero
+         {
+            obstacle_percentage = (obstacle_volume / total_volume) * 100.0;
+         }
+
+         ROS_INFO("-----------------------------------------");
+         ROS_INFO("Map Statistics:");
+         ROS_INFO("  Total Map Volume (m^3): %.2f", total_volume);
+         ROS_INFO("  Obstacle Points Count: %d", (int)obstacle_points);
+         ROS_INFO("  Voxel Resolution (m): %.3f", _resolution);
+         ROS_INFO("  Estimated Obstacle Volume (m^3): %.2f", obstacle_volume);
+         ROS_INFO("-----------------------------------------");
+   }
+
+   std_msgs::Float64 percentage_msg;
+   percentage_msg.data = obstacle_percentage;
+   _obstacle_percentage_pub.publish(percentage_msg);
+   ROS_INFO("Obstacle percentage published to latched topic: %s", _obstacle_percentage_pub.getTopic().c_str());
+   // ==================================================
+   
+
    // only pub map pointcloud on request
    ros::ServiceServer pub_glb_obs_service = n.advertiseService("/pub_glb_obs", pubGlbObs);
+   ROS_INFO("Map generation complete. Ready to publish map on service call.");
    ros::spin();
 
    // ros::Rate loop_rate(_sense_rate);

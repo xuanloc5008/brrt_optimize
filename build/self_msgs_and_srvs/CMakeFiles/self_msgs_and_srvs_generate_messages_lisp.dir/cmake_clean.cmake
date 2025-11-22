@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
-  "/home/phuong/DACN/test/brrt_optimize/devel/share/common-lisp/ros/self_msgs_and_srvs/msg/input_point.lisp"
-  "/home/phuong/DACN/test/brrt_optimize/devel/share/common-lisp/ros/self_msgs_and_srvs/msg/output_point.lisp"
-  "/home/phuong/DACN/test/brrt_optimize/devel/share/common-lisp/ros/self_msgs_and_srvs/srv/GlbObsRcv.lisp"
-  "/home/phuong/DACN/test/brrt_optimize/devel/share/common-lisp/ros/self_msgs_and_srvs/srv/LearningSampler.lisp"
+  "/home/phuong/DACN/brrt_optimize/devel/share/common-lisp/ros/self_msgs_and_srvs/msg/input_point.lisp"
+  "/home/phuong/DACN/brrt_optimize/devel/share/common-lisp/ros/self_msgs_and_srvs/msg/output_point.lisp"
+  "/home/phuong/DACN/brrt_optimize/devel/share/common-lisp/ros/self_msgs_and_srvs/srv/GlbObsRcv.lisp"
+  "/home/phuong/DACN/brrt_optimize/devel/share/common-lisp/ros/self_msgs_and_srvs/srv/LearningSampler.lisp"
   "CMakeFiles/self_msgs_and_srvs_generate_messages_lisp"
 )
 

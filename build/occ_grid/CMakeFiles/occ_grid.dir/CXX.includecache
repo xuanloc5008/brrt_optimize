@@ -6,9 +6,9 @@
 
 #IncludeRegexTransform: 
 
-/home/phuong/DACN/test/brrt_optimize/src/occ_grid/include/occ_grid/occ_map.h
+/home/phuong/DACN/brrt_optimize/src/occ_grid/include/occ_grid/occ_map.h
 raycast.h
-/home/phuong/DACN/test/brrt_optimize/src/occ_grid/include/occ_grid/raycast.h
+/home/phuong/DACN/brrt_optimize/src/occ_grid/include/occ_grid/raycast.h
 pcl/point_types.h
 -
 pcl_conversions/pcl_conversions.h
@@ -18,17 +18,17 @@ Eigen/Eigen
 ros/ros.h
 -
 
-/home/phuong/DACN/test/brrt_optimize/src/occ_grid/include/occ_grid/raycast.h
+/home/phuong/DACN/brrt_optimize/src/occ_grid/include/occ_grid/raycast.h
 Eigen/Eigen
 -
 vector
 -
 
-/home/phuong/DACN/test/brrt_optimize/src/occ_grid/src/occ_map.cpp
+/home/phuong/DACN/brrt_optimize/src/occ_grid/src/occ_map.cpp
 occ_grid/occ_map.h
-/home/phuong/DACN/test/brrt_optimize/src/occ_grid/src/occ_grid/occ_map.h
+/home/phuong/DACN/brrt_optimize/src/occ_grid/src/occ_grid/occ_map.h
 occ_grid/raycast.h
-/home/phuong/DACN/test/brrt_optimize/src/occ_grid/src/occ_grid/raycast.h
+/home/phuong/DACN/brrt_optimize/src/occ_grid/src/occ_grid/raycast.h
 visualization_msgs/Marker.h
 -
 geometry_msgs/PoseStamped.h
@@ -44,7 +44,7 @@ chrono
 random
 -
 
-/home/phuong/DACN/test/brrt_optimize/src/occ_grid/src/raycast.cpp
+/home/phuong/DACN/brrt_optimize/src/occ_grid/src/raycast.cpp
 occ_grid/raycast.h
 -
 iostream

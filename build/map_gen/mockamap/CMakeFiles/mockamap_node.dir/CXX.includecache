@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/phuong/DACN/test/brrt_optimize/devel/include/self_msgs_and_srvs/GlbObsRcv.h
+/home/phuong/DACN/brrt_optimize/devel/include/self_msgs_and_srvs/GlbObsRcv.h
 ros/service_traits.h
 -
 self_msgs_and_srvs/GlbObsRcvRequest.h
@@ -14,7 +14,7 @@ self_msgs_and_srvs/GlbObsRcvRequest.h
 self_msgs_and_srvs/GlbObsRcvResponse.h
 -
 
-/home/phuong/DACN/test/brrt_optimize/devel/include/self_msgs_and_srvs/GlbObsRcvRequest.h
+/home/phuong/DACN/brrt_optimize/devel/include/self_msgs_and_srvs/GlbObsRcvRequest.h
 string
 -
 vector
@@ -30,7 +30,7 @@ ros/builtin_message_traits.h
 ros/message_operations.h
 -
 
-/home/phuong/DACN/test/brrt_optimize/devel/include/self_msgs_and_srvs/GlbObsRcvResponse.h
+/home/phuong/DACN/brrt_optimize/devel/include/self_msgs_and_srvs/GlbObsRcvResponse.h
 string
 -
 vector
@@ -46,7 +46,7 @@ ros/builtin_message_traits.h
 ros/message_operations.h
 -
 
-/home/phuong/DACN/test/brrt_optimize/src/map_gen/mockamap/include/maps.hpp
+/home/phuong/DACN/brrt_optimize/src/map_gen/mockamap/include/maps.hpp
 ros/ros.h
 -
 pcl/point_cloud.h
@@ -56,11 +56,11 @@ pcl_conversions/pcl_conversions.h
 sensor_msgs/PointCloud2.h
 -
 
-/home/phuong/DACN/test/brrt_optimize/src/map_gen/mockamap/include/perlinnoise.hpp
+/home/phuong/DACN/brrt_optimize/src/map_gen/mockamap/include/perlinnoise.hpp
 vector
 -
 
-/home/phuong/DACN/test/brrt_optimize/src/map_gen/mockamap/src/ces_randommap.cpp
+/home/phuong/DACN/brrt_optimize/src/map_gen/mockamap/src/ces_randommap.cpp
 iostream
 -
 pcl/point_cloud.h
@@ -110,15 +110,15 @@ sys/time.h
 time.h
 -
 visualization_msgs/Marker.h
-/home/phuong/DACN/test/brrt_optimize/src/map_gen/mockamap/src/visualization_msgs/Marker.h
+/home/phuong/DACN/brrt_optimize/src/map_gen/mockamap/src/visualization_msgs/Marker.h
 visualization_msgs/MarkerArray.h
-/home/phuong/DACN/test/brrt_optimize/src/map_gen/mockamap/src/visualization_msgs/MarkerArray.h
+/home/phuong/DACN/brrt_optimize/src/map_gen/mockamap/src/visualization_msgs/MarkerArray.h
 maps.hpp
-/home/phuong/DACN/test/brrt_optimize/src/map_gen/mockamap/src/maps.hpp
+/home/phuong/DACN/brrt_optimize/src/map_gen/mockamap/src/maps.hpp
 
-/home/phuong/DACN/test/brrt_optimize/src/map_gen/mockamap/src/maps.cpp
+/home/phuong/DACN/brrt_optimize/src/map_gen/mockamap/src/maps.cpp
 maps.hpp
-/home/phuong/DACN/test/brrt_optimize/src/map_gen/mockamap/src/maps.hpp
+/home/phuong/DACN/brrt_optimize/src/map_gen/mockamap/src/maps.hpp
 algorithm
 -
 iostream
@@ -130,11 +130,11 @@ vector
 Eigen/Core
 -
 perlinnoise.hpp
-/home/phuong/DACN/test/brrt_optimize/src/map_gen/mockamap/src/perlinnoise.hpp
+/home/phuong/DACN/brrt_optimize/src/map_gen/mockamap/src/perlinnoise.hpp
 
-/home/phuong/DACN/test/brrt_optimize/src/map_gen/mockamap/src/mockamap.cpp
+/home/phuong/DACN/brrt_optimize/src/map_gen/mockamap/src/mockamap.cpp
 self_msgs_and_srvs/GlbObsRcv.h
-/home/phuong/DACN/test/brrt_optimize/src/map_gen/mockamap/src/self_msgs_and_srvs/GlbObsRcv.h
+/home/phuong/DACN/brrt_optimize/src/map_gen/mockamap/src/self_msgs_and_srvs/GlbObsRcv.h
 ros/ros.h
 -
 sensor_msgs/PointCloud2.h
@@ -152,11 +152,11 @@ pcl/point_cloud.h
 pcl_conversions/pcl_conversions.h
 -
 maps.hpp
-/home/phuong/DACN/test/brrt_optimize/src/map_gen/mockamap/src/maps.hpp
+/home/phuong/DACN/brrt_optimize/src/map_gen/mockamap/src/maps.hpp
 
-/home/phuong/DACN/test/brrt_optimize/src/map_gen/mockamap/src/perlinnoise.cpp
+/home/phuong/DACN/brrt_optimize/src/map_gen/mockamap/src/perlinnoise.cpp
 perlinnoise.hpp
-/home/phuong/DACN/test/brrt_optimize/src/map_gen/mockamap/src/perlinnoise.hpp
+/home/phuong/DACN/brrt_optimize/src/map_gen/mockamap/src/perlinnoise.hpp
 algorithm
 -
 cmath

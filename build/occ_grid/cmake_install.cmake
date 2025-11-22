@@ -1,8 +1,8 @@
-# Install script for directory: /home/phuong/DACN/test/brrt_optimize/src/occ_grid
+# Install script for directory: /home/phuong/DACN/brrt_optimize/src/occ_grid
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/phuong/DACN/test/brrt_optimize/install")
+  set(CMAKE_INSTALL_PREFIX "/home/phuong/DACN/brrt_optimize/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,17 +38,17 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/phuong/DACN/test/brrt_optimize/build/occ_grid/catkin_generated/installspace/occ_grid.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/phuong/DACN/brrt_optimize/build/occ_grid/catkin_generated/installspace/occ_grid.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/occ_grid/cmake" TYPE FILE FILES
-    "/home/phuong/DACN/test/brrt_optimize/build/occ_grid/catkin_generated/installspace/occ_gridConfig.cmake"
-    "/home/phuong/DACN/test/brrt_optimize/build/occ_grid/catkin_generated/installspace/occ_gridConfig-version.cmake"
+    "/home/phuong/DACN/brrt_optimize/build/occ_grid/catkin_generated/installspace/occ_gridConfig.cmake"
+    "/home/phuong/DACN/brrt_optimize/build/occ_grid/catkin_generated/installspace/occ_gridConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/occ_grid" TYPE FILE FILES "/home/phuong/DACN/test/brrt_optimize/src/occ_grid/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/occ_grid" TYPE FILE FILES "/home/phuong/DACN/brrt_optimize/src/occ_grid/package.xml")
 endif()
 

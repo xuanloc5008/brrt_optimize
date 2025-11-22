@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/phuong/DACN/test/brrt_optimize/src
+CMAKE_SOURCE_DIR = /home/phuong/DACN/brrt_optimize/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/phuong/DACN/test/brrt_optimize/build
+CMAKE_BINARY_DIR = /home/phuong/DACN/brrt_optimize/build
 
 # Utility rule file for rviz_generate_messages_lisp.
 
@@ -63,10 +63,10 @@ rviz_plugins/CMakeFiles/rviz_generate_messages_lisp.dir/build: rviz_generate_mes
 .PHONY : rviz_plugins/CMakeFiles/rviz_generate_messages_lisp.dir/build
 
 rviz_plugins/CMakeFiles/rviz_generate_messages_lisp.dir/clean:
-	cd /home/phuong/DACN/test/brrt_optimize/build/rviz_plugins && $(CMAKE_COMMAND) -P CMakeFiles/rviz_generate_messages_lisp.dir/cmake_clean.cmake
+	cd /home/phuong/DACN/brrt_optimize/build/rviz_plugins && $(CMAKE_COMMAND) -P CMakeFiles/rviz_generate_messages_lisp.dir/cmake_clean.cmake
 .PHONY : rviz_plugins/CMakeFiles/rviz_generate_messages_lisp.dir/clean
 
 rviz_plugins/CMakeFiles/rviz_generate_messages_lisp.dir/depend:
-	cd /home/phuong/DACN/test/brrt_optimize/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/phuong/DACN/test/brrt_optimize/src /home/phuong/DACN/test/brrt_optimize/src/rviz_plugins /home/phuong/DACN/test/brrt_optimize/build /home/phuong/DACN/test/brrt_optimize/build/rviz_plugins /home/phuong/DACN/test/brrt_optimize/build/rviz_plugins/CMakeFiles/rviz_generate_messages_lisp.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/phuong/DACN/brrt_optimize/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/phuong/DACN/brrt_optimize/src /home/phuong/DACN/brrt_optimize/src/rviz_plugins /home/phuong/DACN/brrt_optimize/build /home/phuong/DACN/brrt_optimize/build/rviz_plugins /home/phuong/DACN/brrt_optimize/build/rviz_plugins/CMakeFiles/rviz_generate_messages_lisp.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : rviz_plugins/CMakeFiles/rviz_generate_messages_lisp.dir/depend
 

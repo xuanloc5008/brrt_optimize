@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/phuong/DACN/test/brrt_optimize/devel/lib/mockamap/mockamap_node"
-  "/home/phuong/DACN/test/brrt_optimize/devel/lib/mockamap/mockamap_node.pdb"
+  "/home/phuong/DACN/brrt_optimize/devel/lib/mockamap/mockamap_node"
+  "/home/phuong/DACN/brrt_optimize/devel/lib/mockamap/mockamap_node.pdb"
   "CMakeFiles/mockamap_node.dir/src/ces_randommap.cpp.o"
   "CMakeFiles/mockamap_node.dir/src/maps.cpp.o"
   "CMakeFiles/mockamap_node.dir/src/mockamap.cpp.o"

@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   pcl_conversions
   self_msgs_and_srvs
+  sensor_msgs 
 )
 find_package(PCL REQUIRED)
 find_package(Eigen3 REQUIRED)
@@ -25,6 +26,7 @@ include_directories(
   ${PCL_INCLUDE_DIRS}
 )
 
+# --- This is your existing executable (and it's all you need) ---
 add_executable (random_forest src/random_forest_sensing.cpp )
 target_link_libraries(random_forest
   ${catkin_LIBRARIES}
@@ -33,3 +35,7 @@ target_link_libraries(random_forest
 add_dependencies(random_forest
    ${catkin_EXPORTED_TARGETS}
 )
+
+# --- DELETED BLOCK for map_generator_node ---
+# The block for "map_generator_node" has been removed
+# because src/map_generator_node.cpp does not exist.

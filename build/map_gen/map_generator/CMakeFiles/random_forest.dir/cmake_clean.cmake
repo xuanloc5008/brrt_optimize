@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/phuong/DACN/test/brrt_optimize/devel/lib/map_generator/random_forest"
-  "/home/phuong/DACN/test/brrt_optimize/devel/lib/map_generator/random_forest.pdb"
+  "/home/phuong/DACN/brrt_optimize/devel/lib/map_generator/random_forest"
+  "/home/phuong/DACN/brrt_optimize/devel/lib/map_generator/random_forest.pdb"
   "CMakeFiles/random_forest.dir/src/random_forest_sensing.cpp.o"
 )
 

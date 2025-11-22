@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/phuong/DACN/test/brrt_optimize/devel/include/self_msgs_and_srvs/GlbObsRcv.h
+/home/phuong/DACN/brrt_optimize/devel/include/self_msgs_and_srvs/GlbObsRcv.h
 ros/service_traits.h
 -
 self_msgs_and_srvs/GlbObsRcvRequest.h
@@ -14,7 +14,7 @@ self_msgs_and_srvs/GlbObsRcvRequest.h
 self_msgs_and_srvs/GlbObsRcvResponse.h
 -
 
-/home/phuong/DACN/test/brrt_optimize/devel/include/self_msgs_and_srvs/GlbObsRcvRequest.h
+/home/phuong/DACN/brrt_optimize/devel/include/self_msgs_and_srvs/GlbObsRcvRequest.h
 string
 -
 vector
@@ -30,7 +30,7 @@ ros/builtin_message_traits.h
 ros/message_operations.h
 -
 
-/home/phuong/DACN/test/brrt_optimize/devel/include/self_msgs_and_srvs/GlbObsRcvResponse.h
+/home/phuong/DACN/brrt_optimize/devel/include/self_msgs_and_srvs/GlbObsRcvResponse.h
 string
 -
 vector
@@ -46,9 +46,9 @@ ros/builtin_message_traits.h
 ros/message_operations.h
 -
 
-/home/phuong/DACN/test/brrt_optimize/src/map_gen/map_generator/src/random_forest_sensing.cpp
+/home/phuong/DACN/brrt_optimize/src/map_gen/map_generator/src/random_forest_sensing.cpp
 self_msgs_and_srvs/GlbObsRcv.h
-/home/phuong/DACN/test/brrt_optimize/src/map_gen/map_generator/src/self_msgs_and_srvs/GlbObsRcv.h
+/home/phuong/DACN/brrt_optimize/src/map_gen/map_generator/src/self_msgs_and_srvs/GlbObsRcv.h
 iostream
 -
 pcl/io/pcd_io.h
@@ -82,6 +82,8 @@ Eigen/Eigen
 math.h
 -
 random
+-
+std_msgs/Float64.h
 -
 
 /opt/ros/noetic/include/geometry_msgs/Point.h
@@ -1059,6 +1061,22 @@ sensor_msgs/PointField.h
 -
 
 /opt/ros/noetic/include/sensor_msgs/PointField.h
+string
+-
+vector
+-
+memory
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+
+/opt/ros/noetic/include/std_msgs/Float64.h
 string
 -
 vector

@@ -1,8 +1,8 @@
-# Install script for directory: /home/phuong/DACN/test/brrt_optimize/src
+# Install script for directory: /home/phuong/DACN/brrt_optimize/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/phuong/DACN/test/brrt_optimize/install")
+  set(CMAKE_INSTALL_PREFIX "/home/phuong/DACN/brrt_optimize/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -49,109 +49,109 @@ endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/phuong/DACN/test/brrt_optimize/install/_setup_util.py")
+   "/home/phuong/DACN/brrt_optimize/install/_setup_util.py")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/phuong/DACN/test/brrt_optimize/install" TYPE PROGRAM FILES "/home/phuong/DACN/test/brrt_optimize/build/catkin_generated/installspace/_setup_util.py")
+file(INSTALL DESTINATION "/home/phuong/DACN/brrt_optimize/install" TYPE PROGRAM FILES "/home/phuong/DACN/brrt_optimize/build/catkin_generated/installspace/_setup_util.py")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/phuong/DACN/test/brrt_optimize/install/env.sh")
+   "/home/phuong/DACN/brrt_optimize/install/env.sh")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/phuong/DACN/test/brrt_optimize/install" TYPE PROGRAM FILES "/home/phuong/DACN/test/brrt_optimize/build/catkin_generated/installspace/env.sh")
+file(INSTALL DESTINATION "/home/phuong/DACN/brrt_optimize/install" TYPE PROGRAM FILES "/home/phuong/DACN/brrt_optimize/build/catkin_generated/installspace/env.sh")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/phuong/DACN/test/brrt_optimize/install/setup.bash;/home/phuong/DACN/test/brrt_optimize/install/local_setup.bash")
+   "/home/phuong/DACN/brrt_optimize/install/setup.bash;/home/phuong/DACN/brrt_optimize/install/local_setup.bash")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/phuong/DACN/test/brrt_optimize/install" TYPE FILE FILES
-    "/home/phuong/DACN/test/brrt_optimize/build/catkin_generated/installspace/setup.bash"
-    "/home/phuong/DACN/test/brrt_optimize/build/catkin_generated/installspace/local_setup.bash"
+file(INSTALL DESTINATION "/home/phuong/DACN/brrt_optimize/install" TYPE FILE FILES
+    "/home/phuong/DACN/brrt_optimize/build/catkin_generated/installspace/setup.bash"
+    "/home/phuong/DACN/brrt_optimize/build/catkin_generated/installspace/local_setup.bash"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/phuong/DACN/test/brrt_optimize/install/setup.sh;/home/phuong/DACN/test/brrt_optimize/install/local_setup.sh")
+   "/home/phuong/DACN/brrt_optimize/install/setup.sh;/home/phuong/DACN/brrt_optimize/install/local_setup.sh")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/phuong/DACN/test/brrt_optimize/install" TYPE FILE FILES
-    "/home/phuong/DACN/test/brrt_optimize/build/catkin_generated/installspace/setup.sh"
-    "/home/phuong/DACN/test/brrt_optimize/build/catkin_generated/installspace/local_setup.sh"
+file(INSTALL DESTINATION "/home/phuong/DACN/brrt_optimize/install" TYPE FILE FILES
+    "/home/phuong/DACN/brrt_optimize/build/catkin_generated/installspace/setup.sh"
+    "/home/phuong/DACN/brrt_optimize/build/catkin_generated/installspace/local_setup.sh"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/phuong/DACN/test/brrt_optimize/install/setup.zsh;/home/phuong/DACN/test/brrt_optimize/install/local_setup.zsh")
+   "/home/phuong/DACN/brrt_optimize/install/setup.zsh;/home/phuong/DACN/brrt_optimize/install/local_setup.zsh")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/phuong/DACN/test/brrt_optimize/install" TYPE FILE FILES
-    "/home/phuong/DACN/test/brrt_optimize/build/catkin_generated/installspace/setup.zsh"
-    "/home/phuong/DACN/test/brrt_optimize/build/catkin_generated/installspace/local_setup.zsh"
+file(INSTALL DESTINATION "/home/phuong/DACN/brrt_optimize/install" TYPE FILE FILES
+    "/home/phuong/DACN/brrt_optimize/build/catkin_generated/installspace/setup.zsh"
+    "/home/phuong/DACN/brrt_optimize/build/catkin_generated/installspace/local_setup.zsh"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/phuong/DACN/test/brrt_optimize/install/setup.fish;/home/phuong/DACN/test/brrt_optimize/install/local_setup.fish")
+   "/home/phuong/DACN/brrt_optimize/install/setup.fish;/home/phuong/DACN/brrt_optimize/install/local_setup.fish")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/phuong/DACN/test/brrt_optimize/install" TYPE FILE FILES
-    "/home/phuong/DACN/test/brrt_optimize/build/catkin_generated/installspace/setup.fish"
-    "/home/phuong/DACN/test/brrt_optimize/build/catkin_generated/installspace/local_setup.fish"
+file(INSTALL DESTINATION "/home/phuong/DACN/brrt_optimize/install" TYPE FILE FILES
+    "/home/phuong/DACN/brrt_optimize/build/catkin_generated/installspace/setup.fish"
+    "/home/phuong/DACN/brrt_optimize/build/catkin_generated/installspace/local_setup.fish"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/phuong/DACN/test/brrt_optimize/install/.rosinstall")
+   "/home/phuong/DACN/brrt_optimize/install/.rosinstall")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/phuong/DACN/test/brrt_optimize/install" TYPE FILE FILES "/home/phuong/DACN/test/brrt_optimize/build/catkin_generated/installspace/.rosinstall")
+file(INSTALL DESTINATION "/home/phuong/DACN/brrt_optimize/install" TYPE FILE FILES "/home/phuong/DACN/brrt_optimize/build/catkin_generated/installspace/.rosinstall")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/phuong/DACN/test/brrt_optimize/build/gtest/cmake_install.cmake")
-  include("/home/phuong/DACN/test/brrt_optimize/build/self_msgs_and_srvs/cmake_install.cmake")
-  include("/home/phuong/DACN/test/brrt_optimize/build/map_gen/map_generator/cmake_install.cmake")
-  include("/home/phuong/DACN/test/brrt_optimize/build/occ_grid/cmake_install.cmake")
-  include("/home/phuong/DACN/test/brrt_optimize/build/path_finder/cmake_install.cmake")
-  include("/home/phuong/DACN/test/brrt_optimize/build/map_gen/mockamap/cmake_install.cmake")
-  include("/home/phuong/DACN/test/brrt_optimize/build/rviz_plugins/cmake_install.cmake")
+  include("/home/phuong/DACN/brrt_optimize/build/gtest/cmake_install.cmake")
+  include("/home/phuong/DACN/brrt_optimize/build/self_msgs_and_srvs/cmake_install.cmake")
+  include("/home/phuong/DACN/brrt_optimize/build/map_gen/map_generator/cmake_install.cmake")
+  include("/home/phuong/DACN/brrt_optimize/build/occ_grid/cmake_install.cmake")
+  include("/home/phuong/DACN/brrt_optimize/build/path_finder/cmake_install.cmake")
+  include("/home/phuong/DACN/brrt_optimize/build/map_gen/mockamap/cmake_install.cmake")
+  include("/home/phuong/DACN/brrt_optimize/build/rviz_plugins/cmake_install.cmake")
 
 endif()
 
@@ -163,5 +163,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/phuong/DACN/test/brrt_optimize/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/phuong/DACN/brrt_optimize/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
