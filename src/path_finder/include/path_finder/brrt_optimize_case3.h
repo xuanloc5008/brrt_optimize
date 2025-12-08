@@ -477,17 +477,17 @@ namespace path_plan
         
         if (in_trap_node)
         {
-            // Check if Heuristic improved while in trap mode [cite: 12]
+            // Check if Heuristic improved while in trap mode 
             if (h_improvement > h_threshold_) {
-                // Yes -> Exit trap mode, reset variables [cite: 13, 14]
+                //Exit trap mode, reset variables 
                 in_trap_node = false;
                 trapCount = 0;
                 h_past = h_tmp;
             } else {
-                // Step remaining in trap mode? [cite: 21]
+                // Step remaining in trap mode
                 trap_steps_current++;
                 if (trap_steps_current >= trap_step_limit_) {
-                    // Force exit trap solver mode [cite: 22]
+                    // Force exit trap solver mode
                     in_trap_node = false;
                     trapCount = 0;
                     h_past = h_tmp; 
@@ -496,14 +496,13 @@ namespace path_plan
         }
         else 
         {
-            // Standard Mode: Check for stagnation [cite: 6]
             if (h_improvement < h_threshold_) {
-                trapCount++; // [cite: 7]
-                if (trapCount >= trap_count_limit_) { // [cite: 8]
-                    in_trap_node = true; // [cite: 9]
+                trapCount++;
+                if (trapCount >= trap_count_limit_) { 
+                    in_trap_node = true;
                     trap_steps_current = 0;
                     
-                    // Compute center and radius [cite: 10]
+                    // Compute center and radius
                     trap_center_ = (selected_SI->x + selected_GI->x) * 0.5;
                     trap_radius_ = (selected_SI->x - selected_GI->x).norm() * 0.5;
                 }
