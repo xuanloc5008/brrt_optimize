@@ -63,7 +63,7 @@ void RandomBRRTGenerate_Large(double size = 4)
    pcl::PointXYZ pt_random;
    random_device rd;
    default_random_engine eng(rd());
-   float ramdom_ratio = 0.2;
+   float ramdom_ratio = 0.6;
    int number_ostacle = (_x_h - _x_l) * (_y_h - _y_l) / (size * size) * ramdom_ratio;
    std::cout << "number of ostacle" << number_ostacle;
 
@@ -206,7 +206,230 @@ void RandomNarrowGenerate()
    pcl::toROSMsg(cloudMap, globalMap_pcd);
    globalMap_pcd.header.frame_id = "map";
 }
+// --- Environment A: Two Simple Obstacles ---
+void GenerateEnvA_Simple()
+{
+   cloudMap.points.clear();
+   pcl::PointXYZ pt;
 
+   // Define two large square obstacles
+   // Obstacle 1: Bottom-Left
+   double obs1_x = -10.0, obs1_y = -10.0, size = 6.0;
+   for (double i = obs1_x; i < obs1_x + size; i += _resolution)
+      for (double j = obs1_y; j < obs1_y + size; j += _resolution)
+         for (double k = -1; k < _h_h; k += _resolution) {
+            pt.x = i; pt.y = j; pt.z = k;
+            cloudMap.points.push_back(pt);
+         }
+
+   // Obstacle 2: Top-Right
+   double obs2_x = 10.0, obs2_y = 10.0;
+   for (double i = obs2_x; i < obs2_x + size; i += _resolution)
+      for (double j = obs2_y; j < obs2_y + size; j += _resolution)
+         for (double k = -1; k < _h_h; k += _resolution) {
+            pt.x = i; pt.y = j; pt.z = k;
+            cloudMap.points.push_back(pt);
+         }
+
+   cloudMap.width = cloudMap.points.size();
+   cloudMap.height = 1;
+   cloudMap.is_dense = true;
+   _has_map = true;
+   pcl::toROSMsg(cloudMap, globalMap_pcd);
+   globalMap_pcd.header.frame_id = "map";
+}
+
+// --- Environment B: Cluttered Random Blocks ---
+void GenerateEnvB_Cluttered()
+{
+   cloudMap.points.clear();
+   pcl::PointXYZ pt;
+   
+   // Random generator
+   std::random_device rd;
+   std::mt19937 gen(rd());
+   std::uniform_real_distribution<> dis_x(_x_l + 2.0, _x_h - 2.0); // Padding from edges
+   std::uniform_real_distribution<> dis_y(_y_l + 2.0, _y_h - 2.0);
+
+   int num_obstacles = 40; // Number of small blocks
+   double obs_size = 2.0;  // Size of each block
+
+   for (int n = 0; n < num_obstacles; n++)
+   {
+      double cx = dis_x(gen);
+      double cy = dis_y(gen);
+
+      // Keep start (0,0) clear roughly
+      if (std::sqrt(cx*cx + cy*cy) < 5.0) continue;
+
+      for (double i = cx - obs_size/2; i < cx + obs_size/2; i += _resolution)
+         for (double j = cy - obs_size/2; j < cy + obs_size/2; j += _resolution)
+            for (double k = -1; k < _h_h; k += _resolution) {
+               pt.x = i; pt.y = j; pt.z = k;
+               cloudMap.points.push_back(pt);
+            }
+   }
+
+   cloudMap.width = cloudMap.points.size();
+   cloudMap.height = 1;
+   cloudMap.is_dense = true;
+   _has_map = true;
+   pcl::toROSMsg(cloudMap, globalMap_pcd);
+   globalMap_pcd.header.frame_id = "map";
+}
+
+// --- Environment C: Complex Maze / Trap ---
+void GenerateEnvC_Maze()
+{
+   cloudMap.points.clear();
+   pcl::PointXYZ pt;
+   
+   auto add_rect = [&](double x, double y, double w, double h) {
+       for(double i=x; i<x+w; i+=_resolution)
+           for(double j=y; j<y+h; j+=_resolution)
+               for(double k=-1; k<_h_h; k+=_resolution) {
+                   pt.x=i; pt.y=j; pt.z=k; cloudMap.points.push_back(pt);
+               }
+   };
+
+   // 1. The "U" trap near the start (forces backtracking)
+   // Left wall of U
+   add_rect(5.0, -5.0, 2.0, 10.0);
+   // Top wall of U
+   add_rect(5.0, 5.0, 8.0, 2.0);
+   // Bottom wall of U
+   add_rect(5.0, -7.0, 8.0, 2.0);
+   
+   // 2. Some scattered maze walls similar to image C
+   add_rect(-10.0, 5.0, 2.0, 10.0);  // Tall wall left
+   add_rect(15.0, -10.0, 2.0, 15.0); // Tall wall right
+   add_rect(-5.0, -10.0, 10.0, 2.0); // Horizontal bar
+   add_rect(0.0, 12.0, 10.0, 2.0);   // Horizontal top
+
+   cloudMap.width = cloudMap.points.size();
+   cloudMap.height = 1;
+   cloudMap.is_dense = true;
+   _has_map = true;
+   pcl::toROSMsg(cloudMap, globalMap_pcd);
+   globalMap_pcd.header.frame_id = "map";
+}
+
+// --- Environment D: Narrow Passage ---
+void GenerateEnvD_Narrow()
+{
+   cloudMap.points.clear();
+   pcl::PointXYZ pt;
+
+   double wall_x = 0.0;     // Position of the wall
+   double wall_width = 3.0; // Thickness of the wall
+   double gap_size = 1.5;   // Size of the narrow passage
+
+   // Lower Wall
+   for (double i = wall_x - wall_width/2; i < wall_x + wall_width/2; i += _resolution)
+      for (double j = _y_l; j < -gap_size/2; j += _resolution)
+         for (double k = -1; k < _h_h; k += _resolution) {
+            pt.x = i; pt.y = j; pt.z = k;
+            cloudMap.points.push_back(pt);
+         }
+
+   // Upper Wall
+   for (double i = wall_x - wall_width/2; i < wall_x + wall_width/2; i += _resolution)
+      for (double j = gap_size/2; j < _y_h; j += _resolution)
+         for (double k = -1; k < _h_h; k += _resolution) {
+            pt.x = i; pt.y = j; pt.z = k;
+            cloudMap.points.push_back(pt);
+         }
+
+   cloudMap.width = cloudMap.points.size();
+   cloudMap.height = 1;
+   cloudMap.is_dense = true;
+   _has_map = true;
+   pcl::toROSMsg(cloudMap, globalMap_pcd);
+   globalMap_pcd.header.frame_id = "map";
+}
+void FixedTrapAndNarrowGenerate()
+{
+   pcl::PointXYZ pt_random;
+   
+   // Clear previous data if any
+   cloudMap.points.clear();
+
+   // 1. Create a Divider Wall with a Narrow Passage at X = 0
+   // The gap is located at (0, 0) with a width of 1.2 meters
+   double gap_width = 1.2; 
+   double wall_thickness = 1.0;
+   
+   // Lower part of the wall
+   for (double i = -wall_thickness/2; i < wall_thickness/2; i += _resolution) {
+      for (double j = _y_l; j < -gap_width/2; j += _resolution) {
+         for (double k = -1; k < _h_h; k += _resolution) {
+            pt_random.x = i; pt_random.y = j; pt_random.z = k;
+            cloudMap.points.push_back(pt_random);
+         }
+      }
+   }
+   // Upper part of the wall
+   for (double i = -wall_thickness/2; i < wall_thickness/2; i += _resolution) {
+      for (double j = gap_width/2; j < _y_h; j += _resolution) {
+         for (double k = -1; k < _h_h; k += _resolution) {
+            pt_random.x = i; pt_random.y = j; pt_random.z = k;
+            cloudMap.points.push_back(pt_random);
+         }
+      }
+   }
+
+   // 2. Create a "U" Shaped Dead-End Trap at X = 10
+   // It is open towards the start, forcing the robot to enter and backtrack
+   double trap_center_x = 10.0;
+   double trap_width = 8.0;
+   double trap_depth = 6.0;
+   
+   // Back wall of the trap
+   for (double j = -trap_width/2; j < trap_width/2; j += _resolution) {
+      for (double i = trap_center_x + trap_depth; i < trap_center_x + trap_depth + wall_thickness; i += _resolution) {
+          for (double k = -1; k < _h_h; k += _resolution) {
+            pt_random.x = i; pt_random.y = j; pt_random.z = k;
+            cloudMap.points.push_back(pt_random);
+         }
+      }
+   }
+   // Side walls of the trap
+   for (double i = trap_center_x; i < trap_center_x + trap_depth; i += _resolution) {
+      // Side 1
+      for (double j = -trap_width/2 - wall_thickness; j < -trap_width/2; j += _resolution) {
+         for (double k = -1; k < _h_h; k += _resolution) {
+            pt_random.x = i; pt_random.y = j; pt_random.z = k;
+            cloudMap.points.push_back(pt_random);
+         }
+      }
+      // Side 2
+      for (double j = trap_width/2; j < trap_width/2 + wall_thickness; j += _resolution) {
+         for (double k = -1; k < _h_h; k += _resolution) {
+            pt_random.x = i; pt_random.y = j; pt_random.z = k;
+            cloudMap.points.push_back(pt_random);
+         }
+      }
+   }
+
+   // 3. Add a small obstacle inside the trap to create a Local Minima
+   for (double i = trap_center_x + 2.0; i < trap_center_x + 3.0; i+= _resolution) {
+       for (double j = -1.0; j < 1.0; j+= _resolution) {
+           for (double k = -1; k < _h_h; k += _resolution) {
+            pt_random.x = i; pt_random.y = j; pt_random.z = k;
+            cloudMap.points.push_back(pt_random);
+         }
+       }
+   }
+
+   cloudMap.width = cloudMap.points.size();
+   cloudMap.height = 1;
+   cloudMap.is_dense = true;
+   std::cout << "Generated Fixed Trap Map. Points: " << cloudMap.points.size() << std::endl;
+   
+   _has_map = true;
+   pcl::toROSMsg(cloudMap, globalMap_pcd);
+   globalMap_pcd.header.frame_id = "map";
+}
 void RandomMapGenerate()
 {
    random_device rd;
@@ -473,10 +696,53 @@ int main(int argc, char **argv)
 
    _y_l = -_y_size / 2.0;
    _y_h = +_y_size / 2.0;
+      // === Map Generation Selection ===
+   std::string map_type;
+   n.param("map/map_type", map_type, std::string("random_large"));
 
+   ROS_INFO("Selected map type: %s", map_type.c_str());
+
+   if (map_type == "fixed")
+   {
+      FixedTrapAndNarrowGenerate();
+   }
+   else if (map_type == "env_a") {
+      GenerateEnvA_Simple();
+   }
+   else if (map_type == "env_b") {
+      GenerateEnvB_Cluttered();
+   }
+   else if (map_type == "env_c") {
+      GenerateEnvC_Maze();
+   }
+   else if (map_type == "env_d") {
+      GenerateEnvD_Narrow();
+   }
+   else if (map_type == "random_large")
+   {
+      RandomBRRTGenerate_Large();
+   }
+   else if (map_type == "random_narrow")
+   {
+      RandomNarrowGenerate();
+   }
+   else if (map_type == "random")
+   {
+      RandomMapGenerate();
+   }
+   else if (map_type == "random_brrt")
+   {
+      RandomBRRTGenerate();
+   }
+   else
+   {
+      ROS_ERROR("Unknown map type: '%s'. Defaulting to 'random_large'.", map_type.c_str());
+      RandomBRRTGenerate_Large();
+   }
+   // =================================
    // RandomMapGenerate();
    // RandomNarrowGenerate();
-   RandomBRRTGenerate_Large();
+   // RandomBRRTGenerate_Large();
    // only pub map pointcloud on request
    ros::ServiceServer pub_glb_obs_service = n.advertiseService("/pub_glb_obs", pubGlbObs);
    ros::spin();

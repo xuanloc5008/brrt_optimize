@@ -1,0 +1,13 @@
+{
+    "trial": 2891,
+    "environment": "2.00_0.5_0.5_0_4_5",
+    "p1": 0.5,
+    "u_p": 0.5,
+    "alpha": 0,
+    "beta": 4,
+    "gamma": 5,
+    "epsilon": 2.0,
+    "trap_h_threshold": 0.01,
+    "trap_count_limit": 20,
+    "trap_step_limit": 50
+}
