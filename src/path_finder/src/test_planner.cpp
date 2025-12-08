@@ -34,6 +34,9 @@ OF SUCH DAMAGE.
 #include "path_finder/sampler.h"
 #include <ros/ros.h>
 #include <geometry_msgs/PoseStamped.h>
+#include "nlohmann/json.hpp"
+#include <fstream>
+using json = nlohmann::json;
 
 #define NUMBER_TEST_TIMES 100
 class TesterPathFinder
@@ -155,18 +158,18 @@ public:
         vis_ptr_->visualize_a_ball(start_, 0.3, "start", visualization::Color::pink);
         vis_ptr_->visualize_a_ball(goal_, 0.3, "goal", visualization::Color::steelblue);
 
-        // BiasSampler sampler;
-        // sampler.setSamplingRange(env_ptr_->getOrigin(), env_ptr_->getMapSize());
-        // vector<Eigen::Vector3d> preserved_samples;
-        // for (int i = 0; i < 5000; ++i)
-        // {
-        //     Eigen::Vector3d rand_sample;
-        //     sampler.uniformSamplingOnce(rand_sample);
-        //     preserved_samples.push_back(rand_sample);
-        // }
-        // rrt_ptr_->setPreserveSamples(preserved_samples);
-        // rrt_star_ptr_->setPreserveSamples(preserved_samples);
-        // rrt_sharp_ptr_->setPreserveSamples(preserved_samples);
+        BiasSampler sampler;
+        sampler.setSamplingRange(env_ptr_->getOrigin(), env_ptr_->getMapSize());
+        vector<Eigen::Vector3d> preserved_samples;
+        for (int i = 0; i < 5000; ++i)
+        {
+            Eigen::Vector3d rand_sample;
+            sampler.uniformSamplingOnce(rand_sample);
+            preserved_samples.push_back(rand_sample);
+        }
+        rrt_ptr_->setPreserveSamples(preserved_samples);
+        rrt_star_ptr_->setPreserveSamples(preserved_samples);
+        rrt_sharp_ptr_->setPreserveSamples(preserved_samples);
 
         if (run_rrt_)
         {
@@ -224,6 +227,7 @@ public:
 
         if (run_brrt_star_)
         {
+
             bool brrt_star_res = brrt_star_ptr_->plan(start_, goal_);
             if (brrt_star_res)
             {
@@ -273,6 +277,41 @@ public:
                 vector<std::pair<double, double>> slns = brrt_optimize_case3_ptr->getSolutions();
                 ROS_INFO_STREAM("[BRRTOpitmize3] final path len: " << slns.back().first);
             }
+            std::ofstream json_log("brrt_case2_log.jsonl", std::ios::out | std::ios::app);
+
+            // bool brrt_optimize_case2_res = brrt_simple_case2_ptr_->plan(start_, goal_);
+
+            // json log_entry;
+            // log_entry["timestamp"] = ros::Time::now().toSec();
+            // log_entry["planner"] = "BRRT_Optimize_Case2";
+            // log_entry["start"] = {start_.x(), start_.y(), start_.z()};
+            // log_entry["goal"] = {goal_.x(), goal_.y(), goal_.z()};
+            // log_entry["success"] = brrt_optimize_case2_res;
+
+            // if (brrt_optimize_case2_res)
+            // {
+            //     vector<Eigen::Vector3d> final_path = brrt_simple_case2_ptr_->getPath();
+            //     vector<std::pair<double, double>> slns = brrt_simple_case2_ptr_->getSolutions();
+
+            //     vis_ptr_->visualize_path(final_path, "brrt_case2_final_path");
+            //     vis_ptr_->visualize_pointcloud(final_path, "brrt_case2_final_wpts");
+
+            //     double final_length = slns.empty() ? -1.0 : slns.back().first;
+            //     ROS_INFO_STREAM("[BRRTOpitmize_case2] final path len: " << final_length);
+
+            //     // Add path info to JSON
+            //     log_entry["path_length"] = final_length;
+            //     log_entry["path_points"] = json::array();
+            //     for (const auto& p : final_path) {
+            //         log_entry["path_points"].push_back({p[0], p[1], p[2]});
+            //     }
+            // } 
+            // else {
+            //     log_entry["path_length"] = nullptr;
+            //     log_entry["path_points"] = json::array();
+            // }
+
+            // json_log << log_entry.dump() << std::endl;
         }
 
         start_ = goal_;
@@ -395,17 +434,32 @@ public:
             // bool brrt_optimize_res = brrt_optimize_ptr_->plan(start_, goal_);
             // if (brrt_optimize_res)
             // {
-            //     vector<std::pair<double, double>> slns = brrt_optimize_ptr_->getSolutions();
-            //     int num_nodes = brrt_optimize_ptr_->get_valid_tree_node_nums();
-            //     int num_iterations = brrt_optimize_ptr_->get_number_of_iteration();
-            //     algo_outputs["BRRT_Optimize"] = {true, slns.back().second, slns.back().first, num_nodes, num_iterations, start_, goal_};
+            //     vector<std::pair<double, double>> slns = brrt_simple_case2_ptr_->getSolutions();
+            //     int num_nodes = brrt_simple_case2_ptr_->get_valid_tree_node_nums();
+            //     int num_iterations = brrt_simple_case2_ptr_->get_number_of_iteration();
+            //     algo_outputs["BRRT_Case2"] = {true, slns.back().second, slns.back().first, num_nodes, num_iterations, start_, goal_};
             // }
             // else
             // {
-            //     algo_outputs["BRRT_Optimize"] = {false, 0.0, 0.0, 0, 0, start_, goal_};
+            //     int num_nodes = brrt_simple_case2_ptr_->get_valid_tree_node_nums();
+            //     int num_iterations = brrt_simple_case2_ptr_->get_number_of_iteration();
+            //     algo_outputs["BRRT_Case2"] = {false, brrt_simple_case2_ptr_->get_final_path_use_time_(), DBL_MAX, num_nodes, num_iterations, start_, goal_};
             // }
+            brrt_optimize_ptr_->set_heuristic_param(input.p1, input.u_p, input.alpha, input.beta, input.gamma,input.epsilon);
+            bool brrt_optimize_res = brrt_optimize_ptr_->plan(start_, goal_);
+            if (brrt_optimize_res)
+            {
+                vector<std::pair<double, double>> slns = brrt_optimize_ptr_->getSolutions();
+                int num_nodes = brrt_optimize_ptr_->get_valid_tree_node_nums();
+                int num_iterations = brrt_optimize_ptr_->get_number_of_iteration();
+                algo_outputs["BRRT_Optimize"] = {true, slns.back().second, slns.back().first, num_nodes, num_iterations, start_, goal_};
+            }
+            else
+            {
+                algo_outputs["BRRT_Optimize"] = {false, 0.0, 0.0, 0, 0, start_, goal_};
+            }
             start_ = goal_;
-            // std::cout << "Run " << i + 1 << " completed." << std::endl;
+            std::cout << "Run " << i + 1 << " completed." << std::endl;
             manager->store_output_for_run(algo_outputs);
         }
         manager->save_json();

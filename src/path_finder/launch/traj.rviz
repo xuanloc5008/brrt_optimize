@@ -560,7 +560,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/case1/tree_vertice
           Name: tree-edge
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Class: rviz/Marker
@@ -568,7 +568,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/case1/tree_edges
           Name: tree-node
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Alpha: 1
@@ -878,9 +878,9 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: -1.8451290130615234
-        Y: 25.192394256591797
-        Z: 8.4622239228338e-05
+        X: -6.569754123687744
+        Y: 11.548277854919434
+        Z: 9.165099618257955e-05
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false

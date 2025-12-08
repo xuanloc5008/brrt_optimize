@@ -99,6 +99,11 @@
     <param name="BRRT_Optimize/gamma" value="$(arg brrt_gamma)" type="double"/>
     <param name="BRRT_Optimize/max_iteration" value="$(arg brrt_max_iteration)" type="int"/>
     
-  </node>
+    <param name="BRRT_Optimize/slow_decrease_threshold" value="$(arg brrt_slow_decrease_threshold)" type="double"/>
+    <param name="BRRT_Optimize/trap_log_file" value="$(arg brrt_trap_log_file)" type="string"/>
 
+    <param name="BRRT_Optimize/obstacle_percentage_topic" value="$(arg obstacle_percentage_topic)" />
+    <param name="BRRT_Optimize/base_trap_limit"           value="$(arg base_trap_limit)" />
+    <param name="BRRT_Optimize/trap_limit_scaling_factor" value="$(arg trap_limit_scaling_factor)" />
+    </node>
 </launch>
