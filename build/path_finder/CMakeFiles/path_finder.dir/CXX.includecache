@@ -265,6 +265,8 @@ iostream
 -
 nlohmann/json.hpp
 -
+cstdlib
+-
 
 /home/phuong/DACN/brrt_optimize/src/path_finder/include/visualization/visualization.hpp
 nav_msgs/Path.h
@@ -312,6 +314,8 @@ path_finder/sampler.h
 ros/ros.h
 -
 geometry_msgs/PoseStamped.h
+-
+cfloat
 -
 nlohmann/json.hpp
 /home/phuong/DACN/brrt_optimize/src/path_finder/src/nlohmann/json.hpp

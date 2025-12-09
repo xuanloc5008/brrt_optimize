@@ -121,6 +121,10 @@ namespace path_plan
     {
       return valid_tree_node_nums_;
     }
+    double get_final_path_use_time_()
+    {
+      return final_path_use_time_;
+    }
 
   private:
     // nodehandle params
