@@ -63,7 +63,7 @@ void RandomBRRTGenerate_Large(double size = 4)
    pcl::PointXYZ pt_random;
    random_device rd;
    default_random_engine eng(rd());
-   float ramdom_ratio = 0.6;
+   float ramdom_ratio = 0.2;
    int number_ostacle = (_x_h - _x_l) * (_y_h - _y_l) / (size * size) * ramdom_ratio;
    std::cout << "number of ostacle" << number_ostacle;
 
@@ -649,7 +649,42 @@ void RandomMapGenerate()
    pcl::toROSMsg(cloudMap, globalMap_pcd);
    globalMap_pcd.header.frame_id = "map";
 }
+// Add this function to your map generation code
+void GenerateClutterTrap()
+{
+   cloudMap.points.clear();
+   pcl::PointXYZ pt;
+   
+   // 1. Clear Start and Goal areas
+   // Assuming Start is near (-20, 0) and Goal is near (20, 0)
 
+   // 2. Create a "Broken Wall" at X = 0
+   // This forces the robot to weave through or go around, triggering heuristic issues.
+   double wall_x = 0.0;
+   double block_size = 2.0;
+   double gap = 0.5; // Small gap that might be too narrow, creating local minima
+   
+   // Create a vertical line of blocks with small gaps
+   for (double y = -15.0; y <= 15.0; y += (block_size + gap)) {
+       
+       // Randomly shift x slightly to create "clutter" feel
+       double current_x = wall_x + ((rand() % 10) / 10.0); 
+
+       for (double i = current_x; i < current_x + block_size; i += _resolution)
+           for (double j = y; j < y + block_size; j += _resolution)
+               for (double k = -1; k < _h_h; k += _resolution) {
+                   pt.x = i; pt.y = j; pt.z = k;
+                   cloudMap.points.push_back(pt);
+               }
+   }
+
+   cloudMap.width = cloudMap.points.size();
+   cloudMap.height = 1;
+   cloudMap.is_dense = true;
+   _has_map = true;
+   pcl::toROSMsg(cloudMap, globalMap_pcd);
+   globalMap_pcd.header.frame_id = "map";
+}
 void pubSensedPoints()
 {
    if (!_has_map)
@@ -733,6 +768,9 @@ int main(int argc, char **argv)
    else if (map_type == "random_brrt")
    {
       RandomBRRTGenerate();
+   }
+   else if (map_type == "clutter_trap") {
+      GenerateClutterTrap();
    }
    else
    {

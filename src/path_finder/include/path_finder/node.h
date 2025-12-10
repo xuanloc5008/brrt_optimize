@@ -232,6 +232,60 @@ class HeuristicCache {
             outH = std::numeric_limits<double>::infinity();
             return false;
         }
+
+        bool getBoltzmannPair(void* treeA, void* treeB, TreeNode*& a, TreeNode*& b, double& outH, double temperature = 1.0) {
+            std::vector<NodePairKey> candidates;
+            std::vector<double> weights;
+            double max_weight = 0.0;
+            
+            for (const auto& kv : cache) {
+                const NodePairKey& key = kv.first;
+                double h = kv.second;
+                
+                bool relevant = (key.tree1 == treeA && key.tree2 == treeB) || (key.tree1 == treeB && key.tree2 == treeA);
+                if (relevant) {
+                    candidates.push_back(key);
+
+                    weights.push_back(std::exp(-h / temperature)); 
+                }
+            }
+
+            if (candidates.empty()) return false;
+
+            std::discrete_distribution<> dist(weights.begin(), weights.end());
+            static std::random_device rd;
+            static std::mt19937 gen(rd());
+            
+            int idx = dist(gen);
+            const NodePairKey& selected = candidates[idx];
+            
+            bool is_direct = (selected.tree1 == treeA);
+            a = is_direct ? selected.node1 : selected.node2;
+            b = is_direct ? selected.node2 : selected.node1;
+            outH = cache.at(selected);
+            
+            return true;
+        }
+        void removeNodesInside(const Eigen::Vector3d& center, double radius, void* treeA, void* treeB) {
+            double r_sq = radius * radius;
+            auto it = cache.begin();
+            while (it != cache.end()) {
+                const NodePairKey& key = it->first;
+                bool relevant = (key.tree1 == treeA && key.tree2 == treeB) || (key.tree1 == treeB && key.tree2 == treeA);
+                
+                if (relevant) {
+                    double d1 = (key.node1->x - center).squaredNorm();
+                    double d2 = (key.node2->x - center).squaredNorm();
+
+                    if (d1 < r_sq || d2 < r_sq) {
+                    unindexTree(key.tree1, key.tree2, key);
+                    it = cache.erase(it);
+                    continue;
+                    }
+                }
+                ++it;
+            }
+        }
     
         bool popMinByTree(void* treeA, void* treeB, TreeNode*& outA, TreeNode*& outB, double& outH) {
             while (!minHeap.empty()) {

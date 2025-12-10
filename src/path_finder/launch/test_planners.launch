@@ -34,7 +34,7 @@
   <arg name="brrt_max_iteration" value="100000" />
 
   <arg name="input_param" default="/home/xuanloc/DACN/ICIT/brrt_optimize/brrt_input.json" />
-  <arg name="output_result" default="/home/xuanloc/DACN/ICIT/brrt_optimize/" />
+  <arg name="output_result" default="/home/xuanloc/DACN/ICIT/brrt_optimize/eval/output.json" />
 
   <node pkg="path_finder" type="path_finder" name="path_finder_node" output="screen" required="true">
     <remap from="/global_cloud" to="$(arg global_env_pcd2_topic)"/>
