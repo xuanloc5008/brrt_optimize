@@ -649,6 +649,156 @@ void RandomMapGenerate()
    pcl::toROSMsg(cloudMap, globalMap_pcd);
    globalMap_pcd.header.frame_id = "map";
 }
+// --- Environment V-Shape: Multiple Rectangular Obstacles in a V-formation (Adjustable Tip) ---
+void GenerateEnvV_Shape()
+{
+    cloudMap.points.clear();
+    pcl::PointXYZ pt;
+
+    // Lambda function to add a rectangular block centered at (cx, cy)
+    // Hàm lambda đã được sửa để nhận tâm (cx, cy) thay vì góc dưới bên trái, giúp dễ căn chỉnh hơn
+    auto add_rect_block_centered = [&](double cx, double cy, double w, double h, double z_min, double z_max) {
+        double x_start = cx - w / 2.0;
+        double y_start = cy - h / 2.0;
+        for (double i = x_start; i < x_start + w; i += _resolution)
+            for (double j = y_start; j < y_start + h; j += _resolution)
+                for (double k = z_min; k < z_max; k += _resolution) {
+                    pt.x = i; pt.y = j; pt.z = k;
+                    cloudMap.points.push_back(pt);
+                }
+    };
+
+    // --- Parameters for the V-shape formation ---
+    int num_obstacles_per_arm = 8;   // Tăng số lượng khối để nhìn dày hơn
+    double block_width = 2.0;        // Chiều rộng ngang của mỗi khối
+    double block_depth = 3.0;        // Chiều sâu dọc (theo trục Y) của mỗi khối
+    double block_height = 2.5;       // Chiều cao
+
+    double start_y = 12.0;           // Vị trí Y trên cùng (miệng chữ V)
+    double end_y = -5.0;             // Vị trí Y dưới cùng (đáy nhọn chữ V)
+    double start_x_span = 12.0;      // Khoảng cách X từ tâm ra đến miệng chữ V (độ mở phía trên)
+
+    // --- NEW PARAMETER: Kiểm soát độ sát nhau ở đáy ---
+    // tip_gap: Khoảng cách giữa tâm của 2 khối dưới cùng.
+    // Nếu tip_gap = block_width (ví dụ 2.0), các cạnh của chúng sẽ vừa chạm nhau.
+    // Nếu tip_gap < block_width (ví dụ 1.0), chúng sẽ chồng lấn lên nhau ở đáy, tạo cảm giác rất sát.
+    double tip_gap = 3.0;
+    double end_x_span = tip_gap / 2.0; // Khoảng cách X từ tâm ra đến khối đáy
+
+    // Tính toán bước nhảy (step) để rải đều các khối
+    // Sử dụng (num - 1) để đảm bảo khối đầu nằm đúng start_y và khối cuối nằm đúng end_y
+    double y_step = (end_y - start_y) / (num_obstacles_per_arm - 1);
+
+    // Left Arm Trajectory: từ (-start_x_span, start_y) đến (-end_x_span, end_y)
+    double left_x_step = (-end_x_span - (-start_x_span)) / (num_obstacles_per_arm - 1);
+
+    // Right Arm Trajectory: từ (start_x_span, start_y) đến (end_x_span, end_y)
+    double right_x_step = (end_x_span - start_x_span) / (num_obstacles_per_arm - 1);
+
+
+    // Generate Left Arm
+    for (int i = 0; i < num_obstacles_per_arm; ++i) {
+        double current_x = -start_x_span + i * left_x_step;
+        double current_y = start_y + i * y_step;
+        // Sử dụng hàm vẽ khối theo tâm đã sửa đổi
+        add_rect_block_centered(current_x, current_y, block_width, block_depth, -1.0, block_height);
+    }
+
+    // Generate Right Arm
+    for (int i = 0; i < num_obstacles_per_arm; ++i) {
+        double current_x = start_x_span + i * right_x_step;
+        double current_y = start_y + i * y_step;
+        add_rect_block_centered(current_x, current_y, block_width, block_depth, -1.0, block_height);
+    }
+
+    cloudMap.width = cloudMap.points.size();
+    cloudMap.height = 1;
+    cloudMap.is_dense = true;
+    _has_map = true;
+    pcl::toROSMsg(cloudMap, globalMap_pcd);
+    globalMap_pcd.header.frame_id = "map";
+    ROS_INFO("Generated Tight V-Shape environment with %zu points.", cloudMap.points.size());
+}
+// --- Environment: 4 V-Shapes in a Line with Zig-Zag (Misaligned) Tips ---
+void GenerateEnvMultiV_ZigZag()
+{
+    cloudMap.points.clear();
+    pcl::PointXYZ pt;
+
+    // 1. Hàm Lambda dùng chung để vẽ khối hộp
+    auto add_rect_block_centered = [&](double cx, double cy, double w, double h, double z_min, double z_max) {
+        double x_start = cx - w / 2.0;
+        double y_start = cy - h / 2.0;
+        for (double i = x_start; i < x_start + w; i += _resolution)
+            for (double j = y_start; j < y_start + h; j += _resolution)
+                for (double k = z_min; k < z_max; k += _resolution) {
+                    pt.x = i; pt.y = j; pt.z = k;
+                    cloudMap.points.push_back(pt);
+                }
+    };
+
+    // 2. Tham số chung cho hình dáng mỗi chữ V
+    int num_blocks_per_arm = 7;
+    double block_w = 2.0;
+    double block_d = 3.0;
+    double block_h = 2.5;
+    double v_longitudinal_len = 12.0; // Chiều dài dọc trục Y của mỗi chữ V
+    double v_lateral_span = 10.0;     // Độ mở ngang (bán kính) ở miệng chữ V
+    double tip_gap = 3.0;             // Khoảng cách giữa 2 khối ở đáy (khe hẹp)
+
+    // 3. Cấu hình cho việc sắp xếp 4 chữ V
+    int num_v_shapes = 4;
+    double spacing_between_vs = 5.0; // Khoảng trống giữa đuôi chữ V trước và đầu chữ V sau
+    double start_y_base = -30.0;     // Vị trí Y bắt đầu của hệ thống
+
+    // === QUAN TRỌNG: Mảng chứa độ lệch (offset) của khe hẹp cho từng chữ V ===
+    // Các giá trị này làm cho đỉnh chữ V lệch khỏi trục giữa (X=0).
+    // Ví dụ: chữ V đầu tiên có đỉnh lệch sang phải 3m, chữ thứ 2 lệch sang trái 2.5m, v.v.
+    std::vector<double> tip_offsets = {3.0, -2.5, 2.0, -1.5};
+
+    double current_base_y = start_y_base;
+
+    // 4. Vòng lặp để vẽ từng chữ V
+    for (int n = 0; n < num_v_shapes; ++n) {
+        // Tính toán vị trí Y đầu và cuối cho chữ V hiện tại
+        double v_start_y = current_base_y + v_longitudinal_len; // Miệng chữ V (phía trên y)
+        double v_end_y = current_base_y;                        // Đáy chữ V (phía dưới y)
+        
+        // Lấy độ lệch đỉnh cho chữ V này
+        double current_tip_offset = tip_offsets[n % tip_offsets.size()];
+
+        // Tính toán quỹ đạo cho 2 cánh tay
+        // Tâm của hệ thống chữ V này bị dịch chuyển bởi current_tip_offset
+        double start_x_left = current_tip_offset - v_lateral_span;
+        double start_x_right = current_tip_offset + v_lateral_span;
+        double end_x_left = current_tip_offset - tip_gap / 2.0;
+        double end_x_right = current_tip_offset + tip_gap / 2.0;
+
+        double y_step = (v_end_y - v_start_y) / (num_blocks_per_arm - 1);
+        double left_x_step = (end_x_left - start_x_left) / (num_blocks_per_arm - 1);
+        double right_x_step = (end_x_right - start_x_right) / (num_blocks_per_arm - 1);
+
+        // Vẽ cánh tay trái
+        for (int i = 0; i < num_blocks_per_arm; ++i) {
+            add_rect_block_centered(start_x_left + i * left_x_step, v_start_y + i * y_step, block_w, block_d, -1.0, block_h);
+        }
+        // Vẽ cánh tay phải
+        for (int i = 0; i < num_blocks_per_arm; ++i) {
+            add_rect_block_centered(start_x_right + i * right_x_step, v_start_y + i * y_step, block_w, block_d, -1.0, block_h);
+        }
+
+        // Cập nhật vị trí Y cơ sở cho chữ V tiếp theo
+        current_base_y += (v_longitudinal_len + spacing_between_vs);
+    }
+
+    cloudMap.width = cloudMap.points.size();
+    cloudMap.height = 1;
+    cloudMap.is_dense = true;
+    _has_map = true;
+    pcl::toROSMsg(cloudMap, globalMap_pcd);
+    globalMap_pcd.header.frame_id = "map";
+    ROS_INFO("Generated Multi-V Zig-Zag environment with %zu points.", cloudMap.points.size());
+}
 // Add this function to your map generation code
 void GenerateClutterTrap()
 {
@@ -733,7 +883,7 @@ int main(int argc, char **argv)
    _y_h = +_y_size / 2.0;
       // === Map Generation Selection ===
    std::string map_type;
-   n.param("map/map_type", map_type, std::string("random_large"));
+   n.param("map/map_type", map_type, std::string("env_multi_v_zigzag"));
 
    ROS_INFO("Selected map type: %s", map_type.c_str());
 
@@ -768,6 +918,12 @@ int main(int argc, char **argv)
    else if (map_type == "random_brrt")
    {
       RandomBRRTGenerate();
+   }
+   else if (map_type == "env_v_shape") {
+      GenerateEnvV_Shape();
+   }
+   else if (map_type == "env_multi_v_zigzag") {
+      GenerateEnvMultiV_ZigZag();
    }
    else if (map_type == "clutter_trap") {
       GenerateClutterTrap();
