@@ -80,9 +80,9 @@ self_msgs_and_srvs/CMakeFiles/self_msgs_and_srvs_generate_messages_py: /home/xua
 
 /home/xuanloc/DACN/ICIT/brrt_optimize/devel/lib/python3/dist-packages/self_msgs_and_srvs/srv/_LearningSampler.py: /opt/ros/noetic/lib/genpy/gensrv_py.py
 /home/xuanloc/DACN/ICIT/brrt_optimize/devel/lib/python3/dist-packages/self_msgs_and_srvs/srv/_LearningSampler.py: /home/xuanloc/DACN/ICIT/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv
-/home/xuanloc/DACN/ICIT/brrt_optimize/devel/lib/python3/dist-packages/self_msgs_and_srvs/srv/_LearningSampler.py: /home/xuanloc/DACN/ICIT/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg
 /home/xuanloc/DACN/ICIT/brrt_optimize/devel/lib/python3/dist-packages/self_msgs_and_srvs/srv/_LearningSampler.py: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
 /home/xuanloc/DACN/ICIT/brrt_optimize/devel/lib/python3/dist-packages/self_msgs_and_srvs/srv/_LearningSampler.py: /home/xuanloc/DACN/ICIT/brrt_optimize/src/self_msgs_and_srvs/msg/input_point.msg
+/home/xuanloc/DACN/ICIT/brrt_optimize/devel/lib/python3/dist-packages/self_msgs_and_srvs/srv/_LearningSampler.py: /home/xuanloc/DACN/ICIT/brrt_optimize/src/self_msgs_and_srvs/msg/output_point.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/xuanloc/DACN/ICIT/brrt_optimize/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Python code from SRV self_msgs_and_srvs/LearningSampler"
 	cd /home/xuanloc/DACN/ICIT/brrt_optimize/build/self_msgs_and_srvs && ../catkin_generated/env_cached.sh /home/xuanloc/miniconda3/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/gensrv_py.py /home/xuanloc/DACN/ICIT/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv -Iself_msgs_and_srvs:/home/xuanloc/DACN/ICIT/brrt_optimize/src/self_msgs_and_srvs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p self_msgs_and_srvs -o /home/xuanloc/DACN/ICIT/brrt_optimize/devel/lib/python3/dist-packages/self_msgs_and_srvs/srv
 

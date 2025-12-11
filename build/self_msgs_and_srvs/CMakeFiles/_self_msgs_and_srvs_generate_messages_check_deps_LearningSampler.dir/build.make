@@ -54,7 +54,7 @@ CMAKE_BINARY_DIR = /home/xuanloc/DACN/ICIT/brrt_optimize/build
 include self_msgs_and_srvs/CMakeFiles/_self_msgs_and_srvs_generate_messages_check_deps_LearningSampler.dir/progress.make
 
 self_msgs_and_srvs/CMakeFiles/_self_msgs_and_srvs_generate_messages_check_deps_LearningSampler:
-	cd /home/xuanloc/DACN/ICIT/brrt_optimize/build/self_msgs_and_srvs && ../catkin_generated/env_cached.sh /home/xuanloc/miniconda3/bin/python3 /opt/ros/noetic/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py self_msgs_and_srvs /home/xuanloc/DACN/ICIT/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv self_msgs_and_srvs/output_point:geometry_msgs/Point:self_msgs_and_srvs/input_point
+	cd /home/xuanloc/DACN/ICIT/brrt_optimize/build/self_msgs_and_srvs && ../catkin_generated/env_cached.sh /home/xuanloc/miniconda3/bin/python3 /opt/ros/noetic/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py self_msgs_and_srvs /home/xuanloc/DACN/ICIT/brrt_optimize/src/self_msgs_and_srvs/srv/LearningSampler.srv geometry_msgs/Point:self_msgs_and_srvs/input_point:self_msgs_and_srvs/output_point
 
 _self_msgs_and_srvs_generate_messages_check_deps_LearningSampler: self_msgs_and_srvs/CMakeFiles/_self_msgs_and_srvs_generate_messages_check_deps_LearningSampler
 _self_msgs_and_srvs_generate_messages_check_deps_LearningSampler: self_msgs_and_srvs/CMakeFiles/_self_msgs_and_srvs_generate_messages_check_deps_LearningSampler.dir/build.make

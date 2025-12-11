@@ -377,7 +377,7 @@ namespace path_plan
       if (tree_connected)
       {
         final_path_use_time_ = (ros::Time::now() - rrt_start_time).toSec();
-        // ROS_INFO_STREAM("[BRRT]: find_path_use_time: " << solution_cost_time_pair_list_.front().second << ", length: " << solution_cost_time_pair_list_.front().first);
+        ROS_INFO_STREAM("[BRRT]: find_path_use_time: " << solution_cost_time_pair_list_.front().second << ", length: " << solution_cost_time_pair_list_.front().first);
         // visualizeWholeTree();
         final_path_ = path_list_.back();
         

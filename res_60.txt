@@ -1,0 +1,1713 @@
+input_param: /home/xuanloc/DACN/ICIT/brrt_optimize/brrt_input.json
+output_result: /home/xuanloc/DACN/ICIT/brrt_optimize/eval/output.json
+[INFO] [1765451144.350199691]: no map rcved yet.
+glb occ set
+[WARN] [1765451145.350263096]: Timer tick
+[INFO] [1765451223.903495407]: 
+-----------------------------
+goal rcved at      29.5637      37.6696 -2.79564e-06
+[BRRT]**********find path after 977 iterations
+[INFO] [1765451223.918963227]: [BRRT]: find_path_use_time: 0.0013503, length: 77.874
+[INFO] [1765451223.919110219]: [BRRT] final path len: 77.874
+[INFO] [1765451223.973716855]: [BRRTOpitmize1] final path len: 75.7844
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 1127 iterations
+[INFO] [1765451223.981558551]: [BRRT_Optimize_case2]: find_path_use_time: 0.00684567, length: 81.1501
+[INFO] [1765451223.981692835]: [BRRTOpitmize2] final path len: 81.1501
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1807 iterations
+[INFO] [1765451224.004227893]: [BRRT_Optimize_case3]: find_path_use_time: 0.0222649, length: 61.6371
+[INFO] [1765451224.004286015]: [BRRTOpitmize3] final path len: 61.6371
+[INFO] [1765451225.606229201]: 
+-----------------------------
+goal rcved at     23.3689    -12.3985 2.82545e-06
+[BRRT]**********find path after 1624 iterations
+[INFO] [1765451225.611384960]: [BRRT]: find_path_use_time: 0.00162029, length: 113.76
+[INFO] [1765451225.611507662]: [BRRT] final path len: 113.76
+[INFO] [1765451225.630783439]: [BRRTOpitmize1] final path len: 83.8899
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 179 iterations
+[INFO] [1765451225.634752222]: [BRRT_Optimize_case2]: find_path_use_time: 0.00180011, length: 60.219
+[INFO] [1765451225.634862508]: [BRRTOpitmize2] final path len: 60.219
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 990 iterations
+[INFO] [1765451225.657216366]: [BRRT_Optimize_case3]: find_path_use_time: 0.0138195, length: 57.199
+[INFO] [1765451225.657294945]: [BRRTOpitmize3] final path len: 57.199
+[INFO] [1765451227.077644784]: 
+-----------------------------
+goal rcved at     -20.2437      28.1352 -1.11819e-06
+[BRRT]**********find path after 2758 iterations
+[INFO] [1765451227.092578007]: [BRRT]: find_path_use_time: 0.00289684, length: 93.598
+[INFO] [1765451227.092662502]: [BRRT] final path len: 93.598
+[INFO] [1765451227.108236982]: [BRRTOpitmize1] final path len: 118.555
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 2494 iterations
+[INFO] [1765451227.129925876]: [BRRT_Optimize_case2]: find_path_use_time: 0.0145046, length: 130.641
+[INFO] [1765451227.130026663]: [BRRTOpitmize2] final path len: 130.641
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 4300 iterations
+[INFO] [1765451227.210345843]: [BRRT_Optimize_case3]: find_path_use_time: 0.0550385, length: 73.0479
+[INFO] [1765451227.210420755]: [BRRTOpitmize3] final path len: 73.0479
+[INFO] [1765451228.411780514]: 
+-----------------------------
+goal rcved at     8.40025    -30.8721 8.78135e-07
+[BRRT]**********find path after 6990 iterations
+[INFO] [1765451228.432534209]: [BRRT]: find_path_use_time: 0.00387816, length: 125.942
+[INFO] [1765451228.432585456]: [BRRT] final path len: 125.942
+[INFO] [1765451229.039689662]: [BRRTOpitmize1] final path len: 93.0664
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 13012 iterations
+[INFO] [1765451229.190434767]: [BRRT_Optimize_case2]: find_path_use_time: 0.0893496, length: 143.07
+[INFO] [1765451229.190491389]: [BRRTOpitmize2] final path len: 143.07
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 3368 iterations
+[INFO] [1765451229.244349601]: [BRRT_Optimize_case3]: find_path_use_time: 0.0358522, length: 84.0383
+[INFO] [1765451229.244403431]: [BRRTOpitmize3] final path len: 84.0383
+[INFO] [1765451230.928242245]: 
+-----------------------------
+goal rcved at    9.68442    36.2034 1.8752e-06
+[BRRT]**********find path after 1812 iterations
+[INFO] [1765451230.933699945]: [BRRT]: find_path_use_time: 0.0010394, length: 156.316
+[INFO] [1765451230.933752400]: [BRRT] final path len: 156.316
+[INFO] [1765451231.137958316]: [BRRTOpitmize1] final path len: 154.933
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 2460 iterations
+[INFO] [1765451231.176488784]: [BRRT_Optimize_case2]: find_path_use_time: 0.0152945, length: 112.437
+[INFO] [1765451231.176537239]: [BRRTOpitmize2] final path len: 112.437
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1786 iterations
+[INFO] [1765451231.200353390]: [BRRT_Optimize_case3]: find_path_use_time: 0.015457, length: 87.948
+[INFO] [1765451231.200483675]: [BRRTOpitmize3] final path len: 87.948
+[INFO] [1765451232.943943314]: 
+-----------------------------
+goal rcved at      31.3589      -31.232 -6.03721e-07
+[BRRT]**********find path after 194 iterations
+[INFO] [1765451232.944775435]: [BRRT]: find_path_use_time: 0.00012391, length: 86.1557
+[INFO] [1765451232.944819641]: [BRRT] final path len: 86.1557
+[INFO] [1765451233.546219267]: [BRRTOpitmize1] final path len: 103.646
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 19367 iterations
+[INFO] [1765451233.763959180]: [BRRT_Optimize_case2]: find_path_use_time: 0.112792, length: 129.333
+[INFO] [1765451233.764538065]: [BRRTOpitmize2] final path len: 129.333
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 3576 iterations
+[INFO] [1765451233.807745649]: [BRRT_Optimize_case3]: find_path_use_time: 0.030836, length: 78.7086
+[INFO] [1765451233.807820145]: [BRRTOpitmize3] final path len: 78.7086
+[INFO] [1765451235.660351821]: 
+-----------------------------
+goal rcved at    -18.4051     27.9282 1.77737e-06
+[BRRT]**********find path after 6757 iterations
+[INFO] [1765451235.679207284]: [BRRT]: find_path_use_time: 0.00388058, length: 149.054
+[INFO] [1765451235.679332361]: [BRRT] final path len: 149.054
+[INFO] [1765451235.870241657]: [BRRTOpitmize1] final path len: 127.563
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 11141 iterations
+[INFO] [1765451236.066524322]: [BRRT_Optimize_case2]: find_path_use_time: 0.0676556, length: 125.261
+[INFO] [1765451236.067119998]: [BRRTOpitmize2] final path len: 125.261
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 6062 iterations
+[INFO] [1765451236.151616142]: [BRRT_Optimize_case3]: find_path_use_time: 0.0550351, length: 107.559
+[INFO] [1765451236.151944666]: [BRRTOpitmize3] final path len: 107.559
+[INFO] [1765451237.445089995]: 
+-----------------------------
+goal rcved at     20.6748    -15.0057 1.51113e-06
+[BRRT]**********find path after 2049 iterations
+[INFO] [1765451237.451137245]: [BRRT]: find_path_use_time: 0.0012836, length: 104.865
+[INFO] [1765451237.451192534]: [BRRT] final path len: 104.865
+[INFO] [1765451237.486966232]: [BRRTOpitmize1] final path len: 112.834
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 5197 iterations
+[INFO] [1765451237.535046004]: [BRRT_Optimize_case2]: find_path_use_time: 0.0288171, length: 114.388
+[INFO] [1765451237.535273783]: [BRRTOpitmize2] final path len: 114.388
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1290 iterations
+[INFO] [1765451237.552040402]: [BRRT_Optimize_case3]: find_path_use_time: 0.00983658, length: 68.4971
+[INFO] [1765451237.552087191]: [BRRTOpitmize3] final path len: 68.4971
+[INFO] [1765451238.783070534]: 
+-----------------------------
+goal rcved at     6.76203      37.382 5.65233e-08
+[BRRT]**********find path after 3318 iterations
+[INFO] [1765451238.791175046]: [BRRT]: find_path_use_time: 0.00200868, length: 77.0513
+[INFO] [1765451238.791267291]: [BRRT] final path len: 77.0513
+[INFO] [1765451238.823248656]: [BRRTOpitmize1] final path len: 109.246
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 886 iterations
+[INFO] [1765451238.832972829]: [BRRT_Optimize_case2]: find_path_use_time: 0.00452917, length: 79.7467
+[INFO] [1765451238.833052700]: [BRRTOpitmize2] final path len: 79.7467
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 2152 iterations
+[INFO] [1765451238.862031521]: [BRRT_Optimize_case3]: find_path_use_time: 0.0208116, length: 60.9361
+[INFO] [1765451238.862246135]: [BRRTOpitmize3] final path len: 60.9361
+[INFO] [1765451240.293751195]: 
+-----------------------------
+goal rcved at    -8.69847    -33.9561 -3.5252e-06
+[BRRT]**********find path after 2766 iterations
+[INFO] [1765451240.302289808]: [BRRT]: find_path_use_time: 0.0022148, length: 140.913
+[INFO] [1765451240.302379219]: [BRRT] final path len: 140.913
+[INFO] [1765451240.308905777]: [BRRTOpitmize1] final path len: 101.876
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 1369 iterations
+[INFO] [1765451240.321062357]: [BRRT_Optimize_case2]: find_path_use_time: 0.00759312, length: 122.734
+[INFO] [1765451240.321219307]: [BRRTOpitmize2] final path len: 122.734
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 834 iterations
+[INFO] [1765451240.330747865]: [BRRT_Optimize_case3]: find_path_use_time: 0.00483865, length: 76.2314
+[INFO] [1765451240.330790738]: [BRRTOpitmize3] final path len: 76.2314
+[INFO] [1765451241.812313588]: 
+-----------------------------
+goal rcved at     26.6196     -13.796 7.28939e-07
+[BRRT]**********find path after 353 iterations
+[INFO] [1765451241.813793506]: [BRRT]: find_path_use_time: 0.0003054, length: 51.5542
+[INFO] [1765451241.813850003]: [BRRT] final path len: 51.5542
+[INFO] [1765451241.866536976]: [BRRTOpitmize1] final path len: 117.873
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 1560 iterations
+[INFO] [1765451241.879472555]: [BRRT_Optimize_case2]: find_path_use_time: 0.00817222, length: 63.7205
+[INFO] [1765451241.879554258]: [BRRTOpitmize2] final path len: 63.7205
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1504 iterations
+[INFO] [1765451241.898512381]: [BRRT_Optimize_case3]: find_path_use_time: 0.0137523, length: 63.8862
+[INFO] [1765451241.898554128]: [BRRTOpitmize3] final path len: 63.8862
+[INFO] [1765451244.095217382]: 
+-----------------------------
+goal rcved at    -20.6767     28.1345 2.55447e-06
+[BRRT]**********find path after 811 iterations
+[INFO] [1765451244.097550503]: [BRRT]: find_path_use_time: 0.000614216, length: 103.471
+[INFO] [1765451244.097594584]: [BRRT] final path len: 103.471
+[INFO] [1765451244.155299152]: [BRRTOpitmize1] final path len: 139.826
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 6950 iterations
+[INFO] [1765451244.221898396]: [BRRT_Optimize_case2]: find_path_use_time: 0.0374859, length: 169.456
+[INFO] [1765451244.222035638]: [BRRTOpitmize2] final path len: 169.456
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 3399 iterations
+[INFO] [1765451244.272592725]: [BRRT_Optimize_case3]: find_path_use_time: 0.0369463, length: 77.5808
+[INFO] [1765451244.272647472]: [BRRTOpitmize3] final path len: 77.5808
+[INFO] [1765451245.922222777]: 
+-----------------------------
+goal rcved at      26.6643      6.32448 -1.65658e-06
+[BRRT]**********find path after 233 iterations
+[INFO] [1765451245.924255748]: [BRRT]: find_path_use_time: 0.000510472, length: 78.9226
+[INFO] [1765451245.924290413]: [BRRT] final path len: 78.9226
+[INFO] [1765451245.931541305]: [BRRTOpitmize1] final path len: 88.7222
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 1128 iterations
+[INFO] [1765451245.949681054]: [BRRT_Optimize_case2]: find_path_use_time: 0.00594138, length: 84.0768
+[INFO] [1765451245.949727510]: [BRRTOpitmize2] final path len: 84.0768
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1087 iterations
+[INFO] [1765451245.967019598]: [BRRT_Optimize_case3]: find_path_use_time: 0.00900742, length: 73.6434
+[INFO] [1765451245.967069053]: [BRRTOpitmize3] final path len: 73.6434
+[INFO] [1765451247.843797684]: 
+-----------------------------
+goal rcved at    24.4712    42.4108 1.8531e-06
+[BRRT]**********find path after 305 iterations
+[INFO] [1765451247.845486507]: [BRRT]: find_path_use_time: 0.00026886, length: 53.525
+[INFO] [1765451247.845568169]: [BRRT] final path len: 53.525
+[INFO] [1765451247.852191262]: [BRRTOpitmize1] final path len: 55.4512
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 818 iterations
+[INFO] [1765451247.864877770]: [BRRT_Optimize_case2]: find_path_use_time: 0.00821521, length: 49.0045
+[INFO] [1765451247.864937725]: [BRRTOpitmize2] final path len: 49.0045
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 134 iterations
+[INFO] [1765451247.868514736]: [BRRT_Optimize_case3]: find_path_use_time: 0.00158691, length: 40.9452
+[INFO] [1765451247.868547776]: [BRRTOpitmize3] final path len: 40.9452
+[INFO] [1765451249.443785205]: 
+-----------------------------
+goal rcved at     -10.4277     -34.3944 -1.33674e-06
+[BRRT]**********find path after 1550 iterations
+[INFO] [1765451249.453237850]: [BRRT]: find_path_use_time: 0.00249578, length: 126.89
+[INFO] [1765451249.453318804]: [BRRT] final path len: 126.89
+[INFO] [1765451249.487559037]: [BRRTOpitmize1] final path len: 156.608
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 8155 iterations
+[INFO] [1765451249.621806622]: [BRRT_Optimize_case2]: find_path_use_time: 0.0654149, length: 133.965
+[INFO] [1765451249.622340801]: [BRRTOpitmize2] final path len: 133.965
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 2737 iterations
+[INFO] [1765451249.659758318]: [BRRT_Optimize_case3]: find_path_use_time: 0.0258838, length: 97.0351
+[INFO] [1765451249.659816939]: [BRRTOpitmize3] final path len: 97.0351
+[INFO] [1765451251.711475615]: 
+-----------------------------
+goal rcved at    -35.0656     38.7636 1.48027e-06
+[BRRT]**********find path after 4261 iterations
+[INFO] [1765451251.730030089]: [BRRT]: find_path_use_time: 0.00462262, length: 146.328
+[INFO] [1765451251.730164582]: [BRRT] final path len: 146.328
+[INFO] [1765451252.284619974]: [BRRTOpitmize1] final path len: 170.444
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 693 iterations
+[INFO] [1765451252.304176143]: [BRRT_Optimize_case2]: find_path_use_time: 0.00533358, length: 113.072
+[INFO] [1765451252.304256638]: [BRRTOpitmize2] final path len: 113.072
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 2816 iterations
+[INFO] [1765451252.349759914]: [BRRT_Optimize_case3]: find_path_use_time: 0.0298611, length: 92.5849
+[INFO] [1765451252.349863367]: [BRRTOpitmize3] final path len: 92.5849
+[INFO] [1765451253.996589641]: 
+-----------------------------
+goal rcved at     25.7507    -12.6081 2.76937e-06
+[BRRT]**********find path after 3259 iterations
+[INFO] [1765451254.003257855]: [BRRT]: find_path_use_time: 0.00198902, length: 118.103
+[INFO] [1765451254.003327393]: [BRRT] final path len: 118.103
+[INFO] [1765451254.090298957]: [BRRTOpitmize1] final path len: 118.801
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 2552 iterations
+[INFO] [1765451254.109321279]: [BRRT_Optimize_case2]: find_path_use_time: 0.0136785, length: 115.668
+[INFO] [1765451254.109479312]: [BRRTOpitmize2] final path len: 115.668
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 2297 iterations
+[INFO] [1765451254.142122215]: [BRRT_Optimize_case3]: find_path_use_time: 0.0233776, length: 100.113
+[INFO] [1765451254.142165546]: [BRRTOpitmize3] final path len: 100.113
+[INFO] [1765451257.675454499]: 
+-----------------------------
+goal rcved at      -5.3633       44.155 -7.50006e-07
+[BRRT]**********find path after 8268 iterations
+[INFO] [1765451257.697883049]: [BRRT]: find_path_use_time: 0.00740726, length: 104.116
+[INFO] [1765451257.698307026]: [BRRT] final path len: 104.116
+[INFO] [1765451257.728629347]: [BRRTOpitmize1] final path len: 106.534
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 932 iterations
+[INFO] [1765451257.743756217]: [BRRT_Optimize_case2]: find_path_use_time: 0.00751292, length: 90.6653
+[INFO] [1765451257.744084699]: [BRRTOpitmize2] final path len: 90.6653
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 2074 iterations
+[INFO] [1765451257.782465157]: [BRRT_Optimize_case3]: find_path_use_time: 0.0270037, length: 72.8523
+[INFO] [1765451257.782583859]: [BRRTOpitmize3] final path len: 72.8523
+[INFO] [1765451259.914665052]: 
+-----------------------------
+goal rcved at     -5.98412     -35.4623 -2.16811e-07
+[BRRT]**********find path after 1744 iterations
+[INFO] [1765451259.921715411]: [BRRT]: find_path_use_time: 0.00184411, length: 115.089
+[INFO] [1765451259.921797157]: [BRRT] final path len: 115.089
+[INFO] [1765451259.931691233]: [BRRTOpitmize1] final path len: 129.11
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 3745 iterations
+[INFO] [1765451259.966762874]: [BRRT_Optimize_case2]: find_path_use_time: 0.0215128, length: 134.205
+[INFO] [1765451259.966822620]: [BRRTOpitmize2] final path len: 134.205
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 5013 iterations
+[INFO] [1765451260.019106765]: [BRRT_Optimize_case3]: find_path_use_time: 0.038295, length: 102.285
+[INFO] [1765451260.019159804]: [BRRTOpitmize3] final path len: 102.285
+[INFO] [1765451261.776360702]: 
+-----------------------------
+goal rcved at      33.6668     -18.5302 -2.80425e-06
+[BRRT]**********find path after 6725 iterations
+[INFO] [1765451261.800121010]: [BRRT]: find_path_use_time: 0.00637798, length: 97.7382
+[INFO] [1765451261.800187590]: [BRRT] final path len: 97.7382
+[INFO] [1765451261.857709193]: [BRRTOpitmize1] final path len: 152.903
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 2753 iterations
+[INFO] [1765451261.879545399]: [BRRT_Optimize_case2]: find_path_use_time: 0.0132693, length: 62.7859
+[INFO] [1765451261.879697307]: [BRRTOpitmize2] final path len: 62.7859
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 2514 iterations
+[INFO] [1765451261.921423827]: [BRRT_Optimize_case3]: find_path_use_time: 0.0268752, length: 72.7548
+[INFO] [1765451261.921469325]: [BRRTOpitmize3] final path len: 72.7548
+[INFO] [1765451264.142545523]: 
+-----------------------------
+goal rcved at     -39.1744      28.0781 -9.07567e-07
+[BRRT]**********find path after 2113 iterations
+[INFO] [1765451264.147536205]: [BRRT]: find_path_use_time: 0.00117881, length: 132.624
+[INFO] [1765451264.147607284]: [BRRT] final path len: 132.624
+[INFO] [1765451264.186112273]: [BRRTOpitmize1] final path len: 173.143
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 11840 iterations
+[INFO] [1765451264.340283719]: [BRRT_Optimize_case2]: find_path_use_time: 0.0802193, length: 140.087
+[INFO] [1765451264.340842355]: [BRRTOpitmize2] final path len: 140.087
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 4306 iterations
+[INFO] [1765451264.410885219]: [BRRT_Optimize_case3]: find_path_use_time: 0.0502779, length: 107.715
+[INFO] [1765451264.410953382]: [BRRTOpitmize3] final path len: 107.715
+[INFO] [1765451266.959587437]: 
+-----------------------------
+goal rcved at      23.2028      6.20424 -1.15334e-06
+[BRRT]**********find path after 3908 iterations
+[INFO] [1765451266.974330160]: [BRRT]: find_path_use_time: 0.00423702, length: 103.584
+[INFO] [1765451266.974621352]: [BRRT] final path len: 103.584
+[INFO] [1765451267.015020901]: [BRRTOpitmize1] final path len: 135.615
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 2366 iterations
+[INFO] [1765451267.041100286]: [BRRT_Optimize_case2]: find_path_use_time: 0.0111418, length: 127.928
+[INFO] [1765451267.041156075]: [BRRTOpitmize2] final path len: 127.928
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1590 iterations
+[INFO] [1765451267.069051859]: [BRRT_Optimize_case3]: find_path_use_time: 0.0176452, length: 85.7203
+[INFO] [1765451267.069101273]: [BRRTOpitmize3] final path len: 85.7203
+[INFO] [1765451269.076357050]: 
+-----------------------------
+goal rcved at      8.38745     -26.4325 -4.02438e-07
+[BRRT]**********find path after 254 iterations
+[INFO] [1765451269.077377202]: [BRRT]: find_path_use_time: 0.00021203, length: 40.7634
+[INFO] [1765451269.077420991]: [BRRT] final path len: 40.7634
+[INFO] [1765451269.082030943]: [BRRTOpitmize1] final path len: 57.4657
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 194 iterations
+[INFO] [1765451269.085414588]: [BRRT_Optimize_case2]: find_path_use_time: 0.00103374, length: 43.2626
+[INFO] [1765451269.085460252]: [BRRTOpitmize2] final path len: 43.2626
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 292 iterations
+[INFO] [1765451269.090906950]: [BRRT_Optimize_case3]: find_path_use_time: 0.00261144, length: 37.8877
+[INFO] [1765451269.090942156]: [BRRTOpitmize3] final path len: 37.8877
+[INFO] [1765451271.878006151]: 
+-----------------------------
+goal rcved at      6.55425      35.1135 -2.99244e-06
+[BRRT]**********find path after 8423 iterations
+[INFO] [1765451271.945385739]: [BRRT]: find_path_use_time: 0.0204319, length: 158.667
+[INFO] [1765451271.945653350]: [BRRT] final path len: 158.667
+[INFO] [1765451272.034137931]: [BRRTOpitmize1] final path len: 117.424
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 9258 iterations
+[INFO] [1765451272.185336107]: [BRRT_Optimize_case2]: find_path_use_time: 0.0856546, length: 166.979
+[INFO] [1765451272.185547846]: [BRRTOpitmize2] final path len: 166.979
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 3277 iterations
+[INFO] [1765451272.232984333]: [BRRT_Optimize_case3]: find_path_use_time: 0.03483, length: 81.3278
+[INFO] [1765451272.233241985]: [BRRTOpitmize3] final path len: 81.3278
+[INFO] [1765451273.837342202]: 
+-----------------------------
+goal rcved at    -18.6567    -34.9628 3.15503e-06
+[BRRT]**********find path after 884 iterations
+[INFO] [1765451273.839733527]: [BRRT]: find_path_use_time: 0.00054047, length: 127.414
+[INFO] [1765451273.839776275]: [BRRT] final path len: 127.414
+[INFO] [1765451273.857210305]: [BRRTOpitmize1] final path len: 116.285
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 11263 iterations
+[INFO] [1765451274.054460709]: [BRRT_Optimize_case2]: find_path_use_time: 0.106165, length: 154.976
+[INFO] [1765451274.054866603]: [BRRTOpitmize2] final path len: 154.976
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1008 iterations
+[INFO] [1765451274.067098548]: [BRRT_Optimize_case3]: find_path_use_time: 0.00734968, length: 78.6584
+[INFO] [1765451274.067175335]: [BRRTOpitmize3] final path len: 78.6584
+[INFO] [1765451276.076135312]: 
+-----------------------------
+goal rcved at     -23.9405      40.5271 -1.64765e-06
+[BRRT]**********find path after 4610 iterations
+[INFO] [1765451276.094332633]: [BRRT]: find_path_use_time: 0.00485123, length: 178.296
+[INFO] [1765451276.094659865]: [BRRT] final path len: 178.296
+[INFO] [1765451276.196401035]: [BRRTOpitmize1] final path len: 124.617
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 14766 iterations
+[INFO] [1765451276.393885086]: [BRRT_Optimize_case2]: find_path_use_time: 0.089372, length: 106.417
+[INFO] [1765451276.394408807]: [BRRTOpitmize2] final path len: 106.417
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 3048 iterations
+[INFO] [1765451276.445879567]: [BRRT_Optimize_case3]: find_path_use_time: 0.0378594, length: 100.468
+[INFO] [1765451276.446031267]: [BRRTOpitmize3] final path len: 100.468
+[INFO] [1765451278.108783205]: 
+-----------------------------
+goal rcved at      24.2491     -17.0474 -2.09085e-06
+[BRRT]**********find path after 2810 iterations
+[INFO] [1765451278.118086771]: [BRRT]: find_path_use_time: 0.00196831, length: 136.693
+[INFO] [1765451278.118280260]: [BRRT] final path len: 136.693
+[INFO] [1765451278.242319353]: [BRRTOpitmize1] final path len: 203.494
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 7316 iterations
+[INFO] [1765451278.330109381]: [BRRT_Optimize_case2]: find_path_use_time: 0.0454455, length: 130.074
+[INFO] [1765451278.330286038]: [BRRTOpitmize2] final path len: 130.074
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 7906 iterations
+[INFO] [1765451278.510269057]: [BRRT_Optimize_case3]: find_path_use_time: 0.104628, length: 104.862
+[INFO] [1765451278.510751280]: [BRRTOpitmize3] final path len: 104.862
+[INFO] [1765451280.358008559]: 
+-----------------------------
+goal rcved at    -6.42504    -33.9472 3.48127e-06
+[BRRT]**********find path after 1520 iterations
+[INFO] [1765451280.367155716]: [BRRT]: find_path_use_time: 0.000915907, length: 56.2469
+[INFO] [1765451280.367361079]: [BRRT] final path len: 56.2469
+[INFO] [1765451280.488854769]: [BRRTOpitmize1] final path len: 64.2117
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 2936 iterations
+[INFO] [1765451280.514260520]: [BRRT_Optimize_case2]: find_path_use_time: 0.0147361, length: 62.9258
+[INFO] [1765451280.514545337]: [BRRTOpitmize2] final path len: 62.9258
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 919 iterations
+[INFO] [1765451280.536800181]: [BRRT_Optimize_case3]: find_path_use_time: 0.00879318, length: 55.2844
+[INFO] [1765451280.536843220]: [BRRTOpitmize3] final path len: 55.2844
+[INFO] [1765451282.658063802]: 
+-----------------------------
+goal rcved at    -38.951    25.9128 1.4232e-07
+[BRRT]**********find path after 1347 iterations
+[INFO] [1765451282.663627575]: [BRRT]: find_path_use_time: 0.000620216, length: 90.6084
+[INFO] [1765451282.663681239]: [BRRT] final path len: 90.6084
+[INFO] [1765451282.712436146]: [BRRTOpitmize1] final path len: 101.081
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 3388 iterations
+[INFO] [1765451282.737517373]: [BRRT_Optimize_case2]: find_path_use_time: 0.0166689, length: 97.0461
+[INFO] [1765451282.738218168]: [BRRTOpitmize2] final path len: 97.0461
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 6864 iterations
+[INFO] [1765451282.836745759]: [BRRT_Optimize_case3]: find_path_use_time: 0.0686952, length: 115.763
+[INFO] [1765451282.836838962]: [BRRTOpitmize3] final path len: 115.763
+[INFO] [1765451284.841603057]: 
+-----------------------------
+goal rcved at     28.2126    -4.37788 3.05798e-06
+[BRRT]**********find path after 5157 iterations
+[INFO] [1765451284.871884785]: [BRRT]: find_path_use_time: 0.00567002, length: 131.605
+[INFO] [1765451284.872049359]: [BRRT] final path len: 131.605
+[INFO] [1765451284.953678224]: [BRRTOpitmize1] final path len: 149.362
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 11794 iterations
+[INFO] [1765451285.019951569]: [BRRT_Optimize_case2]: find_path_use_time: 0.0424541, length: 124.263
+[INFO] [1765451285.020009275]: [BRRTOpitmize2] final path len: 124.263
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 5072 iterations
+[INFO] [1765451285.101055754]: [BRRT_Optimize_case3]: find_path_use_time: 0.0520681, length: 95.1356
+[INFO] [1765451285.101234744]: [BRRTOpitmize3] final path len: 95.1356
+-----------------------------
+goal rcved at      26.1012      38.9579 -2.13162e-06
+[BRRT]**********find path after 507 iterations
+[INFO] [1765451463.607373407]: [BRRT]: find_path_use_time: 0.000389645, length: 62.1253
+[INFO] [1765451463.607475902]: [BRRT] final path len: 62.1253
+[INFO] [1765451463.623977835]: [BRRTOpitmize1] final path len: 66.8464
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 306 iterations
+[INFO] [1765451463.633891978]: [BRRT_Optimize_case2]: find_path_use_time: 0.00232895, length: 64.816
+[INFO] [1765451463.633963974]: [BRRTOpitmize2] final path len: 64.816
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 516 iterations
+[INFO] [1765451463.654244984]: [BRRT_Optimize_case3]: find_path_use_time: 0.00503625, length: 49.4297
+[INFO] [1765451463.654298898]: [BRRTOpitmize3] final path len: 49.4297
+[INFO] [1765451464.964095944]: 
+-----------------------------
+goal rcved at      2.39847     -16.7917 -1.78073e-06
+[BRRT]**********find path after 4275 iterations
+[INFO] [1765451465.001969992]: [BRRT]: find_path_use_time: 0.016245, length: 114.848
+[INFO] [1765451465.002261434]: [BRRT] final path len: 114.848
+[INFO] [1765451465.019595237]: [BRRTOpitmize1] final path len: 107.525
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 4010 iterations
+[INFO] [1765451465.049133010]: [BRRT_Optimize_case2]: find_path_use_time: 0.0219413, length: 105.593
+[INFO] [1765451465.049284210]: [BRRTOpitmize2] final path len: 105.593
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 3688 iterations
+[INFO] [1765451465.124555541]: [BRRT_Optimize_case3]: find_path_use_time: 0.0579667, length: 76.5646
+[INFO] [1765451465.124610122]: [BRRTOpitmize3] final path len: 76.5646
+[INFO] [1765451466.829709445]: 
+-----------------------------
+goal rcved at     45.0273    -19.5778 2.94232e-06
+[BRRT]**********find path after 83 iterations
+[INFO] [1765451466.830887920]: [BRRT]: find_path_use_time: 0.000130909, length: 53.6153
+[INFO] [1765451466.830932834]: [BRRT] final path len: 53.6153
+[INFO] [1765451466.834491964]: [BRRTOpitmize1] final path len: 54.1679
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 112 iterations
+[INFO] [1765451466.839296107]: [BRRT_Optimize_case2]: find_path_use_time: 0.000798997, length: 53.4073
+[INFO] [1765451466.839360103]: [BRRTOpitmize2] final path len: 53.4073
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 429 iterations
+[INFO] [1765451466.851824100]: [BRRT_Optimize_case3]: find_path_use_time: 0.00430684, length: 44.7942
+[INFO] [1765451466.852056545]: [BRRTOpitmize3] final path len: 44.7942
+[INFO] [1765451468.663964975]: 
+-----------------------------
+goal rcved at    -20.4598     28.0272 -1.9331e-06
+[BRRT]**********find path after 3566 iterations
+[INFO] [1765451468.685408043]: [BRRT]: find_path_use_time: 0.0134422, length: 114.296
+[INFO] [1765451468.685838519]: [BRRT] final path len: 114.296
+[INFO] [1765451469.031685122]: [BRRTOpitmize1] final path len: 167.419
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 3498 iterations
+[INFO] [1765451469.059971966]: [BRRT_Optimize_case2]: find_path_use_time: 0.0190358, length: 131.574
+[INFO] [1765451469.060030296]: [BRRTOpitmize2] final path len: 131.574
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 3319 iterations
+[INFO] [1765451469.116113972]: [BRRT_Optimize_case3]: find_path_use_time: 0.040157, length: 100.941
+[INFO] [1765451469.116190467]: [BRRTOpitmize3] final path len: 100.941
+[INFO] [1765451470.379452187]: 
+-----------------------------
+goal rcved at      -8.9098     -35.1485 -2.85441e-06
+[BRRT]**********find path after 3100 iterations
+[INFO] [1765451470.396963563]: [BRRT]: find_path_use_time: 0.010846, length: 116.419
+[INFO] [1765451470.397107096]: [BRRT] final path len: 116.419
+[INFO] [1765451470.482443061]: [BRRTOpitmize1] final path len: 117.398
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 8829 iterations
+[INFO] [1765451470.681661361]: [BRRT_Optimize_case2]: find_path_use_time: 0.100067, length: 114.112
+[INFO] [1765451470.681718775]: [BRRTOpitmize2] final path len: 114.112
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 2818 iterations
+[INFO] [1765451470.718254857]: [BRRT_Optimize_case3]: find_path_use_time: 0.0245756, length: 82.6327
+[INFO] [1765451470.718373142]: [BRRTOpitmize3] final path len: 82.6327
+[INFO] [1765451471.845365672]: 
+-----------------------------
+goal rcved at      27.1807      39.3946 -2.90642e-06
+[BRRT]**********find path after 2034 iterations
+[INFO] [1765451471.856816977]: [BRRT]: find_path_use_time: 0.00542302, length: 119.096
+[INFO] [1765451471.857153833]: [BRRT] final path len: 119.096
+[INFO] [1765451472.330400205]: [BRRTOpitmize1] final path len: 243.029
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 12488 iterations
+[INFO] [1765451472.469647301]: [BRRT_Optimize_case2]: find_path_use_time: 0.0727776, length: 164.133
+[INFO] [1765451472.469710422]: [BRRTOpitmize2] final path len: 164.133
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 3647 iterations
+[INFO] [1765451472.531807879]: [BRRT_Optimize_case3]: find_path_use_time: 0.0439537, length: 106.508
+[INFO] [1765451472.532031033]: [BRRTOpitmize3] final path len: 106.508
+[INFO] [1765451473.846826007]: 
+-----------------------------
+goal rcved at      16.5388     -36.2591 -3.35922e-06
+[BRRT]**********find path after 1834 iterations
+[INFO] [1765451473.853369425]: [BRRT]: find_path_use_time: 0.00153021, length: 121.124
+[INFO] [1765451473.853417881]: [BRRT] final path len: 121.124
+[INFO] [1765451473.915428176]: [BRRTOpitmize1] final path len: 133.572
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 1582 iterations
+[INFO] [1765451473.940291090]: [BRRT_Optimize_case2]: find_path_use_time: 0.00993677, length: 120.093
+[INFO] [1765451473.940364170]: [BRRTOpitmize2] final path len: 120.093
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 3195 iterations
+[INFO] [1765451473.985865781]: [BRRT_Optimize_case3]: find_path_use_time: 0.0300093, length: 99.0313
+[INFO] [1765451473.985916445]: [BRRTOpitmize3] final path len: 99.0313
+[INFO] [1765451475.496429119]: 
+-----------------------------
+goal rcved at     -34.9547       38.116 -1.59092e-06
+[BRRT]**********find path after 1898 iterations
+[INFO] [1765451475.503704162]: [BRRT]: find_path_use_time: 0.00199693, length: 153.664
+[INFO] [1765451475.503849862]: [BRRT] final path len: 153.664
+[INFO] [1765451476.300397778]: [BRRTOpitmize1] final path len: 159.159
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 11925 iterations
+[INFO] [1765451476.412959603]: [BRRT_Optimize_case2]: find_path_use_time: 0.0723025, length: 176.875
+[INFO] [1765451476.413130885]: [BRRTOpitmize2] final path len: 176.875
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 3548 iterations
+[INFO] [1765451476.479081330]: [BRRT_Optimize_case3]: find_path_use_time: 0.0438189, length: 103.499
+[INFO] [1765451476.479140243]: [BRRTOpitmize3] final path len: 103.499
+[INFO] [1765451478.563478320]: 
+-----------------------------
+goal rcved at      41.7848     -20.3456 -2.58078e-06
+[BRRT]**********find path after 3469 iterations
+[INFO] [1765451478.576636569]: [BRRT]: find_path_use_time: 0.00287534, length: 176.518
+[INFO] [1765451478.576727230]: [BRRT] final path len: 176.518
+[INFO] [1765451478.656363977]: [BRRTOpitmize1] final path len: 163.225
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 5686 iterations
+[INFO] [1765451478.744594649]: [BRRT_Optimize_case2]: find_path_use_time: 0.0440696, length: 146.762
+[INFO] [1765451478.744672978]: [BRRTOpitmize2] final path len: 146.762
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 2906 iterations
+[INFO] [1765451478.796830001]: [BRRT_Optimize_case3]: find_path_use_time: 0.0345281, length: 117.234
+[INFO] [1765451478.796932662]: [BRRTOpitmize3] final path len: 117.234
+[INFO] [1765451480.478864487]: 
+-----------------------------
+goal rcved at      -45.093     -16.2926 -2.35072e-06
+[BRRT]**********find path after 4342 iterations
+[INFO] [1765451480.497037575]: [BRRT]: find_path_use_time: 0.00413372, length: 138.315
+[INFO] [1765451480.497201316]: [BRRT] final path len: 138.315
+[INFO] [1765451480.502446975]: [BRRTOpitmize1] final path len: 115.319
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 3262 iterations
+[INFO] [1765451480.555581067]: [BRRT_Optimize_case2]: find_path_use_time: 0.0284677, length: 125.595
+[INFO] [1765451480.555917964]: [BRRTOpitmize2] final path len: 125.595
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1583 iterations
+[INFO] [1765451480.583771249]: [BRRT_Optimize_case3]: find_path_use_time: 0.0183187, length: 93.2362
+[INFO] [1765451480.583825121]: [BRRTOpitmize3] final path len: 93.2362
+[INFO] [1765451481.945699585]: 
+-----------------------------
+goal rcved at      24.9032       41.871 -1.08896e-06
+[BRRT]**********find path after 3045 iterations
+[INFO] [1765451481.956681750]: [BRRT]: find_path_use_time: 0.00261573, length: 138.067
+[INFO] [1765451481.956776286]: [BRRT] final path len: 138.067
+[INFO] [1765451482.119284592]: [BRRTOpitmize1] final path len: 166.558
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 9124 iterations
+[INFO] [1765451482.183197485]: [BRRT_Optimize_case2]: find_path_use_time: 0.040785, length: 118.464
+[INFO] [1765451482.183548507]: [BRRTOpitmize2] final path len: 118.464
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 4218 iterations
+[INFO] [1765451482.252357870]: [BRRT_Optimize_case3]: find_path_use_time: 0.0495053, length: 126.413
+[INFO] [1765451482.252490696]: [BRRTOpitmize3] final path len: 126.413
+[INFO] [1765451483.432462955]: 
+-----------------------------
+goal rcved at    -21.3564    -37.1357 1.86888e-06
+[BRRT]**********find path after 4307 iterations
+[INFO] [1765451483.454966629]: [BRRT]: find_path_use_time: 0.00541148, length: 146.177
+[INFO] [1765451483.455438477]: [BRRT] final path len: 146.177
+[INFO] [1765451483.501886200]: [BRRTOpitmize1] final path len: 209.342
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 1636 iterations
+[INFO] [1765451483.519518069]: [BRRT_Optimize_case2]: find_path_use_time: 0.00955816, length: 127.947
+[INFO] [1765451483.519685184]: [BRRTOpitmize2] final path len: 127.947
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 2050 iterations
+[INFO] [1765451483.548609783]: [BRRT_Optimize_case3]: find_path_use_time: 0.0186126, length: 104.068
+[INFO] [1765451483.548668279]: [BRRTOpitmize3] final path len: 104.068
+[INFO] [1765451485.212308878]: 
+-----------------------------
+goal rcved at     -23.2895      39.8836 -1.17396e-06
+[BRRT]**********find path after 2458 iterations
+[INFO] [1765451485.221441356]: [BRRT]: find_path_use_time: 0.00197705, length: 171.456
+[INFO] [1765451485.221626387]: [BRRT] final path len: 171.456
+[INFO] [1765451485.262775871]: [BRRTOpitmize1] final path len: 118.237
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 9508 iterations
+[INFO] [1765451485.508020118]: [BRRT_Optimize_case2]: find_path_use_time: 0.114491, length: 139.459
+[INFO] [1765451485.508147111]: [BRRTOpitmize2] final path len: 139.459
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 4941 iterations
+[INFO] [1765451485.594834494]: [BRRT_Optimize_case3]: find_path_use_time: 0.0613407, length: 105.686
+[INFO] [1765451485.594929489]: [BRRTOpitmize3] final path len: 105.686
+[INFO] [1765451486.728305065]: 
+-----------------------------
+goal rcved at     22.2855    -11.7524 1.14111e-06
+[BRRT]**********find path after 1594 iterations
+[INFO] [1765451486.733266782]: [BRRT]: find_path_use_time: 0.000873366, length: 116.407
+[INFO] [1765451486.733315529]: [BRRT] final path len: 116.407
+[INFO] [1765451486.846235831]: [BRRTOpitmize1] final path len: 248.299
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 8718 iterations
+[INFO] [1765451486.977115608]: [BRRT_Optimize_case2]: find_path_use_time: 0.0681695, length: 110.559
+[INFO] [1765451486.977198395]: [BRRTOpitmize2] final path len: 110.559
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 5366 iterations
+[INFO] [1765451487.060603299]: [BRRT_Optimize_case3]: find_path_use_time: 0.0535862, length: 116.065
+[INFO] [1765451487.060818037]: [BRRTOpitmize3] final path len: 116.065
+[INFO] [1765451489.254585678]: 
+-----------------------------
+goal rcved at     -41.1105      24.7187 -4.09679e-07
+[BRRT]**********find path after 1265 iterations
+[INFO] [1765451489.261091015]: [BRRT]: find_path_use_time: 0.000831286, length: 111.507
+[INFO] [1765451489.261144179]: [BRRT] final path len: 111.507
+[INFO] [1765451489.291888839]: [BRRTOpitmize1] final path len: 134.467
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 17863 iterations
+[INFO] [1765451489.689739077]: [BRRT_Optimize_case2]: find_path_use_time: 0.21394, length: 149.958
+[INFO] [1765451489.690084349]: [BRRTOpitmize2] final path len: 149.958
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 2770 iterations
+[INFO] [1765451489.729454101]: [BRRT_Optimize_case3]: find_path_use_time: 0.0249899, length: 92.0319
+[INFO] [1765451489.729515889]: [BRRTOpitmize3] final path len: 92.0319
+[INFO] [1765451491.247096926]: 
+-----------------------------
+goal rcved at     23.6902    -11.4244 2.03296e-06
+[BRRT]**********find path after 2432 iterations
+[INFO] [1765451491.252885762]: [BRRT]: find_path_use_time: 0.00191043, length: 125.101
+[INFO] [1765451491.252955092]: [BRRT] final path len: 125.101
+[INFO] [1765451491.284293469]: [BRRTOpitmize1] final path len: 148.576
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 10136 iterations
+[INFO] [1765451491.427306217]: [BRRT_Optimize_case2]: find_path_use_time: 0.0710756, length: 120.35
+[INFO] [1765451491.427394046]: [BRRTOpitmize2] final path len: 120.35
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 3202 iterations
+[INFO] [1765451491.467938063]: [BRRT_Optimize_case3]: find_path_use_time: 0.0282096, length: 88.1128
+[INFO] [1765451491.468032600]: [BRRTOpitmize3] final path len: 88.1128
+[INFO] [1765451494.449004542]: 
+-----------------------------
+goal rcved at     -3.41813      44.3756 -1.93498e-06
+[BRRT]**********find path after 1507 iterations
+[INFO] [1765451494.458019652]: [BRRT]: find_path_use_time: 0.00154133, length: 99.7882
+[INFO] [1765451494.458093981]: [BRRT] final path len: 99.7882
+[INFO] [1765451494.469608407]: [BRRTOpitmize1] final path len: 97.5209
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 3952 iterations
+[INFO] [1765451494.513069049]: [BRRT_Optimize_case2]: find_path_use_time: 0.0210137, length: 91.6914
+[INFO] [1765451494.513203541]: [BRRTOpitmize2] final path len: 91.6914
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1889 iterations
+[INFO] [1765451494.538983527]: [BRRT_Optimize_case3]: find_path_use_time: 0.017705, length: 70.6713
+[INFO] [1765451494.539037316]: [BRRTOpitmize3] final path len: 70.6713
+[INFO] [1765451495.883685463]: 
+-----------------------------
+goal rcved at     -20.2851     -33.1256 -1.45722e-06
+[BRRT]**********find path after 5008 iterations
+[INFO] [1765451495.953328985]: [BRRT]: find_path_use_time: 0.0192723, length: 156.13
+[INFO] [1765451495.953809749]: [BRRT] final path len: 156.13
+[INFO] [1765451495.991492472]: [BRRTOpitmize1] final path len: 122.922
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 774 iterations
+[INFO] [1765451496.004061379]: [BRRT_Optimize_case2]: find_path_use_time: 0.0057108, length: 108.969
+[INFO] [1765451496.004126250]: [BRRTOpitmize2] final path len: 108.969
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1763 iterations
+[INFO] [1765451496.030882555]: [BRRT_Optimize_case3]: find_path_use_time: 0.0184464, length: 88.348
+[INFO] [1765451496.030981633]: [BRRTOpitmize3] final path len: 88.348
+[INFO] [1765451497.562176201]: 
+-----------------------------
+goal rcved at      23.7414      6.85587 -2.30816e-06
+[BRRT]**********find path after 3495 iterations
+[INFO] [1765451497.575728052]: [BRRT]: find_path_use_time: 0.00269622, length: 111.547
+[INFO] [1765451497.575831962]: [BRRT] final path len: 111.547
+[INFO] [1765451497.833803475]: [BRRTOpitmize1] final path len: 120.01
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 8415 iterations
+[INFO] [1765451497.928413153]: [BRRT_Optimize_case2]: find_path_use_time: 0.059019, length: 103.866
+[INFO] [1765451497.928464650]: [BRRTOpitmize2] final path len: 103.866
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 3562 iterations
+[INFO] [1765451497.976948964]: [BRRT_Optimize_case3]: find_path_use_time: 0.0348383, length: 85.4865
+[INFO] [1765451497.977002252]: [BRRTOpitmize3] final path len: 85.4865
+[INFO] [1765451499.368764530]: 
+-----------------------------
+goal rcved at    -34.6326     38.4415 1.63891e-06
+[BRRT]**********find path after 1270 iterations
+[INFO] [1765451499.373220775]: [BRRT]: find_path_use_time: 0.00101903, length: 85.0084
+[INFO] [1765451499.373354934]: [BRRT] final path len: 85.0084
+[INFO] [1765451499.454268061]: [BRRTOpitmize1] final path len: 116.838
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 256 iterations
+[INFO] [1765451499.464076376]: [BRRT_Optimize_case2]: find_path_use_time: 0.0015347, length: 103.164
+[INFO] [1765451499.464325861]: [BRRTOpitmize2] final path len: 103.164
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 812 iterations
+[INFO] [1765451499.479069436]: [BRRT_Optimize_case3]: find_path_use_time: 0.00850393, length: 81.8635
+[INFO] [1765451499.479131266]: [BRRTOpitmize3] final path len: 81.8635
+[INFO] [1765451500.684069754]: 
+-----------------------------
+goal rcved at      16.3428      -13.505 -1.66185e-07
+[BRRT]**********find path after 940 iterations
+[INFO] [1765451500.687635509]: [BRRT]: find_path_use_time: 0.00099536, length: 103.674
+[INFO] [1765451500.687707171]: [BRRT] final path len: 103.674
+[INFO] [1765451500.710830225]: [BRRTOpitmize1] final path len: 119.358
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 4107 iterations
+[INFO] [1765451500.747442883]: [BRRT_Optimize_case2]: find_path_use_time: 0.0220231, length: 130.303
+[INFO] [1765451500.747528295]: [BRRTOpitmize2] final path len: 130.303
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 2341 iterations
+[INFO] [1765451500.778344451]: [BRRT_Optimize_case3]: find_path_use_time: 0.0223866, length: 89.7445
+[INFO] [1765451500.778420405]: [BRRTOpitmize3] final path len: 89.7445
+[INFO] [1765451502.228284603]: 
+-----------------------------
+goal rcved at    -41.5247    -15.8499 -2.3061e-06
+[BRRT]**********find path after 1961 iterations
+[INFO] [1765451502.234294593]: [BRRT]: find_path_use_time: 0.00130818, length: 97.0021
+[INFO] [1765451502.234401087]: [BRRT] final path len: 97.0021
+[INFO] [1765451502.239628205]: [BRRTOpitmize1] final path len: 84.7116
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 246 iterations
+[INFO] [1765451502.247053239]: [BRRT_Optimize_case2]: find_path_use_time: 0.00181477, length: 77.8794
+[INFO] [1765451502.247185440]: [BRRTOpitmize2] final path len: 77.8794
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 382 iterations
+[INFO] [1765451502.254558310]: [BRRT_Optimize_case3]: find_path_use_time: 0.00365404, length: 62.5641
+[INFO] [1765451502.254765298]: [BRRTOpitmize3] final path len: 62.5641
+[INFO] [1765451503.399529551]: 
+-----------------------------
+goal rcved at     -18.4428      -33.877 -1.50738e-06
+[BRRT]**********find path after 106 iterations
+[INFO] [1765451503.402102696]: [BRRT]: find_path_use_time: 0.000134534, length: 45.1059
+[INFO] [1765451503.402189357]: [BRRT] final path len: 45.1059
+[INFO] [1765451503.406938211]: [BRRTOpitmize1] final path len: 57.8829
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 9888 iterations
+[INFO] [1765451503.500632107]: [BRRT_Optimize_case2]: find_path_use_time: 0.0628443, length: 88.3814
+[INFO] [1765451503.500789390]: [BRRTOpitmize2] final path len: 88.3814
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 544 iterations
+[INFO] [1765451503.506267577]: [BRRT_Optimize_case3]: find_path_use_time: 0.00401927, length: 38.5022
+[INFO] [1765451503.506307199]: [BRRTOpitmize3] final path len: 38.5022
+[INFO] [1765451505.162936989]: 
+-----------------------------
+goal rcved at     22.2311     32.6764 -9.5518e-07
+[BRRT]**********find path after 929 iterations
+[INFO] [1765451505.169616149]: [BRRT]: find_path_use_time: 0.00112944, length: 125.746
+[INFO] [1765451505.169756266]: [BRRT] final path len: 125.746
+[INFO] [1765451505.220891927]: [BRRTOpitmize1] final path len: 144.175
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 5319 iterations
+[INFO] [1765451505.288751382]: [BRRT_Optimize_case2]: find_path_use_time: 0.0356964, length: 134.276
+[INFO] [1765451505.289842695]: [BRRTOpitmize2] final path len: 134.276
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 2743 iterations
+[INFO] [1765451505.321211860]: [BRRT_Optimize_case3]: find_path_use_time: 0.0239674, length: 94.8376
+[INFO] [1765451505.321569006]: [BRRTOpitmize3] final path len: 94.8376
+[INFO] [1765451506.635501749]: 
+-----------------------------
+goal rcved at      25.7579     -15.0959 -3.17273e-06
+[BRRT]**********find path after 335 iterations
+[INFO] [1765451506.637190361]: [BRRT]: find_path_use_time: 0.000505513, length: 63.7213
+[INFO] [1765451506.637287481]: [BRRT] final path len: 63.7213
+[INFO] [1765451506.645709458]: [BRRTOpitmize1] final path len: 69.7276
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 72 iterations
+[INFO] [1765451506.653186822]: [BRRT_Optimize_case2]: find_path_use_time: 0.000569592, length: 58.0231
+[INFO] [1765451506.653239694]: [BRRTOpitmize2] final path len: 58.0231
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 706 iterations
+[INFO] [1765451506.664490093]: [BRRT_Optimize_case3]: find_path_use_time: 0.00592391, length: 51.2793
+[INFO] [1765451506.664545756]: [BRRTOpitmize3] final path len: 51.2793
+[INFO] [1765451508.444302913]: 
+-----------------------------
+goal rcved at    -34.0895     38.1201 1.06391e-06
+[BRRT]**********find path after 2977 iterations
+[INFO] [1765451508.455297034]: [BRRT]: find_path_use_time: 0.00352413, length: 115.904
+[INFO] [1765451508.455419027]: [BRRT] final path len: 115.904
+[INFO] [1765451508.471870670]: [BRRTOpitmize1] final path len: 131.162
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 1594 iterations
+[INFO] [1765451508.489414209]: [BRRT_Optimize_case2]: find_path_use_time: 0.0130258, length: 125.753
+[INFO] [1765451508.489476206]: [BRRTOpitmize2] final path len: 125.753
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 2223 iterations
+[INFO] [1765451508.531200821]: [BRRT_Optimize_case3]: find_path_use_time: 0.0298273, length: 98.0047
+[INFO] [1765451508.531264401]: [BRRTOpitmize3] final path len: 98.0047
+[INFO] [1765451509.744358773]: 
+-----------------------------
+goal rcved at     8.82408     -27.727 7.28784e-07
+[BRRT]**********find path after 5323 iterations
+[INFO] [1765451509.759597735]: [BRRT]: find_path_use_time: 0.00453112, length: 173.554
+[INFO] [1765451509.759700396]: [BRRT] final path len: 173.554
+[INFO] [1765451510.465268525]: [BRRTOpitmize1] final path len: 156.631
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 28318 iterations
+[INFO] [1765451511.166305828]: [BRRT_Optimize_case2]: find_path_use_time: 0.348527, length: 148.997
+[INFO] [1765451511.166808716]: [BRRTOpitmize2] final path len: 148.997
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 4349 iterations
+[INFO] [1765451511.232837275]: [BRRT_Optimize_case3]: find_path_use_time: 0.0464763, length: 102.393
+[INFO] [1765451511.232929436]: [BRRTOpitmize3] final path len: 102.393
+[INFO] [1765451513.249795187]: 
+-----------------------------
+goal rcved at      27.2725      44.1476 -2.15334e-06
+[BRRT]**********find path after 2743 iterations
+[INFO] [1765451513.258373030]: [BRRT]: find_path_use_time: 0.00209438, length: 113.022
+[INFO] [1765451513.258462983]: [BRRT] final path len: 113.022
+[INFO] [1765451513.330777516]: [BRRTOpitmize1] final path len: 90.4722
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 2196 iterations
+[INFO] [1765451513.402325092]: [BRRT_Optimize_case2]: find_path_use_time: 0.016351, length: 123.008
+[INFO] [1765451513.402526456]: [BRRTOpitmize2] final path len: 123.008
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 2134 iterations
+[INFO] [1765451513.441986700]: [BRRT_Optimize_case3]: find_path_use_time: 0.0255479, length: 84.0924
+[INFO] [1765451513.442089777]: [BRRTOpitmize3] final path len: 84.0924
+[INFO] [1765451514.710129745]: 
+-----------------------------
+goal rcved at     4.38048    -26.4463 1.79678e-06
+[BRRT]**********find path after 3068 iterations
+[INFO] [1765451514.725407622]: [BRRT]: find_path_use_time: 0.00360196, length: 122.564
+[INFO] [1765451514.725536031]: [BRRT] final path len: 122.564
+[INFO] [1765451514.785664469]: [BRRTOpitmize1] final path len: 103.079
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 11553 iterations
+[INFO] [1765451514.947732412]: [BRRT_Optimize_case2]: find_path_use_time: 0.0873777, length: 148.063
+[INFO] [1765451514.948289921]: [BRRTOpitmize2] final path len: 148.063
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1699 iterations
+[INFO] [1765451514.974143568]: [BRRT_Optimize_case3]: find_path_use_time: 0.0165386, length: 86.367
+[INFO] [1765451514.974244813]: [BRRTOpitmize3] final path len: 86.367
+[INFO] [1765451516.910591650]: 
+-----------------------------
+goal rcved at     48.4721    -32.9109 2.67215e-06
+[BRRT]**********find path after 4627 iterations
+[INFO] [1765451516.919196908]: [BRRT]: find_path_use_time: 0.00187981, length: 63.3686
+[INFO] [1765451516.919247989]: [BRRT] final path len: 63.3686
+[INFO] [1765451516.936356927]: [BRRTOpitmize1] final path len: 72.4948
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 17843 iterations
+[INFO] [1765451517.226536961]: [BRRT_Optimize_case2]: find_path_use_time: 0.161005, length: 74.2572
+[INFO] [1765451517.226881942]: [BRRTOpitmize2] final path len: 74.2572
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1527 iterations
+[INFO] [1765451517.243901593]: [BRRT_Optimize_case3]: find_path_use_time: 0.0121762, length: 53.9102
+[INFO] [1765451517.243963757]: [BRRTOpitmize3] final path len: 53.9102
+[INFO] [1765451518.881587165]: 
+-----------------------------
+goal rcved at    -44.5916     43.5982 1.33001e-06
+[BRRT]**********find path after 4873 iterations
+[INFO] [1765451518.901902629]: [BRRT]: find_path_use_time: 0.00790109, length: 169.416
+[INFO] [1765451518.902082160]: [BRRT] final path len: 169.416
+[INFO] [1765451518.971300119]: [BRRTOpitmize1] final path len: 234.015
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 4478 iterations
+[INFO] [1765451519.061730740]: [BRRT_Optimize_case2]: find_path_use_time: 0.0387574, length: 192.402
+[INFO] [1765451519.061868107]: [BRRTOpitmize2] final path len: 192.402
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 3196 iterations
+[INFO] [1765451519.126818768]: [BRRT_Optimize_case3]: find_path_use_time: 0.0476813, length: 141.602
+[INFO] [1765451519.126942011]: [BRRTOpitmize3] final path len: 141.602
+[INFO] [1765451521.026789919]: 
+-----------------------------
+goal rcved at    -19.6496    -29.1196 5.56749e-07
+[BRRT]**********find path after 1724 iterations
+[INFO] [1765451521.036144509]: [BRRT]: find_path_use_time: 0.000910948, length: 101.955
+[INFO] [1765451521.036498447]: [BRRT] final path len: 101.955
+[INFO] [1765451521.114409159]: [BRRTOpitmize1] final path len: 133.932
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 4929 iterations
+[INFO] [1765451521.181317416]: [BRRT_Optimize_case2]: find_path_use_time: 0.0392073, length: 118.6
+[INFO] [1765451521.181461616]: [BRRTOpitmize2] final path len: 118.6
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 4570 iterations
+[INFO] [1765451521.259912047]: [BRRT_Optimize_case3]: find_path_use_time: 0.0516774, length: 111.228
+[INFO] [1765451521.259964336]: [BRRTOpitmize3] final path len: 111.228
+[INFO] [1765451523.009024650]: 
+-----------------------------
+goal rcved at     27.4977     41.4447 2.04876e-06
+[BRRT]**********find path after 810 iterations
+[INFO] [1765451523.014184855]: [BRRT]: find_path_use_time: 0.000621881, length: 107.389
+[INFO] [1765451523.014233352]: [BRRT] final path len: 107.389
+[INFO] [1765451523.038068406]: [BRRTOpitmize1] final path len: 186.363
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 7364 iterations
+[INFO] [1765451523.110738583]: [BRRT_Optimize_case2]: find_path_use_time: 0.0451219, length: 142.06
+[INFO] [1765451523.110999485]: [BRRTOpitmize2] final path len: 142.06
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1774 iterations
+[INFO] [1765451523.140159192]: [BRRT_Optimize_case3]: find_path_use_time: 0.0186761, length: 95.9267
+[INFO] [1765451523.140317308]: [BRRTOpitmize3] final path len: 95.9267
+[INFO] [1765451524.576097865]: 
+-----------------------------
+goal rcved at     9.69754    -29.7829 2.49274e-08
+[BRRT]**********find path after 3685 iterations
+[INFO] [1765451524.603012076]: [BRRT]: find_path_use_time: 0.0060649, length: 123.088
+[INFO] [1765451524.603225314]: [BRRT] final path len: 123.088
+[INFO] [1765451524.619310269]: [BRRTOpitmize1] final path len: 106.808
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 300 iterations
+[INFO] [1765451524.629683717]: [BRRT_Optimize_case2]: find_path_use_time: 0.00220458, length: 92.8305
+[INFO] [1765451524.629906246]: [BRRTOpitmize2] final path len: 92.8305
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1033 iterations
+[INFO] [1765451524.646462175]: [BRRT_Optimize_case3]: find_path_use_time: 0.0106367, length: 76.339
+[INFO] [1765451524.646559044]: [BRRTOpitmize3] final path len: 76.339
+[INFO] [1765451526.392296828]: 
+-----------------------------
+goal rcved at    -42.7214     20.6019 8.55417e-07
+[BRRT]**********find path after 1735 iterations
+[INFO] [1765451526.402276215]: [BRRT]: find_path_use_time: 0.00500492, length: 103.825
+[INFO] [1765451526.402402292]: [BRRT] final path len: 103.825
+[INFO] [1765451526.414450977]: [BRRTOpitmize1] final path len: 95.2683
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 544 iterations
+[INFO] [1765451526.419913998]: [BRRT_Optimize_case2]: find_path_use_time: 0.00343014, length: 99.1411
+[INFO] [1765451526.419998160]: [BRRTOpitmize2] final path len: 99.1411
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1005 iterations
+[INFO] [1765451526.437039144]: [BRRT_Optimize_case3]: find_path_use_time: 0.0120679, length: 78.4771
+[INFO] [1765451526.437115806]: [BRRTOpitmize3] final path len: 78.4771
+-----------------------------
+goal rcved at     28.6809     43.7224 8.89361e-07
+[BRRT]**********find path after 1128 iterations
+[INFO] [1765451615.195901993]: [BRRT]: find_path_use_time: 0.0120776, length: 97.8233
+[INFO] [1765451615.196564330]: [BRRT] final path len: 97.8233
+[INFO] [1765451615.299391394]: [BRRTOpitmize1] final path len: 160.344
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 574 iterations
+[INFO] [1765451615.307947196]: [BRRT_Optimize_case2]: find_path_use_time: 0.00507429, length: 105.739
+[INFO] [1765451615.308067064]: [BRRTOpitmize2] final path len: 105.739
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1598 iterations
+[INFO] [1765451615.347500637]: [BRRT_Optimize_case3]: find_path_use_time: 0.0271447, length: 92.3749
+[INFO] [1765451615.347572258]: [BRRTOpitmize3] final path len: 92.3749
+[INFO] [1765451616.436672122]: 
+-----------------------------
+goal rcved at      8.94165     -30.0017 -1.64958e-06
+[BRRT]**********find path after 1681 iterations
+[INFO] [1765451616.452347765]: [BRRT]: find_path_use_time: 0.00865484, length: 161.691
+[INFO] [1765451616.452642373]: [BRRT] final path len: 161.691
+[INFO] [1765451616.516521170]: [BRRTOpitmize1] final path len: 162.324
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 504 iterations
+[INFO] [1765451616.521912153]: [BRRT_Optimize_case2]: find_path_use_time: 0.00337668, length: 104.73
+[INFO] [1765451616.522079935]: [BRRTOpitmize2] final path len: 104.73
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1079 iterations
+[INFO] [1765451616.539016130]: [BRRT_Optimize_case3]: find_path_use_time: 0.0118971, length: 80.4433
+[INFO] [1765451616.539073585]: [BRRTOpitmize3] final path len: 80.4433
+[INFO] [1765451617.606994038]: 
+-----------------------------
+goal rcved at     -37.5882      5.03905 -2.85896e-06
+[BRRT]**********find path after 183 iterations
+[INFO] [1765451617.614149461]: [BRRT]: find_path_use_time: 0.00377187, length: 68.0329
+[INFO] [1765451617.614989454]: [BRRT] final path len: 68.0329
+[INFO] [1765451617.628979236]: [BRRTOpitmize1] final path len: 74.6178
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 940 iterations
+[INFO] [1765451617.657762127]: [BRRT_Optimize_case2]: find_path_use_time: 0.0258858, length: 80.9666
+[INFO] [1765451617.657888370]: [BRRTOpitmize2] final path len: 80.9666
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 239 iterations
+[INFO] [1765451617.664117430]: [BRRT_Optimize_case3]: find_path_use_time: 0.00378108, length: 60.4373
+[INFO] [1765451617.664170177]: [BRRTOpitmize3] final path len: 60.4373
+[INFO] [1765451618.841447609]: 
+-----------------------------
+goal rcved at     28.1013    -3.51177 1.44168e-06
+[BRRT]**********find path after 2164 iterations
+[INFO] [1765451618.848170432]: [BRRT]: find_path_use_time: 0.00191672, length: 96.0264
+[INFO] [1765451618.848276093]: [BRRT] final path len: 96.0264
+[INFO] [1765451618.998257829]: [BRRTOpitmize1] final path len: 113.522
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 12275 iterations
+[INFO] [1765451619.226771313]: [BRRT_Optimize_case2]: find_path_use_time: 0.129399, length: 137.596
+[INFO] [1765451619.226869765]: [BRRTOpitmize2] final path len: 137.596
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 2062 iterations
+[INFO] [1765451619.246516098]: [BRRT_Optimize_case3]: find_path_use_time: 0.0151062, length: 75.7524
+[INFO] [1765451619.246633424]: [BRRTOpitmize3] final path len: 75.7524
+[INFO] [1765451620.534238155]: 
+-----------------------------
+goal rcved at      -18.41     29.5498 2.25962e-06
+[BRRT]**********find path after 1201 iterations
+[INFO] [1765451620.536823882]: [BRRT]: find_path_use_time: 0.000598258, length: 121.214
+[INFO] [1765451620.536860297]: [BRRT] final path len: 121.214
+[INFO] [1765451620.555704050]: [BRRTOpitmize1] final path len: 98.1388
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 4110 iterations
+[INFO] [1765451620.600695637]: [BRRT_Optimize_case2]: find_path_use_time: 0.0198244, length: 99.7397
+[INFO] [1765451620.601193650]: [BRRTOpitmize2] final path len: 99.7397
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 2735 iterations
+[INFO] [1765451620.641359140]: [BRRT_Optimize_case3]: find_path_use_time: 0.0283803, length: 69.7537
+[INFO] [1765451620.641412928]: [BRRTOpitmize3] final path len: 69.7537
+[INFO] [1765451621.886664919]: 
+-----------------------------
+goal rcved at      14.1498      -34.426 -2.03881e-06
+[BRRT]**********find path after 3238 iterations
+[INFO] [1765451621.900058568]: [BRRT]: find_path_use_time: 0.00381628, length: 126.541
+[INFO] [1765451621.900198435]: [BRRT] final path len: 126.541
+[INFO] [1765451622.798445650]: [BRRTOpitmize1] final path len: 147.289
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 14523 iterations
+[INFO] [1765451623.037579066]: [BRRT_Optimize_case2]: find_path_use_time: 0.131815, length: 137.938
+[INFO] [1765451623.038253402]: [BRRTOpitmize2] final path len: 137.938
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 2414 iterations
+[INFO] [1765451623.086788995]: [BRRT_Optimize_case3]: find_path_use_time: 0.0324941, length: 78.8803
+[INFO] [1765451623.086838159]: [BRRTOpitmize3] final path len: 78.8803
+[INFO] [1765451625.109682777]: 
+-----------------------------
+goal rcved at     -25.2564     -36.9314 -2.01591e-06
+[BRRT]**********find path after 8259 iterations
+[INFO] [1765451625.146862437]: [BRRT]: find_path_use_time: 0.014623, length: 68.3074
+[INFO] [1765451625.146944224]: [BRRT] final path len: 68.3074
+[INFO] [1765451625.281558798]: [BRRTOpitmize1] final path len: 51.6506
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 2477 iterations
+[INFO] [1765451625.320551688]: [BRRT_Optimize_case2]: find_path_use_time: 0.015082, length: 52.978
+[INFO] [1765451625.320638058]: [BRRTOpitmize2] final path len: 52.978
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 654 iterations
+[INFO] [1765451625.333024889]: [BRRT_Optimize_case3]: find_path_use_time: 0.00769768, length: 42.0395
+[INFO] [1765451625.333070095]: [BRRTOpitmize3] final path len: 42.0395
+[INFO] [1765451626.790226099]: 
+-----------------------------
+goal rcved at      28.3702      38.9661 -1.95026e-06
+[BRRT]**********find path after 2864 iterations
+[INFO] [1765451626.806325801]: [BRRT]: find_path_use_time: 0.0111714, length: 136.315
+[INFO] [1765451626.806502832]: [BRRT] final path len: 136.315
+[INFO] [1765451626.987645989]: [BRRTOpitmize1] final path len: 184.874
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 21854 iterations
+[INFO] [1765451627.379087172]: [BRRT_Optimize_case2]: find_path_use_time: 0.214648, length: 138.456
+[INFO] [1765451627.379649640]: [BRRTOpitmize2] final path len: 138.456
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1798 iterations
+[INFO] [1765451627.400337995]: [BRRT_Optimize_case3]: find_path_use_time: 0.0151388, length: 104.497
+[INFO] [1765451627.400411033]: [BRRTOpitmize3] final path len: 104.497
+[INFO] [1765451628.559981845]: 
+-----------------------------
+goal rcved at    18.7118    -38.633 2.9309e-06
+[BRRT]**********find path after 4984 iterations
+[INFO] [1765451628.579707047]: [BRRT]: find_path_use_time: 0.00491668, length: 153.395
+[INFO] [1765451628.579777127]: [BRRT] final path len: 153.395
+[INFO] [1765451628.632478272]: [BRRTOpitmize1] final path len: 115.51
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 901 iterations
+[INFO] [1765451628.671972216]: [BRRT_Optimize_case2]: find_path_use_time: 0.00610894, length: 118.493
+[INFO] [1765451628.672040087]: [BRRTOpitmize2] final path len: 118.493
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 955 iterations
+[INFO] [1765451628.683423934]: [BRRT_Optimize_case3]: find_path_use_time: 0.00791038, length: 84.7099
+[INFO] [1765451628.683528928]: [BRRTOpitmize3] final path len: 84.7099
+[INFO] [1765451629.997534843]: 
+-----------------------------
+goal rcved at    -43.3896     26.4427 8.12558e-07
+[BRRT]**********find path after 4597 iterations
+[INFO] [1765451630.013702583]: [BRRT]: find_path_use_time: 0.005053, length: 125.742
+[INFO] [1765451630.013757621]: [BRRT] final path len: 125.742
+[INFO] [1765451630.024035199]: [BRRTOpitmize1] final path len: 113.744
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 1551 iterations
+[INFO] [1765451630.038640361]: [BRRT_Optimize_case2]: find_path_use_time: 0.00977769, length: 126.172
+[INFO] [1765451630.038699691]: [BRRTOpitmize2] final path len: 126.172
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 689 iterations
+[INFO] [1765451630.046497327]: [BRRT_Optimize_case3]: find_path_use_time: 0.00534565, length: 97.6918
+[INFO] [1765451630.046740480]: [BRRTOpitmize3] final path len: 97.6918
+[INFO] [1765451631.485889926]: 
+-----------------------------
+goal rcved at        5.357      37.2726 -1.47531e-06
+[BRRT]**********find path after 2467 iterations
+[INFO] [1765451631.499647429]: [BRRT]: find_path_use_time: 0.00320252, length: 112.306
+[INFO] [1765451631.499742465]: [BRRT] final path len: 112.306
+[INFO] [1765451631.504612103]: [BRRTOpitmize1] final path len: 70.0987
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 5014 iterations
+[INFO] [1765451631.560237080]: [BRRT_Optimize_case2]: find_path_use_time: 0.0376366, length: 72.225
+[INFO] [1765451631.560330367]: [BRRTOpitmize2] final path len: 72.225
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 3611 iterations
+[INFO] [1765451631.622283065]: [BRRT_Optimize_case3]: find_path_use_time: 0.0447606, length: 84.2757
+[INFO] [1765451631.622385017]: [BRRTOpitmize3] final path len: 84.2757
+[INFO] [1765451632.787666164]: 
+-----------------------------
+goal rcved at      5.3572    -26.9811 7.25131e-08
+[BRRT]**********find path after 5242 iterations
+[INFO] [1765451632.813282987]: [BRRT]: find_path_use_time: 0.00520216, length: 124.869
+[INFO] [1765451632.813393522]: [BRRT] final path len: 124.869
+[INFO] [1765451632.914886578]: [BRRTOpitmize1] final path len: 164.262
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 12892 iterations
+[INFO] [1765451633.155417745]: [BRRT_Optimize_case2]: find_path_use_time: 0.132721, length: 103.334
+[INFO] [1765451633.156371982]: [BRRTOpitmize2] final path len: 103.334
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 2639 iterations
+[INFO] [1765451633.186562376]: [BRRT_Optimize_case3]: find_path_use_time: 0.0194244, length: 74.3035
+[INFO] [1765451633.186657121]: [BRRTOpitmize3] final path len: 74.3035
+[INFO] [1765451634.519838722]: 
+-----------------------------
+goal rcved at      29.2206      43.9381 -9.60125e-07
+[BRRT]**********find path after 2035 iterations
+[INFO] [1765451634.526383181]: [BRRT]: find_path_use_time: 0.00166757, length: 110.815
+[INFO] [1765451634.526483508]: [BRRT] final path len: 110.815
+[INFO] [1765451634.568312318]: [BRRTOpitmize1] final path len: 104.056
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 6312 iterations
+[INFO] [1765451634.698391818]: [BRRT_Optimize_case2]: find_path_use_time: 0.0607224, length: 121.511
+[INFO] [1765451634.698478771]: [BRRTOpitmize2] final path len: 121.511
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1764 iterations
+[INFO] [1765451634.727482608]: [BRRT_Optimize_case3]: find_path_use_time: 0.0215726, length: 87.7863
+[INFO] [1765451634.727598977]: [BRRTOpitmize3] final path len: 87.7863
+[INFO] [1765451636.169759495]: 
+-----------------------------
+goal rcved at      24.4561      -40.241 -1.61156e-06
+[BRRT]**********find path after 1438 iterations
+[INFO] [1765451636.175347216]: [BRRT]: find_path_use_time: 0.00169603, length: 118.688
+[INFO] [1765451636.175479250]: [BRRT] final path len: 118.688
+[INFO] [1765451636.207347423]: [BRRTOpitmize1] final path len: 155.049
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 2542 iterations
+[INFO] [1765451636.243271155]: [BRRT_Optimize_case2]: find_path_use_time: 0.0168442, length: 146.555
+[INFO] [1765451636.243462602]: [BRRTOpitmize2] final path len: 146.555
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1432 iterations
+[INFO] [1765451636.260319927]: [BRRT_Optimize_case3]: find_path_use_time: 0.0112251, length: 94.8868
+[INFO] [1765451636.260419796]: [BRRTOpitmize3] final path len: 94.8868
+[INFO] [1765451637.786753819]: 
+-----------------------------
+goal rcved at     -45.962    -29.0921 1.75358e-06
+[BRRT]**********find path after 1424 iterations
+[INFO] [1765451637.793025251]: [BRRT]: find_path_use_time: 0.00145692, length: 133.884
+[INFO] [1765451637.793205366]: [BRRT] final path len: 133.884
+[INFO] [1765451637.845526199]: [BRRTOpitmize1] final path len: 98.9013
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 4028 iterations
+[INFO] [1765451637.876217231]: [BRRT_Optimize_case2]: find_path_use_time: 0.0196238, length: 103.14
+[INFO] [1765451637.876426844]: [BRRTOpitmize2] final path len: 103.14
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 2596 iterations
+[INFO] [1765451637.903444212]: [BRRT_Optimize_case3]: find_path_use_time: 0.0204721, length: 90.4179
+[INFO] [1765451637.903498084]: [BRRTOpitmize3] final path len: 90.4179
+[INFO] [1765451639.502770047]: 
+-----------------------------
+goal rcved at     27.0231    -4.70704 2.19566e-06
+[BRRT]**********find path after 1762 iterations
+[INFO] [1765451639.513302610]: [BRRT]: find_path_use_time: 0.00186048, length: 113.135
+[INFO] [1765451639.513442352]: [BRRT] final path len: 113.135
+[INFO] [1765451639.524448179]: [BRRTOpitmize1] final path len: 116.62
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 585 iterations
+[INFO] [1765451639.535172439]: [BRRT_Optimize_case2]: find_path_use_time: 0.00511654, length: 124.656
+[INFO] [1765451639.535324639]: [BRRTOpitmize2] final path len: 124.656
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1676 iterations
+[INFO] [1765451639.556723870]: [BRRT_Optimize_case3]: find_path_use_time: 0.0149829, length: 86.7432
+[INFO] [1765451639.556785783]: [BRRTOpitmize3] final path len: 86.7432
+[INFO] [1765451641.085296635]: 
+-----------------------------
+goal rcved at    -43.5093     42.9546 1.43361e-06
+[BRRT]**********find path after 530 iterations
+[INFO] [1765451641.088597613]: [BRRT]: find_path_use_time: 0.00090474, length: 116.455
+[INFO] [1765451641.088715689]: [BRRT] final path len: 116.455
+[INFO] [1765451641.106006073]: [BRRTOpitmize1] final path len: 156.714
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 1955 iterations
+[INFO] [1765451641.125442125]: [BRRT_Optimize_case2]: find_path_use_time: 0.0137237, length: 114.901
+[INFO] [1765451641.125560701]: [BRRTOpitmize2] final path len: 114.901
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1764 iterations
+[INFO] [1765451641.152906550]: [BRRT_Optimize_case3]: find_path_use_time: 0.0188564, length: 100.64
+[INFO] [1765451641.152958839]: [BRRTOpitmize3] final path len: 100.64
+[INFO] [1765451642.719186776]: 
+-----------------------------
+goal rcved at     -7.61068     -35.1444 -1.18997e-06
+[BRRT]**********find path after 7278 iterations
+[INFO] [1765451642.749431250]: [BRRT]: find_path_use_time: 0.00794792, length: 208.05
+[INFO] [1765451642.749867350]: [BRRT] final path len: 208.05
+[INFO] [1765451642.780254024]: [BRRTOpitmize1] final path len: 152.581
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 2108 iterations
+[INFO] [1765451642.801683379]: [BRRT_Optimize_case2]: find_path_use_time: 0.0125144, length: 120.808
+[INFO] [1765451642.801738042]: [BRRTOpitmize2] final path len: 120.808
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 6547 iterations
+[INFO] [1765451642.947070292]: [BRRT_Optimize_case3]: find_path_use_time: 0.0994804, length: 123.895
+[INFO] [1765451642.947269655]: [BRRTOpitmize3] final path len: 123.895
+[INFO] [1765451644.838283632]: 
+-----------------------------
+goal rcved at     -5.57925        43.94 -1.13024e-06
+[BRRT]**********find path after 4500 iterations
+[INFO] [1765451644.856999892]: [BRRT]: find_path_use_time: 0.00483385, length: 165.262
+[INFO] [1765451644.857109803]: [BRRT] final path len: 165.262
+[INFO] [1765451644.887858581]: [BRRTOpitmize1] final path len: 143.002
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 8004 iterations
+[INFO] [1765451645.042970520]: [BRRT_Optimize_case2]: find_path_use_time: 0.0879747, length: 145.608
+[INFO] [1765451645.043277252]: [BRRTOpitmize2] final path len: 145.608
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 2318 iterations
+[INFO] [1765451645.072674483]: [BRRT_Optimize_case3]: find_path_use_time: 0.0155719, length: 88.477
+[INFO] [1765451645.072719272]: [BRRTOpitmize3] final path len: 88.477
+[INFO] [1765451647.082114915]: 
+-----------------------------
+goal rcved at     43.1984    -22.5034 5.51764e-07
+[BRRT]**********find path after 1018 iterations
+[INFO] [1765451647.089251381]: [BRRT]: find_path_use_time: 0.00110773, length: 109.116
+[INFO] [1765451647.089323585]: [BRRT] final path len: 109.116
+[INFO] [1765451647.107890645]: [BRRTOpitmize1] final path len: 122.644
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 964 iterations
+[INFO] [1765451647.132990748]: [BRRT_Optimize_case2]: find_path_use_time: 0.00602382, length: 126.477
+[INFO] [1765451647.133052369]: [BRRTOpitmize2] final path len: 126.477
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 946 iterations
+[INFO] [1765451647.145984877]: [BRRT_Optimize_case3]: find_path_use_time: 0.00848447, length: 89.6727
+[INFO] [1765451647.146033958]: [BRRTOpitmize3] final path len: 89.6727
+[INFO] [1765451648.608314933]: 
+-----------------------------
+goal rcved at     -41.817    -38.8243 2.46493e-06
+[BRRT]**********find path after 1524 iterations
+[INFO] [1765451648.615953245]: [BRRT]: find_path_use_time: 0.00162299, length: 109.795
+[INFO] [1765451648.616016783]: [BRRT] final path len: 109.795
+[INFO] [1765451648.627476500]: [BRRTOpitmize1] final path len: 116.658
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 6870 iterations
+[INFO] [1765451648.685398179]: [BRRT_Optimize_case2]: find_path_use_time: 0.0377252, length: 130.869
+[INFO] [1765451648.685488923]: [BRRTOpitmize2] final path len: 130.869
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 3838 iterations
+[INFO] [1765451648.769618765]: [BRRT_Optimize_case3]: find_path_use_time: 0.0554404, length: 123.552
+[INFO] [1765451648.769666971]: [BRRTOpitmize3] final path len: 123.552
+[INFO] [1765451650.636737438]: 
+-----------------------------
+goal rcved at     -41.6692      42.2021 -1.39675e-06
+[BRRT]**********find path after 4136 iterations
+[INFO] [1765451650.658305534]: [BRRT]: find_path_use_time: 0.00938125, length: 182.877
+[INFO] [1765451650.658816505]: [BRRT] final path len: 182.877
+[INFO] [1765451650.705684067]: [BRRTOpitmize1] final path len: 144.353
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 20386 iterations
+[INFO] [1765451651.362533438]: [BRRT_Optimize_case2]: find_path_use_time: 0.338431, length: 220.666
+[INFO] [1765451651.362935373]: [BRRTOpitmize2] final path len: 220.666
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 5596 iterations
+[INFO] [1765451651.462442792]: [BRRT_Optimize_case3]: find_path_use_time: 0.066087, length: 115.897
+[INFO] [1765451651.462667029]: [BRRTOpitmize3] final path len: 115.897
+[INFO] [1765451653.045847315]: 
+-----------------------------
+goal rcved at      13.8215     -32.5855 -1.23034e-06
+[BRRT]**********find path after 7132 iterations
+[INFO] [1765451653.079391600]: [BRRT]: find_path_use_time: 0.00775389, length: 147.82
+[INFO] [1765451653.079561381]: [BRRT] final path len: 147.82
+[INFO] [1765451653.119597752]: [BRRTOpitmize1] final path len: 141.951
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 4868 iterations
+[INFO] [1765451653.233108534]: [BRRT_Optimize_case2]: find_path_use_time: 0.0360676, length: 138.778
+[INFO] [1765451653.233558091]: [BRRTOpitmize2] final path len: 138.778
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 5010 iterations
+[INFO] [1765451653.328802087]: [BRRT_Optimize_case3]: find_path_use_time: 0.0616953, length: 109.851
+[INFO] [1765451653.328987368]: [BRRTOpitmize3] final path len: 109.851
+[INFO] [1765451654.985334164]: 
+-----------------------------
+goal rcved at     27.4884     44.4757 1.13933e-06
+[BRRT]**********find path after 2911 iterations
+[INFO] [1765451655.001101801]: [BRRT]: find_path_use_time: 0.0030987, length: 146.859
+[INFO] [1765451655.001170423]: [BRRT] final path len: 146.859
+[INFO] [1765451655.024795776]: [BRRTOpitmize1] final path len: 141.448
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 10863 iterations
+[INFO] [1765451655.239155482]: [BRRT_Optimize_case2]: find_path_use_time: 0.111447, length: 161.722
+[INFO] [1765451655.239305098]: [BRRTOpitmize2] final path len: 161.722
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 2021 iterations
+[INFO] [1765451655.268765992]: [BRRT_Optimize_case3]: find_path_use_time: 0.0170815, length: 99.334
+[INFO] [1765451655.268817530]: [BRRTOpitmize3] final path len: 99.334
+[INFO] [1765451657.518421881]: 
+-----------------------------
+goal rcved at     -41.388    -37.5205 1.54533e-06
+[BRRT]**********find path after 2298 iterations
+[INFO] [1765451657.530262577]: [BRRT]: find_path_use_time: 0.00241136, length: 171.811
+[INFO] [1765451657.530323449]: [BRRT] final path len: 171.811
+[INFO] [1765451657.819570192]: [BRRTOpitmize1] final path len: 191.489
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 8503 iterations
+[INFO] [1765451657.976555480]: [BRRT_Optimize_case2]: find_path_use_time: 0.0728101, length: 171.676
+[INFO] [1765451657.976621768]: [BRRTOpitmize2] final path len: 171.676
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 8787 iterations
+[INFO] [1765451658.170303159]: [BRRT_Optimize_case3]: find_path_use_time: 0.140446, length: 138.481
+[INFO] [1765451658.170779840]: [BRRTOpitmize3] final path len: 138.481
+[INFO] [1765451660.042073594]: 
+-----------------------------
+goal rcved at     -35.0676      39.1989 -8.60896e-07
+[BRRT]**********find path after 4982 iterations
+[INFO] [1765451660.064098705]: [BRRT]: find_path_use_time: 0.00347351, length: 160.529
+[INFO] [1765451660.064334692]: [BRRT] final path len: 160.529
+[INFO] [1765451660.213250609]: [BRRTOpitmize1] final path len: 152.285
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 3647 iterations
+[INFO] [1765451660.291004482]: [BRRT_Optimize_case2]: find_path_use_time: 0.0400008, length: 124.884
+[INFO] [1765451660.291134725]: [BRRTOpitmize2] final path len: 124.884
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 5359 iterations
+[INFO] [1765451660.371580528]: [BRRT_Optimize_case3]: find_path_use_time: 0.0502125, length: 120.611
+[INFO] [1765451660.371765184]: [BRRTOpitmize3] final path len: 120.611
+[INFO] [1765451661.767233935]: 
+-----------------------------
+goal rcved at      21.7521     -13.9203 -1.61517e-06
+[BRRT]**********find path after 1918 iterations
+[INFO] [1765451661.772098573]: [BRRT]: find_path_use_time: 0.0012021, length: 126.092
+[INFO] [1765451661.772203775]: [BRRT] final path len: 126.092
+[INFO] [1765451661.833832782]: [BRRTOpitmize1] final path len: 164.101
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 1356 iterations
+[INFO] [1765451661.850582321]: [BRRT_Optimize_case2]: find_path_use_time: 0.00742491, length: 114.519
+[INFO] [1765451661.850897719]: [BRRTOpitmize2] final path len: 114.519
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1982 iterations
+[INFO] [1765451661.885112882]: [BRRT_Optimize_case3]: find_path_use_time: 0.0223687, length: 89.0579
+[INFO] [1765451661.885171920]: [BRRTOpitmize3] final path len: 89.0579
+[INFO] [1765451663.917451893]: 
+-----------------------------
+goal rcved at    -5.68806     44.0472 2.41638e-06
+[BRRT]**********find path after 519 iterations
+[INFO] [1765451663.919700931]: [BRRT]: find_path_use_time: 0.000603716, length: 123.683
+[INFO] [1765451663.919833423]: [BRRT] final path len: 123.683
+[INFO] [1765451663.949555218]: [BRRTOpitmize1] final path len: 106.618
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 1931 iterations
+[INFO] [1765451663.962248740]: [BRRT_Optimize_case2]: find_path_use_time: 0.00782963, length: 97.1151
+[INFO] [1765451663.962303112]: [BRRTOpitmize2] final path len: 97.1151
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1644 iterations
+[INFO] [1765451663.986125496]: [BRRT_Optimize_case3]: find_path_use_time: 0.0164043, length: 71.6916
+[INFO] [1765451663.986286237]: [BRRTOpitmize3] final path len: 71.6916
+[INFO] [1765451665.576495647]: 
+-----------------------------
+goal rcved at     -9.12172     -36.6617 -7.47673e-08
+[BRRT]**********find path after 1450 iterations
+[INFO] [1765451665.585816654]: [BRRT]: find_path_use_time: 0.00174798, length: 140.379
+[INFO] [1765451665.585878526]: [BRRT] final path len: 140.379
+[INFO] [1765451665.748979795]: [BRRTOpitmize1] final path len: 135.136
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 4147 iterations
+[INFO] [1765451665.811568997]: [BRRT_Optimize_case2]: find_path_use_time: 0.0419396, length: 151.9
+[INFO] [1765451665.811652992]: [BRRTOpitmize2] final path len: 151.9
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 2263 iterations
+[INFO] [1765451665.838819100]: [BRRT_Optimize_case3]: find_path_use_time: 0.0214287, length: 97.3013
+[INFO] [1765451665.838860431]: [BRRTOpitmize3] final path len: 97.3013
+[INFO] [1765451667.667740191]: 
+-----------------------------
+goal rcved at      -40.617      5.46581 -2.15496e-06
+[BRRT]**********find path after 403 iterations
+[INFO] [1765451667.671179411]: [BRRT]: find_path_use_time: 0.000256027, length: 63.7955
+[INFO] [1765451667.671247573]: [BRRT] final path len: 63.7955
+[INFO] [1765451667.701683619]: [BRRTOpitmize1] final path len: 95.5004
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 187 iterations
+[INFO] [1765451667.708069544]: [BRRT_Optimize_case2]: find_path_use_time: 0.00122605, length: 68.694
+[INFO] [1765451667.708122291]: [BRRTOpitmize2] final path len: 68.694
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 357 iterations
+[INFO] [1765451667.712983721]: [BRRT_Optimize_case3]: find_path_use_time: 0.00260652, length: 55.7676
+[INFO] [1765451667.713038134]: [BRRTOpitmize3] final path len: 55.7676
+[INFO] [1765451669.201663244]: 
+-----------------------------
+goal rcved at      15.3719      19.8133 -2.39689e-07
+[BRRT]**********find path after 1698 iterations
+[INFO] [1765451669.209788277]: [BRRT]: find_path_use_time: 0.00252652, length: 87.6373
+[INFO] [1765451669.209990891]: [BRRT] final path len: 87.6373
+[INFO] [1765451669.233439129]: [BRRTOpitmize1] final path len: 98.5923
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 7776 iterations
+[INFO] [1765451669.361372915]: [BRRT_Optimize_case2]: find_path_use_time: 0.084103, length: 104.412
+[INFO] [1765451669.361685814]: [BRRTOpitmize2] final path len: 104.412
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 3126 iterations
+[INFO] [1765451669.418543553]: [BRRT_Optimize_case3]: find_path_use_time: 0.0386812, length: 76.9525
+[INFO] [1765451669.419059231]: [BRRTOpitmize3] final path len: 76.9525
+[INFO] [1765451670.701979431]: 
+-----------------------------
+goal rcved at    24.5704   -15.8588 1.6724e-06
+[BRRT]**********find path after 2967 iterations
+[INFO] [1765451670.709643199]: [BRRT]: find_path_use_time: 0.00215309, length: 50.6585
+[INFO] [1765451670.709705862]: [BRRT] final path len: 50.6585
+[INFO] [1765451670.728263839]: [BRRTOpitmize1] final path len: 76.0075
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 1680 iterations
+[INFO] [1765451670.751113445]: [BRRT_Optimize_case2]: find_path_use_time: 0.00727225, length: 50.7618
+[INFO] [1765451670.751205607]: [BRRTOpitmize2] final path len: 50.7618
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 3786 iterations
+[INFO] [1765451670.842804394]: [BRRT_Optimize_case3]: find_path_use_time: 0.0572614, length: 76.429
+[INFO] [1765451670.843175581]: [BRRTOpitmize3] final path len: 76.429
+[INFO] [1765451673.260610281]: 
+-----------------------------
+goal rcved at     -37.5492      38.4352 -3.72901e-07
+[BRRT]**********find path after 2651 iterations
+[INFO] [1765451673.266406740]: [BRRT]: find_path_use_time: 0.00191947, length: 137.698
+[INFO] [1765451673.266549273]: [BRRT] final path len: 137.698
+[INFO] [1765451673.338625972]: [BRRTOpitmize1] final path len: 182.768
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 3398 iterations
+[INFO] [1765451673.369801600]: [BRRT_Optimize_case2]: find_path_use_time: 0.0197803, length: 133.042
+[INFO] [1765451673.369860514]: [BRRTOpitmize2] final path len: 133.042
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1743 iterations
+[INFO] [1765451673.400843778]: [BRRT_Optimize_case3]: find_path_use_time: 0.018258, length: 96.6234
+[INFO] [1765451673.400977437]: [BRRTOpitmize3] final path len: 96.6234
+[INFO] [1765451674.933494439]: 
+-----------------------------
+goal rcved at      8.50482     -29.4616 -2.65062e-06
+[BRRT]**********find path after 1119 iterations
+[INFO] [1765451674.944663465]: [BRRT]: find_path_use_time: 0.000861742, length: 112.764
+[INFO] [1765451674.944809999]: [BRRT] final path len: 112.764
+[INFO] [1765451675.456776920]: [BRRTOpitmize1] final path len: 160.396
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 14436 iterations
+[INFO] [1765451675.744125311]: [BRRT_Optimize_case2]: find_path_use_time: 0.178436, length: 161.743
+[INFO] [1765451675.744386296]: [BRRTOpitmize2] final path len: 161.743
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 3002 iterations
+[INFO] [1765451675.799769494]: [BRRT_Optimize_case3]: find_path_use_time: 0.0374841, length: 101.62
+[INFO] [1765451675.799848198]: [BRRTOpitmize3] final path len: 101.62
+[INFO] [1765451677.827114691]: 
+-----------------------------
+goal rcved at     27.9259     42.7459 2.83019e-06
+[BRRT]**********find path after 6831 iterations
+[INFO] [1765451677.860215223]: [BRRT]: find_path_use_time: 0.00702742, length: 110.405
+[INFO] [1765451677.860569857]: [BRRT] final path len: 110.405
+[INFO] [1765451678.022520027]: [BRRTOpitmize1] final path len: 136.244
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 2669 iterations
+[INFO] [1765451678.086939079]: [BRRT_Optimize_case2]: find_path_use_time: 0.0213829, length: 126.268
+[INFO] [1765451678.086990920]: [BRRTOpitmize2] final path len: 126.268
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 2054 iterations
+[INFO] [1765451678.118371537]: [BRRT_Optimize_case3]: find_path_use_time: 0.0210454, length: 81.0801
+[INFO] [1765451678.118414293]: [BRRTOpitmize3] final path len: 81.0801
+[INFO] [1765451679.538758974]: 
+-----------------------------
+goal rcved at     -17.682    -34.9587 2.59071e-06
+[BRRT]**********find path after 2003 iterations
+[INFO] [1765451679.544055260]: [BRRT]: find_path_use_time: 0.00120142, length: 146.928
+[INFO] [1765451679.544111476]: [BRRT] final path len: 146.928
+[INFO] [1765451679.652248453]: [BRRTOpitmize1] final path len: 142.477
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 6888 iterations
+[INFO] [1765451679.724836772]: [BRRT_Optimize_case2]: find_path_use_time: 0.0435484, length: 184.273
+[INFO] [1765451679.725059511]: [BRRTOpitmize2] final path len: 184.273
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 6935 iterations
+[INFO] [1765451679.877180040]: [BRRT_Optimize_case3]: find_path_use_time: 0.107158, length: 127.824
+[INFO] [1765451679.877423491]: [BRRTOpitmize3] final path len: 127.824
+[INFO] [1765451681.134001680]: 
+-----------------------------
+goal rcved at     -43.5907      21.8969 -1.14773e-06
+[BRRT]**********find path after 211 iterations
+[INFO] [1765451681.137253086]: [BRRT]: find_path_use_time: 0.000179566, length: 77.7746
+[INFO] [1765451681.137336639]: [BRRT] final path len: 77.7746
+[INFO] [1765451681.157951311]: [BRRTOpitmize1] final path len: 76.5073
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 288 iterations
+[INFO] [1765451681.167100987]: [BRRT_Optimize_case2]: find_path_use_time: 0.0018418, length: 80.0787
+[INFO] [1765451681.167189958]: [BRRTOpitmize2] final path len: 80.0787
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 539 iterations
+[INFO] [1765451681.184226720]: [BRRT_Optimize_case3]: find_path_use_time: 0.00627937, length: 66.441
+[INFO] [1765451681.184312232]: [BRRTOpitmize3] final path len: 66.441
+[INFO] [1765451682.369645830]: 
+-----------------------------
+goal rcved at      25.3289     -15.9653 -1.21421e-06
+[BRRT]**********find path after 1726 iterations
+[INFO] [1765451682.381360677]: [BRRT]: find_path_use_time: 0.00233186, length: 108.484
+[INFO] [1765451682.381444564]: [BRRT] final path len: 108.484
+[INFO] [1765451682.388819069]: [BRRTOpitmize1] final path len: 116.934
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 11495 iterations
+[INFO] [1765451682.645776313]: [BRRT_Optimize_case2]: find_path_use_time: 0.145984, length: 104.364
+[INFO] [1765451682.646177534]: [BRRTOpitmize2] final path len: 104.364
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1125 iterations
+[INFO] [1765451682.660389847]: [BRRT_Optimize_case3]: find_path_use_time: 0.00987322, length: 86.8481
+[INFO] [1765451682.660440146]: [BRRTOpitmize3] final path len: 86.8481
+[INFO] [1765451684.122478875]: 
+-----------------------------
+goal rcved at    -43.4025     43.6049 2.95635e-07
+[BRRT]**********find path after 1466 iterations
+[INFO] [1765451684.128285318]: [BRRT]: find_path_use_time: 0.00167922, length: 126.291
+[INFO] [1765451684.128384415]: [BRRT] final path len: 126.291
+[INFO] [1765451684.171932486]: [BRRTOpitmize1] final path len: 153.623
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 8622 iterations
+[INFO] [1765451684.273607036]: [BRRT_Optimize_case2]: find_path_use_time: 0.0498309, length: 147.507
+[INFO] [1765451684.273706383]: [BRRTOpitmize2] final path len: 147.507
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 2027 iterations
+[INFO] [1765451684.305185049]: [BRRT_Optimize_case3]: find_path_use_time: 0.0221544, length: 107.304
+[INFO] [1765451684.305233555]: [BRRTOpitmize3] final path len: 107.304
+[INFO] [1765451685.669211052]: 
+-----------------------------
+goal rcved at      7.4163    -27.9499 3.23002e-07
+[BRRT]**********find path after 10227 iterations
+[INFO] [1765451685.695971719]: [BRRT]: find_path_use_time: 0.00849608, length: 190.25
+[INFO] [1765451685.696280635]: [BRRT] final path len: 190.25
+[INFO] [1765451685.766141799]: [BRRTOpitmize1] final path len: 167.134
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 16891 iterations
+[INFO] [1765451686.017031821]: [BRRT_Optimize_case2]: find_path_use_time: 0.137059, length: 145.586
+[INFO] [1765451686.017181257]: [BRRTOpitmize2] final path len: 145.586
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 4739 iterations
+[INFO] [1765451686.112784620]: [BRRT_Optimize_case3]: find_path_use_time: 0.0619957, length: 111.773
+[INFO] [1765451686.112954433]: [BRRTOpitmize3] final path len: 111.773
+[INFO] [1765451687.421585221]: 
+-----------------------------
+goal rcved at     17.9085     32.3424 2.31542e-06
+[BRRT]**********find path after 5703 iterations
+[INFO] [1765451687.450662244]: [BRRT]: find_path_use_time: 0.0123669, length: 91.2859
+[INFO] [1765451687.450916568]: [BRRT] final path len: 91.2859
+[INFO] [1765451687.551730941]: [BRRTOpitmize1] final path len: 118.127
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 1075 iterations
+[INFO] [1765451687.581914107]: [BRRT_Optimize_case2]: find_path_use_time: 0.00692307, length: 95.6988
+[INFO] [1765451687.582137720]: [BRRTOpitmize2] final path len: 95.6988
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 5871 iterations
+[INFO] [1765451687.711999528]: [BRRT_Optimize_case3]: find_path_use_time: 0.0920896, length: 82.1883
+[INFO] [1765451687.712058160]: [BRRTOpitmize3] final path len: 82.1883
+[INFO] [1765451688.985151708]: 
+-----------------------------
+goal rcved at     -18.7689      -33.555 -5.53031e-07
+[BRRT]**********find path after 2273 iterations
+[INFO] [1765451688.991086721]: [BRRT]: find_path_use_time: 0.0014994, length: 148.324
+[INFO] [1765451688.991125976]: [BRRT] final path len: 148.324
+[INFO] [1765451689.034899225]: [BRRTOpitmize1] final path len: 173.114
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 6212 iterations
+[INFO] [1765451689.080931246]: [BRRT_Optimize_case2]: find_path_use_time: 0.0302768, length: 134.208
+[INFO] [1765451689.081028592]: [BRRTOpitmize2] final path len: 134.208
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 2595 iterations
+[INFO] [1765451689.117240739]: [BRRT_Optimize_case3]: find_path_use_time: 0.0209736, length: 87.3467
+[INFO] [1765451689.117380007]: [BRRTOpitmize3] final path len: 87.3467
+[INFO] [1765451690.302736598]: 
+-----------------------------
+goal rcved at     -20.5712      28.8933 -1.44302e-06
+[BRRT]**********find path after 3373 iterations
+[INFO] [1765451690.317525710]: [BRRT]: find_path_use_time: 0.00180714, length: 113.355
+[INFO] [1765451690.317722818]: [BRRT] final path len: 113.355
+[INFO] [1765451690.411036776]: [BRRTOpitmize1] final path len: 99.1848
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 2408 iterations
+[INFO] [1765451690.437627916]: [BRRT_Optimize_case2]: find_path_use_time: 0.014298, length: 101.808
+[INFO] [1765451690.437680715]: [BRRTOpitmize2] final path len: 101.808
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 4117 iterations
+[INFO] [1765451690.484419517]: [BRRT_Optimize_case3]: find_path_use_time: 0.032914, length: 84.6921
+[INFO] [1765451690.484517154]: [BRRTOpitmize3] final path len: 84.6921
+[INFO] [1765451692.408309830]: 
+-----------------------------
+goal rcved at     30.4189      -18.22 7.56068e-07
+[BRRT]**********find path after 4009 iterations
+[INFO] [1765451692.428545078]: [BRRT]: find_path_use_time: 0.00291215, length: 126.623
+[INFO] [1765451692.428615961]: [BRRT] final path len: 126.623
+[INFO] [1765451692.591217195]: [BRRTOpitmize1] final path len: 123.13
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 5268 iterations
+[INFO] [1765451692.641945789]: [BRRT_Optimize_case2]: find_path_use_time: 0.0309654, length: 133.203
+[INFO] [1765451692.642053594]: [BRRTOpitmize2] final path len: 133.203
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 3138 iterations
+[INFO] [1765451692.697305704]: [BRRT_Optimize_case3]: find_path_use_time: 0.0375271, length: 89.4568
+[INFO] [1765451692.697358044]: [BRRTOpitmize3] final path len: 89.4568
+[INFO] [1765451694.212639917]: 
+-----------------------------
+goal rcved at    -45.5326    -28.2251 1.61572e-06
+[BRRT]**********find path after 3761 iterations
+[INFO] [1765451694.231945752]: [BRRT]: find_path_use_time: 0.00449392, length: 108.527
+[INFO] [1765451694.232060849]: [BRRT] final path len: 108.527
+[INFO] [1765451694.264377341]: [BRRTOpitmize1] final path len: 128.051
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 29324 iterations
+[INFO] [1765451696.313953294]: [BRRT_Optimize_case2]: find_path_use_time: 0.900102, length: 125.481
+[INFO] [1765451696.321205612]: [BRRTOpitmize2] final path len: 125.481
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 4195 iterations
+[INFO] [1765451696.382935594]: [BRRT_Optimize_case3]: find_path_use_time: 0.0420562, length: 91.4558
+[INFO] [1765451696.383015770]: [BRRTOpitmize3] final path len: 91.4558
+[INFO] [1765451698.186719899]: 
+-----------------------------
+goal rcved at     20.8264      32.454 2.58424e-06
+[BRRT]**********find path after 160 iterations
+[INFO] [1765451698.193639245]: [BRRT]: find_path_use_time: 0.000200482, length: 106.561
+[INFO] [1765451698.193713920]: [BRRT] final path len: 106.561
+[INFO] [1765451698.467628812]: [BRRTOpitmize1] final path len: 181.948
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 10730 iterations
+[INFO] [1765451698.701170182]: [BRRT_Optimize_case2]: find_path_use_time: 0.0557214, length: 126.441
+[INFO] [1765451698.701427086]: [BRRTOpitmize2] final path len: 126.441
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1885 iterations
+[INFO] [1765451698.725675402]: [BRRT_Optimize_case3]: find_path_use_time: 0.015877, length: 95.6534
+[INFO] [1765451698.725785165]: [BRRTOpitmize3] final path len: 95.6534
+[INFO] [1765451699.756367122]: 
+-----------------------------
+goal rcved at       8.9383     -29.5683 -7.46058e-07
+[BRRT]**********find path after 1560 iterations
+[INFO] [1765451699.773248479]: [BRRT]: find_path_use_time: 0.00112359, length: 117.018
+[INFO] [1765451699.773304652]: [BRRT] final path len: 117.018
+[INFO] [1765451699.828686893]: [BRRTOpitmize1] final path len: 105.06
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 1113 iterations
+[INFO] [1765451699.847072673]: [BRRT_Optimize_case2]: find_path_use_time: 0.0082512, length: 101.192
+[INFO] [1765451699.847148473]: [BRRTOpitmize2] final path len: 101.192
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 1586 iterations
+[INFO] [1765451699.866205664]: [BRRT_Optimize_case3]: find_path_use_time: 0.0129153, length: 87.9332
+[INFO] [1765451699.866265171]: [BRRTOpitmize3] final path len: 87.9332
+[INFO] [1765451701.262145099]: 
+-----------------------------
+goal rcved at    -36.3659     39.6241 3.24229e-06
+[BRRT]**********find path after 1209 iterations
+[INFO] [1765451701.265149521]: [BRRT]: find_path_use_time: 0.000905018, length: 128.657
+[INFO] [1765451701.265265659]: [BRRT] final path len: 128.657
+[INFO] [1765451701.713623272]: [BRRTOpitmize1] final path len: 183.188
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 7372 iterations
+[INFO] [1765451701.801880669]: [BRRT_Optimize_case2]: find_path_use_time: 0.0570411, length: 142.374
+[INFO] [1765451701.801993848]: [BRRTOpitmize2] final path len: 142.374
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 3570 iterations
+[INFO] [1765451701.850907148]: [BRRT_Optimize_case3]: find_path_use_time: 0.0348904, length: 100.9
+[INFO] [1765451701.851045955]: [BRRTOpitmize3] final path len: 100.9
+[INFO] [1765451703.212943728]: 
+-----------------------------
+goal rcved at    -16.6265     -21.182 3.40015e-06
+[BRRT]**********find path after 916 iterations
+[INFO] [1765451703.220626659]: [BRRT]: find_path_use_time: 0.000810798, length: 128.198
+[INFO] [1765451703.220697500]: [BRRT] final path len: 128.198
+[INFO] [1765451703.542867955]: [BRRTOpitmize1] final path len: 112.269
+[BRRT_Optimize_case2] Start sampling...
+[BRRT_Optimize_case2]**********Find path after 13344 iterations
+[INFO] [1765451703.663601815]: [BRRT_Optimize_case2]: find_path_use_time: 0.065043, length: 129.554
+[INFO] [1765451703.663660571]: [BRRTOpitmize2] final path len: 129.554
+[BRRT_Optimize_case3] Start sampling...
+[BRRT_Optimize_case3]**********Find path after 4389 iterations
+[INFO] [1765451703.733590702]: [BRRT_Optimize_case3]: find_path_use_time: 0.0458679, length: 90.0347
+[INFO] [1765451703.733742427]: [BRRTOpitmize3] final path len: 90.0347

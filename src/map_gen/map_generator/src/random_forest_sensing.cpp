@@ -63,7 +63,7 @@ void RandomBRRTGenerate_Large(double size = 4)
    pcl::PointXYZ pt_random;
    random_device rd;
    default_random_engine eng(rd());
-   float ramdom_ratio = 0.4;
+   float ramdom_ratio = 0.6;
    int number_ostacle = (_x_h - _x_l) * (_y_h - _y_l) / (size * size) * ramdom_ratio;
    std::cout << "number of ostacle" << number_ostacle;
 
@@ -883,7 +883,7 @@ int main(int argc, char **argv)
    _y_h = +_y_size / 2.0;
       // === Map Generation Selection ===
    std::string map_type;
-   n.param("map/map_type", map_type, std::string("env_multi_v_zigzag"));
+   n.param("map/map_type", map_type, std::string("random_narrow"));
 
    ROS_INFO("Selected map type: %s", map_type.c_str());
 
