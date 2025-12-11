@@ -883,7 +883,7 @@ int main(int argc, char **argv)
    _y_h = +_y_size / 2.0;
       // === Map Generation Selection ===
    std::string map_type;
-   n.param("map/map_type", map_type, std::string("random_narrow"));
+   n.param("map/map_type", map_type, std::string("random_large"));
 
    ROS_INFO("Selected map type: %s", map_type.c_str());
 
