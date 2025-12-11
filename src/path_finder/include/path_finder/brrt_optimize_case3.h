@@ -703,13 +703,16 @@ namespace path_plan
         double random01 = dis(gen);
 
         if (random01 < current_pbias)
-        {
+        {          
+          // Eigen::Vector3d x_tmp
+          // if (in_trap_node) {
+          //   continue; // Skip iteration
+          //   x_tmp = 
+          // }
+          // else{
+          //   Eigen::Vector3d x_tmp = randomPointInCircle(selected_SI->x, selected_GI->x);
+          // }
           Eigen::Vector3d x_tmp = randomPointInCircle(selected_SI->x, selected_GI->x);
-          
-          if (in_trap_node && isInsideTrap(x_tmp)) {
-            continue; // Skip iteration
-          }
-          
           x_new = steer(selected_SI->x, x_tmp, steer_length_);
           sampling_success = true;
         }
@@ -720,12 +723,12 @@ namespace path_plan
           // --- FIX 2: Gaussian Wiggle Strategy ---
           // If we are struggling (trapCount is high) but not yet in full trap mode,
           // sample NEAR the stuck point to find the "hole" in the clutter.
-          if (trapCount > 5 && !in_trap_node) {
-              x_rand = GaussianSample(selected_SI->x, 1.5); // Standard deviation 1.5m
-          } else {
-              x_rand = SpatialWeightSample(treeA);
-          }
-          
+          // if (trapCount > 5 && !in_trap_node) {
+          //     x_rand = GaussianSample(selected_SI->x, 1.5); // Standard deviation 1.5m
+          // } else {
+          //     x_rand = SpatialWeightSample(treeA);
+          // }
+          x_rand = SpatialWeightSample(treeA);
           // --- FIX 3: Re-enable Trap Check (Safe now due to capped radius) ---
           int safety = 0;
           while (isInsideTrap(x_rand) && safety < 100){
