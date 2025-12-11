@@ -416,16 +416,12 @@ namespace path_plan
     // Thêm hàm này vào trong class BRRT_Simple_Case2 (phần private hoặc public)
 
     Eigen::Vector3d smartSectorSampling(const Eigen::Vector3d& A, const Eigen::Vector3d& B) {
-        // 1. Thiết lập hình học (Geometry Setup)
         Eigen::Vector3d midpoint = (A + B) / 2.0;
         double dist_AB = (A - B).norm();
         double radius = dist_AB / 2.0;
         
-        // Tránh lỗi chia cho 0 hoặc bán kính quá nhỏ
         if (radius < 0.05) return midpoint; 
 
-        // Tạo hệ trục tọa độ (u, v) cho mặt phẳng đĩa tròn vuông góc với vector AB
-        // (Tận dụng lại logic của randomPointInCircle cũ)
         Eigen::Vector3d normal = (B - A).normalized();
         Eigen::Vector3d u;
         if (std::abs(normal.x()) < 1e-6 && std::abs(normal.y()) < 1e-6) {
@@ -435,11 +431,9 @@ namespace path_plan
         }
         Eigen::Vector3d v = normal.cross(u);
 
-        // 2. Quét LiDAR ảo trên 8 rẻ quạt (Simulated Lidar Scan)
         int num_sectors = 8;
-        std::vector<std::pair<double, int>> sector_scores; // <tỷ lệ vật cản, chỉ số sector>
+        std::vector<std::pair<double, int>> sector_scores;
         
-        // Cấu hình quét: Số tia mỗi rẻ quạt và số bước trên mỗi tia
         int rays_per_sector = 5; 
         int steps_per_ray = 5;
 
@@ -450,20 +444,16 @@ namespace path_plan
             int obstacle_hits = 0;
             int total_checks = 0;
 
-            // Bắn tia quét trong rẻ quạt này
             for (int r = 0; r < rays_per_sector; ++r) {
-                // Lấy góc giữa rẻ quạt để đại diện
                 double ray_angle = theta_start + (theta_end - theta_start) * ((double)r + 0.5) / rays_per_sector;
                 
                 Eigen::Vector3d ray_dir = std::cos(ray_angle) * u + std::sin(ray_angle) * v;
 
-                // Kiểm tra va chạm dọc theo tia (từ tâm ra biên)
                 for (int s = 1; s <= steps_per_ray; ++s) {
                     double dist = radius * ((double)s / steps_per_ray);
                     Eigen::Vector3d check_point = midpoint + dist * ray_dir;
                     
                     total_checks++;
-                    // Giả sử !isStateValid nghĩa là có vật cản
                     if (!map_ptr_->isStateValid(check_point)) { 
                         obstacle_hits++;
                     }
@@ -474,17 +464,10 @@ namespace path_plan
             sector_scores.push_back({obs_ratio, i});
         }
 
-        // 3. Sắp xếp và chọn rẻ quạt có vật cản ít thứ 2 (Sort & Select 2nd Lowest)
-        // Sắp xếp tăng dần theo tỷ lệ vật cản
         std::sort(sector_scores.begin(), sector_scores.end());
 
-        // Chọn index thứ 1 (phần tử thứ 2). Nếu chỉ có 1 rẻ quạt (không thể xảy ra với for loop 8), fallback về 0.
         int chosen_sector_idx = sector_scores[1].second; 
-        
-        // (Optional) Debug log
-        // ROS_INFO("Sector %d chosen with obstacle ratio: %f", chosen_sector_idx, sector_scores[1].first);
 
-        // 4. Lấy mẫu ngẫu nhiên trong rẻ quạt đã chọn (Sampling)
         std::random_device rd;
         std::mt19937 gen(rd());
         std::uniform_real_distribution<> dist_angle(0, 1);
@@ -493,39 +476,30 @@ namespace path_plan
         double angle_step = 2 * M_PI / num_sectors;
         double theta_base = chosen_sector_idx * angle_step;
         
-        // Random góc trong phạm vi rẻ quạt
         double sample_theta = theta_base + dist_angle(gen) * angle_step;
         
-        // Random bán kính (dùng sqrt để phân bố đều theo diện tích)
         double sample_r = radius * std::sqrt(dist_radius(gen)); 
 
         Eigen::Vector3d sample_point = midpoint + sample_r * (std::cos(sample_theta) * u + std::sin(sample_theta) * v);
 
         return sample_point;
     }
-    // Hàm tính bán kính thích ứng theo Eq (12) trong paper
     double getAdaptiveRewireRadius(int tree_size)
     {
         if (tree_size <= 1) return rewire_radius_init_;
-        
-        // Công thức (12) trong paper: R_near giảm theo log(N)/N
-        // Lưu ý: Để tránh bán kính về 0 quá nhanh, ta thường kẹp (clamp) giá trị min
+
         double decay = std::log10(tree_size) / (double)tree_size;
-        double r = rewire_radius_init_ * (1.0 + decay); // Điều chỉnh lại một chút cho thực tế
+        double r = rewire_radius_init_ * (1.0 + decay);
         
-        // Giới hạn bán kính tối thiểu để đảm bảo khả năng kết nối
         return std::max(r, steer_length_ * 1.5); 
     }
-    // Thêm vào phần private functions
     void rewire(RRTNode3DPtr &new_node, kdtree *tree_ptr)
     {
-        int tree_size = kd_res_size(kd_nearest_range3(tree_ptr, new_node->x[0], new_node->x[1], new_node->x[2], DBL_MAX)); // Lấy size xấp xỉ hoặc dùng biến đếm riêng
-        double r_near = getAdaptiveRewireRadius(valid_tree_node_nums_); // Sử dụng số lượng node toàn cục để tính
-
-        // 1. Tìm các hàng xóm trong bán kính r_near
+        int tree_size = kd_res_size(kd_nearest_range3(tree_ptr, new_node->x[0], new_node->x[1], new_node->x[2], DBL_MAX));
+        double r_near = getAdaptiveRewireRadius(valid_tree_node_nums_);
         struct kdres *neighbors = kd_nearest_range3(tree_ptr, new_node->x[0], new_node->x[1], new_node->x[2], r_near);
         
-        if (kd_res_size(neighbors) <= 1) // Chỉ có chính nó hoặc không có ai
+        if (kd_res_size(neighbors) <= 1)
         {
             kd_res_free(neighbors);
             return;
@@ -535,7 +509,7 @@ namespace path_plan
         while (!kd_res_end(neighbors))
         {
             RRTNode3DPtr nb = (RRTNode3DPtr)kd_res_item_data(neighbors);
-            if (nb != new_node && nb != new_node->parent) // Bỏ qua chính nó và cha hiện tại
+            if (nb != new_node && nb != new_node->parent)
             {
                 neighbor_nodes.push_back(nb);
             }
@@ -543,7 +517,6 @@ namespace path_plan
         }
         kd_res_free(neighbors);
 
-        // 2. Choose Parent: Tìm xem có hàng xóm nào làm cha tốt hơn cho new_node không
         for (auto &nb : neighbor_nodes)
         {
             double dist = calDist(nb->x, new_node->x);
@@ -553,14 +526,11 @@ namespace path_plan
             {
                 if (map_ptr_->isSegmentValid(nb->x, new_node->x))
                 {
-                    // Cập nhật cha mới cho new_node
-                    // Lưu ý: changeNodeParent cập nhật cost cho cả cây con của new_node
                     changeNodeParent(new_node, nb, dist); 
                 }
             }
         }
 
-        // 3. Rewire Neighbors: Xem new_node có làm cha tốt hơn cho các hàng xóm không
         for (auto &nb : neighbor_nodes)
         {
             double dist = calDist(new_node->x, nb->x);
@@ -570,7 +540,6 @@ namespace path_plan
             {
                 if (map_ptr_->isSegmentValid(new_node->x, nb->x))
                 {
-                    // Cập nhật nb nhận new_node làm cha
                     changeNodeParent(nb, new_node, dist);
                 }
             }
@@ -579,49 +548,39 @@ namespace path_plan
     //-------------------------------------LIDAR-------------------------------------------------------------
 
     //----------------------------------------------not bias sampling-----------------------------------------
-    // Thêm vào class BRRT_Simple_Case2
-
-    // Mô phỏng Algorithm 1: WeightSample từ bài báo
     Eigen::Vector3d spatialProbabilityWeightSampling(const Eigen::Vector3d& center_point, double max_range) 
     {
-        int N_block = 16; // Số lượng rẻ quạt (Paper dùng N_block = 13 hoặc 16) [cite: 310, 317]
-        double weightGrade = 1.0; // WG = 1 (Paper khuyến nghị không nên quá lớn) [cite: 290]
+        int N_block = 16;
+        double weightGrade = 1.0;
         
         std::vector<double> weights;
         std::vector<double> ray_lengths;
         double sum_weight = 0.0;
 
-        // 1. GetBlockLines: Bắn tia mô phỏng LiDAR [cite: 246, 299]
         for (int i = 0; i < N_block; ++i) 
         {
             double angle = i * (2 * M_PI / N_block);
             Eigen::Vector3d direction(std::cos(angle), std::sin(angle), 0.0); 
-            // Lưu ý: Nếu map 3D hoàn toàn, cần xử lý direction theo cầu. 
-            // Ở đây giả sử quy hoạch chủ yếu trên mặt phẳng XY hoặc map 2.5D như paper mô tả.
-            
-            // Raymarching để tìm khoảng cách va chạm
+
             double r = 0.0;
-            double step = 0.1; // Bước nhảy kiểm tra
+            double step = 0.1;
             for (; r <= max_range; r += step) 
             {
                 Eigen::Vector3d check_pt = center_point + direction * r;
                 if (!map_ptr_->isStateValid(check_pt)) {
-                    break; // Gặp vật cản
+                    break;
                 }
             }
             
-            // Lưu lại chiều dài tia (đã bị chặn bởi vật cản hoặc max_range)
             ray_lengths.push_back(r);
 
-            // 2. Tính trọng số theo công thức (6): W = r^WG [cite: 272]
             double w = std::pow(r, weightGrade);
             weights.push_back(w);
             sum_weight += w;
         }
 
-        if (sum_weight < 1e-3) return get_sample_valid(); // Fallback nếu kẹt hoàn toàn
+        if (sum_weight < 1e-3) return get_sample_valid();
 
-        // 3. Chọn rẻ quạt dựa trên trọng số (Roulette Wheel Selection) 
         std::random_device rd;
         std::mt19937 gen(rd());
         std::uniform_real_distribution<> dist_weight(0, sum_weight);
@@ -636,10 +595,6 @@ namespace path_plan
                 break;
             }
         }
-
-        // 4. Lấy mẫu trong rẻ quạt đã chọn (Sample Block) [cite: 282, 300]
-        // Rẻ quạt i bắt đầu từ góc (i * 2PI/N) đến ((i+1) * 2PI/N)
-        // Bán kính khả dụng là ray_lengths[chosen_block_idx]
         
         std::uniform_real_distribution<> dist_angle(0, 1);
         std::uniform_real_distribution<> dist_radius(0, 1);
@@ -647,10 +602,8 @@ namespace path_plan
         double angle_start = chosen_block_idx * (2 * M_PI / N_block);
         double angle_step = 2 * M_PI / N_block;
         
-        // Random góc trong sector
-        double theta = angle_start + dist_angle(gen) * angle_step; // (Paper: sector axis symmetry, nhưng random trong góc cũng tương tự)
+        double theta = angle_start + dist_angle(gen) * angle_step; 
         
-        // Random bán kính (sqrt để phân bố đều, giới hạn bởi vật cản)
         double r_limit = ray_lengths[chosen_block_idx];
         double r_sample = r_limit * std::sqrt(dist_radius(gen));
 
