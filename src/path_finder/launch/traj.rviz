@@ -7,7 +7,6 @@ Panels:
         - /Global Options1
         - /Status1
         - /Grid1/Offset1
-        - /Mapping1
         - /Mapping1/input_obs1/Autocompute Value Bounds1
         - /Mapping1/global_occ1
         - /Mapping1/global_occ1/Autocompute Value Bounds1
@@ -19,12 +18,19 @@ Panels:
         - /Case11/tree-edge1
         - /Case11/tree-node1
         - /Case11/Path1
+        - /Case21/tree-node1
+        - /Case21/tree-edge1
         - /Case21/Path1
-        - /Case31
+        - /Case21/PointCloud21
         - /Case31/tree-node1
         - /Case31/tree-edge1
         - /Case31/Path1
         - /Case31/PointCloud21
+        - /brrt_star1
+        - /brrt_star1/tree-edge1
+        - /brrt_star1/tree-node1
+        - /brrt_star1/Path1
+        - /brrt_star1/PointCloud21
       Splitter Ratio: 0.6735293865203857
     Tree Height: 781
   - Class: rviz/Selection
@@ -152,7 +158,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/start
           Name: start
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Class: rviz/Marker
@@ -160,7 +166,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/goal
           Name: goal
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Class: rviz/MarkerArray
@@ -388,7 +394,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/brrt/tree_edges
           Name: BRRT_Tree
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Class: rviz/MarkerArray
@@ -396,7 +402,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/brrt/tree_vertice
           Name: BRRT_Edge
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Alpha: 1
@@ -560,7 +566,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/case1/tree_vertice
           Name: tree-edge
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Class: rviz/Marker
@@ -568,7 +574,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/case1/tree_edges
           Name: tree-node
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Alpha: 1
@@ -632,7 +638,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/case2/tree_edges
           Name: tree-node
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Class: rviz/MarkerArray
@@ -640,7 +646,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/case2/tree_vertice
           Name: tree-edge
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Alpha: 1
@@ -773,7 +779,7 @@ Visualization Manager:
       Displays:
         - Class: rviz/MarkerArray
           Enabled: true
-          Marker Topic: /path_finder_node/case1/tree_vertice
+          Marker Topic: /path_finder_node/rrt_star_paths
           Name: tree-edge
           Namespaces:
             {}
@@ -784,13 +790,13 @@ Visualization Manager:
           Marker Topic: /path_finder_node/case1/tree_edges
           Name: tree-node
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Alpha: 1
           Buffer Length: 1
           Class: rviz/Path
-          Color: 0; 85; 255
+          Color: 143; 89; 2
           Enabled: true
           Head Diameter: 0.30000001192092896
           Head Length: 0.20000000298023224
@@ -808,7 +814,7 @@ Visualization Manager:
           Radius: 0.029999999329447746
           Shaft Diameter: 0.10000000149011612
           Shaft Length: 0.10000000149011612
-          Topic: /path_finder_node/brrt_case1_final_path
+          Topic: /path_finder_node/rrt_star_final_path
           Unreliable: false
           Value: true
         - Alpha: 1
@@ -826,7 +832,7 @@ Visualization Manager:
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
-          Min Color: 0; 0; 0
+          Min Color: 117; 80; 123
           Name: PointCloud2
           Position Transformer: XYZ
           Queue Size: 10
@@ -834,13 +840,13 @@ Visualization Manager:
           Size (Pixels): 3
           Size (m): 0.009999999776482582
           Style: Flat Squares
-          Topic: /path_finder_node/brrt_case1_final_wpts
+          Topic: /path_finder_node/rrt_star_final_wpts
           Unreliable: false
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
       Enabled: true
-      Name: Case1
+      Name: brrt_star
   Enabled: true
   Global Options:
     Background Color: 46; 52; 54
@@ -870,7 +876,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 109.93390655517578
+      Distance: 35.631160736083984
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -878,9 +884,9 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: -1.8451290130615234
-        Y: 25.192394256591797
-        Z: 8.4622239228338e-05
+        X: 3.0492894649505615
+        Y: 4.999719619750977
+        Z: 7.540347723988816e-05
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
@@ -888,7 +894,7 @@ Visualization Manager:
       Near Clip Distance: 0.009999999776482582
       Pitch: 1.5697963237762451
       Target Frame: map
-      Yaw: 1.573944091796875
+      Yaw: 1.693943738937378
     Saved: ~
 Window Geometry:
   Displays:

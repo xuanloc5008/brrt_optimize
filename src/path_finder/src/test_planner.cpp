@@ -35,7 +35,7 @@ OF SUCH DAMAGE.
 #include <ros/ros.h>
 #include <geometry_msgs/PoseStamped.h>
 
-#define NUMBER_TEST_TIMES 100
+#define NUMBER_TEST_TIMES 1000
 class TesterPathFinder
 {
 private:
@@ -329,6 +329,22 @@ public:
             std::map<std::string, AlgoResult> algo_outputs;
 
             // Simulate BRRT
+            brrt_star_ptr_->set_test_param(input.epsilon);
+            bool brrt_star_res = brrt_star_ptr_->plan(start_, goal_);
+            if (brrt_star_res)
+            {
+                vector<std::pair<double, double>> slns = brrt_star_ptr_->getSolutions();
+                int num_nodes = brrt_star_ptr_->get_valid_tree_node_nums();
+                int num_iterations = brrt_star_ptr_->get_number_of_iteration();
+                algo_outputs["BRRT star"] = {true, slns.back().second, slns.back().first, num_nodes, num_iterations, start_, goal_};
+            }
+            else
+            {
+                int num_nodes = brrt_star_ptr_->get_valid_tree_node_nums();
+                int num_iterations = brrt_star_ptr_->get_number_of_iteration();
+                algo_outputs["BRRT start"] = {false, brrt_star_ptr_->get_final_path_use_time_(), DBL_MAX, num_nodes, num_iterations, start_, goal_};
+            }
+            //BRRT*
             brrt_ptr_->set_test_param(input.epsilon);
             bool brrt_res = brrt_ptr_->plan(start_, goal_);
             if (brrt_res)

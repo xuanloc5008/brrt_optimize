@@ -116,6 +116,28 @@ namespace path_plan
       vis_ptr_ = visPtr;
     };
 
+    // --- Added methods to match BRRT_Optimize Interface ---
+    void set_test_param(double steer_length)
+    {
+      steer_length_ = steer_length;
+    }
+
+    int get_number_of_iteration()
+    {
+      return number_of_iterations_;
+    }
+
+    int get_valid_tree_node_nums()
+    {
+      return valid_tree_node_nums_;
+    }
+
+    double get_final_path_use_time_()
+    {
+      return final_path_use_time_;
+    }
+    // ----------------------------------------------------
+
   private:
     // nodehandle params
     ros::NodeHandle nh_;
@@ -131,6 +153,10 @@ namespace path_plan
     double search_time_;
     int max_tree_node_nums_;
     int valid_tree_node_nums_;
+    
+    // Added number_of_iterations_
+    int number_of_iterations_;
+
     double first_path_use_time_;
     double final_path_use_time_;
     double cost_best_;
@@ -159,6 +185,7 @@ namespace path_plan
         nodes_pool_[i]->children.clear();
       }
       valid_tree_node_nums_ = 0;
+      number_of_iterations_ = 0; // Reset iterations
     }
 
     double calDist(const Eigen::Vector3d &p1, const Eigen::Vector3d &p2)
@@ -289,8 +316,8 @@ namespace path_plan
       kd_insert3(treeB, goal_node_->x[0], goal_node_->x[1], goal_node_->x[2], goal_node_);
       
       /* main loop */
-      int idx = 0;
-      for (idx = 0; (ros::Time::now() - rrt_start_time).toSec() < search_time_ && valid_tree_node_nums_ < max_tree_node_nums_; ++idx)
+      // Modified loop variable to use class member
+      for (number_of_iterations_ = 0; (ros::Time::now() - rrt_start_time).toSec() < search_time_ && valid_tree_node_nums_ < max_tree_node_nums_; ++number_of_iterations_)
       {
         bool check_connect = false;
         bool selectTreeA = true;

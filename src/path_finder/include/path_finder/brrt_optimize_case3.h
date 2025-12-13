@@ -413,63 +413,99 @@ namespace path_plan
       return Pbias;
     }
     //-------------------------------------LIDAR-------------------------------------------------------------
-    // Thêm hàm này vào trong class BRRT_Simple_Case2 (phần private hoặc public)
-
     Eigen::Vector3d smartSectorSampling(const Eigen::Vector3d& A, const Eigen::Vector3d& B) {
+        // 1. Tính toán cơ bản
         Eigen::Vector3d midpoint = (A + B) / 2.0;
-        double dist_AB = (A - B).norm();
+        Eigen::Vector3d diff = B - A;
+        double dist_AB = diff.norm();
         double radius = dist_AB / 2.0;
         
         if (radius < 0.05) return midpoint; 
 
-        Eigen::Vector3d normal = (B - A).normalized();
-        Eigen::Vector3d u;
+        // 2. Tạo hệ trục tọa độ cục bộ (u, v)
+        // normal là trục nối 2 guide node (AB)
+        Eigen::Vector3d normal = diff.normalized();
+        Eigen::Vector3d u; // Vector ngang (Horizontal)
+        
+        // Đảm bảo u nằm ngang so với mặt đất (Z-up)
         if (std::abs(normal.x()) < 1e-6 && std::abs(normal.y()) < 1e-6) {
             u = Eigen::Vector3d(0, 1, 0).cross(normal).normalized();
         } else {
             u = Eigen::Vector3d(0, 0, 1).cross(normal).normalized();
         }
-        Eigen::Vector3d v = normal.cross(u);
-
-        int num_sectors = 8;
-        std::vector<std::pair<double, int>> sector_scores;
         
-        int rays_per_sector = 5; 
-        int steps_per_ray = 5;
+        // v sẽ là vector hướng "Lên" (Vertical) trên mặt cắt đĩa
+        // Các sector ưu tiên (theo hình) sẽ nằm dọc theo trục v này
+        Eigen::Vector3d v = normal.cross(u); 
 
-        for (int i = 0; i < num_sectors; ++i) {
-            double theta_start = i * (2 * M_PI / num_sectors);
-            double theta_end = (i + 1) * (2 * M_PI / num_sectors);
-            
-            int obstacle_hits = 0;
-            int total_checks = 0;
+        // 3. Cấu hình quét
+        const int num_sectors = 8;
+        const int rays_per_sector = 5; 
+        const int steps_per_ray = 5;
+        
+        std::vector<std::pair<double, int>> candidates;
+        candidates.reserve(num_sectors);
 
-            for (int r = 0; r < rays_per_sector; ++r) {
-                double ray_angle = theta_start + (theta_end - theta_start) * ((double)r + 0.5) / rays_per_sector;
+        // Định nghĩa các nhóm sector
+        // Với 8 sector, góc 90 độ (trục v - lên) rơi vào giữa index 1 và 2
+        // Góc 270 độ (trục -v - xuống) rơi vào giữa index 5 và 6
+        std::vector<int> priority_sectors = {1, 2, 5, 6}; // Nhóm "Dọc" (Theo hình vẽ)
+        std::vector<int> secondary_sectors = {0, 3, 4, 7}; // Nhóm "Ngang" (Hai bên hông)
+
+        // Hàm lambda để quét một danh sách các sector cụ thể
+        auto scan_sector_group = [&](const std::vector<int>& indices) {
+            for (int i : indices) {
+                double theta_start = i * (2 * M_PI / num_sectors);
+                double theta_step = (2 * M_PI / num_sectors) / rays_per_sector;
                 
-                Eigen::Vector3d ray_dir = std::cos(ray_angle) * u + std::sin(ray_angle) * v;
+                int obstacle_hits = 0;
+                int total_checks = 0;
 
-                for (int s = 1; s <= steps_per_ray; ++s) {
-                    double dist = radius * ((double)s / steps_per_ray);
-                    Eigen::Vector3d check_point = midpoint + dist * ray_dir;
-                    
-                    total_checks++;
-                    if (!map_ptr_->isStateValid(check_point)) { 
-                        obstacle_hits++;
+                for (int r = 0; r < rays_per_sector; ++r) {
+                    double ray_angle = theta_start + theta_step * (r + 0.5);
+                    Eigen::Vector3d ray_dir = std::cos(ray_angle) * u + std::sin(ray_angle) * v;
+
+                    for (int s = 1; s <= steps_per_ray; ++s) {
+                        double dist = radius * ((double)s / steps_per_ray);
+                        Eigen::Vector3d check_point = midpoint + dist * ray_dir;
+                        
+                        total_checks++;
+                        if (!map_ptr_->isStateValid(check_point)) { 
+                            obstacle_hits++;
+                        }
                     }
                 }
+                double obs_ratio = (total_checks > 0) ? (double)obstacle_hits / total_checks : 0.0;
+                candidates.push_back({obs_ratio, i});
             }
+        };
 
-            double obs_ratio = (double)obstacle_hits / total_checks;
-            sector_scores.push_back({obs_ratio, i});
+        // 4. Bước 1: Chỉ quét nhóm ưu tiên (Priority)
+        scan_sector_group(priority_sectors);
+
+        // Sắp xếp để tìm sector tốt nhất trong nhóm ưu tiên
+        std::sort(candidates.begin(), candidates.end());
+
+        // 5. Bước 2: Kiểm tra điều kiện mật độ > 70% (0.7)
+        // candidates[0] là sector tốt nhất hiện tại
+        if (candidates[0].first > 0.7) {
+            // Nếu khu vực ưu tiên quá tắc nghẽn, quét tiếp khu vực phụ
+            scan_sector_group(secondary_sectors);
+            
+            // Sắp xếp lại toàn bộ (bao gồm cả cũ và mới)
+            std::sort(candidates.begin(), candidates.end());
         }
 
-        std::sort(sector_scores.begin(), sector_scores.end());
+        // 6. Chọn sector tốt nhất
+        int chosen_sector_idx = candidates[0].second;
+        
+        // (Optional) Nếu ngay cả sector tốt nhất của cả vòng tròn đều > 90% vật cản
+        // thì trả về trung điểm để tránh tính toán vô ích (hoặc xử lý fallback khác)
+        if (candidates[0].first > 0.95) return midpoint;
 
-        int chosen_sector_idx = sector_scores[1].second; 
-
-        std::random_device rd;
-        std::mt19937 gen(rd());
+        // 7. Sampling (Sử dụng static RNG để tối ưu hiệu năng)
+        static std::random_device rd;
+        static std::mt19937 gen(rd());
         std::uniform_real_distribution<> dist_angle(0, 1);
         std::uniform_real_distribution<> dist_radius(0, 1);
 
@@ -477,12 +513,9 @@ namespace path_plan
         double theta_base = chosen_sector_idx * angle_step;
         
         double sample_theta = theta_base + dist_angle(gen) * angle_step;
-        
         double sample_r = radius * std::sqrt(dist_radius(gen)); 
 
-        Eigen::Vector3d sample_point = midpoint + sample_r * (std::cos(sample_theta) * u + std::sin(sample_theta) * v);
-
-        return sample_point;
+        return midpoint + sample_r * (std::cos(sample_theta) * u + std::sin(sample_theta) * v);
     }
     double getAdaptiveRewireRadius(int tree_size)
     {

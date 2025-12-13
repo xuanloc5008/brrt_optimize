@@ -63,7 +63,7 @@ void RandomBRRTGenerate_Large(double size = 4)
    pcl::PointXYZ pt_random;
    random_device rd;
    default_random_engine eng(rd());
-   float ramdom_ratio = 0.6;
+   float ramdom_ratio = 0.4;
    int number_ostacle = (_x_h - _x_l) * (_y_h - _y_l) / (size * size) * ramdom_ratio;
    std::cout << "number of ostacle" << number_ostacle;
 
@@ -157,7 +157,169 @@ void RandomBRRTGenerate()
    pcl::toROSMsg(cloudMap, globalMap_pcd);
    globalMap_pcd.header.frame_id = "map";
 }
+void addObstacleWall(double x1, double y1, double x2, double y2, double z_min, double z_max, double resolution)
+{
+   pcl::PointXYZ pt_obs;
+   double dist = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+   int num_points_xy = dist / resolution;
 
+   // Use num_points_xy + 1 to include both endpoints
+   if (num_points_xy == 0) num_points_xy = 1; // Ensure at least one point if start/end are close
+
+   double dx = (x2 - x1) / num_points_xy;
+   double dy = (y2 - y1) / num_points_xy;
+
+   for (double z = z_min; z <= z_max; z += resolution)
+   {
+      for (int i = 0; i <= num_points_xy; ++i)
+      {
+         pt_obs.x = x1 + i * dx;
+         pt_obs.y = y1 + i * dy;
+         pt_obs.z = z;
+         cloudMap.points.push_back(pt_obs);
+      }
+   }
+}
+
+void FixedMapGenerate()
+{
+   ROS_INFO("Generating fixed map with outer L/H/U shapes and new central obstacles.");
+   cloudMap.points.clear();
+
+   double wall_z_min = -1.0;
+   double wall_z_max = _h_h; // Use the parameter for height
+   double res = _resolution; // Use the parameter for resolution
+
+   // Ensure valid map boundaries
+   if (_x_l >= _x_h || _y_l >= _y_h) {
+      ROS_ERROR("Invalid map boundaries. Fixed map generation failed.");
+      return;
+   }
+
+   // --- OUTER OBSTACLES (Unchanged) ---
+
+   // 1. L-Shape (Bottom-Left)
+   double l_base_x = _x_l + 5.0;
+   double l_base_y = _y_l + 5.0;
+   double l_len = 8.0;
+   if (l_base_x + l_len < _x_h && l_base_y + l_len < _y_h) {
+      addObstacleWall(l_base_x, l_base_y, l_base_x + l_len, l_base_y, wall_z_min, wall_z_max, res); // Horizontal part
+      addObstacleWall(l_base_x, l_base_y, l_base_x, l_base_y + l_len, wall_z_min, wall_z_max, res); // Vertical part
+   } else {
+      ROS_WARN("L-Shape obstacle is outside map boundaries, skipping.");
+   }
+
+   // 2. H-Shape (Top-Right)
+   double h_base_x = _x_h - 15.0;
+   double h_base_y = _y_h - 15.0;
+   double h_len = 8.0;
+   double h_width = 6.0;
+   if (h_base_x + h_width < _x_h && h_base_y + h_len < _y_h) {
+      addObstacleWall(h_base_x, h_base_y, h_base_x, h_base_y + h_len, wall_z_min, wall_z_max, res); // Left bar
+      addObstacleWall(h_base_x + h_width, h_base_y, h_base_x + h_width, h_base_y + h_len, wall_z_min, wall_z_max, res); // Right bar
+      addObstacleWall(h_base_x, h_base_y + h_len / 2.0, h_base_x + h_width, h_base_y + h_len / 2.0, wall_z_min, wall_z_max, res); // Middle bar
+   } else {
+      ROS_WARN("H-Shape obstacle is outside map boundaries, skipping.");
+   }
+
+   // 3. U-Shape (Bottom-Right)
+   double u_base_x = _x_h - 15.0;
+   double u_base_y = _y_l + 5.0;
+   double u_len = 8.0;
+   double u_width = 6.0;
+    if (u_base_x + u_width < _x_h && u_base_y + u_len < _y_h) {
+      addObstacleWall(u_base_x, u_base_y, u_base_x, u_base_y + u_len, wall_z_min, wall_z_max, res); // Left bar
+      addObstacleWall(u_base_x + u_width, u_base_y, u_base_x + u_width, u_base_y + u_len, wall_z_min, wall_z_max, res); // Right bar
+      addObstacleWall(u_base_x, u_base_y, u_base_x + u_width, u_base_y, wall_z_min, wall_z_max, res); // Bottom bar
+   } else {
+      ROS_WARN("U-Shape obstacle is outside map boundaries, skipping.");
+   }
+
+   // 4. New H-Shape (Top-Left)
+   double h2_base_x = _x_l + 5.0;
+   double h2_base_y = _y_h - 15.0;
+   double h2_len = 6.0;
+   double h2_width = 5.0;
+   if (h2_base_x + h2_width < _x_h && h2_base_y + h2_len < _y_h) {
+      addObstacleWall(h2_base_x, h2_base_y, h2_base_x, h2_base_y + h2_len, wall_z_min, wall_z_max, res); // Left bar
+      addObstacleWall(h2_base_x + h2_width, h2_base_y, h2_base_x + h2_width, h2_base_y + h2_len, wall_z_min, wall_z_max, res); // Right bar
+      addObstacleWall(h2_base_x, h2_base_y + h2_len / 2.0, h2_base_x + h2_width, h2_base_y + h2_len / 2.0, wall_z_min, wall_z_max, res); // Middle bar
+   } else {
+      ROS_WARN("New H-Shape obstacle is outside map boundaries, skipping.");
+   }
+
+   // 5. New U-Shape (Inverted "n-shape", Top-Left)
+   double u2_base_x = _x_l + 12.0; 
+   double u2_base_y = _y_h - 10.0; 
+   double u2_len = 6.0;
+   double u2_width = 5.0;
+   if (u2_base_x + u2_width < _x_h && u2_base_y + u2_len < _y_h) {
+      addObstacleWall(u2_base_x, u2_base_y, u2_base_x, u2_base_y + u2_len, wall_z_min, wall_z_max, res); // Left bar
+      addObstacleWall(u2_base_x + u2_width, u2_base_y, u2_base_x + u2_width, u2_base_y + u2_len, wall_z_min, wall_z_max, res); // Right bar
+      addObstacleWall(u2_base_x, u2_base_y + u2_len, u2_base_x + u2_width, u2_base_y + u2_len, wall_z_min, wall_z_max, res); // Top bar
+   } else {
+       ROS_WARN("New U-Shape obstacle is outside map boundaries, skipping.");
+   }
+
+   // 6. New L-Shape (Inverted, near Bottom-Right)
+   double l2_base_x = 5.0;
+   double l2_base_y = -15.0;
+   double l2_len = 6.0;
+   if (l2_base_x - l2_len > _x_l && l2_base_y + l2_len < _y_h) {
+       addObstacleWall(l2_base_x, l2_base_y, l2_base_x - l2_len, l2_base_y, wall_z_min, wall_z_max, res); // Horizontal bar (left)
+       addObstacleWall(l2_base_x, l2_base_y, l2_base_x, l2_base_y + l2_len, wall_z_min, wall_z_max, res); // Vertical bar (up)
+   } else {
+       ROS_WARN("New L-Shape is outside map boundaries, skipping.");
+   }
+
+   // --- NEW: CENTRAL OBSTACLES ---
+
+   // 7. Central Vertical Wall (Positive X)
+   double v_wall_x = 2.0;
+   double v_wall_y_start = -5.0;
+   double v_wall_y_end = 5.0;
+   if (v_wall_x > _x_l && v_wall_x < _x_h && v_wall_y_end < _y_h && v_wall_y_start > _y_l) {
+      addObstacleWall(v_wall_x, v_wall_y_start, v_wall_x, v_wall_y_end, wall_z_min, wall_z_max, res);
+   } else {
+       ROS_WARN("Central Vertical Wall is outside map boundaries, skipping.");
+   }
+   
+   // 8. Central Horizontal Wall (Positive Y)
+   double h_wall_x_start = -5.0;
+   double h_wall_x_end = 5.0;
+   double h_wall_y = 2.0;
+   if (h_wall_x_end < _x_h && h_wall_x_start > _x_l && h_wall_y < _y_h && h_wall_y > _y_l) {
+      addObstacleWall(h_wall_x_start, h_wall_y, h_wall_x_end, h_wall_y, wall_z_min, wall_z_max, res);
+   } else {
+       ROS_WARN("Central Horizontal Wall is outside map boundaries, skipping.");
+   }
+
+   // 9. Small Box (Negative X, Negative Y)
+   double box_x = -8.0;
+   double box_y = -8.0;
+   double box_size = 3.0;
+   if (box_x + box_size < _x_h && box_y + box_size < _y_h) {
+      addObstacleWall(box_x, box_y, box_x + box_size, box_y, wall_z_min, wall_z_max, res); // Bottom
+      addObstacleWall(box_x + box_size, box_y, box_x + box_size, box_y + box_size, wall_z_min, wall_z_max, res); // Right
+      addObstacleWall(box_x, box_y + box_size, box_x + box_size, box_y + box_size, wall_z_min, wall_z_max, res); // Top
+   } else {
+      ROS_WARN("Central Small Box is outside map boundaries, skipping.");
+   }
+
+   // --- End of Added Obstacles ---
+
+
+   // Set cloud properties and convert to ROS message
+   cloudMap.width = cloudMap.points.size();
+   cloudMap.height = 1;
+   cloudMap.is_dense = true;
+
+   _has_map = true;
+   ROS_INFO("Fixed map generated with %zu points.", cloudMap.points.size());
+
+   pcl::toROSMsg(cloudMap, globalMap_pcd);
+   globalMap_pcd.header.frame_id = "map";
+}
 void RandomNarrowGenerate()
 {
    random_device rd;
@@ -906,6 +1068,9 @@ int main(int argc, char **argv)
    else if (map_type == "random_large")
    {
       RandomBRRTGenerate_Large();
+   }
+   else if (map_type == "multipe"){
+      FixedMapGenerate();
    }
    else if (map_type == "random_narrow")
    {

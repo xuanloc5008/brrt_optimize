@@ -129,6 +129,7 @@ namespace path_plan
     // nodehandle params
     ros::NodeHandle nh_;
 
+    double rewire_radius_init_ = 5.0;
     BiasSampler sampler_;
     double brrt_optimize_p1_;
     double brrt_optimize_u_p;
@@ -377,6 +378,69 @@ namespace path_plan
       double Pbias = Pinit * std::exp(-ratio);
       return Pbias;
     }
+        //-----------------------rewire--------------------------------------------
+        double getAdaptiveRewireRadius(int tree_size)
+    {
+        if (tree_size <= 1) return rewire_radius_init_;
+
+        double decay = std::log10(tree_size) / (double)tree_size;
+        double r = rewire_radius_init_ * (1.0 + decay);
+        
+        return std::max(r, steer_length_ * 1.5); 
+    }
+    void rewire(RRTNode3DPtr &new_node, kdtree *tree_ptr)
+    {
+        int tree_size = kd_res_size(kd_nearest_range3(tree_ptr, new_node->x[0], new_node->x[1], new_node->x[2], DBL_MAX));
+        double r_near = getAdaptiveRewireRadius(valid_tree_node_nums_);
+        struct kdres *neighbors = kd_nearest_range3(tree_ptr, new_node->x[0], new_node->x[1], new_node->x[2], r_near);
+        
+        if (kd_res_size(neighbors) <= 1)
+        {
+            kd_res_free(neighbors);
+            return;
+        }
+
+        std::vector<RRTNode3DPtr> neighbor_nodes;
+        while (!kd_res_end(neighbors))
+        {
+            RRTNode3DPtr nb = (RRTNode3DPtr)kd_res_item_data(neighbors);
+            if (nb != new_node && nb != new_node->parent)
+            {
+                neighbor_nodes.push_back(nb);
+            }
+            kd_res_next(neighbors);
+        }
+        kd_res_free(neighbors);
+
+        for (auto &nb : neighbor_nodes)
+        {
+            double dist = calDist(nb->x, new_node->x);
+            double new_cost = nb->cost_from_start + dist;
+
+            if (new_cost < new_node->cost_from_start)
+            {
+                if (map_ptr_->isSegmentValid(nb->x, new_node->x))
+                {
+                    changeNodeParent(new_node, nb, dist); 
+                }
+            }
+        }
+
+        for (auto &nb : neighbor_nodes)
+        {
+            double dist = calDist(new_node->x, nb->x);
+            double new_cost = new_node->cost_from_start + dist;
+
+            if (new_cost < nb->cost_from_start)
+            {
+                if (map_ptr_->isSegmentValid(new_node->x, nb->x))
+                {
+                    changeNodeParent(nb, new_node, dist);
+                }
+            }
+        }
+    }
+    //-------------------------------------------------------------------------
     bool brrt_optimize(const Eigen::Vector3d &s, const Eigen::Vector3d &g)
     {
       // CustomLogger logger("/home/x/brrt_optimize/logger_time.txt");
@@ -481,7 +545,9 @@ namespace path_plan
     
         kd_insert3(treeA, x_new[0], x_new[1], x_new[2], new_nodeA);
         update_cache_nearest_heuristic(new_nodeA, treeA, treeB); // update cache with new node
-
+        //-----------------------rewire------------------------------
+        // rewire(new_nodeA, treeA);
+        //-----------------------------------------------------------
         /* request x_new's nearest node in treeB */
         /* Greedy steer & check connection */
         vector<Eigen::Vector3d> x_connects;
@@ -505,6 +571,9 @@ namespace path_plan
             
           }
           update_cache_nearest_heuristic(new_nodeB,treeB,treeA);
+          //-----------------------rewire------------------------------
+          // rewire(new_nodeB, treeB);
+          //-----------------------------------------------------------
         }
 
         /* If connected, trace the connected path */
@@ -524,6 +593,9 @@ namespace path_plan
             solution_cost_time_pair_list_.emplace_back(path_cost, (ros::Time::now() - rrt_start_time).toSec());
             cost_best_ = path_cost;
           }
+          #ifdef DEBUG
+          std::cout << "[BRRT_Optimize_case1]**********Find path after " << number_of_iterations_ << " iterations" << std::endl;
+#endif
           break;
         }
         else
@@ -543,7 +615,9 @@ namespace path_plan
 #endif
       if (tree_connected)
       {
-        
+        #ifdef DEBUG
+        ROS_INFO_STREAM("[BRRT_Optimize_case1]: find_path_use_time: " << solution_cost_time_pair_list_.front().second << ", length: " << solution_cost_time_pair_list_.front().first);
+        #endif
 
         // vis_ptr_->visualize_a_text(Eigen::Vector3d(0, 0, 0), "find_path_use_time","find_path_use_time: " + std::to_string(solution_cost_time_pair_list_.front().second), visualization::Color::black);
         // vis_ptr_->visualize_a_text(Eigen::Vector3d(0, 0, 0.5), "length","length: " + std::to_string(solution_cost_time_pair_list_.front().first), visualization::Color::black);
