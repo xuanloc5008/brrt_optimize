@@ -28,13 +28,13 @@
   <arg name="brrt_optimize_p1" value="1.0" />
   <arg name="brrt_step" value="0.5" />
 
-  <arg name="brrt_alpha" value="7.0" />
-  <arg name="brrt_beta" value="2.0" />
-  <arg name="brrt_gamma" value="2.0" />
+  <arg name="brrt_alpha" value="8.0" />
+  <arg name="brrt_beta" value="1.0" />
+  <arg name="brrt_gamma" value="1.0" />
   <arg name="brrt_max_iteration" value="100000" />
 
-  <arg name="input_param" default="/home/x/Develop/brrt_optimize/brrt_input.json" />
-  <arg name="output_result" default="/home/x/Develop/evaluation/20250705/" />
+  <arg name="input_param" default="/home/xuanloc/DACN/ICIT/brrt_optimize/src/eval/base/brrt_input.json" />
+  <arg name="output_result" default="/home/xuanloc/DACN/ICIT/brrt_optimize/src/eval/20250705/" />
 
   <node pkg="path_finder" type="path_finder" name="path_finder_node" output="screen" required="true">
     <remap from="/global_cloud" to="$(arg global_env_pcd2_topic)"/>
