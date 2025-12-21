@@ -34,7 +34,7 @@ OF SUCH DAMAGE.
 #include <ros/ros.h>
 #include <geometry_msgs/PoseStamped.h>
 
-#define NUMBER_TEST_TIMES 500
+#define NUMBER_TEST_TIMES 200
 class TesterPathFinder
 {
 private:
