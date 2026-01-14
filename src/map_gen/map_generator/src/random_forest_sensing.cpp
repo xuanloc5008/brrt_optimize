@@ -125,7 +125,7 @@ void RandomBRRTGenerate()
 {
    random_device rd;
    default_random_engine eng(rd());
-   float ramdom_ratio = 0.8;
+   float ramdom_ratio = 0.6;
 
    pcl::PointXYZ pt_random;
    std::cout<<"size of map" << _x_l << " " << _x_h << " " << _y_l << " " << _y_h <<" " << _h_h <<std::endl;
