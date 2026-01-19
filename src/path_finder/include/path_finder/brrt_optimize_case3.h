@@ -758,7 +758,7 @@ namespace path_plan
         kd_insert3(treeA, x_new[0], x_new[1], x_new[2], new_nodeA);
         update_cache_nearest_heuristic(new_nodeA, treeA, treeB); // update cache with new node
         //REWIRE----------
-        rewire(new_nodeA, treeA);
+        // rewire(new_nodeA, treeA);
         //----------------
         /* request x_new 's nearest node in treeB */
         /* Greedy steer & check connection */
@@ -781,7 +781,7 @@ namespace path_plan
 
             kd_insert3(treeB, x_connect[0], x_connect[1], x_connect[2], new_nodeB);
             //------------REWIRE-----------
-            rewire(new_nodeB, treeB);
+            // rewire(new_nodeB, treeB);
             //-----------------------------
           }
           update_cache_nearest_heuristic(new_nodeB,treeB,treeA);
