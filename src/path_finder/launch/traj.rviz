@@ -151,7 +151,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/start
           Name: start
           Namespaces:
-            "": true
+            {}
           Queue Size: 100
           Value: true
         - Class: rviz/Marker
@@ -159,7 +159,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/goal
           Name: goal
           Namespaces:
-            "": true
+            {}
           Queue Size: 100
           Value: true
         - Class: rviz/MarkerArray
@@ -611,7 +611,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/case1/tree_vertice
           Name: tree-edge
           Namespaces:
-            "": true
+            {}
           Queue Size: 100
           Value: true
         - Class: rviz/Marker
@@ -619,7 +619,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/case1/tree_edges
           Name: tree-node
           Namespaces:
-            "": true
+            {}
           Queue Size: 100
           Value: true
         - Alpha: 1
@@ -683,7 +683,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/case2/tree_edges
           Name: tree-node
           Namespaces:
-            "": true
+            {}
           Queue Size: 100
           Value: true
         - Class: rviz/MarkerArray
@@ -691,7 +691,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/case2/tree_vertice
           Name: tree-edge
           Namespaces:
-            "": true
+            {}
           Queue Size: 100
           Value: true
         - Alpha: 1
@@ -818,7 +818,7 @@ Visualization Manager:
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
-      Enabled: true
+      Enabled: false
       Name: Case3
     - Class: rviz/Group
       Displays:

@@ -9,7 +9,6 @@
 #include "path_finder/brrt_simple_case1.h"
 #include "path_finder/brrt_simple_case2.h"
 #include "path_finder/brrt_optimize_case3.h"
-#include "path_finder/sof_rrt_star.h" 
 #include "path_finder/testcase.h"
 #include "visualization/visualization.hpp"
 #include "path_finder/sampler.h"
@@ -40,16 +39,10 @@ private:
     shared_ptr<path_plan::BRRT_Simple_Case2> brrt_simple_case2_ptr_;
     shared_ptr<path_plan::BRRT_Optimize_Case3> brrt_optimize_case3_ptr;
 
-    // ---> THÊM POINTER SOF-RRT* <---
-    shared_ptr<path_plan::SOF_RRT_Star> sof_rrt_star_ptr_;
-
     Eigen::Vector3d start_, goal_;
 
     bool run_rrt_, run_rrt_star_, run_rrt_sharp_;
     bool run_brrt_, run_brrt_star_, run_brrt_optimize_;
-    // ---> THÊM CỜ CHẠY <---
-    bool run_sof_rrt_star_;
-
     // Implement for testing path planning algorithms
     BiasSampler sampler_;
     BRRTExperimentMultiAlgo *manager;
@@ -182,22 +175,6 @@ public:
         //     }
         // }
 
-        // ---> THÊM LOGIC GỌI SOF-RRT* KHI DÙNG RVIZ <---
-        // if (run_sof_rrt_star_)
-        // {
-        //     bool sof_res = sof_rrt_star_ptr_->plan(start_, goal_);
-        //     if (sof_res)
-        //     {
-        //         vector<Eigen::Vector3d> final_path = sof_rrt_star_ptr_->getPath();
-        //         vis_ptr_->visualize_path(final_path, "sof_rrt_star_final_path");
-        //         vis_ptr_->visualize_pointcloud(final_path, "sof_rrt_star_final_wpts");
-        //         // Giả sử SOF-RRT* có hàm getSolutions trả về vector<pair<cost, time>>
-        //         // Nếu chưa có, bạn cần thêm vào class SOF_RRT_Star
-        //         // vector<std::pair<double, double>> slns = sof_rrt_star_ptr_->getSolutions();
-        //         // ROS_INFO_STREAM("[SOF-RRT*] final path len: " << slns.back().first);
-        //     }
-        // }
-
         // if (run_rrt_sharp_)
         // {
         //     bool rrt_sharp_res = rrt_sharp_ptr_->plan(start_, goal_);
@@ -319,35 +296,6 @@ public:
             print_vector3d("start", start_);
             print_vector3d("goal", goal_);
             std::map<std::string, AlgoResult> algo_outputs;
-
-            // // ---> BENCHMARK SOF-RRT* <---
-            // // Lưu ý: Class SOF_RRT_Star cần có các hàm getter (getSolutions, get_valid_tree_node_nums, get_number_of_iteration)
-            // // như các thuật toán khác để biên dịch thành công đoạn này.
-            // if(run_sof_rrt_star_) {
-            //     // sof_rrt_star_ptr_->set_test_param(input.epsilon); // Nếu cần set param
-            //     bool sof_res = sof_rrt_star_ptr_->plan(start_, goal_);
-            //     if (sof_res)
-            //     {
-            //         // Lấy kết quả nếu tìm thấy đường
-            //         // Nếu class SOF chưa có getSolutions(), bạn cần dùng goal_node_->cost_from_start để lấy cost
-            //         // và biến thời gian đo được.
-            //         // Dưới đây là giả định class đã chuẩn theo template của BRRT*:
-            //         /*
-            //         vector<std::pair<double, double>> slns = sof_rrt_star_ptr_->getSolutions();
-            //         int num_nodes = sof_rrt_star_ptr_->get_valid_tree_node_nums(); // Cần thêm hàm này vào class SOF
-            //         int num_iterations = sof_rrt_star_ptr_->get_number_of_iteration(); // Cần thêm hàm này vào class SOF
-            //         algo_outputs["SOF-RRT*"] = {true, slns.back().second, slns.back().first, num_nodes, num_iterations, start_, goal_};
-            //         */
-                   
-            //        // Nếu chưa implement các getter trên, ta có thể log đơn giản:
-            //        ROS_INFO("SOF-RRT* found path.");
-            //     }
-            //     else
-            //     {
-            //        ROS_WARN("SOF-RRT* failed.");
-            //        // algo_outputs["SOF-RRT*"] = {false, 0.0, DBL_MAX, 0, 0, start_, goal_};
-            //     }
-            // }
 
             // Simulate BRRT
             brrt_star_ptr_->set_test_param(input.epsilon);
