@@ -1,3 +1,23 @@
+/*
+Copyright (C) 2022 Hongkai Ye (kyle_yeh@163.com)
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
+OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+OF SUCH DAMAGE.
+*/
 #include "self_msgs_and_srvs/GlbObsRcv.h"
 #include "occ_grid/occ_map.h"
 #include "path_finder/rrt_sharp.h"
@@ -16,7 +36,6 @@
 #include <geometry_msgs/PoseStamped.h>
 
 #define NUMBER_TEST_TIMES 100
-
 class TesterPathFinder
 {
 private:
@@ -27,8 +46,6 @@ private:
 
     env::OccMap::Ptr env_ptr_;
     std::shared_ptr<visualization::Visualization> vis_ptr_;
-    
-    // Pointers to algorithms
     shared_ptr<path_plan::RRTSharp> rrt_sharp_ptr_;
     shared_ptr<path_plan::RRTStar> rrt_star_ptr_;
     shared_ptr<path_plan::RRT> rrt_ptr_;
@@ -37,8 +54,7 @@ private:
     shared_ptr<path_plan::BRRT_Optimize> brrt_optimize_ptr_;
     shared_ptr<path_plan::BRRT_Simple_Case1> brrt_simple_case1_ptr_;
     shared_ptr<path_plan::BRRT_Simple_Case2> brrt_simple_case2_ptr_;
-    shared_ptr<path_plan::BRRT_Optimize_Case3> brrt_optimize_case3_ptr;
-
+    shared_ptr<path_plan::BRRT_Simple_case3> brrt_optimize_case3_ptr;
     Eigen::Vector3d start_, goal_;
 
     bool run_rrt_, run_rrt_star_, run_rrt_sharp_;
@@ -59,26 +75,22 @@ public:
         vis_ptr_->registe<visualization_msgs::Marker>("start");
         vis_ptr_->registe<visualization_msgs::Marker>("goal");
 
-        // Init RRT#
         rrt_sharp_ptr_ = std::make_shared<path_plan::RRTSharp>(nh_, env_ptr_);
         rrt_sharp_ptr_->setVisualizer(vis_ptr_);
         vis_ptr_->registe<nav_msgs::Path>("rrt_sharp_final_path");
         vis_ptr_->registe<sensor_msgs::PointCloud2>("rrt_sharp_final_wpts");
 
-        // Init RRT*
         rrt_star_ptr_ = std::make_shared<path_plan::RRTStar>(nh_, env_ptr_);
         rrt_star_ptr_->setVisualizer(vis_ptr_);
         vis_ptr_->registe<nav_msgs::Path>("rrt_star_final_path");
         vis_ptr_->registe<sensor_msgs::PointCloud2>("rrt_star_final_wpts");
         vis_ptr_->registe<visualization_msgs::MarkerArray>("rrt_star_paths");
 
-        // Init RRT
         rrt_ptr_ = std::make_shared<path_plan::RRT>(nh_, env_ptr_);
         rrt_ptr_->setVisualizer(vis_ptr_);
         vis_ptr_->registe<nav_msgs::Path>("rrt_final_path");
         vis_ptr_->registe<sensor_msgs::PointCloud2>("rrt_final_wpts");
 
-        // Init BRRT variants
         brrt_ptr_ = std::make_shared<path_plan::BRRT>(nh_, env_ptr_);
         brrt_ptr_->setVisualizer(vis_ptr_);
         vis_ptr_->registe<nav_msgs::Path>("brrt_final_path");
@@ -104,11 +116,10 @@ public:
         vis_ptr_->registe<nav_msgs::Path>("brrt_case2_final_path");
         vis_ptr_->registe<sensor_msgs::PointCloud2>("brrt_case2_final_wpts");
 
-        brrt_optimize_case3_ptr = std::make_shared<path_plan::BRRT_Optimize_Case3>(nh_, env_ptr_);
+        brrt_optimize_case3_ptr = std::make_shared<path_plan::BRRT_Simple_case3>(nh_, env_ptr_);
         brrt_optimize_case3_ptr->setVisualizer(vis_ptr_);
         vis_ptr_->registe<nav_msgs::Path>("brrt_case3_final_path");
         vis_ptr_->registe<sensor_msgs::PointCloud2>("brrt_case3_final_wpts");
-
         goal_ = get_sample_valid();
         goal_sub_ = nh_.subscribe("/goal", 1, &TesterPathFinder::goalCallback, this);
         execution_timer_ = nh_.createTimer(ros::Duration(1), &TesterPathFinder::executionCallback, this);
@@ -122,9 +133,6 @@ public:
         nh_.param("run_brrt", run_brrt_, false);
         nh_.param("run_brrt_star", run_brrt_star_, false);
         nh_.param("run_brrt_optimize", run_brrt_optimize_, false);
-        // ---> LOAD PARAM SOF-RRT* <---
-        // nh_.param("run_sof_rrt_star", run_sof_rrt_star_, true); 
-
         nh_.param("input_param", input_param_, std::string("/home/xuanloc/DACN/ICIT/brrt_optimize/brrt_input.json"));
         nh_.param("output_result", output_result_, std::string("/home/xuanloc/DACN/ICIT/brrt_optimize/evaluation/"));
         std::cout <<"input_param: " << input_param_ << std::endl;
@@ -147,46 +155,59 @@ public:
         vis_ptr_->visualize_a_ball(start_, 0.3, "start", visualization::Color::pink);
         vis_ptr_->visualize_a_ball(goal_, 0.3, "goal", visualization::Color::steelblue);
 
-        // if (run_rrt_)
+        // BiasSampler sampler;
+        // sampler.setSamplingRange(env_ptr_->getOrigin(), env_ptr_->getMapSize());
+        // vector<Eigen::Vector3d> preserved_samples;
+        // for (int i = 0; i < 5000; ++i)
         // {
-        //     bool rrt_res = rrt_ptr_->plan(start_, goal_);
-        //     if (rrt_res)
-        //     {
-        //         vector<Eigen::Vector3d> final_path = rrt_ptr_->getPath();
-        //         vis_ptr_->visualize_path(final_path, "rrt_final_path");
-        //         vis_ptr_->visualize_pointcloud(final_path, "rrt_final_wpts");
-        //         vector<std::pair<double, double>> slns = rrt_ptr_->getSolutions();
-        //         ROS_INFO_STREAM("[RRT] final path len: " << slns.back().first);
-        //     }
+        //     Eigen::Vector3d rand_sample;
+        //     sampler.uniformSamplingOnce(rand_sample);
+        //     preserved_samples.push_back(rand_sample);
         // }
+        // rrt_ptr_->setPreserveSamples(preserved_samples);
+        // rrt_star_ptr_->setPreserveSamples(preserved_samples);
+        // rrt_sharp_ptr_->setPreserveSamples(preserved_samples);
 
-        // if (run_rrt_star_)
-        // {
-        //     bool rrt_star_res = rrt_star_ptr_->plan(start_, goal_);
-        //     if (rrt_star_res)
-        //     {
-        //         vector<vector<Eigen::Vector3d>> routes = rrt_star_ptr_->getAllPaths();
-        //         vis_ptr_->visualize_path_list(routes, "rrt_star_paths", visualization::blue);
-        //         vector<Eigen::Vector3d> final_path = rrt_star_ptr_->getPath();
-        //         vis_ptr_->visualize_path(final_path, "rrt_star_final_path");
-        //         vis_ptr_->visualize_pointcloud(final_path, "rrt_star_final_wpts");
-        //         vector<std::pair<double, double>> slns = rrt_star_ptr_->getSolutions();
-        //         ROS_INFO_STREAM("[RRT*] final path len: " << slns.back().first);
-        //     }
-        // }
+        if (run_rrt_)
+        {
+            bool rrt_res = rrt_ptr_->plan(start_, goal_);
+            if (rrt_res)
+            {
+                vector<Eigen::Vector3d> final_path = rrt_ptr_->getPath();
+                vis_ptr_->visualize_path(final_path, "rrt_final_path");
+                vis_ptr_->visualize_pointcloud(final_path, "rrt_final_wpts");
+                vector<std::pair<double, double>> slns = rrt_ptr_->getSolutions();
+                ROS_INFO_STREAM("[RRT] final path len: " << slns.back().first);
+            }
+        }
 
-        // if (run_rrt_sharp_)
-        // {
-        //     bool rrt_sharp_res = rrt_sharp_ptr_->plan(start_, goal_);
-        //     if (rrt_sharp_res)
-        //     {
-        //         vector<Eigen::Vector3d> final_path = rrt_sharp_ptr_->getPath();
-        //         vis_ptr_->visualize_path(final_path, "rrt_sharp_final_path");
-        //         vis_ptr_->visualize_pointcloud(final_path, "rrt_sharp_final_wpts");
-        //         vector<std::pair<double, double>> slns = rrt_sharp_ptr_->getSolutions();
-        //         ROS_INFO_STREAM("[RRT#] final path len: " << slns.back().first);
-        //     }
-        // }
+        if (run_rrt_star_)
+        {
+            bool rrt_star_res = rrt_star_ptr_->plan(start_, goal_);
+            if (rrt_star_res)
+            {
+                vector<vector<Eigen::Vector3d>> routes = rrt_star_ptr_->getAllPaths();
+                vis_ptr_->visualize_path_list(routes, "rrt_star_paths", visualization::blue);
+                vector<Eigen::Vector3d> final_path = rrt_star_ptr_->getPath();
+                vis_ptr_->visualize_path(final_path, "rrt_star_final_path");
+                vis_ptr_->visualize_pointcloud(final_path, "rrt_star_final_wpts");
+                vector<std::pair<double, double>> slns = rrt_star_ptr_->getSolutions();
+                ROS_INFO_STREAM("[RRT*] final path len: " << slns.back().first);
+            }
+        }
+
+        if (run_rrt_sharp_)
+        {
+            bool rrt_sharp_res = rrt_sharp_ptr_->plan(start_, goal_);
+            if (rrt_sharp_res)
+            {
+                vector<Eigen::Vector3d> final_path = rrt_sharp_ptr_->getPath();
+                vis_ptr_->visualize_path(final_path, "rrt_sharp_final_path");
+                vis_ptr_->visualize_pointcloud(final_path, "rrt_sharp_final_wpts");
+                vector<std::pair<double, double>> slns = rrt_sharp_ptr_->getSolutions();
+                ROS_INFO_STREAM("[RRT#] final path len: " << slns.back().first);
+            }
+        }
 
         if (run_brrt_)
         {
@@ -201,20 +222,30 @@ public:
             }
         }
 
-        // if (run_brrt_star_)
-        // {
-        //     bool brrt_star_res = brrt_star_ptr_->plan(start_, goal_);
-        //     if (brrt_star_res)
-        //     {
-        //         vector<Eigen::Vector3d> final_path = brrt_star_ptr_->getPath();
-        //         vis_ptr_->visualize_path(final_path, "brrt_star_final_path");
-        //         vis_ptr_->visualize_pointcloud(final_path, "brrt_star_final_wpts");
-        //         vector<std::pair<double, double>> slns = brrt_star_ptr_->getSolutions();
-        //         ROS_INFO_STREAM("[BRRT*] final path len: " << slns.back().first);
-        //     }
-        // }
+        if (run_brrt_star_)
+        {
+            bool brrt_star_res = brrt_star_ptr_->plan(start_, goal_);
+            if (brrt_star_res)
+            {
+                vector<Eigen::Vector3d> final_path = brrt_star_ptr_->getPath();
+                vis_ptr_->visualize_path(final_path, "brrt_star_final_path");
+                vis_ptr_->visualize_pointcloud(final_path, "brrt_star_final_wpts");
+                vector<std::pair<double, double>> slns = brrt_star_ptr_->getSolutions();
+                ROS_INFO_STREAM("[BRRT*] final path len: " << slns.back().first);
+            }
+        }
         if (run_brrt_optimize_)
         {
+            // bool brrt_optimize_res = brrt_optimize_ptr_->plan(start_, goal_);
+            // if (brrt_optimize_res)
+            // {
+            //     vector<Eigen::Vector3d> final_path = brrt_optimize_ptr_->getPath();
+            //     vis_ptr_->visualize_path(final_path, "brrt_optimize_final_path");
+            //     vis_ptr_->visualize_pointcloud(final_path, "brrt_optimize_final_wpts");
+            //     vector<std::pair<double, double>> slns = brrt_optimize_ptr_->getSolutions();
+            //     ROS_INFO_STREAM("[BRRTOpitmize*] final path len: " << slns.back().first);
+            // }
+
             bool brrt_optimize_case1_res = brrt_simple_case1_ptr_->plan(start_, goal_);
             if (brrt_optimize_case1_res)
             {
@@ -311,7 +342,7 @@ public:
             {
                 int num_nodes = brrt_star_ptr_->get_valid_tree_node_nums();
                 int num_iterations = brrt_star_ptr_->get_number_of_iteration();
-                algo_outputs["BRRT star"] = {false, brrt_star_ptr_->get_final_path_use_time_(), DBL_MAX, num_nodes, num_iterations, start_, goal_};
+                algo_outputs["BRRT start"] = {false, brrt_star_ptr_->get_final_path_use_time_(), DBL_MAX, num_nodes, num_iterations, start_, goal_};
             }
             //BRRT*
             brrt_ptr_->set_test_param(input.epsilon);
@@ -376,7 +407,19 @@ public:
                 int num_iterations = brrt_optimize_case3_ptr->get_number_of_iteration();
                 algo_outputs["BRRT_Case3"] = {false, brrt_simple_case1_ptr_->get_final_path_use_time_(), DBL_MAX, num_nodes, num_iterations, start_, goal_};
             }
-            
+            // brrt_optimize_ptr_->set_heuristic_param(input.p1, input.u_p, input.alpha, input.beta, input.gamma,input.epsilon);
+            // bool brrt_optimize_res = brrt_optimize_ptr_->plan(start_, goal_);
+            // if (brrt_optimize_res)
+            // {
+            //     vector<std::pair<double, double>> slns = brrt_optimize_ptr_->getSolutions();
+            //     int num_nodes = brrt_optimize_ptr_->get_valid_tree_node_nums();
+            //     int num_iterations = brrt_optimize_ptr_->get_number_of_iteration();
+            //     algo_outputs["BRRT_Optimize"] = {true, slns.back().second, slns.back().first, num_nodes, num_iterations, start_, goal_};
+            // }
+            // else
+            // {
+            //     algo_outputs["BRRT_Optimize"] = {false, 0.0, 0.0, 0, 0, start_, goal_};
+            // }
             start_ = goal_;
             // std::cout << "Run " << i + 1 << " completed." << std::endl;
             manager->store_output_for_run(algo_outputs);

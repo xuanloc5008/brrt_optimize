@@ -53,13 +53,6 @@ namespace path_plan
       nh_.param("BRRT_Optimize/max_iteration", max_iteration_, 0);
       nh_.param("BRRT_Optimize/enable2d", brrt_enable_2d, true);
 
-      nh_.param("BRRT/epsilon", epsilon_, 1.0);           
-      nh_.param("BRRT/epsilon_floor", epsilon_floor_, 0.2);
-      nh_.param("BRRT/gamma", gamma_, 0.998);             
-      nh_.param("BRRT/weight_grade", weight_grade_, 1.5); 
-      nh_.param("BRRT/n_blocks", n_blocks_, 8);          
-      nh_.param("BRRT/lidar_radius", lidar_radius_, 60.0);
-
       ROS_WARN_STREAM("[BRRT_Optimize_case2] param: steer_length: " << steer_length_);
       ROS_WARN_STREAM("[BRRT_Optimize_case2] param: search_time: " << search_time_);
       ROS_WARN_STREAM("[BRRT_Optimize_case2] param: max_tree_node_nums: " << max_tree_node_nums_);
@@ -136,7 +129,6 @@ namespace path_plan
     // nodehandle params
     ros::NodeHandle nh_;
 
-    double rewire_radius_init_ = 5.0;
     BiasSampler sampler_;
     double brrt_optimize_p1_;
     double brrt_optimize_u_p;
@@ -153,13 +145,6 @@ namespace path_plan
     double first_path_use_time_;
     double final_path_use_time_;
     bool brrt_enable_2d;
-
-    // SOF specific
-    double epsilon_, epsilon_floor_, gamma_, weight_grade_, lidar_radius_;
-    int n_blocks_;
-    std::mt19937 gen_;
-    std::uniform_real_distribution<double> rand01_;
-
 
     double cost_best_;
     std::vector<TreeNode *> nodes_pool_;
@@ -180,149 +165,19 @@ namespace path_plan
       cost_best_ = DBL_MAX;
 
       solution_cost_time_pair_list_.clear();
-      for (int i = 0; i < max_tree_node_nums_; i++)
+      for (int i = 0; i < valid_tree_node_nums_; i++)
       {
         nodes_pool_[i]->parent = nullptr;
         nodes_pool_[i]->children.clear();
-        nodes_pool_[i]->cost_from_start = 0.0;
-        nodes_pool_[i]->cost_from_parent = 0.0;
       }
       valid_tree_node_nums_ = 0;
-      epsilon_ = 0.9; // Reset exploration rate
     }
 
     double calDist(const Eigen::Vector3d &p1, const Eigen::Vector3d &p2)
     {
       return (p1 - p2).norm();
     }
-    //---------------------------------SOF-RRT----------------------------------
-    // Helper: Sigmoid for AFBGSteer
-    double sigmoid(double x) { return 1.0 / (1.0 + std::exp(-x)); }
 
-    // Helper: RayCast for SOF Weighting
-    double rayCast(const Eigen::Vector3d &start, double angle) {
-        Eigen::Vector3d dir(cos(angle), sin(angle), 0.0);
-        double dist = 0.0;
-        double step = map_ptr_->getResolution();
-        Eigen::Vector3d current = start;
-        while (dist < lidar_radius_) {
-            current = start + dir * dist;
-            if (!map_ptr_->isStateValid(current)) return dist;
-            dist += step;
-        }
-        return lidar_radius_;
-    }
-
-    Eigen::Vector3d weightSample(TreeNode* root_node, const Eigen::Vector3d& target_point, kdtree* tree) {
-        epsilon_ = std::max(epsilon_ * gamma_, epsilon_floor_);
-        
-        if (rand01_(gen_) < 0.2) return target_point;
-
-        TreeNode* chosen_node = nullptr;
-
-        if (valid_tree_node_nums_ > 2 && rand01_(gen_) < epsilon_) {
-             int idx = std::rand() % valid_tree_node_nums_;
-             chosen_node = nodes_pool_[idx];
-        } 
-        else {
-             struct kdres *p_nearest = kd_nearest3(tree, target_point[0], target_point[1], target_point[2]);
-             if (p_nearest) {
-                 chosen_node = (TreeNode*)kd_res_item_data(p_nearest);
-                 kd_res_free(p_nearest);
-             } else {
-                 chosen_node = root_node;
-             }
-        }
-
-        struct Sector { double min_a, max_a, r, w; };
-        std::vector<Sector> blocks;
-        double angle_step = 2.0 * M_PI / n_blocks_;
-        double sum_weight = 0.0;
-
-        for (int i = 0; i < n_blocks_; ++i) {
-            Sector s;
-            s.min_a = i * angle_step;
-            s.max_a = (i + 1) * angle_step;
-            double center_angle = s.min_a + angle_step / 2.0;
-            s.r = rayCast(chosen_node->x, center_angle);
-            s.w = std::pow(s.r, weight_grade_);
-            sum_weight += s.w;
-            blocks.push_back(s);
-        }
-
-        double rand_val = rand01_(gen_) * sum_weight;
-        double cur_sum = 0.0;
-        Sector selected = blocks.back();
-        for (const auto& b : blocks) {
-            cur_sum += b.w;
-            if (rand_val <= cur_sum) { selected = b; break; }
-        }
-
-        double r = std::sqrt(rand01_(gen_)) * selected.r;
-        double theta = selected.min_a + rand01_(gen_) * (selected.max_a - selected.min_a);
-        
-        return Eigen::Vector3d(chosen_node->x[0] + r*cos(theta), chosen_node->x[1] + r*sin(theta), 0.0);
-    }
-    Eigen::Vector3d AFBGSteer(const Eigen::Vector3d &x_near, const Eigen::Vector3d &x_rand, const Eigen::Vector3d &x_target, double steer_length_)
-    {
-        Eigen::Vector3d v_expand = (x_rand - x_near).normalized();
-        
-        using dispair = std::pair<double, Eigen::Vector3d>;
-        struct DistCompare {
-            bool operator()(const dispair& a, const dispair& b) {
-                return a.first > b.first; 
-            }
-        };
-
-        std::priority_queue<dispair, std::vector<dispair>, DistCompare> pqueue;
-
-        double min_obs_dist = DBL_MAX;
-        Eigen::Vector3d obs_vec(0,0,0);
-        
-        for(int i=0; i<n_blocks_; ++i) {
-            double ang = i * M_PI / 4.0;
-            double d = rayCast(x_near, ang);
-            if(d < lidar_radius_) {
-              Eigen::Vector3d vec = Eigen::Vector3d(cos(ang), sin(ang), 0)*d;
-              pqueue.push({d, vec});
-            }
-        }
-
-        if (!pqueue.empty()) {
-            min_obs_dist = pqueue.top().first;
-            obs_vec = pqueue.top().second;
-        }
-
-        Eigen::Vector3d total_vec(0,0,0);
-
-        double dist_to_target = calDist(x_near, x_target);
-        double max_dist = map_ptr_->getMapSize()(0);
-        
-        double phi = steer_length_ * sigmoid((dist_to_target / max_dist) * 5.0); 
-        Eigen::Vector3d v_target = (x_target - x_near).normalized();
-
-        double eta = 0.0;
-        Eigen::Vector3d v_tangent(0,0,0);
-
-        if (min_obs_dist < 2.0 * steer_length_) {
-             eta = steer_length_ * sigmoid((min_obs_dist / (2.0 * steer_length_)) * 5.0);
-             
-             Eigen::Vector3d t1(-v_expand[1], v_expand[0], 0);
-             Eigen::Vector3d t2(v_expand[1], -v_expand[0], 0);
-             
-             Eigen::Vector3d v_obs_dir = obs_vec.normalized(); 
-             
-             v_tangent = (t1.dot(v_obs_dir) < t2.dot(v_obs_dir)) ? t1 : t2;
-             
-             total_vec = v_expand + phi * v_target + eta * v_tangent;
-        } 
-        else {
-             total_vec = v_expand + phi * v_target;
-        }
-        
-        return x_near + total_vec.normalized();
-    }
-    //----------------------------------------------------------------------------------------------------------
     RRTNode3DPtr addTreeNode(RRTNode3DPtr &parent, const Eigen::Vector3d &state,
                              const double &cost_from_start, const double &cost_from_parent)
     {
@@ -556,69 +411,6 @@ namespace path_plan
       double Pbias = Pinit * std::exp(-ratio);
       return Pbias;
     }
-    //-----------------------rewire--------------------------------------------
-        double getAdaptiveRewireRadius(int tree_size)
-    {
-        if (tree_size <= 1) return rewire_radius_init_;
-
-        double decay = std::log10(tree_size) / (double)tree_size;
-        double r = rewire_radius_init_ * (1.0 + decay);
-        
-        return std::max(r, steer_length_ * 1.5); 
-    }
-    void rewire(RRTNode3DPtr &new_node, kdtree *tree_ptr)
-    {
-        int tree_size = kd_res_size(kd_nearest_range3(tree_ptr, new_node->x[0], new_node->x[1], new_node->x[2], DBL_MAX));
-        double r_near = getAdaptiveRewireRadius(valid_tree_node_nums_);
-        struct kdres *neighbors = kd_nearest_range3(tree_ptr, new_node->x[0], new_node->x[1], new_node->x[2], r_near);
-        
-        if (kd_res_size(neighbors) <= 1)
-        {
-            kd_res_free(neighbors);
-            return;
-        }
-
-        std::vector<RRTNode3DPtr> neighbor_nodes;
-        while (!kd_res_end(neighbors))
-        {
-            RRTNode3DPtr nb = (RRTNode3DPtr)kd_res_item_data(neighbors);
-            if (nb != new_node && nb != new_node->parent)
-            {
-                neighbor_nodes.push_back(nb);
-            }
-            kd_res_next(neighbors);
-        }
-        kd_res_free(neighbors);
-
-        for (auto &nb : neighbor_nodes)
-        {
-            double dist = calDist(nb->x, new_node->x);
-            double new_cost = nb->cost_from_start + dist;
-
-            if (new_cost < new_node->cost_from_start)
-            {
-                if (map_ptr_->isSegmentValid(nb->x, new_node->x))
-                {
-                    changeNodeParent(new_node, nb, dist); 
-                }
-            }
-        }
-
-        for (auto &nb : neighbor_nodes)
-        {
-            double dist = calDist(new_node->x, nb->x);
-            double new_cost = new_node->cost_from_start + dist;
-
-            if (new_cost < nb->cost_from_start)
-            {
-                if (map_ptr_->isSegmentValid(new_node->x, nb->x))
-                {
-                    changeNodeParent(nb, new_node, dist);
-                }
-            }
-        }
-    }
-    //-------------------------------------------------------------------------
     bool brrt_optimize(const Eigen::Vector3d &s, const Eigen::Vector3d &g)
     {
       ros::Time rrt_start_time = ros::Time::now();
@@ -638,10 +430,7 @@ namespace path_plan
       // double min_houristic = h_start_goal;
       kdtree *treeA = kdtree_1;
       kdtree *treeB = kdtree_2;
-      //----------------------------------------------------
-      TreeNode *rootCurrent = start_node_;
-      TreeNode *rootOther = goal_node_;
-      //------------------------------------------------------------
+
       std::random_device rd;                                // Seed
       std::mt19937 gen(rd());                               // Mersenne Twister engine
       std::uniform_real_distribution<double> dis(0.0, 1.0); // Uniform distribution [0,1)
@@ -671,11 +460,9 @@ namespace path_plan
         if (random01 < pbias)
         {
           
-          // Eigen::Vector3d x_tmp = randomPointInCircle(selected_SI->x, selected_GI->x);
-          Eigen::Vector3d x_tmp = weightSample(selected_SI, selected_GI->x, treeA);
+          Eigen::Vector3d x_tmp = randomPointInCircle(selected_SI->x, selected_GI->x);
           nearest_nodeA = selected_SI;
-          // x_new = steer(nearest_nodeA->x, x_tmp, steer_length_);
-          x_new = AFBGSteer(selected_SI->x, x_tmp, selected_GI->x, steer_length_);
+          x_new = steer(nearest_nodeA->x, x_tmp, steer_length_);
           if ((!map_ptr_->isStateValid(x_new)) || (!map_ptr_->isSegmentValid(nearest_nodeA->x, x_new)))
           {
             std::swap(treeA, treeB);
@@ -690,7 +477,7 @@ namespace path_plan
         }
         else
         {
-          Eigen::Vector3d x_rand = weightSample(rootCurrent, rootOther->x, treeA);
+          Eigen::Vector3d x_rand = get_sample_valid();
 // x_new = map_ptr_->getFreeNodeInLine(nearest_nodeA->x, x_rand, brrt_optimize_step_);
 
           p_nearestA = kd_nearest3(treeA, x_rand[0], x_rand[1], x_rand[2]);
@@ -704,9 +491,7 @@ namespace path_plan
           }
           nearest_nodeA = (RRTNode3DPtr)kd_res_item_data(p_nearestA);
           kd_res_free(p_nearestA);
-          
-          // x_new = steer(nearest_nodeA->x, x_rand, steer_length_);
-          x_new = AFBGSteer(nearest_nodeA->x, x_rand, rootOther->x, steer_length_);
+          x_new = steer(nearest_nodeA->x, x_rand, steer_length_);
           if ((!map_ptr_->isStateValid(x_new)) || (!map_ptr_->isSegmentValid(nearest_nodeA->x, x_new)))
           {
             std::swap(treeA, treeB);
@@ -737,9 +522,7 @@ namespace path_plan
     
         kd_insert3(treeA, x_new[0], x_new[1], x_new[2], new_nodeA);
         update_cache_nearest_heuristic(new_nodeA, treeA, treeB); // update cache with new node
-        //-----------------------rewire------------------------------
-        // rewire(new_nodeA, treeA);
-        //-----------------------------------------------------------
+
         /* request x_new's nearest node in treeB */
         /* Greedy steer & check connection */
         vector<Eigen::Vector3d> x_connects;
@@ -760,9 +543,6 @@ namespace path_plan
             new_nodeB = addTreeNode(new_nodeB, x_connect, new_nodeB->cost_from_start + steer_length_, steer_length_);
 
             kd_insert3(treeB, x_connect[0], x_connect[1], x_connect[2], new_nodeB);
-            //-----------------------rewire------------------------------
-            // rewire(new_nodeB, treeB);
-            //-----------------------------------------------------------
           }
           update_cache_nearest_heuristic(new_nodeB,treeB,treeA);
         }
