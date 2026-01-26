@@ -57,8 +57,8 @@ namespace path_plan
       nh_.param("BRRT/epsilon_floor", epsilon_floor_, 0.2);
       nh_.param("BRRT/gamma", gamma_, 0.998);             
       nh_.param("BRRT/weight_grade", weight_grade_, 1.5); 
-      nh_.param("BRRT/n_blocks", n_blocks_, 32);          
-      nh_.param("BRRT/lidar_radius", lidar_radius_, 90.0);
+      nh_.param("BRRT/n_blocks", n_blocks_, 8);          
+      nh_.param("BRRT/lidar_radius", lidar_radius_, 30.0);
 
       ROS_WARN_STREAM("[BRRT_Optimize_case3] param: steer_length: " << steer_length_);
       ROS_WARN_STREAM("[BRRT_Optimize_case3] param: search_time: " << search_time_);
@@ -198,7 +198,7 @@ namespace path_plan
     //---------------------------------SOF-RRT----------------------------------
     // Helper: Sigmoid for AFBGSteer
     double sigmoid(double x) { return 1.0 / (1.0 + std::exp(-x)); }
-    /*
+    
     // Helper: RayCast for SOF Weighting
     double rayCast(const Eigen::Vector3d &start, double angle) {
         Eigen::Vector3d dir(cos(angle), sin(angle), 0.0);
@@ -266,214 +266,34 @@ namespace path_plan
         double theta = selected.min_a + rand01_(gen_) * (selected.max_a - selected.min_a);
         
         return Eigen::Vector3d(chosen_node->x[0] + r*cos(theta), chosen_node->x[1] + r*sin(theta), 0.0);
-    } */
-   // [OPTIMIZED] RayCast with default arguments for compatibility
-    // If max_range or step_size are not provided, they default to the "High Quality" settings used by AFBGSteer
-    double rayCast(const Eigen::Vector3d &start, double angle, double max_range = -1.0, double step_size = -1.0) {
+    } 
+  //  // [OPTIMIZED] RayCast with default arguments for compatibility
+  //   // If max_range or step_size are not provided, they default to the "High Quality" settings used by AFBGSteer
+  //   double rayCast(const Eigen::Vector3d &start, double angle, double max_range = -1.0, double step_size = -1.0) {
         
-        // Handle defaults for compatibility with AFBGSteer
-        if (max_range < 0) max_range = lidar_radius_; 
-        if (step_size < 0) step_size = map_ptr_->getResolution();
+  //       // Handle defaults for compatibility with AFBGSteer
+  //       if (max_range < 0) max_range = lidar_radius_; 
+  //       if (step_size < 0) step_size = map_ptr_->getResolution();
 
-        Eigen::Vector3d dir(cos(angle), sin(angle), 0.0);
-        Eigen::Vector3d increment = dir * step_size; // Pre-calculate step vector
+  //       Eigen::Vector3d dir(cos(angle), sin(angle), 0.0);
+  //       Eigen::Vector3d increment = dir * step_size; // Pre-calculate step vector
         
-        double dist = 0.0;
-        Eigen::Vector3d current = start;
+  //       double dist = 0.0;
+  //       Eigen::Vector3d current = start;
 
-        // Optimization: Use vector addition instead of re-calculating from start every time
-        // This is significantly faster for CPU cache
-        while (dist < max_range) {
-            current += increment;
+  //       // Optimization: Use vector addition instead of re-calculating from start every time
+  //       // This is significantly faster for CPU cache
+  //       while (dist < max_range) {
+  //           current += increment;
             
-            // Check map bounds first (optional safety, but good for speed if map check is slow)
-            if (!map_ptr_->isStateValid(current)) return dist;
+  //           // Check map bounds first (optional safety, but good for speed if map check is slow)
+  //           if (!map_ptr_->isStateValid(current)) return dist;
             
-            dist += step_size;
-        }
-        return max_range;
-    }
+  //           dist += step_size;
+  //       }
+  //       return max_range;
+  //   }
 
-    // // [OPTIMIZED] Weight Sample
-    // Eigen::Vector3d weightSample(TreeNode* root_node, const Eigen::Vector3d& target_point, kdtree* tree, bool rand_sampling) {
-    //     epsilon_ = std::max(epsilon_ * gamma_, epsilon_floor_);
-        
-    //     // 1. Random Exit (Fastest path)
-    //     if (rand01_(gen_) < 0.2) return target_point;
-
-    //     TreeNode* chosen_node = nullptr;
-        
-    //     // 2. Select Node logic
-    //     if (rand_sampling == true){
-    //       if (valid_tree_node_nums_ > 2 && rand01_(gen_) < epsilon_) {
-    //          int idx = std::rand() % valid_tree_node_nums_;
-    //          chosen_node = nodes_pool_[idx];
-    //       } 
-    //       else {
-    //           struct kdres *p_nearest = kd_nearest3(tree, target_point[0], target_point[1], target_point[2]);
-    //           if (p_nearest) {
-    //               chosen_node = (TreeNode*)kd_res_item_data(p_nearest);
-    //               kd_res_free(p_nearest);
-    //           } else {
-    //               chosen_node = root_node;
-    //           }
-    //       }
-    //     }
-    //     else chosen_node = root_node;
-
-    //     // --- PERFORMANCE OPTIMIZATION START ---
-        
-    //     // A. Reduced Directions: 16 blocks is enough to find "open space"
-    //     // (Original was 32, which is overkill for a heuristic)
-    //     int fast_n_blocks = 16; 
-    //     double angle_step = 2.0 * M_PI / fast_n_blocks;
-        
-    //     // B. Reduced Range: We only care about obstacles within 5.0m for sampling bias
-    //     // (Original was 90.0m, which required checking ~900 pixels per ray)
-    //     double scan_limit = std::min(lidar_radius_, 5.0); 
-        
-    //     // C. Reduced Resolution: Check every 2nd pixel
-    //     // (This cuts the workload in half without missing significant obstacles)
-    //     double fast_step = map_ptr_->getResolution() * 2.0;
-
-    //     struct Sector { double min_a, max_a, r, w; };
-    //     std::vector<Sector> blocks;
-    //     blocks.reserve(fast_n_blocks); // Prevent memory reallocation
-
-    //     double sum_weight = 0.0;
-
-    //     for (int i = 0; i < fast_n_blocks; ++i) {
-    //         Sector s;
-    //         s.min_a = i * angle_step;
-    //         s.max_a = (i + 1) * angle_step;
-    //         double center_angle = s.min_a + angle_step / 2.0;
-            
-    //         // Call Optimized RayCast with explicit limits
-    //         s.r = rayCast(chosen_node->x, center_angle, scan_limit, fast_step);
-            
-    //         // Use simple multiplication if weight_grade_ is close to 1.0, otherwise pow
-    //         s.w = std::pow(s.r, weight_grade_);
-    //         sum_weight += s.w;
-    //         blocks.push_back(s);
-    //     }
-    //     // --- PERFORMANCE OPTIMIZATION END ---
-
-    //     double rand_val = rand01_(gen_) * sum_weight;
-    //     double cur_sum = 0.0;
-        
-    //     // Default to last block to prevent uninitialized variable warnings
-    //     Sector selected = blocks.back();
-        
-    //     for (const auto& b : blocks) {
-    //         cur_sum += b.w;
-    //         if (rand_val <= cur_sum) { selected = b; break; }
-    //     }
-
-    //     double r = rand01_(gen_) * selected.r;
-    //     double theta = selected.min_a + rand01_(gen_) * (selected.max_a - selected.min_a);
-        
-    //     return Eigen::Vector3d(chosen_node->x[0] + r*cos(theta), chosen_node->x[1] + r*sin(theta), 0.0);
-    // }
-
-    // [OPTIMIZED & SMART] Weight Sample
-    // 1. Checks direct line to goal first (for straight paths & speed)
-    // 2. Weights other directions by both "openness" and "alignment to goal"
-    Eigen::Vector3d weightSample(TreeNode* root_node, const Eigen::Vector3d& target_point, kdtree* tree, bool rand_sampling) {
-        epsilon_ = std::max(epsilon_ * gamma_, epsilon_floor_);
-        
-        // --- 1. Random Randomness (Exploration) ---
-        if (rand01_(gen_) < 0.2) return target_point;
-
-        TreeNode* chosen_node = nullptr;
-        if (rand_sampling) {
-            // ... (Your existing node selection logic) ...
-            if (valid_tree_node_nums_ > 2 && rand01_(gen_) < epsilon_) {
-                int idx = std::rand() % valid_tree_node_nums_;
-                chosen_node = nodes_pool_[idx];
-            } else {
-                struct kdres *p_nearest = kd_nearest3(tree, target_point[0], target_point[1], target_point[2]);
-                if (p_nearest) {
-                    chosen_node = (TreeNode*)kd_res_item_data(p_nearest);
-                    kd_res_free(p_nearest);
-                } else {
-                    chosen_node = root_node;
-                }
-            }
-        } else {
-            chosen_node = root_node;
-        }
-
-        // --- 2. THE "GOLDEN TUNNEL" CHECK (Speed + Straightness) ---
-        // Calculate vector to the target (the other tree's root)
-        Eigen::Vector3d to_target = target_point - chosen_node->x;
-        double dist_to_target = to_target.norm();
-        double angle_to_target = std::atan2(to_target.y(), to_target.x());
-        
-        // Quick Check: Is the direct path to the target clear for at least 5 meters (or dist)?
-        // If yes, DON'T waste time spinning rays. Just go there.
-        double check_dist = std::min(dist_to_target, 5.0); 
-        double clear_dist = rayCast(chosen_node->x, angle_to_target, check_dist, map_ptr_->getResolution() * 2.0);
-        
-        // If the path is mostly clear (e.g. > 90% of requested distance), take it!
-        if (clear_dist >= check_dist * 0.9) {
-             // Return a point strictly along this line -> Perfectly straight path segment
-             double sample_dist = std::min(clear_dist, steer_length_ * 2.0); 
-             return chosen_node->x + to_target.normalized() * sample_dist;
-        }
-
-        // --- 3. SECTOR SCANNING (Fallback) ---
-        int fast_n_blocks = 16; 
-        double angle_step = 2.0 * M_PI / fast_n_blocks;
-        double scan_limit = std::min(lidar_radius_, 5.0); 
-        double fast_step = map_ptr_->getResolution() * 2.0;
-
-        struct Sector { double min_a, max_a, r, w; };
-        std::vector<Sector> blocks;
-        blocks.reserve(fast_n_blocks); 
-
-        double sum_weight = 0.0;
-        
-        // Pre-calculate target direction for alignment scoring
-        Eigen::Vector3d ideal_dir = to_target.normalized();
-
-        for (int i = 0; i < fast_n_blocks; ++i) {
-            Sector s;
-            s.min_a = i * angle_step;
-            s.max_a = (i + 1) * angle_step;
-            double center_angle = s.min_a + angle_step / 2.0;
-            
-            // A. Clearance Score (How much space?)
-            s.r = rayCast(chosen_node->x, center_angle, scan_limit, fast_step);
-            
-            // B. Alignment Score (Does it point to the goal?)
-            // Dot product: 1.0 = perfect alignment, -1.0 = opposite direction
-            Eigen::Vector3d scan_dir(cos(center_angle), sin(center_angle), 0.0);
-            double alignment = scan_dir.dot(ideal_dir); 
-            // Map [-1, 1] to small bonus [0.5, 1.5]
-            double align_weight = 1.0 + (alignment * 0.5); 
-
-            // Combined Weight: Prefer CLEAR directions that also ALIGN with goal
-            s.w = std::pow(s.r, weight_grade_) * align_weight;
-            
-            sum_weight += s.w;
-            blocks.push_back(s);
-        }
-
-        // --- 4. Selection ---
-        double rand_val = rand01_(gen_) * sum_weight;
-        double cur_sum = 0.0;
-        Sector selected = blocks.back();
-        
-        for (const auto& b : blocks) {
-            cur_sum += b.w;
-            if (rand_val <= cur_sum) { selected = b; break; }
-        }
-
-        double r = rand01_(gen_) * selected.r;
-        double theta = selected.min_a + rand01_(gen_) * (selected.max_a - selected.min_a);
-        
-        return Eigen::Vector3d(chosen_node->x[0] + r*cos(theta), chosen_node->x[1] + r*sin(theta), 0.0);
-    }
     Eigen::Vector3d AFBGSteer(const Eigen::Vector3d &x_near, const Eigen::Vector3d &x_rand, const Eigen::Vector3d &x_target, double steer_length_)
     {
         Eigen::Vector3d v_expand = (x_rand - x_near).normalized();
@@ -698,24 +518,24 @@ namespace path_plan
     }
     
 
-    // void update_cache_nearest_heuristic(RRTNode3DPtr nodeSi,kdtree *treeA, kdtree *treeB)
-    // {
+    void update_cache_nearest_heuristic(RRTNode3DPtr nodeSi,kdtree *treeA, kdtree *treeB)
+    {
 
-    //   // Iterate through all nodes in treeA
+      // Iterate through all nodes in treeA
 
-    //   // Find the nearest node in treeB to the current node in treeA
-    //   // struct kdres *nodesB = kd_nearest_range3(treeB, nodeSi->x[0], nodeSi->x[1], nodeSi->x[2], DBL_MAX);
-    //   struct kdres *nodesB = kd_nearest_n(treeB, nodeSi->x.data(), 30);
-    //   // std::cout << "size of nodesB: " << kd_res_size(nodesB) << std::endl;
-    //   while (!kd_res_end(nodesB))
-    //   {
-    //     RRTNode3DPtr nodeGi = (RRTNode3DPtr)kd_res_item_data(nodesB);
-    //     double h = computeH(nodeSi->x, nodeGi->x);
-    //     cache.insert(nodeSi, treeA, nodeGi, treeB, h);  // same as insert(nodeB, treeB_ptr, nodeA, treeA_ptr, 1.23)
-    //     kd_res_next(nodesB);
-    //   }
-    //   kd_res_free(nodesB);
-    // }
+      // Find the nearest node in treeB to the current node in treeA
+      // struct kdres *nodesB = kd_nearest_range3(treeB, nodeSi->x[0], nodeSi->x[1], nodeSi->x[2], DBL_MAX);
+      struct kdres *nodesB = kd_nearest_n(treeB, nodeSi->x.data(), 30);
+      // std::cout << "size of nodesB: " << kd_res_size(nodesB) << std::endl;
+      while (!kd_res_end(nodesB))
+      {
+        RRTNode3DPtr nodeGi = (RRTNode3DPtr)kd_res_item_data(nodesB);
+        double h = computeH(nodeSi->x, nodeGi->x);
+        cache.insert(nodeSi, treeA, nodeGi, treeB, h);  // same as insert(nodeB, treeB_ptr, nodeA, treeA_ptr, 1.23)
+        kd_res_next(nodesB);
+      }
+      kd_res_free(nodesB);
+    }
     Eigen::Vector3d get_sample_valid()
     {
       Eigen::Vector3d x_rand;
@@ -727,39 +547,39 @@ namespace path_plan
       }
       return x_rand;
     }
-    // [IMPROVED] Heuristic Update with Obstacle Penalty
-    void update_cache_nearest_heuristic(RRTNode3DPtr nodeSi, kdtree *treeA, kdtree *treeB)
-    {
-      // 1. Parameters for optimization
-      int K = 20; // Check 20 nearest neighbors
-      double penalty = 50.0; // Huge cost for being blocked
-      double check_radius = steer_length_ * 4.0; // Only check LOS for nearby nodes
+    // // [IMPROVED] Heuristic Update with Obstacle Penalty
+    // void update_cache_nearest_heuristic(RRTNode3DPtr nodeSi, kdtree *treeA, kdtree *treeB)
+    // {
+    //   // 1. Parameters for optimization
+    //   int K = 20; // Check 20 nearest neighbors
+    //   double penalty = 50.0; // Huge cost for being blocked
+    //   double check_radius = steer_length_ * 4.0; // Only check LOS for nearby nodes
 
-      struct kdres *nodesB = kd_nearest_n(treeB, nodeSi->x.data(), K);
+    //   struct kdres *nodesB = kd_nearest_n(treeB, nodeSi->x.data(), K);
       
-      while (!kd_res_end(nodesB))
-      {
-        RRTNode3DPtr nodeGi = (RRTNode3DPtr)kd_res_item_data(nodesB);
+    //   while (!kd_res_end(nodesB))
+    //   {
+    //     RRTNode3DPtr nodeGi = (RRTNode3DPtr)kd_res_item_data(nodesB);
         
-        // Calculate standard heuristic
-        double h = computeH(nodeSi->x, nodeGi->x);
-        double dist = calDist(nodeSi->x, nodeGi->x);
+    //     // Calculate standard heuristic
+    //     double h = computeH(nodeSi->x, nodeGi->x);
+    //     double dist = calDist(nodeSi->x, nodeGi->x);
 
-        // [PENALTY LOGIC]
-        // If nodes are close, verify they can actually see each other.
-        if (dist < check_radius) {
-            if (!map_ptr_->isSegmentValid(nodeSi->x, nodeGi->x)) {
-                // They are close but blocked by a wall. Penalize heavily!
-                // This tells the sampler: "Don't pick this pair, it's a trap."
-                h += penalty; 
-            }
-        }
+    //     // [PENALTY LOGIC]
+    //     // If nodes are close, verify they can actually see each other.
+    //     if (dist < check_radius) {
+    //         if (!map_ptr_->isSegmentValid(nodeSi->x, nodeGi->x)) {
+    //             // They are close but blocked by a wall. Penalize heavily!
+    //             // This tells the sampler: "Don't pick this pair, it's a trap."
+    //             h += penalty; 
+    //         }
+    //     }
 
-        cache.insert(nodeSi, treeA, nodeGi, treeB, h);
-        kd_res_next(nodesB);
-      }
-      kd_res_free(nodesB);
-    }
+    //     cache.insert(nodeSi, treeA, nodeGi, treeB, h);
+    //     kd_res_next(nodesB);
+    //   }
+    //   kd_res_free(nodesB);
+    // }
     bool intersectRaySphere(const Eigen::Vector3d &A, const Eigen::Vector3d &D, const Eigen::Vector3d &B, double radius, Eigen::Vector3d &intersection, float escape = 0.002)
     {
       Eigen::Vector3d m = A - B;
@@ -969,57 +789,12 @@ namespace path_plan
             h_start_goal,
             selected_SI->x,
             selected_GI->x);
-
-        // // [MODIFICATION 3] 5% Chance to aim directly at the other tree
-        // if (random01 < 0.05) {
-        //     x_rand = rootOther->x; // Now valid because x_rand is declared above
-            
-        //     // Standard Nearest Neighbor search for this forced sample
-        //     struct kdres *p_nearestA = kd_nearest3(treeA, x_rand[0], x_rand[1], x_rand[2]);
-        //     if (p_nearestA) {
-        //         nearest_nodeA = (RRTNode3DPtr)kd_res_item_data(p_nearestA);
-        //         kd_res_free(p_nearestA);
-                
-        //         // Use standard steer for direct connection attempts
-        //         x_new = steer(nearest_nodeA->x, x_rand, steer_length_);
-                
-        //         // Validation check
-        //         if ((!map_ptr_->isStateValid(x_new)) || (!map_ptr_->isSegmentValid(nearest_nodeA->x, x_new))) {
-        //             std::swap(treeA, treeB);
-        //             std::swap(rootCurrent, rootOther);
-        //             path_reverse = !path_reverse;
-        //             continue;
-        //         }
-
-        //         // --- CRITICAL FIX: Find nearest_nodeB ---
-        //         struct kdres *p_nearestB = kd_nearest3(treeB, x_new[0], x_new[1], x_new[2]);
-        //         if (p_nearestB) {
-        //             nearest_nodeB = (RRTNode3DPtr)kd_res_item_data(p_nearestB);
-        //             kd_res_free(p_nearestB);
-        //         } else {
-        //             nearest_nodeB = rootOther; 
-        //         }
-        //     }
-        //     else {
-        //         continue; // Failed to find neighbor in A
-        //     }
-        // }
         if (random01 < pbias)
         {
-          // [FIX 2] Assign to x_rand instead of x_tmp so the steering logic below works
           // x_rand = randomPointInCircle(selected_SI->x, selected_GI->x);
           x_rand = weightSample(selected_SI, selected_GI->x, treeA, true);
           nearest_nodeA = selected_SI;
-          
-          // [MODIFICATION 1] Fallback Steering Logic
-          // First, try the advanced AFBG steering
           x_new = AFBGSteer(nearest_nodeA->x, x_rand, selected_GI->x, steer_length_);
-
-          // If AFBG fails (hits obstacle), try standard RRT steering (straight line)
-          if ((!map_ptr_->isStateValid(x_new)) || (!map_ptr_->isSegmentValid(nearest_nodeA->x, x_new)))
-          {
-              x_new = steer(nearest_nodeA->x, x_rand, steer_length_);
-          }
 
           // Final check: if BOTH failed, then we swap and skip
           if ((!map_ptr_->isStateValid(x_new)) || (!map_ptr_->isSegmentValid(nearest_nodeA->x, x_new)))
