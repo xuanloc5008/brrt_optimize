@@ -342,7 +342,7 @@ public:
             {
                 int num_nodes = brrt_star_ptr_->get_valid_tree_node_nums();
                 int num_iterations = brrt_star_ptr_->get_number_of_iteration();
-                algo_outputs["BRRT start"] = {false, brrt_star_ptr_->get_final_path_use_time_(), DBL_MAX, num_nodes, num_iterations, start_, goal_};
+                algo_outputs["BRRT star"] = {false, brrt_star_ptr_->get_final_path_use_time_(), DBL_MAX, num_nodes, num_iterations, start_, goal_};
             }
             //BRRT*
             brrt_ptr_->set_test_param(input.epsilon);

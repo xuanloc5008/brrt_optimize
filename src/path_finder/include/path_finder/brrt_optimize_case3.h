@@ -267,33 +267,6 @@ namespace path_plan
         
         return Eigen::Vector3d(chosen_node->x[0] + r*cos(theta), chosen_node->x[1] + r*sin(theta), 0.0);
     } 
-  //  // [OPTIMIZED] RayCast with default arguments for compatibility
-  //   // If max_range or step_size are not provided, they default to the "High Quality" settings used by AFBGSteer
-  //   double rayCast(const Eigen::Vector3d &start, double angle, double max_range = -1.0, double step_size = -1.0) {
-        
-  //       // Handle defaults for compatibility with AFBGSteer
-  //       if (max_range < 0) max_range = lidar_radius_; 
-  //       if (step_size < 0) step_size = map_ptr_->getResolution();
-
-  //       Eigen::Vector3d dir(cos(angle), sin(angle), 0.0);
-  //       Eigen::Vector3d increment = dir * step_size; // Pre-calculate step vector
-        
-  //       double dist = 0.0;
-  //       Eigen::Vector3d current = start;
-
-  //       // Optimization: Use vector addition instead of re-calculating from start every time
-  //       // This is significantly faster for CPU cache
-  //       while (dist < max_range) {
-  //           current += increment;
-            
-  //           // Check map bounds first (optional safety, but good for speed if map check is slow)
-  //           if (!map_ptr_->isStateValid(current)) return dist;
-            
-  //           dist += step_size;
-  //       }
-  //       return max_range;
-  //   }
-
     Eigen::Vector3d AFBGSteer(const Eigen::Vector3d &x_near, const Eigen::Vector3d &x_rand, const Eigen::Vector3d &x_target, double steer_length_)
     {
         Eigen::Vector3d v_expand = (x_rand - x_near).normalized();
@@ -447,62 +420,6 @@ namespace path_plan
       }
       return map_ptr_->isSegmentValid(x_target, x_pre);
     }
-    // [IMPROVED] Greedy Steer with Backoff
-    // Tries to connect to target. If blocked, tries to extend as far as possible.
-    // bool greedySteer(const Eigen::Vector3d &x_near, const Eigen::Vector3d &x_target, vector<Eigen::Vector3d> &x_connects, const double len)
-    // {
-    //   x_connects.clear();
-    //   double dist_to_target = (x_target - x_near).norm();
-      
-    //   // 1. Try full connection first (Fast Path)
-    //   if (dist_to_target < len) {
-    //       if (map_ptr_->isSegmentValid(x_near, x_target)) {
-    //           return true; // Already connected, caller will handle adding the node
-    //       }
-    //       return false;
-    //   }
-
-    //   Eigen::Vector3d x_curr = x_near;
-    //   double dist_traveled = 0.0;
-    //   bool reached_target = false;
-
-    //   // 2. Step-by-step extension
-    //   while (dist_traveled + len <= dist_to_target) {
-    //       // Vector to target
-    //       Eigen::Vector3d diff = x_target - x_curr;
-    //       Eigen::Vector3d dir = diff.normalized();
-          
-    //       Eigen::Vector3d x_try = x_curr + dir * len;
-          
-    //       // Check validity
-    //       if (map_ptr_->isStateValid(x_try) && map_ptr_->isSegmentValid(x_curr, x_try)) {
-    //           x_curr = x_try;
-    //           x_connects.push_back(x_curr); // Add valid step
-    //           dist_traveled += len;
-    //       } else {
-    //           // [BACKOFF STRATEGY]
-    //           // We hit an obstacle. Try taking a smaller step (half length) to get a bit closer?
-    //           // If not, stop here. We made partial progress.
-    //           Eigen::Vector3d x_half = x_curr + dir * (len * 0.5);
-    //           if (map_ptr_->isStateValid(x_half) && map_ptr_->isSegmentValid(x_curr, x_half)) {
-    //               x_connects.push_back(x_half);
-    //           }
-    //           break; // Stop extending
-    //       }
-    //   }
-
-    //   // 3. Final check: Are we close enough to snap to target?
-    //   if (!x_connects.empty()) {
-    //       Eigen::Vector3d last_added = x_connects.back();
-    //       if ((x_target - last_added).norm() < len) {
-    //            if (map_ptr_->isSegmentValid(last_added, x_target)) {
-    //                return true; // Success! Connected.
-    //            }
-    //       }
-    //   }
-      
-    //   return false; // Connection not complete, but x_connects might have partial nodes
-    // }
     double computeH(const Eigen::Vector3d &si, const Eigen::Vector3d &gi)
     {
       Eigen::Vector3d si_gi, si_G, gi_S;
@@ -547,39 +464,6 @@ namespace path_plan
       }
       return x_rand;
     }
-    // // [IMPROVED] Heuristic Update with Obstacle Penalty
-    // void update_cache_nearest_heuristic(RRTNode3DPtr nodeSi, kdtree *treeA, kdtree *treeB)
-    // {
-    //   // 1. Parameters for optimization
-    //   int K = 20; // Check 20 nearest neighbors
-    //   double penalty = 50.0; // Huge cost for being blocked
-    //   double check_radius = steer_length_ * 4.0; // Only check LOS for nearby nodes
-
-    //   struct kdres *nodesB = kd_nearest_n(treeB, nodeSi->x.data(), K);
-      
-    //   while (!kd_res_end(nodesB))
-    //   {
-    //     RRTNode3DPtr nodeGi = (RRTNode3DPtr)kd_res_item_data(nodesB);
-        
-    //     // Calculate standard heuristic
-    //     double h = computeH(nodeSi->x, nodeGi->x);
-    //     double dist = calDist(nodeSi->x, nodeGi->x);
-
-    //     // [PENALTY LOGIC]
-    //     // If nodes are close, verify they can actually see each other.
-    //     if (dist < check_radius) {
-    //         if (!map_ptr_->isSegmentValid(nodeSi->x, nodeGi->x)) {
-    //             // They are close but blocked by a wall. Penalize heavily!
-    //             // This tells the sampler: "Don't pick this pair, it's a trap."
-    //             h += penalty; 
-    //         }
-    //     }
-
-    //     cache.insert(nodeSi, treeA, nodeGi, treeB, h);
-    //     kd_res_next(nodesB);
-    //   }
-    //   kd_res_free(nodesB);
-    // }
     bool intersectRaySphere(const Eigen::Vector3d &A, const Eigen::Vector3d &D, const Eigen::Vector3d &B, double radius, Eigen::Vector3d &intersection, float escape = 0.002)
     {
       Eigen::Vector3d m = A - B;

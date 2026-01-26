@@ -129,6 +129,7 @@ namespace path_plan
     // nodehandle params
     ros::NodeHandle nh_;
 
+    double rewire_radius_init_ = 5.0;
     BiasSampler sampler_;
     double brrt_optimize_p1_;
     double brrt_optimize_u_p;
@@ -411,6 +412,69 @@ namespace path_plan
       double Pbias = Pinit * std::exp(-ratio);
       return Pbias;
     }
+    //-----------------------rewire--------------------------------------------
+        double getAdaptiveRewireRadius(int tree_size)
+    {
+        if (tree_size <= 1) return rewire_radius_init_;
+
+        double decay = std::log10(tree_size) / (double)tree_size;
+        double r = rewire_radius_init_ * (1.0 + decay);
+        
+        return std::max(r, steer_length_ * 1.5); 
+    }
+    void rewire(RRTNode3DPtr &new_node, kdtree *tree_ptr)
+    {
+        int tree_size = kd_res_size(kd_nearest_range3(tree_ptr, new_node->x[0], new_node->x[1], new_node->x[2], DBL_MAX));
+        double r_near = getAdaptiveRewireRadius(valid_tree_node_nums_);
+        struct kdres *neighbors = kd_nearest_range3(tree_ptr, new_node->x[0], new_node->x[1], new_node->x[2], r_near);
+        
+        if (kd_res_size(neighbors) <= 1)
+        {
+            kd_res_free(neighbors);
+            return;
+        }
+
+        std::vector<RRTNode3DPtr> neighbor_nodes;
+        while (!kd_res_end(neighbors))
+        {
+            RRTNode3DPtr nb = (RRTNode3DPtr)kd_res_item_data(neighbors);
+            if (nb != new_node && nb != new_node->parent)
+            {
+                neighbor_nodes.push_back(nb);
+            }
+            kd_res_next(neighbors);
+        }
+        kd_res_free(neighbors);
+
+        for (auto &nb : neighbor_nodes)
+        {
+            double dist = calDist(nb->x, new_node->x);
+            double new_cost = nb->cost_from_start + dist;
+
+            if (new_cost < new_node->cost_from_start)
+            {
+                if (map_ptr_->isSegmentValid(nb->x, new_node->x))
+                {
+                    changeNodeParent(new_node, nb, dist); 
+                }
+            }
+        }
+
+        for (auto &nb : neighbor_nodes)
+        {
+            double dist = calDist(new_node->x, nb->x);
+            double new_cost = new_node->cost_from_start + dist;
+
+            if (new_cost < nb->cost_from_start)
+            {
+                if (map_ptr_->isSegmentValid(new_node->x, nb->x))
+                {
+                    changeNodeParent(nb, new_node, dist);
+                }
+            }
+        }
+    }
+    //-------------------------------------------------------------------------
     bool brrt_optimize(const Eigen::Vector3d &s, const Eigen::Vector3d &g)
     {
       ros::Time rrt_start_time = ros::Time::now();
@@ -522,7 +586,9 @@ namespace path_plan
     
         kd_insert3(treeA, x_new[0], x_new[1], x_new[2], new_nodeA);
         update_cache_nearest_heuristic(new_nodeA, treeA, treeB); // update cache with new node
-
+        //-----------------------rewire------------------------------
+        // rewire(new_nodeA, treeA);
+        //-----------------------------------------------------------
         /* request x_new's nearest node in treeB */
         /* Greedy steer & check connection */
         vector<Eigen::Vector3d> x_connects;
@@ -543,6 +609,9 @@ namespace path_plan
             new_nodeB = addTreeNode(new_nodeB, x_connect, new_nodeB->cost_from_start + steer_length_, steer_length_);
 
             kd_insert3(treeB, x_connect[0], x_connect[1], x_connect[2], new_nodeB);
+            //-----------------------rewire------------------------------
+            // rewire(new_nodeB, treeB);
+            //-----------------------------------------------------------
           }
           update_cache_nearest_heuristic(new_nodeB,treeB,treeA);
         }
