@@ -18,8 +18,8 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
 IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
 OF SUCH DAMAGE.
 */
-#ifndef BRRT_SIMPLE_case3_H
-#define BRRT_SIMPLE_case3_H
+#ifndef BRRT_OPTIMIZE_H
+#define BRRT_OPTIMIZE_H
 
 #include "occ_grid/occ_map.h"
 #include "visualization/visualization.hpp"
@@ -33,11 +33,11 @@ OF SUCH DAMAGE.
 #include <algorithm>
 namespace path_plan
 {
-  class BRRT_Simple_case3
+  class BRRT_Optimize
   {
   public:
-  BRRT_Simple_case3() {};
-  BRRT_Simple_case3(const ros::NodeHandle &nh, const env::OccMap::Ptr &mapPtr) : nh_(nh), map_ptr_(mapPtr)
+    BRRT_Optimize() {};
+    BRRT_Optimize(const ros::NodeHandle &nh, const env::OccMap::Ptr &mapPtr) : nh_(nh), map_ptr_(mapPtr)
     {
       nh_.param("BRRT/steer_length", steer_length_, 0.0);
       nh_.param("BRRT/search_time", search_time_, 0.0);
@@ -53,16 +53,9 @@ namespace path_plan
       nh_.param("BRRT_Optimize/max_iteration", max_iteration_, 0);
       nh_.param("BRRT_Optimize/enable2d", brrt_enable_2d, true);
 
-      nh_.param("BRRT/epsilon", epsilon_, 1.0);           
-      nh_.param("BRRT/epsilon_floor", epsilon_floor_, 0.2);
-      nh_.param("BRRT/gamma", gamma_, 0.998);             
-      nh_.param("BRRT/weight_grade", weight_grade_, 3.0); 
-      nh_.param("BRRT/n_blocks", n_blocks_, 16);          
-      nh_.param("BRRT/lidar_radius", lidar_radius_, 15.0);
-
-      ROS_WARN_STREAM("[BRRT_Optimize_case3] param: steer_length: " << steer_length_);
-      ROS_WARN_STREAM("[BRRT_Optimize_case3] param: search_time: " << search_time_);
-      ROS_WARN_STREAM("[BRRT_Optimize_case3] param: max_tree_node_nums: " << max_tree_node_nums_);
+      ROS_WARN_STREAM("[BRRT_Optimize] param: steer_length: " << steer_length_);
+      ROS_WARN_STREAM("[BRRT_Optimize] param: search_time: " << search_time_);
+      ROS_WARN_STREAM("[BRRT_Optimize] param: max_tree_node_nums: " << max_tree_node_nums_);
 
       sampler_.setSamplingRange(mapPtr->getOrigin(), mapPtr->getMapSize());
 
@@ -73,12 +66,8 @@ namespace path_plan
         nodes_pool_[i] = new TreeNode;
       }
     }
-    ~BRRT_Simple_case3() {
-        for (auto node : nodes_pool_) {
-            delete node;
-        }
-        nodes_pool_.clear();
-    }
+    ~BRRT_Optimize() {};
+
     bool plan(const Eigen::Vector3d &s, const Eigen::Vector3d &g)
     {
       reset();
@@ -132,15 +121,11 @@ namespace path_plan
     {
       return valid_tree_node_nums_;
     }
-    double get_final_path_use_time_()
-    {
-      return final_path_use_time_;
-    }
+
   private:
     // nodehandle params
     ros::NodeHandle nh_;
 
-    double rewire_radius_init_ = 5.0;
     BiasSampler sampler_;
     double brrt_optimize_p1_;
     double brrt_optimize_u_p;
@@ -157,13 +142,6 @@ namespace path_plan
     double first_path_use_time_;
     double final_path_use_time_;
     bool brrt_enable_2d;
-
-    // SOF specific
-    double epsilon_, epsilon_floor_, gamma_, weight_grade_, lidar_radius_;
-    int n_blocks_;
-    std::mt19937 gen_;
-    std::uniform_real_distribution<double> rand01_;
-
 
     double cost_best_;
     std::vector<TreeNode *> nodes_pool_;
@@ -184,295 +162,19 @@ namespace path_plan
       cost_best_ = DBL_MAX;
 
       solution_cost_time_pair_list_.clear();
-      for (int i = 0; i < max_tree_node_nums_; i++)
+      for (int i = 0; i < valid_tree_node_nums_; i++)
       {
         nodes_pool_[i]->parent = nullptr;
         nodes_pool_[i]->children.clear();
-        nodes_pool_[i]->cost_from_start = 0.0;
-        nodes_pool_[i]->cost_from_parent = 0.0;
       }
       valid_tree_node_nums_ = 0;
-      epsilon_ = 0.9; // Reset exploration rate
     }
 
     double calDist(const Eigen::Vector3d &p1, const Eigen::Vector3d &p2)
     {
       return (p1 - p2).norm();
     }
-    //---------------------------------SOF-RRT----------------------------------
-    // Helper: Sigmoid for AFBGSteer
-    double sigmoid(double x) { return 1.0 / (1.0 + std::exp(-x)); }
-    
-    // Helper: RayCast for SOF Weighting
-    // double rayCast(const Eigen::Vector3d &start, double angle, double lidar_radius) {
-    //     Eigen::Vector3d dir(cos(angle), sin(angle), 0.0);
-    //     double dist = 0.0;
-    //     double step = map_ptr_->getResolution();
-    //     Eigen::Vector3d current = start;
-    //     while (dist < lidar_radius_) {
-    //         current = start + dir * dist;
-    //         if (!map_ptr_->isStateValid(current)) return dist;
-    //         dist += step;
-    //     }
-    //     return lidar_radius_;
-    // }
-    double rayCast(const Eigen::Vector3d &start, double angle) {
-        Eigen::Vector3d dir(cos(angle), sin(angle), 0.0);
-        double dist = 0.0;
-        double step = map_ptr_->getResolution();
-        Eigen::Vector3d current = start;
-        while (dist < lidar_radius_) {
-            current = start + dir * dist;
-            if (!map_ptr_->isStateValid(current)) return dist;
-            dist += step;
-        }
-        return lidar_radius_;
-    }
-    Eigen::Vector3d weightSample(TreeNode* root_node, const Eigen::Vector3d& target_point, kdtree* tree, bool rand_sampling) {
-        epsilon_ = std::max(epsilon_ * gamma_, epsilon_floor_);
-        
-        if (rand01_(gen_) < 0.2) return target_point;
 
-        TreeNode* chosen_node = nullptr;
-        if (rand_sampling == true){
-          if (valid_tree_node_nums_ > 2 && rand01_(gen_) < epsilon_) {
-             int idx = std::rand() % valid_tree_node_nums_;
-             chosen_node = nodes_pool_[idx];
-          } 
-          else {
-              struct kdres *p_nearest = kd_nearest3(tree, target_point[0], target_point[1], target_point[2]);
-              if (p_nearest) {
-                  chosen_node = (TreeNode*)kd_res_item_data(p_nearest);
-                  kd_res_free(p_nearest);
-              } else {
-                  chosen_node = root_node;
-              }
-          }
-          // int idx = std::rand() % valid_tree_node_nums_;
-          // chosen_node = nodes_pool_[idx];
-        }
-        else chosen_node = root_node;
-        struct Sector { double min_a, max_a, r, w; };
-        std::vector<Sector> blocks;
-        double angle_step = 2.0 * M_PI / n_blocks_;
-        double sum_weight = 0.0;
-
-        for (int i = 0; i < n_blocks_; ++i) {
-            Sector s;
-            s.min_a = i * angle_step;
-            s.max_a = (i + 1) * angle_step;
-            double center_angle = s.min_a + angle_step / 2.0;
-            s.r = rayCast(chosen_node->x, center_angle);
-            s.w = std::pow(s.r, weight_grade_);
-            sum_weight += s.w;
-            blocks.push_back(s);
-        }
-
-        double rand_val = rand01_(gen_) * sum_weight;
-        double cur_sum = 0.0;
-        Sector selected = blocks.back();
-        for (const auto& b : blocks) {
-            cur_sum += b.w;
-            if (rand_val <= cur_sum) { selected = b; break; }
-        }
-
-        // double r = std::sqrt(rand01_(gen_)) * selected.r;
-        double r = rand01_(gen_) * selected.r;
-        double theta = selected.min_a + rand01_(gen_) * (selected.max_a - selected.min_a);
-        
-        return Eigen::Vector3d(chosen_node->x[0] + r*cos(theta), chosen_node->x[1] + r*sin(theta), 0.0);
-    } 
-
-    /*Eigen::Vector3d weightSample(TreeNode* root_node, const Eigen::Vector3d& target_point, kdtree* tree, bool rand_sampling, double max_r) {
-        epsilon_ = std::max(epsilon_ * gamma_, epsilon_floor_);
-        
-        // Tăng tốc độ hội tụ: 20% khả năng lấy mẫu trực tiếp tại đích
-        if (rand01_(gen_) < 0.2) return target_point;
-
-        TreeNode* chosen_node = nullptr;
-        if (rand_sampling) {
-            struct kdres *p_nearest = kd_nearest3(tree, target_point[0], target_point[1], target_point[2]);
-            if (p_nearest) {
-                chosen_node = (TreeNode*)kd_res_item_data(p_nearest);
-                kd_res_free(p_nearest);
-            } else {
-                chosen_node = root_node;
-            }
-        } else {
-            chosen_node = root_node;
-        }
-
-        Eigen::Vector3d start_pos = chosen_node->x;
-        double angle_step = 2.0 * M_PI / n_blocks_;
-        
-        // Vector hướng từ Start đến Goal
-        Eigen::Vector3d AB = target_point - start_pos;
-        double AB_mag_sq = AB.squaredNorm();
-
-        struct RayInfo {
-            double r;
-            Eigen::Vector3d endpoint;
-        };
-        std::vector<RayInfo> all_rays;
-        double max_r_found = -1.0;
-
-        for (int i = 0; i < n_blocks_; ++i) {
-            double theta = i * angle_step;
-            double r = rayCast(start_pos, theta, max_r);
-            
-            Eigen::Vector3d endpoint(start_pos[0] + r * cos(theta), 
-                                    start_pos[1] + r * sin(theta), 
-                                    0.0);
-            
-            all_rays.push_back({r, endpoint});
-            if (r > max_r_found) max_r_found = r;
-        }
-
-        Eigen::Vector3d best_point = target_point;
-        double min_dist_sq = std::numeric_limits<double>::max();
-        bool found_valid = false;
-
-        for (const auto& ray : all_rays) {
-            if (ray.r >= max_r_found - 1e-3) {
-                double dist_sq;
-                
-                if (AB_mag_sq < 1e-9) {
-                    dist_sq = (ray.endpoint - start_pos).squaredNorm();
-                } else {
-                    Eigen::Vector3d AP = ray.endpoint - start_pos;
-                    double t = AP.dot(AB) / AB_mag_sq;
-                    auto clamp = [](double v, double lo, double hi){
-                      return (v < lo) ? lo : (hi < v) ? hi : v;
-                    };
-                    double t_clamped = clamp(t, 0.0, 1.0);
-                    
-                    Eigen::Vector3d closest_point_on_segment = start_pos + t_clamped * AB;
-                    
-                    dist_sq = (ray.endpoint - closest_point_on_segment).squaredNorm();
-                }
-
-                if (dist_sq < min_dist_sq) {
-                    min_dist_sq = dist_sq;
-                    best_point = ray.endpoint;
-                    found_valid = true;
-                }
-            }
-        }
-
-        return found_valid ? best_point : target_point;
-    } */
-   /*
-    Eigen::Vector3d AFBGSteer(const Eigen::Vector3d &x_near, const Eigen::Vector3d &x_rand, const Eigen::Vector3d &x_target, double steer_length_)
-    {
-        Eigen::Vector3d v_expand = (x_rand - x_near).normalized();
-
-        std::priority_queue<std::pair<double, Eigen::Vector3d>, 
-                            std::vector<std::pair<double, Eigen::Vector3d>>, 
-                            std::greater<std::pair<double, Eigen::Vector3d>>> pqueue;
-
-        double min_obs_dist = DBL_MAX;
-        Eigen::Vector3d obs_vec(0, 0, 0);
-        
-        for(int i = 0; i < n_blocks_; ++i) {
-            double ang = i * (2.0 * M_PI / n_blocks_); 
-            double d = rayCast(x_near, ang);
-            
-            if(d < lidar_radius_) {
-                Eigen::Vector3d vec = Eigen::Vector3d(cos(ang), sin(ang), 0) * d;
-                pqueue.push({d, vec}); 
-            }
-        }
-
-        if (!pqueue.empty()) {
-            min_obs_dist = pqueue.top().first;
-            obs_vec = pqueue.top().second;
-        }
-
-        double dist_to_target = (x_target - x_near).norm();
-        double max_dist = map_ptr_->getMapSize()(0);
-        
-        double phi = steer_length_ * sigmoid((dist_to_target / max_dist) * 5.0); 
-        Eigen::Vector3d v_target = (x_target - x_near).normalized();
-
-        Eigen::Vector3d total_vec(0, 0, 0);
-
-        if (min_obs_dist < 2.0 * steer_length_) {
-            double eta = steer_length_ * sigmoid((min_obs_dist / (2.0 * steer_length_)) * 5.0);
-            
-            Eigen::Vector3d t1(-v_expand[1], v_expand[0], 0);
-            Eigen::Vector3d t2(v_expand[1], -v_expand[0], 0);
-            Eigen::Vector3d v_obs_dir = obs_vec.normalized(); 
-            
-            Eigen::Vector3d v_tangent = (t1.dot(v_obs_dir) < t2.dot(v_obs_dir)) ? t1 : t2;
-            
-            total_vec = v_expand + phi * v_target + eta * v_tangent;
-        } 
-        else {
-            total_vec = v_expand + phi * v_target;
-        }
-        
-        return x_near + total_vec.normalized();
-    }*/
-       Eigen::Vector3d AFBGSteer(const Eigen::Vector3d &x_near, const Eigen::Vector3d &x_rand, const Eigen::Vector3d &x_target, double steer_length_)
-    {
-        Eigen::Vector3d v_expand = (x_rand - x_near).normalized();
-        
-        using dispair = std::pair<double, Eigen::Vector3d>;
-        struct DistCompare {
-            bool operator()(const dispair& a, const dispair& b) {
-                return a.first > b.first; 
-            }
-        };
-
-        std::priority_queue<dispair, std::vector<dispair>, DistCompare> pqueue;
-
-        double min_obs_dist = DBL_MAX;
-        Eigen::Vector3d obs_vec(0,0,0);
-        
-        for(int i=0; i<n_blocks_; ++i) {
-            double ang = i * M_PI / 4.0;
-            double d = rayCast(x_near, ang);
-            if(d < lidar_radius_) {
-              Eigen::Vector3d vec = Eigen::Vector3d(cos(ang), sin(ang), 0)*d;
-              pqueue.push({d, vec});
-            }
-        }
-
-        if (!pqueue.empty()) {
-            min_obs_dist = pqueue.top().first;
-            obs_vec = pqueue.top().second;
-        }
-
-        Eigen::Vector3d total_vec(0,0,0);
-
-        double dist_to_target = calDist(x_near, x_target);
-        double max_dist = map_ptr_->getMapSize()(0);
-        
-        double phi = steer_length_ * sigmoid((dist_to_target / max_dist) * 5.0); 
-        Eigen::Vector3d v_target = (x_target - x_near).normalized();
-
-        double eta = 0.0;
-        Eigen::Vector3d v_tangent(0,0,0);
-
-        if (min_obs_dist < 2.0 * steer_length_) {
-             eta = steer_length_ * sigmoid((min_obs_dist / (2.0 * steer_length_)) * 5.0);
-             
-             Eigen::Vector3d t1(-v_expand[1], v_expand[0], 0);
-             Eigen::Vector3d t2(v_expand[1], -v_expand[0], 0);
-             
-             Eigen::Vector3d v_obs_dir = obs_vec.normalized(); 
-             
-             v_tangent = (t1.dot(v_obs_dir) < t2.dot(v_obs_dir)) ? t1 : t2;
-             
-             total_vec = v_expand + phi * v_target + eta * v_tangent;
-        } 
-        else {
-             total_vec = v_expand + phi * v_target;
-        }
-        
-        return x_near + total_vec.normalized();
-    }
-    //----------------------------------------------------------------------------------------------------------
     RRTNode3DPtr addTreeNode(RRTNode3DPtr &parent, const Eigen::Vector3d &state,
                              const double &cost_from_start, const double &cost_from_parent)
     {
@@ -580,13 +282,6 @@ namespace path_plan
       return h;
     }
     
-    double computeSG(const Eigen::Vector3d &si, const Eigen::Vector3d &gi){
-      Eigen::Vector3d si_gi;
-      double si_gi_dist;
-      si_gi = si - gi;
-      si_gi_dist = si_gi.norm();
-      return si_gi_dist;
-    }
 
     void update_cache_nearest_heuristic(RRTNode3DPtr nodeSi,kdtree *treeA, kdtree *treeB)
     {
@@ -594,9 +289,7 @@ namespace path_plan
       // Iterate through all nodes in treeA
 
       // Find the nearest node in treeB to the current node in treeA
-      // struct kdres *nodesB = kd_nearest_range3(treeB, nodeSi->x[0], nodeSi->x[1], nodeSi->x[2], DBL_MAX);
-      struct kdres *nodesB = kd_nearest_n(treeB, nodeSi->x.data(), 30);
-      // std::cout << "size of nodesB: " << kd_res_size(nodesB) << std::endl;
+      struct kdres *nodesB = kd_nearest_range3(treeB, nodeSi->x[0], nodeSi->x[1], nodeSi->x[2], DBL_MAX);
       while (!kd_res_end(nodesB))
       {
         RRTNode3DPtr nodeGi = (RRTNode3DPtr)kd_res_item_data(nodesB);
@@ -617,6 +310,7 @@ namespace path_plan
       }
       return x_rand;
     }
+
     bool intersectRaySphere(const Eigen::Vector3d &A, const Eigen::Vector3d &D, const Eigen::Vector3d &B, double radius, Eigen::Vector3d &intersection, float escape = 0.002)
     {
       Eigen::Vector3d m = A - B;
@@ -635,7 +329,7 @@ namespace path_plan
 
     Eigen::Vector3d randomPointInCircle(const Eigen::Vector3d& A, const Eigen::Vector3d& B) {
       // Step 1: Get the normal vector of the circle plane
-      // std::cout << "[BRRT_Optimize_case3] randomPointInCircle: A: " << A.transpose() << " B: " << B.transpose() << std::endl;
+      // std::cout << "[BRRT_Optimize] randomPointInCircle: A: " << A.transpose() << " B: " << B.transpose() << std::endl;
       Eigen::Vector3d normal = (B - A).normalized();
       double radius = (B - A).norm();
       #ifdef DEBUG
@@ -712,69 +406,6 @@ namespace path_plan
       double Pbias = Pinit * std::exp(-ratio);
       return Pbias;
     }
-    //-----------------------rewire--------------------------------------------
-        double getAdaptiveRewireRadius(int tree_size)
-    {
-        if (tree_size <= 1) return rewire_radius_init_;
-
-        double decay = std::log10(tree_size) / (double)tree_size;
-        double r = rewire_radius_init_ * (1.0 + decay);
-        
-        return std::max(r, steer_length_ * 1.5); 
-    }
-    void rewire(RRTNode3DPtr &new_node, kdtree *tree_ptr)
-    {
-        int tree_size = kd_res_size(kd_nearest_range3(tree_ptr, new_node->x[0], new_node->x[1], new_node->x[2], DBL_MAX));
-        double r_near = getAdaptiveRewireRadius(valid_tree_node_nums_);
-        struct kdres *neighbors = kd_nearest_range3(tree_ptr, new_node->x[0], new_node->x[1], new_node->x[2], r_near);
-        
-        if (kd_res_size(neighbors) <= 1)
-        {
-            kd_res_free(neighbors);
-            return;
-        }
-
-        std::vector<RRTNode3DPtr> neighbor_nodes;
-        while (!kd_res_end(neighbors))
-        {
-            RRTNode3DPtr nb = (RRTNode3DPtr)kd_res_item_data(neighbors);
-            if (nb != new_node && nb != new_node->parent)
-            {
-                neighbor_nodes.push_back(nb);
-            }
-            kd_res_next(neighbors);
-        }
-        kd_res_free(neighbors);
-
-        for (auto &nb : neighbor_nodes)
-        {
-            double dist = calDist(nb->x, new_node->x);
-            double new_cost = nb->cost_from_start + dist;
-
-            if (new_cost < new_node->cost_from_start)
-            {
-                if (map_ptr_->isSegmentValid(nb->x, new_node->x))
-                {
-                    changeNodeParent(new_node, nb, dist); 
-                }
-            }
-        }
-
-        for (auto &nb : neighbor_nodes)
-        {
-            double dist = calDist(new_node->x, nb->x);
-            double new_cost = new_node->cost_from_start + dist;
-
-            if (new_cost < nb->cost_from_start)
-            {
-                if (map_ptr_->isSegmentValid(new_node->x, nb->x))
-                {
-                    changeNodeParent(nb, new_node, dist);
-                }
-            }
-        }
-    }
-    //-------------------------------------------------------------------------
     bool brrt_optimize(const Eigen::Vector3d &s, const Eigen::Vector3d &g)
     {
       ros::Time rrt_start_time = ros::Time::now();
@@ -791,13 +422,10 @@ namespace path_plan
       kd_insert3(kdtree_1, start_node_->x[0], start_node_->x[1], start_node_->x[2], start_node_);
       kd_insert3(kdtree_2, goal_node_->x[0], goal_node_->x[1], goal_node_->x[2], goal_node_);
       RRTNode3DPtr selected_SI = start_node_, selected_GI = goal_node_;
-      
+      // double min_houristic = h_start_goal;
       kdtree *treeA = kdtree_1;
       kdtree *treeB = kdtree_2;
-      //----------------------------------------------------
-      TreeNode *rootCurrent = start_node_;
-      TreeNode *rootOther = goal_node_;
-      //------------------------------------------------------------
+
       std::random_device rd;                                // Seed
       std::mt19937 gen(rd());                               // Mersenne Twister engine
       std::uniform_real_distribution<double> dis(0.0, 1.0); // Uniform distribution [0,1)
@@ -806,16 +434,14 @@ namespace path_plan
       number_of_iterations_ = 0;
      
 #ifdef DEBUG
-      std::cout << "[BRRT_Optimize_case3] Start sampling..." << std::endl;
+      std::cout << "[BRRT_Optimize] Start sampling..." << std::endl;
 #endif
       cache.insert(start_node_, treeA, goal_node_, treeB, h_start_goal); // insert start and goal node to cache
-      for (number_of_iterations_ = 0; number_of_iterations_ < 150000; ++number_of_iterations_)
+      for (number_of_iterations_ = 0; number_of_iterations_ < max_iteration_; ++number_of_iterations_)
       {
         /* random sampling */
-        
+        Eigen::Vector3d x_rand = get_sample_valid();
         Eigen::Vector3d x_new;
-        Eigen::Vector3d x_rand;
-        
         double random01 = dis(gen);
         struct kdres *p_nearestA = nullptr, *p_nearestB = nullptr;
         RRTNode3DPtr nearest_nodeA, nearest_nodeB;
@@ -828,32 +454,29 @@ namespace path_plan
             selected_GI->x);
         if (random01 < pbias)
         {
-          // x_rand = randomPointInCircle(selected_SI->x, selected_GI->x);
-          double max_r = computeSG(selected_SI->x, selected_GI->x);
-          // x_rand = weightSample(selected_SI, selected_GI->x, treeA, true, max_r);
-          x_rand = weightSample(selected_SI, selected_GI->x, treeA, true);
+          
+          Eigen::Vector3d x_tmp = computeT(selected_SI->x, selected_GI->x, x_rand);
           nearest_nodeA = selected_SI;
-          x_new = AFBGSteer(nearest_nodeA->x, x_rand, rootOther->x, steer_length_);
-          // x_new = steer(nearest_nodeA->x, x_rand, steer_length_);
-
+          x_new = steer(nearest_nodeA->x, x_tmp, steer_length_);
           if ((!map_ptr_->isStateValid(x_new)) || (!map_ptr_->isSegmentValid(nearest_nodeA->x, x_new)))
           {
-              std::swap(treeA, treeB);
-              std::swap(rootCurrent, rootOther); 
-              path_reverse = !path_reverse;
-              continue;
+            std::swap(treeA, treeB);
+            path_reverse = !path_reverse;
+            continue;
           }
 
           nearest_nodeB = selected_GI;
 #ifdef DEBUG
-          vis_ptr_->visualize_a_ball(x_rand, 0.5, "/brrt_optimize/x_tmp", visualization::Color::red);
+          vis_ptr_->visualize_a_ball(x_tmp, 0.5, "/brrt_optimize/x_tmp", visualization::Color::red);
+          std::cout << "[BRRT_Optimize] Use heuristic steer " << pbias << std::endl;
 #endif
         }
         else
         {
-          // Uniform Sampling
-          // x_rand = weightSample(rootCurrent, rootOther->x, treeA, false);
-          x_rand = get_sample_valid();
+// x_new = map_ptr_->getFreeNodeInLine(nearest_nodeA->x, x_rand, brrt_optimize_step_);
+#ifdef DEBUG
+          std::cout << "[BRRT_Optimize] Use normal steer " << pbias << std::endl;
+#endif
           p_nearestA = kd_nearest3(treeA, x_rand[0], x_rand[1], x_rand[2]);
 
           if (p_nearestA == nullptr)
@@ -865,15 +488,14 @@ namespace path_plan
           }
           nearest_nodeA = (RRTNode3DPtr)kd_res_item_data(p_nearestA);
           kd_res_free(p_nearestA);
-          
-          x_new = AFBGSteer(nearest_nodeA->x, x_rand, rootOther->x, steer_length_);
+          x_new = steer(nearest_nodeA->x, x_rand, steer_length_);
           if ((!map_ptr_->isStateValid(x_new)) || (!map_ptr_->isSegmentValid(nearest_nodeA->x, x_new)))
           {
-              std::swap(treeA, treeB);
-              std::swap(rootCurrent, rootOther); 
-              path_reverse = !path_reverse;
-              continue;
+            std::swap(treeA, treeB);
+            path_reverse = !path_reverse;
+            continue;
           }
+
           p_nearestB = kd_nearest3(treeB, x_new[0], x_new[1], x_new[2]);
           if (p_nearestB == nullptr)
           {
@@ -886,6 +508,7 @@ namespace path_plan
           kd_res_free(p_nearestB);
         }
 
+        // Extend Node A by steer
         double dist_from_A = nearest_nodeA->cost_from_start + steer_length_;
         RRTNode3DPtr new_nodeA(nullptr);
         if (valid_tree_node_nums_ + 1 >= max_tree_node_nums_)
@@ -896,8 +519,8 @@ namespace path_plan
         new_nodeA = addTreeNode(nearest_nodeA, x_new, dist_from_A, steer_length_);
     
         kd_insert3(treeA, x_new[0], x_new[1], x_new[2], new_nodeA);
-        update_cache_nearest_heuristic(new_nodeA, treeA, treeB); 
-        
+        update_cache_nearest_heuristic(new_nodeA, treeA, treeB); // update cache with new node
+
         /* request x_new's nearest node in treeB */
         /* Greedy steer & check connection */
         vector<Eigen::Vector3d> x_connects;
@@ -918,8 +541,8 @@ namespace path_plan
             new_nodeB = addTreeNode(new_nodeB, x_connect, new_nodeB->cost_from_start + steer_length_, steer_length_);
 
             kd_insert3(treeB, x_connect[0], x_connect[1], x_connect[2], new_nodeB);
+            update_cache_nearest_heuristic(new_nodeB,treeB,treeA);
           }
-          update_cache_nearest_heuristic(new_nodeB,treeB,treeA);
         }
 
         /* If connected, trace the connected path */
@@ -940,14 +563,28 @@ namespace path_plan
             cost_best_ = path_cost;
           }
 #ifdef DEBUG
-          std::cout << "[BRRT_Optimize_case3]**********Find path after " << number_of_iterations_ << " iterations" << std::endl;
+          std::cout << "[BRRT_Optimize]**********Find path after " << number_of_iterations_ << " iterations" << std::endl;
 #endif
           break;
         }
-        // [MODIFICATION 2] Always Swap
-        std::swap(treeA, treeB);
-        std::swap(rootCurrent, rootOther); // Keep roots synced with trees
-        path_reverse = !path_reverse;
+        else
+        {
+          std::swap(treeA, treeB);
+          path_reverse = !path_reverse;
+        }
+
+#ifdef DEBUG
+        std::cout << "[BRRT_Optimize] Iteration " << number_of_iterations_ << " completed, tree size: " << valid_tree_node_nums_ << std::endl;
+        visualizeWholeTree();
+
+        vis_ptr_->visualize_a_ball(x_rand, 0.5, "/brrt_optimize/x_rand", visualization::Color::blue);
+        vis_ptr_->visualize_a_ball(x_new, 0.5, "/brrt_optimize/x_new", visualization::Color::green);
+        vis_ptr_->visualize_a_ball(nearest_nodeA->x, 0.5, "/brrt_optimize/nearest_nodeA", visualization::Color::black);
+        vis_ptr_->visualize_a_ball(nearest_nodeB->x, 0.5, "/brrt_optimize/nearest_nodeB", visualization::Color::white);
+        usleep(50000); // Sleep for 0.1 seconds to visualize the tree growth
+#endif
+
+        /* Swap treeA&B */
 
       } // End of sampling iteration
 #ifdef DEBUG
@@ -956,20 +593,26 @@ namespace path_plan
       final_path_use_time_ = (ros::Time::now() - rrt_start_time).toSec();
       if (tree_connected)
       {
+        
 
 #ifdef DEBUG
-        ROS_INFO_STREAM("[BRRT_Optimize_case3]: find_path_use_time: " << solution_cost_time_pair_list_.front().second << ", length: " << solution_cost_time_pair_list_.front().first);
+        ROS_INFO_STREAM("[BRRT_Optimize]: find_path_use_time: " << solution_cost_time_pair_list_.front().second << ", length: " << solution_cost_time_pair_list_.front().first);
 #endif
+        // vis_ptr_->visualize_a_text(Eigen::Vector3d(0, 0, 0), "find_path_use_time","find_path_use_time: " + std::to_string(solution_cost_time_pair_list_.front().second), visualization::Color::black);
+        // vis_ptr_->visualize_a_text(Eigen::Vector3d(0, 0, 0.5), "length","length: " + std::to_string(solution_cost_time_pair_list_.front().first), visualization::Color::black);
+
+        // visualizeWholeTree();
         final_path_ = path_list_.back();
       }
 #ifdef DEBUG
       else if (valid_tree_node_nums_ == max_tree_node_nums_)
       {
-        ROS_ERROR_STREAM("[BRRT_Optimize_case3]: NOT CONNECTED TO GOAL after " << max_tree_node_nums_ << " nodes added to rrt-tree");
+        // visualizeWholeTree();
+        ROS_ERROR_STREAM("[BRRT_Optimize]: NOT CONNECTED TO GOAL after " << max_tree_node_nums_ << " nodes added to rrt-tree");
       }
       else
       {
-        ROS_ERROR_STREAM("[BRRT_Optimize_case3]: NOT CONNECTED TO GOAL after " << (ros::Time::now() - rrt_start_time).toSec() << " seconds");
+        ROS_ERROR_STREAM("[BRRT_Optimize]: NOT CONNECTED TO GOAL after " << (ros::Time::now() - rrt_start_time).toSec() << " seconds");
       }
 #endif
       return tree_connected;
@@ -993,8 +636,8 @@ namespace path_plan
         node_p.center = vertice[i];
         tree_nodes.push_back(node_p);
       }
-      vis_ptr_->visualize_balls(tree_nodes, "case3/tree_vertice", visualization::Color::green, 0.5);
-      vis_ptr_->visualize_pairline(edges, "case3/tree_edges", visualization::Color::green, 0.05);
+      vis_ptr_->visualize_balls(tree_nodes, "tree_vertice", visualization::Color::blue, 1.0);
+      vis_ptr_->visualize_pairline(edges, "tree_edges", visualization::Color::red, 0.06);
     }
 
     void sampleWholeTree(const RRTNode3DPtr &root, vector<Eigen::Vector3d> &vertice, vector<std::pair<Eigen::Vector3d, Eigen::Vector3d>> &edges)

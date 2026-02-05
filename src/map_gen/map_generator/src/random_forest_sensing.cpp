@@ -57,13 +57,12 @@ pcl::PointCloud<pcl::PointXYZ> cloudMap;
 pcl::search::KdTree<pcl::PointXYZ> kdtreeMap;
 vector<int> pointIdxSearch;
 vector<float> pointSquaredDistance;
-// --- Environment: Grid of Random L-Shapes (Corner Maze) ---
+// --- Environment: Grid of Random L-Shapes (Corner Maze) with Clear Center ---
 void GenerateEnv_L_Shape_Grid()
 {
     cloudMap.points.clear();
     pcl::PointXYZ pt;
 
-    // Helper: Vẽ một khối hộp chữ nhật (đã có tâm cx, cy)
     auto add_rect = [&](double cx, double cy, double w, double h) {
         double x_start = cx - w / 2.0;
         double y_start = cy - h / 2.0;
@@ -75,74 +74,52 @@ void GenerateEnv_L_Shape_Grid()
                 }
     };
 
-    // Tham số cấu hình để giống trong hình
-    double cell_size = 12.0;   // Khoảng cách giữa các chướng ngại vật
-    double arm_length = 8.0;   // Chiều dài cạnh chữ L
-    double thickness = 2.5;    // Độ dày của tường (làm dày như hình)
+    double cell_size = 12.0;
+    double arm_length = 8.0;
+    double thickness = 2.5;
     
-    // Random generator
+    // --- Define the Center Void Area ---
+    // Adjust these values to make the center gap larger or smaller
+    double clear_zone_radius = 15.0; 
+
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dist_rot(0, 3); // 4 hướng quay: 0, 1, 2, 3
+    std::uniform_int_distribution<> dist_rot(0, 3);
 
-    // Duyệt qua lưới bản đồ
-    // Padding một chút để không vẽ sát mép quá
     for (double x = _x_l + cell_size/2; x < _x_h - cell_size/2; x += cell_size)
     {
         for (double y = _y_l + cell_size/2; y < _y_h - cell_size/2; y += cell_size)
         {
-            // Random hướng quay cho mỗi ô
-            int rotation = dist_rot(gen); 
-            
-            // Tính toán vị trí tâm của 2 thanh (ngang và dọc) tạo nên chữ L
-            double h_center_x, h_center_y, h_w, h_h; // Thanh ngang
-            double v_center_x, v_center_y, v_w, v_h; // Thanh dọc
+            // --- SKIP LOGIC FOR CENTER ---
+            // Assuming the map center is at (0,0). 
+            // If the center is elsewhere, use (x - center_x) and (y - center_y)
+            if (std::abs(x) < clear_zone_radius && std::abs(y) < clear_zone_radius)
+            {
+                continue; // Skip this cell to keep the center empty
+            }
 
-            // Offset để căn chỉnh góc vuông khớp nhau
+            int rotation = dist_rot(gen); 
+            double h_center_x, h_center_y, h_w, h_h;
+            double v_center_x, v_center_y, v_w, v_h;
             double offset = (arm_length - thickness) / 2.0;
 
-            if (rotation == 0) // L (Góc dưới-trái)
-            {
-                // Thanh ngang (nằm dưới)
-                h_w = arm_length; h_h = thickness;
-                h_center_x = x; h_center_y = y - offset;
-
-                // Thanh dọc (nằm trái)
-                v_w = thickness; v_h = arm_length;
-                v_center_x = x - offset; v_center_y = y;
+            if (rotation == 0) { // L (Bottom-Left)
+                h_w = arm_length; h_h = thickness; h_center_x = x; h_center_y = y - offset;
+                v_w = thickness; v_h = arm_length; v_center_x = x - offset; v_center_y = y;
             }
-            else if (rotation == 1) // L quay 90 độ (Góc dưới-phải)
-            {
-                // Thanh ngang (nằm dưới)
-                h_w = arm_length; h_h = thickness;
-                h_center_x = x; h_center_y = y - offset;
-
-                // Thanh dọc (nằm phải)
-                v_w = thickness; v_h = arm_length;
-                v_center_x = x + offset; v_center_y = y;
+            else if (rotation == 1) { // L (Bottom-Right)
+                h_w = arm_length; h_h = thickness; h_center_x = x; h_center_y = y - offset;
+                v_w = thickness; v_h = arm_length; v_center_x = x + offset; v_center_y = y;
             }
-            else if (rotation == 2) // L quay 180 độ (Góc trên-phải - giống chữ Gamma ngược)
-            {
-                // Thanh ngang (nằm trên)
-                h_w = arm_length; h_h = thickness;
-                h_center_x = x; h_center_y = y + offset;
-
-                // Thanh dọc (nằm phải)
-                v_w = thickness; v_h = arm_length;
-                v_center_x = x + offset; v_center_y = y;
+            else if (rotation == 2) { // L (Top-Right)
+                h_w = arm_length; h_h = thickness; h_center_x = x; h_center_y = y + offset;
+                v_w = thickness; v_h = arm_length; v_center_x = x + offset; v_center_y = y;
             }
-            else // L quay 270 độ (Góc trên-trái - giống chữ Gamma)
-            {
-                // Thanh ngang (nằm trên)
-                h_w = arm_length; h_h = thickness;
-                h_center_x = x; h_center_y = y + offset;
-
-                // Thanh dọc (nằm trái)
-                v_w = thickness; v_h = arm_length;
-                v_center_x = x - offset; v_center_y = y;
+            else { // L (Top-Left)
+                h_w = arm_length; h_h = thickness; h_center_x = x; h_center_y = y + offset;
+                v_w = thickness; v_h = arm_length; v_center_x = x - offset; v_center_y = y;
             }
 
-            // Vẽ 2 thanh để tạo thành chữ L
             add_rect(h_center_x, h_center_y, h_w, h_h);
             add_rect(v_center_x, v_center_y, v_w, v_h);
         }
@@ -154,60 +131,53 @@ void GenerateEnv_L_Shape_Grid()
     _has_map = true;
     pcl::toROSMsg(cloudMap, globalMap_pcd);
     globalMap_pcd.header.frame_id = "map";
-    ROS_INFO("Generated L-Shape Grid map with %zu points.", cloudMap.points.size());
+    ROS_INFO("Generated L-Shape Grid map (Clear Center) with %zu points.", cloudMap.points.size());
 }
 void RandomBRRTGenerate_Large(double size = 4)
 {
    pcl::PointXYZ pt_random;
    random_device rd;
-   default_random_engine eng(rd());
-   float ramdom_ratio = 0.5;
+   // float ramdom_ratio = 0.4; // Original
+   float ramdom_ratio = 0.4;
    int number_ostacle = (_x_h - _x_l) * (_y_h - _y_l) / (size * size) * ramdom_ratio;
    std::cout << "number of ostacle" << number_ostacle;
 
-   std::mt19937 gen(rd()); // seed the generator
+   std::mt19937 gen(rd()); 
 
-   // Create distribution in range [a, b]
    std::uniform_real_distribution<> dis_x(_x_l, _x_h);
    std::uniform_real_distribution<> dis_y(_y_l, _y_h);
-   // Generate a random number
+   
+   // --- Define the Center Void Area ---
+   // Obstacles will not be spawned if their center is within this distance from (0,0)
+   double clear_zone_radius = 12.0; 
+
    double half_size = size / 2;
    for (int i = 0; i < number_ostacle; i++)
    {
       double random_x = dis_x(gen);
       double random_y = dis_y(gen);
-      for (double i_x = random_x - half_size; i_x < random_x + half_size; i_x += 0.5)
-         for (double i_y = random_y - half_size; i_y < random_y + half_size; i_y += 0.5)
-         for (float k = -1; k < _h_h; k+=0.5)
-         {
-            pt_random.x = i_x;
-            pt_random.y = i_y;
-            pt_random.z = k;
-            cloudMap.points.push_back(pt_random);
-         }
-   }
 
-   // pcl::PointXYZ pt_random;
-   // std::cout<<"size of map" << _x_l << " " << _x_h << " " << _y_l << " " << _y_h <<" " << _h_h <<std::endl;
-   // // generate  1000 points random with size 4
-   // for (float i = _x_l; i < _x_h; i += size)
-   // {
-   //    for (float j = _y_l; j < _y_h; j += size)
-   //    {
-   //       // get a random number between 0 and 1
-   //       float random_num = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
-   //       if (random_num < ramdom_ratio)
-   //       {
-   //          for (float k = -1; k < _h_h; k += size)
-   //          {
-   //             pt_random.x = i;
-   //             pt_random.y = j;
-   //             pt_random.z = k;
-   //             cloudMap.points.push_back(pt_random);
-   //          }
-   //       }
-   //    }
-   // }
+      // --- SKIP LOGIC FOR CENTER ---
+      // Checks if the sampled obstacle center falls within the clear zone
+      if (std::abs(random_x) < clear_zone_radius && std::abs(random_y) < clear_zone_radius)
+      {
+         continue; 
+      }
+
+      for (double i_x = random_x - half_size; i_x < random_x + half_size; i_x += 0.5)
+      {
+         for (double i_y = random_y - half_size; i_y < random_y + half_size; i_y += 0.5)
+         {
+            for (float k = -1; k < _h_h; k += 0.5)
+            {
+               pt_random.x = i_x;
+               pt_random.y = i_y;
+               pt_random.z = k;
+               cloudMap.points.push_back(pt_random);
+            }
+         }
+      }
+   }
 
    cloudMap.width = cloudMap.points.size();
    cloudMap.height = 1;
@@ -218,7 +188,6 @@ void RandomBRRTGenerate_Large(double size = 4)
    pcl::toROSMsg(cloudMap, globalMap_pcd);
    globalMap_pcd.header.frame_id = "map";
 }
-
 void RandomBRRTGenerate()
 {
    random_device rd;
@@ -1290,7 +1259,7 @@ int main(int argc, char **argv)
    _y_h = +_y_size / 2.0;
       // === Map Generation Selection ===
    std::string map_type;
-   n.param("map/map_type", map_type, std::string("l_shape_grid"));
+   n.param("map/map_type", map_type, std::string("random_large"));
 
    ROS_INFO("Selected map type: %s", map_type.c_str());
 
