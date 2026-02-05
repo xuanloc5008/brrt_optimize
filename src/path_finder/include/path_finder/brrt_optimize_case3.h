@@ -56,9 +56,9 @@ namespace path_plan
       nh_.param("BRRT/epsilon", epsilon_, 1.0);           
       nh_.param("BRRT/epsilon_floor", epsilon_floor_, 0.2);
       nh_.param("BRRT/gamma", gamma_, 0.998);             
-      nh_.param("BRRT/weight_grade", weight_grade_, 1.5); 
-      nh_.param("BRRT/n_blocks", n_blocks_, 8);          
-      nh_.param("BRRT/lidar_radius", lidar_radius_, 30.0);
+      nh_.param("BRRT/weight_grade", weight_grade_, 3.0); 
+      nh_.param("BRRT/n_blocks", n_blocks_, 16);          
+      nh_.param("BRRT/lidar_radius", lidar_radius_, 15.0);
 
       ROS_WARN_STREAM("[BRRT_Optimize_case3] param: steer_length: " << steer_length_);
       ROS_WARN_STREAM("[BRRT_Optimize_case3] param: search_time: " << search_time_);
@@ -73,8 +73,12 @@ namespace path_plan
         nodes_pool_[i] = new TreeNode;
       }
     }
-    ~BRRT_Simple_case3() {};
-
+    ~BRRT_Simple_case3() {
+        for (auto node : nodes_pool_) {
+            delete node;
+        }
+        nodes_pool_.clear();
+    }
     bool plan(const Eigen::Vector3d &s, const Eigen::Vector3d &g)
     {
       reset();
@@ -200,6 +204,18 @@ namespace path_plan
     double sigmoid(double x) { return 1.0 / (1.0 + std::exp(-x)); }
     
     // Helper: RayCast for SOF Weighting
+    // double rayCast(const Eigen::Vector3d &start, double angle, double lidar_radius) {
+    //     Eigen::Vector3d dir(cos(angle), sin(angle), 0.0);
+    //     double dist = 0.0;
+    //     double step = map_ptr_->getResolution();
+    //     Eigen::Vector3d current = start;
+    //     while (dist < lidar_radius_) {
+    //         current = start + dir * dist;
+    //         if (!map_ptr_->isStateValid(current)) return dist;
+    //         dist += step;
+    //     }
+    //     return lidar_radius_;
+    // }
     double rayCast(const Eigen::Vector3d &start, double angle) {
         Eigen::Vector3d dir(cos(angle), sin(angle), 0.0);
         double dist = 0.0;
@@ -212,11 +228,10 @@ namespace path_plan
         }
         return lidar_radius_;
     }
-
     Eigen::Vector3d weightSample(TreeNode* root_node, const Eigen::Vector3d& target_point, kdtree* tree, bool rand_sampling) {
         epsilon_ = std::max(epsilon_ * gamma_, epsilon_floor_);
         
-        if (rand01_(gen_) < 0.2) return target_point;
+        if (rand01_(gen_) < 0.05) return target_point;
 
         TreeNode* chosen_node = nullptr;
         if (rand_sampling == true){
@@ -267,7 +282,138 @@ namespace path_plan
         
         return Eigen::Vector3d(chosen_node->x[0] + r*cos(theta), chosen_node->x[1] + r*sin(theta), 0.0);
     } 
+
+    /*Eigen::Vector3d weightSample(TreeNode* root_node, const Eigen::Vector3d& target_point, kdtree* tree, bool rand_sampling, double max_r) {
+        epsilon_ = std::max(epsilon_ * gamma_, epsilon_floor_);
+        
+        // Tăng tốc độ hội tụ: 20% khả năng lấy mẫu trực tiếp tại đích
+        if (rand01_(gen_) < 0.2) return target_point;
+
+        TreeNode* chosen_node = nullptr;
+        if (rand_sampling) {
+            struct kdres *p_nearest = kd_nearest3(tree, target_point[0], target_point[1], target_point[2]);
+            if (p_nearest) {
+                chosen_node = (TreeNode*)kd_res_item_data(p_nearest);
+                kd_res_free(p_nearest);
+            } else {
+                chosen_node = root_node;
+            }
+        } else {
+            chosen_node = root_node;
+        }
+
+        Eigen::Vector3d start_pos = chosen_node->x;
+        double angle_step = 2.0 * M_PI / n_blocks_;
+        
+        // Vector hướng từ Start đến Goal
+        Eigen::Vector3d AB = target_point - start_pos;
+        double AB_mag_sq = AB.squaredNorm();
+
+        struct RayInfo {
+            double r;
+            Eigen::Vector3d endpoint;
+        };
+        std::vector<RayInfo> all_rays;
+        double max_r_found = -1.0;
+
+        for (int i = 0; i < n_blocks_; ++i) {
+            double theta = i * angle_step;
+            double r = rayCast(start_pos, theta, max_r);
+            
+            Eigen::Vector3d endpoint(start_pos[0] + r * cos(theta), 
+                                    start_pos[1] + r * sin(theta), 
+                                    0.0);
+            
+            all_rays.push_back({r, endpoint});
+            if (r > max_r_found) max_r_found = r;
+        }
+
+        Eigen::Vector3d best_point = target_point;
+        double min_dist_sq = std::numeric_limits<double>::max();
+        bool found_valid = false;
+
+        for (const auto& ray : all_rays) {
+            if (ray.r >= max_r_found - 1e-3) {
+                double dist_sq;
+                
+                if (AB_mag_sq < 1e-9) {
+                    dist_sq = (ray.endpoint - start_pos).squaredNorm();
+                } else {
+                    Eigen::Vector3d AP = ray.endpoint - start_pos;
+                    double t = AP.dot(AB) / AB_mag_sq;
+                    auto clamp = [](double v, double lo, double hi){
+                      return (v < lo) ? lo : (hi < v) ? hi : v;
+                    };
+                    double t_clamped = clamp(t, 0.0, 1.0);
+                    
+                    Eigen::Vector3d closest_point_on_segment = start_pos + t_clamped * AB;
+                    
+                    dist_sq = (ray.endpoint - closest_point_on_segment).squaredNorm();
+                }
+
+                if (dist_sq < min_dist_sq) {
+                    min_dist_sq = dist_sq;
+                    best_point = ray.endpoint;
+                    found_valid = true;
+                }
+            }
+        }
+
+        return found_valid ? best_point : target_point;
+    } */
+   /*
     Eigen::Vector3d AFBGSteer(const Eigen::Vector3d &x_near, const Eigen::Vector3d &x_rand, const Eigen::Vector3d &x_target, double steer_length_)
+    {
+        Eigen::Vector3d v_expand = (x_rand - x_near).normalized();
+
+        std::priority_queue<std::pair<double, Eigen::Vector3d>, 
+                            std::vector<std::pair<double, Eigen::Vector3d>>, 
+                            std::greater<std::pair<double, Eigen::Vector3d>>> pqueue;
+
+        double min_obs_dist = DBL_MAX;
+        Eigen::Vector3d obs_vec(0, 0, 0);
+        
+        for(int i = 0; i < n_blocks_; ++i) {
+            double ang = i * (2.0 * M_PI / n_blocks_); 
+            double d = rayCast(x_near, ang);
+            
+            if(d < lidar_radius_) {
+                Eigen::Vector3d vec = Eigen::Vector3d(cos(ang), sin(ang), 0) * d;
+                pqueue.push({d, vec}); 
+            }
+        }
+
+        if (!pqueue.empty()) {
+            min_obs_dist = pqueue.top().first;
+            obs_vec = pqueue.top().second;
+        }
+
+        double dist_to_target = (x_target - x_near).norm();
+        double max_dist = map_ptr_->getMapSize()(0);
+        
+        double phi = steer_length_ * sigmoid((dist_to_target / max_dist) * 5.0); 
+        Eigen::Vector3d v_target = (x_target - x_near).normalized();
+
+        Eigen::Vector3d total_vec(0, 0, 0);
+
+        if (min_obs_dist < 2.0 * steer_length_) {
+            double eta = steer_length_ * sigmoid((min_obs_dist / (2.0 * steer_length_)) * 5.0);
+            
+            Eigen::Vector3d t1(-v_expand[1], v_expand[0], 0);
+            Eigen::Vector3d t2(v_expand[1], -v_expand[0], 0);
+            Eigen::Vector3d v_obs_dir = obs_vec.normalized(); 
+            
+            Eigen::Vector3d v_tangent = (t1.dot(v_obs_dir) < t2.dot(v_obs_dir)) ? t1 : t2;
+            
+            total_vec = v_expand + phi * v_target + eta * v_tangent;
+        } 
+        else {
+            total_vec = v_expand + phi * v_target;
+        }
+        
+        return x_near + total_vec.normalized();
+    }*/
+       Eigen::Vector3d AFBGSteer(const Eigen::Vector3d &x_near, const Eigen::Vector3d &x_rand, const Eigen::Vector3d &x_target, double steer_length_)
     {
         Eigen::Vector3d v_expand = (x_rand - x_near).normalized();
         
@@ -434,6 +580,13 @@ namespace path_plan
       return h;
     }
     
+    double computeSG(const Eigen::Vector3d &si, const Eigen::Vector3d &gi){
+      Eigen::Vector3d si_gi;
+      double si_gi_dist;
+      si_gi = si - gi;
+      si_gi_dist = si_gi.norm();
+      return si_gi_dist;
+    }
 
     void update_cache_nearest_heuristic(RRTNode3DPtr nodeSi,kdtree *treeA, kdtree *treeB)
     {
@@ -656,12 +809,12 @@ namespace path_plan
       std::cout << "[BRRT_Optimize_case3] Start sampling..." << std::endl;
 #endif
       cache.insert(start_node_, treeA, goal_node_, treeB, h_start_goal); // insert start and goal node to cache
-      for (number_of_iterations_ = 0; number_of_iterations_ < max_iteration_; ++number_of_iterations_)
+      for (number_of_iterations_ = 0; number_of_iterations_ < 150000; ++number_of_iterations_)
       {
         /* random sampling */
         
         Eigen::Vector3d x_new;
-        Eigen::Vector3d x_rand; // [FIX 1] Declare x_rand here so it is valid in all scopes
+        Eigen::Vector3d x_rand;
         
         double random01 = dis(gen);
         struct kdres *p_nearestA = nullptr, *p_nearestB = nullptr;
@@ -676,11 +829,13 @@ namespace path_plan
         if (random01 < pbias)
         {
           // x_rand = randomPointInCircle(selected_SI->x, selected_GI->x);
+          double max_r = computeSG(selected_SI->x, selected_GI->x);
+          // x_rand = weightSample(selected_SI, selected_GI->x, treeA, true, max_r);
           x_rand = weightSample(selected_SI, selected_GI->x, treeA, true);
           nearest_nodeA = selected_SI;
-          x_new = AFBGSteer(nearest_nodeA->x, x_rand, selected_GI->x, steer_length_);
+          x_new = AFBGSteer(nearest_nodeA->x, x_rand, rootOther->x, steer_length_);
+          // x_new = steer(nearest_nodeA->x, x_rand, steer_length_);
 
-          // Final check: if BOTH failed, then we swap and skip
           if ((!map_ptr_->isStateValid(x_new)) || (!map_ptr_->isSegmentValid(nearest_nodeA->x, x_new)))
           {
               std::swap(treeA, treeB);
@@ -711,14 +866,7 @@ namespace path_plan
           nearest_nodeA = (RRTNode3DPtr)kd_res_item_data(p_nearestA);
           kd_res_free(p_nearestA);
           
-          // [MODIFICATION 1] Fallback Steering Logic
           x_new = AFBGSteer(nearest_nodeA->x, x_rand, rootOther->x, steer_length_);
-
-          // if ((!map_ptr_->isStateValid(x_new)) || (!map_ptr_->isSegmentValid(nearest_nodeA->x, x_new)))
-          // {
-          //     x_new = steer(nearest_nodeA->x, x_rand, steer_length_);
-          // }
-
           if ((!map_ptr_->isStateValid(x_new)) || (!map_ptr_->isSegmentValid(nearest_nodeA->x, x_new)))
           {
               std::swap(treeA, treeB);

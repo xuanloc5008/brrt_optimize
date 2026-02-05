@@ -57,13 +57,111 @@ pcl::PointCloud<pcl::PointXYZ> cloudMap;
 pcl::search::KdTree<pcl::PointXYZ> kdtreeMap;
 vector<int> pointIdxSearch;
 vector<float> pointSquaredDistance;
+// --- Environment: Grid of Random L-Shapes (Corner Maze) ---
+void GenerateEnv_L_Shape_Grid()
+{
+    cloudMap.points.clear();
+    pcl::PointXYZ pt;
 
+    // Helper: Vẽ một khối hộp chữ nhật (đã có tâm cx, cy)
+    auto add_rect = [&](double cx, double cy, double w, double h) {
+        double x_start = cx - w / 2.0;
+        double y_start = cy - h / 2.0;
+        for (double i = x_start; i < x_start + w; i += _resolution)
+            for (double j = y_start; j < y_start + h; j += _resolution)
+                for (double k = -1.0; k < _h_h; k += _resolution) {
+                    pt.x = i; pt.y = j; pt.z = k;
+                    cloudMap.points.push_back(pt);
+                }
+    };
+
+    // Tham số cấu hình để giống trong hình
+    double cell_size = 12.0;   // Khoảng cách giữa các chướng ngại vật
+    double arm_length = 8.0;   // Chiều dài cạnh chữ L
+    double thickness = 2.5;    // Độ dày của tường (làm dày như hình)
+    
+    // Random generator
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dist_rot(0, 3); // 4 hướng quay: 0, 1, 2, 3
+
+    // Duyệt qua lưới bản đồ
+    // Padding một chút để không vẽ sát mép quá
+    for (double x = _x_l + cell_size/2; x < _x_h - cell_size/2; x += cell_size)
+    {
+        for (double y = _y_l + cell_size/2; y < _y_h - cell_size/2; y += cell_size)
+        {
+            // Random hướng quay cho mỗi ô
+            int rotation = dist_rot(gen); 
+            
+            // Tính toán vị trí tâm của 2 thanh (ngang và dọc) tạo nên chữ L
+            double h_center_x, h_center_y, h_w, h_h; // Thanh ngang
+            double v_center_x, v_center_y, v_w, v_h; // Thanh dọc
+
+            // Offset để căn chỉnh góc vuông khớp nhau
+            double offset = (arm_length - thickness) / 2.0;
+
+            if (rotation == 0) // L (Góc dưới-trái)
+            {
+                // Thanh ngang (nằm dưới)
+                h_w = arm_length; h_h = thickness;
+                h_center_x = x; h_center_y = y - offset;
+
+                // Thanh dọc (nằm trái)
+                v_w = thickness; v_h = arm_length;
+                v_center_x = x - offset; v_center_y = y;
+            }
+            else if (rotation == 1) // L quay 90 độ (Góc dưới-phải)
+            {
+                // Thanh ngang (nằm dưới)
+                h_w = arm_length; h_h = thickness;
+                h_center_x = x; h_center_y = y - offset;
+
+                // Thanh dọc (nằm phải)
+                v_w = thickness; v_h = arm_length;
+                v_center_x = x + offset; v_center_y = y;
+            }
+            else if (rotation == 2) // L quay 180 độ (Góc trên-phải - giống chữ Gamma ngược)
+            {
+                // Thanh ngang (nằm trên)
+                h_w = arm_length; h_h = thickness;
+                h_center_x = x; h_center_y = y + offset;
+
+                // Thanh dọc (nằm phải)
+                v_w = thickness; v_h = arm_length;
+                v_center_x = x + offset; v_center_y = y;
+            }
+            else // L quay 270 độ (Góc trên-trái - giống chữ Gamma)
+            {
+                // Thanh ngang (nằm trên)
+                h_w = arm_length; h_h = thickness;
+                h_center_x = x; h_center_y = y + offset;
+
+                // Thanh dọc (nằm trái)
+                v_w = thickness; v_h = arm_length;
+                v_center_x = x - offset; v_center_y = y;
+            }
+
+            // Vẽ 2 thanh để tạo thành chữ L
+            add_rect(h_center_x, h_center_y, h_w, h_h);
+            add_rect(v_center_x, v_center_y, v_w, v_h);
+        }
+    }
+
+    cloudMap.width = cloudMap.points.size();
+    cloudMap.height = 1;
+    cloudMap.is_dense = true;
+    _has_map = true;
+    pcl::toROSMsg(cloudMap, globalMap_pcd);
+    globalMap_pcd.header.frame_id = "map";
+    ROS_INFO("Generated L-Shape Grid map with %zu points.", cloudMap.points.size());
+}
 void RandomBRRTGenerate_Large(double size = 4)
 {
    pcl::PointXYZ pt_random;
    random_device rd;
    default_random_engine eng(rd());
-   float ramdom_ratio = 0.4;
+   float ramdom_ratio = 0.5;
    int number_ostacle = (_x_h - _x_l) * (_y_h - _y_l) / (size * size) * ramdom_ratio;
    std::cout << "number of ostacle" << number_ostacle;
 
@@ -961,6 +1059,153 @@ void GenerateEnvMultiV_ZigZag()
     globalMap_pcd.header.frame_id = "map";
     ROS_INFO("Generated Multi-V Zig-Zag environment with %zu points.", cloudMap.points.size());
 }
+// --- Environment: Random Maze using DFS (Recursive Backtracking) ---
+void GenerateEnv_Maze_DFS()
+{
+    cloudMap.points.clear();
+    pcl::PointXYZ pt;
+    ROS_INFO("Generating random maze map using DFS algorithm...");
+
+    // 1. Cấu hình thông số Maze
+    // Kích thước một ô của mê cung (độ rộng đường đi)
+    double cell_size = 4.0;
+    // Độ dày của tường
+    double wall_thickness = 1.0;
+
+    // Tính toán số lượng hàng và cột dựa trên kích thước bản đồ
+    double map_width = _x_h - _x_l;
+    double map_height = _y_h - _y_l;
+    int cols = floor(map_width / cell_size);
+    int rows = floor(map_height / cell_size);
+
+    if (cols < 2 || rows < 2) {
+        ROS_ERROR("Map size too small for maze generation!");
+        return;
+    }
+
+    // Struct để lưu trạng thái từng ô
+    struct MazeCell {
+        bool visited = false;
+        // Tường: Trên, Phải, Dưới, Trái. True là có tường.
+        bool top = true; bool right = true; bool bottom = true; bool left = true;
+    };
+
+    // Tạo lưới mê cung
+    std::vector<std::vector<MazeCell>> grid(rows, std::vector<MazeCell>(cols));
+
+    // RNG setup
+    std::random_device rd;
+    std::mt19937 gen(rd());
+
+    // 2. Thuật toán DFS (Iterative using Stack) để tạo Maze
+    std::stack<std::pair<int, int>> stack;
+    // Bắt đầu từ ô (0,0)
+    int current_r = 0;
+    int current_c = 0;
+    grid[current_r][current_c].visited = true;
+    stack.push({current_r, current_c});
+
+    while (!stack.empty()) {
+        std::pair<int, int> current = stack.top();
+        int r = current.first;
+        int c = current.second;
+
+        // Tìm hàng xóm chưa thăm
+        std::vector<int> neighbors; // 0:Top, 1:Right, 2:Bottom, 3:Left
+        if (r > 0 && !grid[r - 1][c].visited) neighbors.push_back(0);
+        if (c < cols - 1 && !grid[r][c + 1].visited) neighbors.push_back(1);
+        if (r < rows - 1 && !grid[r + 1][c].visited) neighbors.push_back(2);
+        if (c > 0 && !grid[r][c - 1].visited) neighbors.push_back(3);
+
+        if (!neighbors.empty()) {
+            // Chọn ngẫu nhiên một hàng xóm
+            std::uniform_int_distribution<> dist(0, neighbors.size() - 1);
+            int next_dir = neighbors[dist(gen)];
+            int next_r = r, next_c = c;
+
+            // Phá tường giữa ô hiện tại và hàng xóm
+            if (next_dir == 0) { // Top
+                grid[r][c].top = false; grid[r - 1][c].bottom = false;
+                next_r--;
+            } else if (next_dir == 1) { // Right
+                grid[r][c].right = false; grid[r][c + 1].left = false;
+                next_c++;
+            } else if (next_dir == 2) { // Bottom
+                grid[r][c].bottom = false; grid[r + 1][c].top = false;
+                next_r++;
+            } else if (next_dir == 3) { // Left
+                grid[r][c].left = false; grid[r][c - 1].right = false;
+                next_c--;
+            }
+
+            grid[next_r][next_c].visited = true;
+            stack.push({next_r, next_c});
+        } else {
+            // Không còn hàng xóm, quay lui (backtrack)
+            stack.pop();
+        }
+    }
+
+    // 3. Mở lối vào (Start) và lối ra (Goal)
+    // Ví dụ: Vào ở góc dưới trái, ra ở góc trên phải
+    grid[0][0].left = false; // Mở tường trái ô đầu tiên
+    grid[rows - 1][cols - 1].right = false; // Mở tường phải ô cuối cùng
+
+
+    // 4. Chuyển đổi Grid thành PointCloud (Vẽ tường)
+    // Helper lambda để vẽ một khối chữ nhật
+    auto add_wall_block = [&](double cx, double cy, double w, double h) {
+        double x_start = cx - w / 2.0;
+        double y_start = cy - h / 2.0;
+        for (double i = x_start; i < x_start + w; i += _resolution)
+            for (double j = y_start; j < y_start + h; j += _resolution)
+                for (double k = -1.0; k < _h_h; k += _resolution) {
+                    pt.x = i; pt.y = j; pt.z = k;
+                    cloudMap.points.push_back(pt);
+                }
+    };
+
+    // Tính toán gốc tọa độ để vẽ (góc dưới trái của lưới)
+    double start_x_phys = _x_l + (map_width - cols * cell_size) / 2.0;
+    double start_y_phys = _y_l + (map_height - rows * cell_size) / 2.0;
+
+    for (int r = 0; r < rows; ++r) {
+        for (int c = 0; c < cols; ++c) {
+            // Tâm vật lý của ô hiện tại
+            double cell_cx = start_x_phys + c * cell_size + cell_size / 2.0;
+            double cell_cy = start_y_phys + r * cell_size + cell_size / 2.0;
+
+            // Để tránh vẽ trùng lặp, ta chỉ vẽ tường DƯỚI và tường PHẢI của mỗi ô.
+            // Tường TRÊN và tường TRÁI của biên bản đồ sẽ được vẽ riêng.
+
+            if (grid[r][c].bottom) {
+                // Vẽ tường dưới: tâm nằm ở cạnh dưới ô, rộng=cell_size, cao=thickness
+                add_wall_block(cell_cx, cell_cy - cell_size / 2.0, cell_size + wall_thickness, wall_thickness);
+            }
+            if (grid[r][c].right) {
+                // Vẽ tường phải: tâm nằm ở cạnh phải ô, rộng=thickness, cao=cell_size
+                add_wall_block(cell_cx + cell_size / 2.0, cell_cy, wall_thickness, cell_size + wall_thickness);
+            }
+
+            // Vẽ biên trái cùng
+            if (c == 0 && grid[r][c].left) {
+                 add_wall_block(cell_cx - cell_size / 2.0, cell_cy, wall_thickness, cell_size + wall_thickness);
+            }
+            // Vẽ biên trên cùng
+            if (r == rows - 1 && grid[r][c].top) {
+                 add_wall_block(cell_cx, cell_cy + cell_size / 2.0, cell_size + wall_thickness, wall_thickness);
+            }
+        }
+    }
+
+    cloudMap.width = cloudMap.points.size();
+    cloudMap.height = 1;
+    cloudMap.is_dense = true;
+    _has_map = true;
+    pcl::toROSMsg(cloudMap, globalMap_pcd);
+    globalMap_pcd.header.frame_id = "map";
+    ROS_INFO("Generated Maze map with %zu points. Grid size: %dx%d", cloudMap.points.size(), rows, cols);
+}
 // Add this function to your map generation code
 void GenerateClutterTrap()
 {
@@ -1045,7 +1290,7 @@ int main(int argc, char **argv)
    _y_h = +_y_size / 2.0;
       // === Map Generation Selection ===
    std::string map_type;
-   n.param("map/map_type", map_type, std::string("random_large"));
+   n.param("map/map_type", map_type, std::string("l_shape_grid"));
 
    ROS_INFO("Selected map type: %s", map_type.c_str());
 
@@ -1064,6 +1309,12 @@ int main(int argc, char **argv)
    }
    else if (map_type == "env_d") {
       GenerateEnvD_Narrow();
+   }
+   else if (map_type == "l_shape_grid") {
+      GenerateEnv_L_Shape_Grid();
+   }
+   else if (map_type == "maze_dfs") {
+      GenerateEnv_Maze_DFS();
    }
    else if (map_type == "random_large")
    {

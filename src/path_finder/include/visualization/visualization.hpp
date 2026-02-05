@@ -64,7 +64,9 @@ namespace visualization
         orange,
         purple,
         pink,
-        steelblue
+        steelblue,
+        cyan,    // [ADDED]
+        magenta  // [ADDED]
     };
 
     class Visualization
@@ -138,6 +140,16 @@ namespace visualization
             case steelblue:
                 marker.color.r = 0.4;
                 marker.color.g = 0.7;
+                marker.color.b = 1;
+                break;
+            case cyan: // [ADDED]
+                marker.color.r = 0;
+                marker.color.g = 1;
+                marker.color.b = 1;
+                break;
+            case magenta: // [ADDED]
+                marker.color.r = 1;
+                marker.color.g = 0;
                 marker.color.b = 1;
                 break;
             }
@@ -366,9 +378,8 @@ namespace visualization
                 marker.points[2 * i + 1].y = pairline[i].second[1];
                 marker.points[2 * i + 1].z = pairline[i].second[2];
                 // usleep(900);
-                publisher_map_[topic].publish(marker);
             }
-            
+            publisher_map_[topic].publish(marker);
         }
 
         template <class ARROWS, class TOPIC>

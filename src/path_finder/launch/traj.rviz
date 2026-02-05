@@ -11,7 +11,11 @@ Panels:
         - /Mapping1/global_occ1
         - /Mapping1/global_occ1/Autocompute Value Bounds1
         - /Planning1
+        - /BRRT_Optimize1
+        - /BRRT_Optimize1/BRRT_Optimize_Points1
         - /BRRT_Optimize1/BRRT_Optimize_Path1
+        - /BRRT_Optimize1/BRRT_Optimize_Node1
+        - /BRRT_Optimize1/BRRT_Optimize_Edges1
         - /Case21/tree-node1
         - /Case21/tree-edge1
         - /Case21/Path1
@@ -151,7 +155,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/start
           Name: start
           Namespaces:
-            "": true
+            {}
           Queue Size: 100
           Value: true
         - Class: rviz/Marker
@@ -159,7 +163,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/goal
           Name: goal
           Namespaces:
-            "": true
+            {}
           Queue Size: 100
           Value: true
         - Class: rviz/MarkerArray
@@ -167,7 +171,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/tree_vertice
           Name: vertice
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Class: rviz/Marker
@@ -175,7 +179,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/tree_edges
           Name: edges
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Class: rviz/MarkerArray
@@ -362,7 +366,7 @@ Visualization Manager:
           Buffer Length: 1
           Class: rviz/Path
           Color: 255; 255; 255
-          Enabled: true
+          Enabled: false
           Head Diameter: 0.30000001192092896
           Head Length: 0.20000000298023224
           Length: 0.30000001192092896
@@ -381,23 +385,23 @@ Visualization Manager:
           Shaft Length: 0.10000000149011612
           Topic: /path_finder_node/brrt_final_path
           Unreliable: false
-          Value: true
+          Value: false
         - Class: rviz/Marker
-          Enabled: true
+          Enabled: false
           Marker Topic: /path_finder_node/brrt/tree_edges
           Name: BRRT_Tree
           Namespaces:
             {}
           Queue Size: 100
-          Value: true
+          Value: false
         - Class: rviz/MarkerArray
-          Enabled: true
+          Enabled: false
           Marker Topic: /path_finder_node/brrt/tree_vertice
           Name: BRRT_Edge
           Namespaces:
             {}
           Queue Size: 100
-          Value: true
+          Value: false
         - Alpha: 1
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
@@ -410,7 +414,7 @@ Visualization Manager:
           Color: 0; 85; 255
           Color Transformer: FlatColor
           Decay Time: 0
-          Enabled: true
+          Enabled: false
           Invert Rainbow: false
           Max Color: 255; 255; 255
           Min Color: 0; 0; 0
@@ -425,7 +429,7 @@ Visualization Manager:
           Unreliable: false
           Use Fixed Frame: true
           Use rainbow: true
-          Value: true
+          Value: false
         - Alpha: 1
           Buffer Length: 1
           Class: rviz/Path
@@ -591,7 +595,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/tree_vertice
           Name: BRRT_Optimize_Node
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Class: rviz/Marker
@@ -599,10 +603,106 @@ Visualization Manager:
           Marker Topic: /path_finder_node/tree_edges
           Name: BRRT_Optimize_Edges
           Namespaces:
+            "": true
+          Queue Size: 100
+          Value: true
+        - Class: rviz/Marker
+          Enabled: true
+          Marker Topic: /brrt_optimize/obstacle_rays
+          Name: obs_ray
+          Namespaces:
             {}
           Queue Size: 100
           Value: true
-      Enabled: false
+        - Class: rviz/Marker
+          Enabled: true
+          Marker Topic: /brrt_optimize/sampled_point_sector
+          Name: sample_sector
+          Namespaces:
+            "": true
+          Queue Size: 100
+          Value: true
+        - Class: rviz/Marker
+          Enabled: true
+          Marker Topic: /brrt_optimize/sector_selected
+          Name: sector_select
+          Namespaces:
+            "": true
+          Queue Size: 100
+          Value: true
+        - Class: rviz/Marker
+          Enabled: true
+          Marker Topic: /brrt_optimize/sectors_all
+          Name: sector_all
+          Namespaces:
+            "": true
+          Queue Size: 100
+          Value: true
+        - Class: rviz/Marker
+          Enabled: true
+          Marker Topic: /brrt_optimize/guide_nodeA
+          Name: guide_a
+          Namespaces:
+            {}
+          Queue Size: 100
+          Value: true
+        - Class: rviz/Marker
+          Enabled: true
+          Marker Topic: /brrt_optimize/nearest_nodeA
+          Name: nearest_a
+          Namespaces:
+            {}
+          Queue Size: 100
+          Value: true
+        - Class: rviz/Marker
+          Enabled: true
+          Marker Topic: /brrt_optimize/guide_nodeB
+          Name: guide_b
+          Namespaces:
+            {}
+          Queue Size: 100
+          Value: true
+        - Class: rviz/Marker
+          Enabled: true
+          Marker Topic: /brrt_optimize/x_rand
+          Name: x_rand
+          Namespaces:
+            {}
+          Queue Size: 100
+          Value: true
+        - Class: rviz/Marker
+          Enabled: true
+          Marker Topic: /brrt_optimize/nearest_nodeB
+          Name: nearest_b
+          Namespaces:
+            {}
+          Queue Size: 100
+          Value: true
+        - Class: rviz/Marker
+          Enabled: true
+          Marker Topic: /brrt_optimize/x_new_final
+          Name: x_new_final
+          Namespaces:
+            {}
+          Queue Size: 100
+          Value: true
+        - Class: rviz/Marker
+          Enabled: true
+          Marker Topic: /brrt_optimize/x_new
+          Name: x_new
+          Namespaces:
+            {}
+          Queue Size: 100
+          Value: true
+        - Class: rviz/Marker
+          Enabled: false
+          Marker Topic: /brrt_optimize/x_tmp
+          Name: x_tmp
+          Namespaces:
+            {}
+          Queue Size: 100
+          Value: false
+      Enabled: true
       Name: BRRT_Optimize
     - Class: rviz/Group
       Displays:
@@ -892,6 +992,38 @@ Visualization Manager:
           Value: true
       Enabled: false
       Name: brrt_star
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /brrt_optimize/step_node_connect
+      Name: step_node_connect
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /brrt_optimize/step_edge_A
+      Name: step_edge_A
+      Namespaces:
+        "": true
+      Queue Size: 100
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /brrt_optimize/step_node_A
+      Name: Step_nodeA
+      Namespaces:
+        "": true
+      Queue Size: 100
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /brrt_optimize/step_node_connect
+      Name: step_node_connect
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 46; 52; 54
@@ -921,7 +1053,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 122.15996551513672
+      Distance: 78.03079223632812
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -929,9 +1061,9 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: -1.5120471715927124
-        Y: 25.19483757019043
-        Z: 8.331511344294995e-05
+        X: -25.54779815673828
+        Y: -2.668757438659668
+        Z: -1.5780860849190503e-05
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
@@ -939,7 +1071,7 @@ Visualization Manager:
       Near Clip Distance: 0.009999999776482582
       Pitch: 1.5697963237762451
       Target Frame: map
-      Yaw: 1.563943862915039
+      Yaw: 3.135817289352417
     Saved: ~
 Window Geometry:
   Displays:
