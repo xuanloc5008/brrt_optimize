@@ -11,7 +11,6 @@ Panels:
         - /Mapping1/global_occ1
         - /Mapping1/global_occ1/Autocompute Value Bounds1
         - /Planning1
-        - /BRRT_Optimize1
         - /BRRT_Optimize1/BRRT_Optimize_Points1
         - /BRRT_Optimize1/BRRT_Optimize_Path1
         - /BRRT_Optimize1/BRRT_Optimize_Node1
@@ -155,7 +154,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/start
           Name: start
           Namespaces:
-            "": true
+            {}
           Queue Size: 100
           Value: true
         - Class: rviz/Marker
@@ -163,7 +162,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/goal
           Name: goal
           Namespaces:
-            "": true
+            {}
           Queue Size: 100
           Value: true
         - Class: rviz/MarkerArray
@@ -366,7 +365,7 @@ Visualization Manager:
           Buffer Length: 1
           Class: rviz/Path
           Color: 255; 255; 255
-          Enabled: true
+          Enabled: false
           Head Diameter: 0.30000001192092896
           Head Length: 0.20000000298023224
           Length: 0.30000001192092896
@@ -385,23 +384,23 @@ Visualization Manager:
           Shaft Length: 0.10000000149011612
           Topic: /path_finder_node/brrt_final_path
           Unreliable: false
-          Value: true
+          Value: false
         - Class: rviz/Marker
-          Enabled: true
+          Enabled: false
           Marker Topic: /path_finder_node/brrt/tree_edges
           Name: BRRT_Tree
           Namespaces:
             {}
           Queue Size: 100
-          Value: true
+          Value: false
         - Class: rviz/MarkerArray
-          Enabled: true
+          Enabled: false
           Marker Topic: /path_finder_node/brrt/tree_vertice
           Name: BRRT_Edge
           Namespaces:
             {}
           Queue Size: 100
-          Value: true
+          Value: false
         - Alpha: 1
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
@@ -414,7 +413,7 @@ Visualization Manager:
           Color: 0; 85; 255
           Color Transformer: FlatColor
           Decay Time: 0
-          Enabled: true
+          Enabled: false
           Invert Rainbow: false
           Max Color: 255; 255; 255
           Min Color: 0; 0; 0
@@ -429,7 +428,7 @@ Visualization Manager:
           Unreliable: false
           Use Fixed Frame: true
           Use rainbow: true
-          Value: true
+          Value: false
         - Alpha: 1
           Buffer Length: 1
           Class: rviz/Path
@@ -1077,7 +1076,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 121.09241485595703
+      Distance: 113.95758056640625
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -1085,9 +1084,9 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: -23.65656089782715
-        Y: -3.79811954498291
-        Z: 9.944535122485831e-06
+        X: -21.52249526977539
+        Y: 0.5856144428253174
+        Z: -2.376331940467935e-05
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
