@@ -154,7 +154,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/start
           Name: start
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Class: rviz/Marker
@@ -162,7 +162,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/goal
           Name: goal
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Class: rviz/MarkerArray
@@ -170,7 +170,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/tree_vertice
           Name: vertice
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Class: rviz/Marker
@@ -178,7 +178,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/tree_edges
           Name: edges
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Class: rviz/MarkerArray
@@ -594,7 +594,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/tree_vertice
           Name: BRRT_Optimize_Node
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Class: rviz/Marker
@@ -602,7 +602,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/tree_edges
           Name: BRRT_Optimize_Edges
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Class: rviz/Marker
@@ -618,7 +618,7 @@ Visualization Manager:
           Marker Topic: /brrt_optimize/sampled_point_sector
           Name: sample_sector
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Class: rviz/Marker
@@ -626,7 +626,7 @@ Visualization Manager:
           Marker Topic: /brrt_optimize/sector_selected
           Name: sector_select
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Class: rviz/Marker
@@ -634,7 +634,7 @@ Visualization Manager:
           Marker Topic: /brrt_optimize/sectors_all
           Name: sector_all
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Class: rviz/Marker
@@ -773,7 +773,7 @@ Visualization Manager:
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
-      Enabled: true
+      Enabled: false
       Name: Case1
     - Class: rviz/Group
       Displays:
@@ -845,7 +845,7 @@ Visualization Manager:
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
-      Enabled: true
+      Enabled: false
       Name: Case2
     - Class: rviz/Group
       Displays:
@@ -1004,7 +1004,7 @@ Visualization Manager:
       Marker Topic: /brrt_optimize/step_edge_A
       Name: step_edge_A
       Namespaces:
-        {}
+        "": true
       Queue Size: 100
       Value: true
     - Class: rviz/Marker
@@ -1012,7 +1012,7 @@ Visualization Manager:
       Marker Topic: /brrt_optimize/step_node_A
       Name: Step_nodeA
       Namespaces:
-        {}
+        "": true
       Queue Size: 100
       Value: true
     - Class: rviz/Marker
@@ -1076,7 +1076,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 113.95758056640625
+      Distance: 85.49359130859375
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -1084,9 +1084,9 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: -21.52249526977539
-        Y: 0.5856144428253174
-        Z: -2.376331940467935e-05
+        X: -28.776195526123047
+        Y: 12.476221084594727
+        Z: 6.269352070376044e-06
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
