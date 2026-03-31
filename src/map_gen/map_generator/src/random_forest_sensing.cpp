@@ -149,7 +149,7 @@ void RandomBRRTGenerate_Large(double size = 4)
    
    // --- Define the Center Void Area ---
    // Obstacles will not be spawned if their center is within this distance from (0,0)
-   double clear_zone_radius = 12.0; 
+   double clear_zone_radius = 2.0; 
 
    double half_size = size / 2;
    for (int i = 0; i < number_ostacle; i++)

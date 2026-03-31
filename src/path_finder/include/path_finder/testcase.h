@@ -5,6 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include <nlohmann/json.hpp>
+#include <Eigen/Dense>
 
 using json = nlohmann::json;
 
@@ -17,6 +18,11 @@ struct BRRTInput {
     double beta;
     double gamma;
     double epsilon;
+    // --- 4 BIẾN MỚI THÊM VÀO ĐỂ TEST ---
+    double weight_grade;
+    double lidar_radius;
+    int n_blocks;
+    double steer_length;
 };
 
 struct AlgoResult {
@@ -41,9 +47,7 @@ public:
         load_from_json(json_input_path);
     }
 
-    const BRRTInput& get_input() const {
-        return input_;
-    }
+    const BRRTInput& get_input() const { return input_; }
 
     void store_output_for_run(const std::map<std::string, AlgoResult>& algo_results) {
         RunResult run;
@@ -53,9 +57,7 @@ public:
         run_index_++;
     }
 
-    int current_run_index() const {
-        return run_index_;
-    }
+    int current_run_index() const { return run_index_; }
 
     void save_json() const {
         json j;
@@ -67,7 +69,12 @@ public:
             {"alpha", input_.alpha},
             {"beta", input_.beta},
             {"gamma", input_.gamma},
-            {"epsilon", input_.epsilon}
+            {"epsilon", input_.epsilon},
+            // --- LƯU 4 BIẾN MỚI ---
+            {"weight_grade", input_.weight_grade},
+            {"lidar_radius", input_.lidar_radius},
+            {"n_blocks", input_.n_blocks},
+            {"steer_length", input_.steer_length}
         };
 
         json result_array = json::array();
@@ -120,6 +127,11 @@ private:
         input_.beta = j.at("beta").get<double>();
         input_.gamma = j.at("gamma").get<double>();
         input_.epsilon = j.at("epsilon").get<double>();
-        // json_out_path_ =  json_out_path_  + input_.environment + ".json";
+        
+        // --- ĐỌC 4 BIẾN MỚI ---
+        input_.weight_grade = j.value("weight_grade", 3.0); 
+        input_.lidar_radius = j.value("lidar_radius", 15.0);
+        input_.n_blocks = j.value("n_blocks", 16);
+        input_.steer_length = j.value("steer_length", 0.5);
     }
 };

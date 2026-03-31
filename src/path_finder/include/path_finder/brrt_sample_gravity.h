@@ -531,40 +531,6 @@ namespace path_plan
                 path_reverse = !path_reverse;
                 continue;
               }
-              //             // [MODIFIED] Ray Marching: Walk until blocked
-              // Eigen::Vector3d dir_vec = x_new - nearest_nodeA->x;
-              // double full_dist = dir_vec.norm();
-              
-              // if (full_dist < 1e-4) continue; // Too small
-              
-              // Eigen::Vector3d unit_dir = dir_vec.normalized();
-              // double resolution = map_ptr_->getResolution();
-              // if(resolution <= 0.001) resolution = 0.1; // Safety
-
-              // double curr_dist = 0.0;
-              // Eigen::Vector3d last_valid_pos = nearest_nodeA->x;
-              // bool hit_obstacle = false;
-
-              // while(curr_dist < full_dist) {
-              //     curr_dist += resolution;
-              //     if(curr_dist > full_dist) curr_dist = full_dist;
-
-              //     Eigen::Vector3d test_pos = nearest_nodeA->x + unit_dir * curr_dist;
-                  
-              //     if(!map_ptr_->isStateValid(test_pos)) {
-              //         hit_obstacle = true;
-              //         break; // Stop at last valid pos
-              //     }
-              //     last_valid_pos = test_pos;
-              // }
-
-              // // Update x_new to whatever point we reached
-              // x_new = last_valid_pos;
-
-              // // If we barely moved (stuck), skip
-              // if ((x_new - nearest_nodeA->x).norm() < 0.1) {
-              //     continue;
-              // }
               nearest_nodeB = selected_GI;
 #ifdef DEBUG
     if (vis_ptr_) {

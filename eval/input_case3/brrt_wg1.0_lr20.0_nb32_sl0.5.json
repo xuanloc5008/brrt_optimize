@@ -1,0 +1,14 @@
+{
+    "trial": 25,
+    "environment": "wg1.0_lr20.0_nb32_sl0.5",
+    "p1": 0.8,
+    "u_p": 2.0,
+    "alpha": 0.5,
+    "beta": 0.3,
+    "gamma": 0.5,
+    "epsilon": 1.0,
+    "weight_grade": 1.0,
+    "lidar_radius": 20.0,
+    "n_blocks": 32,
+    "steer_length": 0.5
+}

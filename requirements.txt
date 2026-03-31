@@ -2,3 +2,6 @@ pandas
 matplotlib
 itables
 openpyxl
+optuna 
+plotly 
+pandas
