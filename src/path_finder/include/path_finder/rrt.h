@@ -95,6 +95,9 @@ namespace path_plan
     {
       return solution_cost_time_pair_list_;
     }
+    int get_valid_tree_node_nums() const { return valid_tree_node_nums_; }
+    int get_number_of_iteration() const { return 0; }
+    double get_final_path_use_time_() const { return final_path_use_time_; }
 
     void setVisualizer(const std::shared_ptr<visualization::Visualization> &visPtr)
     {

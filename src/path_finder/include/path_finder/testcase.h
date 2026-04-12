@@ -80,7 +80,9 @@ public:
         json result_array = json::array();
         for (const auto& run : results_) {
             json algos;
-            for (const auto& [name, r] : run.algorithms) {
+            for (const auto& kv : run.algorithms) {
+                const std::string& name = kv.first;
+                const AlgoResult& r = kv.second;
                 algos[name] = {
                     {"success", r.success},
                     {"search_time", r.search_time},

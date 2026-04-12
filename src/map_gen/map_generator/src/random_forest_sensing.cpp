@@ -138,7 +138,7 @@ void RandomBRRTGenerate_Large(double size = 4)
    pcl::PointXYZ pt_random;
    random_device rd;
    // float ramdom_ratio = 0.4; // Original
-   float ramdom_ratio = 0.4;
+   float ramdom_ratio = 0.5;
    int number_ostacle = (_x_h - _x_l) * (_y_h - _y_l) / (size * size) * ramdom_ratio;
    std::cout << "number of ostacle" << number_ostacle;
 

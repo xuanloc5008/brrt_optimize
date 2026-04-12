@@ -40,6 +40,8 @@ public:
     GUILD_informed_ = false;
   };
 
+  void seed(unsigned s) { gen_.seed(s); }
+
   void setSamplingRange(const Eigen::Vector3d origin, const Eigen::Vector3d range)
   {
     origin_ = origin;

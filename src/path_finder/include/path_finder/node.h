@@ -308,7 +308,9 @@ class HeuristicCache {
                 }
                 minHeap.pop();
             }
-            outA = outB = nullptr;
+            // Do NOT null out outA/outB on failure — leave caller's variables
+            // unchanged so selected_SI/selected_GI in brrt_optimize retain
+            // their last valid values and avoid a NULL dereference.
             outH = std::numeric_limits<double>::infinity();
             return false;
         }
