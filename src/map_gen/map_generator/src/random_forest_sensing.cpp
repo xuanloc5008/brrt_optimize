@@ -138,7 +138,7 @@ void RandomBRRTGenerate_Large(double size = 4)
    pcl::PointXYZ pt_random;
    random_device rd;
    // float ramdom_ratio = 0.4; // Original
-   float ramdom_ratio = 0.5;
+   float ramdom_ratio = 0.4;
    int number_ostacle = (_x_h - _x_l) * (_y_h - _y_l) / (size * size) * ramdom_ratio;
    std::cout << "number of ostacle" << number_ostacle;
 
@@ -549,25 +549,52 @@ void GenerateEnvD_Narrow()
    cloudMap.points.clear();
    pcl::PointXYZ pt;
 
-   double wall_x = 0.0;     // Position of the wall
-   double wall_width = 3.0; // Thickness of the wall
-   double gap_size = 1.5;   // Size of the narrow passage
+   double wall_x     = 0.0;    // wall centre x
+   double wall_width = 70.0;   // wall thickness  → faces at x = ±35
+   double gap_size   = 1.0;    // passage height (y: -0.5 … +0.5)
 
-   // Lower Wall
-   for (double i = wall_x - wall_width/2; i < wall_x + wall_width/2; i += _resolution)
-      for (double j = _y_l; j < -gap_size/2; j += _resolution)
+   double face_l = wall_x - wall_width / 2.0;   // left  face x = -35
+   double face_r = wall_x + wall_width / 2.0;   // right face x = +35
+
+   // ── Main wall (lower + upper blocks, gap at y = 0) ───────────────────
+   for (double i = face_l; i < face_r; i += _resolution)
+      for (double j = _y_l; j < -gap_size / 2; j += _resolution)
          for (double k = -1; k < _h_h; k += _resolution) {
             pt.x = i; pt.y = j; pt.z = k;
             cloudMap.points.push_back(pt);
          }
 
-   // Upper Wall
-   for (double i = wall_x - wall_width/2; i < wall_x + wall_width/2; i += _resolution)
-      for (double j = gap_size/2; j < _y_h; j += _resolution)
+   for (double i = face_l; i < face_r; i += _resolution)
+      for (double j = gap_size / 2; j < _y_h; j += _resolution)
          for (double k = -1; k < _h_h; k += _resolution) {
             pt.x = i; pt.y = j; pt.z = k;
             cloudMap.points.push_back(pt);
          }
+
+   // ── Small obstacles at each tunnel head ───────────────────────────────
+   // Placed just outside the wall faces, staggered above/below the gap
+   // centre so the robot must approach at an angle — but a clear path
+   // always exists beside each obstacle.
+   double obs = 2.0;   // obstacle side length
+
+   auto add_obs = [&](double cx, double cy) {
+      for (double x = cx - obs/2; x < cx + obs/2; x += _resolution)
+         for (double y = cy - obs/2; y < cy + obs/2; y += _resolution)
+            for (double z = -1.0; z < _h_h; z += _resolution) {
+               pt.x = x; pt.y = y; pt.z = z;
+               cloudMap.points.push_back(pt);
+            }
+   };
+
+   // Left entrance (approaching from x < -35)
+   // — one obstacle above gap, close to face; one below gap, further out
+   add_obs(face_l - 3.0,  2.5);    // above-centre, near wall
+   add_obs(face_l - 7.0, -2.5);    // below-centre, further out
+
+   // Right exit (leaving toward x > +35)
+   // — mirrored: one below gap near face, one above gap further out
+   add_obs(face_r + 3.0, -2.5);    // below-centre, near wall
+   add_obs(face_r + 7.0,  2.5);    // above-centre, further out
 
    cloudMap.width = cloudMap.points.size();
    cloudMap.height = 1;
@@ -1211,6 +1238,435 @@ void GenerateClutterTrap()
    pcl::toROSMsg(cloudMap, globalMap_pcd);
    globalMap_pcd.header.frame_id = "map";
 }
+// -----------------------------------------------------------------------
+// Type3: Narrow
+// Matches image: large rectangular blocks on top and bottom halves with
+// a narrow horizontal corridor between them, offset each column to force
+// slalom navigation.  3 columns of block-pairs across the map.
+// Path: enter bottom-left gap → cross top-right gap → exit.
+// -----------------------------------------------------------------------
+// Type3: Narrow passage — matches reference image exactly.
+// 4 full-height vertical black bars create 5 narrow passages (left edge,
+// 3 between bars, right edge).  One small square obstacle sits in each
+// passage at a descending height, producing a top→bottom slalom.
+// A clear path always exists beside each obstacle.
+// -----------------------------------------------------------------------
+void GenerateType3_Narrow()
+{
+    cloudMap.points.clear();
+    pcl::PointXYZ pt;
+
+    double s   = (_x_h - _x_l) / 100.0;
+    double res = _resolution;
+
+    // Fill a full-height vertical column between x0 and x1
+    auto fill_col = [&](double x0, double x1) {
+        for (double x = x0; x < x1; x += res)
+            for (double y = _y_l; y < _y_h; y += res)
+                for (double z = -1.0; z < _h_h; z += res) {
+                    pt.x = x; pt.y = y; pt.z = z;
+                    cloudMap.points.push_back(pt);
+                }
+    };
+
+    // Fill a sq×sq obstacle centred at (cx, cy)
+    auto small_obs = [&](double cx, double cy, double sq) {
+        for (double x = cx - sq/2.0; x < cx + sq/2.0; x += res)
+            for (double y = cy - sq/2.0; y < cy + sq/2.0; y += res)
+                for (double z = -1.0; z < _h_h; z += res) {
+                    pt.x = x; pt.y = y; pt.z = z;
+                    cloudMap.points.push_back(pt);
+                }
+    };
+
+    // ── Layout (all in normalised ±50 coords, scaled by s) ───────────────
+    // left-edge passage | Bar1 | passage1 | Bar2 | passage2 | Bar3 | passage3 | Bar4 | right-edge passage
+    //       4 u              18 u    5 u      18 u    5 u      18 u    5 u      18 u       9 u   = 100 u
+    double bar_w  = 18.0 * s;
+    double pas_w  =  5.0 * s;
+    double ledge  =  4.0 * s;   // left-edge passage width
+    double redge  =  9.0 * s;   // right-edge passage width (wider to sum to 100)
+
+    // Bar x-starts
+    double b1x = _x_l + ledge;
+    double b2x = b1x + bar_w + pas_w;
+    double b3x = b2x + bar_w + pas_w;
+    double b4x = b3x + bar_w + pas_w;
+
+    fill_col(b1x, b1x + bar_w);
+    fill_col(b2x, b2x + bar_w);
+    fill_col(b3x, b3x + bar_w);
+    fill_col(b4x, b4x + bar_w);
+
+    // ── Passage centre x positions ────────────────────────────────────────
+    double px0 = _x_l + ledge / 2.0;               // left-edge passage
+    double px1 = b1x + bar_w + pas_w / 2.0;        // passage 1
+    double px2 = b2x + bar_w + pas_w / 2.0;        // passage 2
+    double px3 = b3x + bar_w + pas_w / 2.0;        // passage 3
+    double px4 = b4x + bar_w + redge / 2.0;        // right-edge passage
+
+    // ── Small obstacles — one per passage, descending y (top→bottom slalom) ──
+    double sq = 3.0 * s;   // obstacle side (much smaller than passage width)
+    small_obs(px0,  35.0 * s, sq);   // left edge  — near top
+    small_obs(px1,  17.0 * s, sq);   // passage 1  — upper-middle
+    small_obs(px2,  -3.0 * s, sq);   // passage 2  — centre
+    small_obs(px3, -22.0 * s, sq);   // passage 3  — lower-middle
+    small_obs(px4, -38.0 * s, sq);   // right edge — near bottom
+
+    cloudMap.width = cloudMap.points.size();
+    cloudMap.height = 1; cloudMap.is_dense = true; _has_map = true;
+    pcl::toROSMsg(cloudMap, globalMap_pcd);
+    globalMap_pcd.header.frame_id = "map";
+    ROS_INFO("Generated Type3 Narrow map with %zu points.", cloudMap.points.size());
+}
+
+// -----------------------------------------------------------------------
+// Type4: Rooms
+// Matches image: a building floor-plan with rooms of varying sizes.
+// Fixed 3×2 layout (3 columns, 2 rows).  Every pair of adjacent rooms
+// has one doorway at a fixed, offset position so all rooms are reachable.
+// Outer boundary walls are included.
+// -----------------------------------------------------------------------
+void GenerateType4_Rooms()
+{
+    cloudMap.points.clear();
+    pcl::PointXYZ pt;
+
+    double s   = (_x_h - _x_l) / 100.0;
+    double t   = 2.0 * s;    // wall thickness
+    double d   = 7.0 * s;    // doorway width
+    double res = _resolution;
+
+    // Helper: fill a solid rectangle (corner at x0,y0, size wx × wy)
+    auto fill_rect = [&](double x0, double y0, double wx, double wy) {
+        for (double x = x0; x < x0 + wx; x += res)
+            for (double y = y0; y < y0 + wy; y += res)
+                for (double z = -1.0; z < _h_h; z += res) {
+                    pt.x = x; pt.y = y; pt.z = z;
+                    cloudMap.points.push_back(pt);
+                }
+    };
+
+    // Helper: horizontal wall from (x0,y) to (x1,y) with door centred at door_cx
+    auto h_wall = [&](double x0, double x1, double y, double door_cx) {
+        double d0 = door_cx - d / 2.0, d1 = door_cx + d / 2.0;
+        for (double x = x0; x < x1; x += res) {
+            if (x >= d0 && x <= d1) continue;
+            for (double yy = y; yy < y + t; yy += res)
+                for (double z = -1.0; z < _h_h; z += res) {
+                    pt.x = x; pt.y = yy; pt.z = z;
+                    cloudMap.points.push_back(pt);
+                }
+        }
+    };
+
+    // Helper: vertical wall from (x,y0) to (x,y1) with door centred at door_cy
+    auto v_wall = [&](double x, double y0, double y1, double door_cy) {
+        double d0 = door_cy - d / 2.0, d1 = door_cy + d / 2.0;
+        for (double y = y0; y < y1; y += res) {
+            if (y >= d0 && y <= d1) continue;
+            for (double xx = x; xx < x + t; xx += res)
+                for (double z = -1.0; z < _h_h; z += res) {
+                    pt.x = xx; pt.y = y; pt.z = z;
+                    cloudMap.points.push_back(pt);
+                }
+        }
+    };
+
+    // Map bounds
+    double X0 = _x_l, X3 = _x_h;
+    double Y0 = _y_l, Y2 = _y_h;
+
+    // Column dividers (x positions): 3 columns → 2 vertical dividers
+    double X1 = X0 + (_x_h - _x_l) * 0.38;   // first divider (rooms vary in width)
+    double X2 = X0 + (_x_h - _x_l) * 0.65;   // second divider
+
+    // Row divider (y position): 2 rows → 1 horizontal divider
+    double Y1 = Y0 + (_y_h - _y_l) * 0.45;   // slightly below centre
+
+    // Outer boundary (solid walls, no doors on boundary)
+    fill_rect(X0, Y0, X3 - X0, t);             // bottom
+    fill_rect(X0, Y2 - t, X3 - X0, t);         // top
+    fill_rect(X0, Y0, t, Y2 - Y0);             // left
+    fill_rect(X3 - t, Y0, t, Y2 - Y0);         // right
+
+    // Horizontal divider (row 0 → row 1) — door positions offset per column
+    double hd0 = X0 + (X1 - X0) * 0.30;   // col-0 door centre x
+    double hd1 = X1 + (X2 - X1) * 0.65;   // col-1 door centre x
+    double hd2 = X2 + (X3 - X2) * 0.40;   // col-2 door centre x
+    h_wall(X0, X1, Y1, hd0);
+    h_wall(X1, X2, Y1, hd1);
+    h_wall(X2, X3, Y1, hd2);
+
+    // Vertical divider 1 (col 0 → col 1) — door per row
+    double vd1_bot = Y0 + (Y1 - Y0) * 0.55;   // bottom row door centre y
+    double vd1_top = Y1 + (Y2 - Y1) * 0.35;   // top row door centre y
+    v_wall(X1, Y0, Y1, vd1_bot);
+    v_wall(X1, Y1, Y2, vd1_top);
+
+    // Vertical divider 2 (col 1 → col 2) — door per row
+    double vd2_bot = Y0 + (Y1 - Y0) * 0.70;   // bottom row door centre y
+    double vd2_top = Y1 + (Y2 - Y1) * 0.50;   // top row door centre y
+    v_wall(X2, Y0, Y1, vd2_bot);
+    v_wall(X2, Y1, Y2, vd2_top);
+
+    // Square baffles in front of every doorway — on both room faces of each wall.
+    // sq < d (door width) so a gap of (d-sq)/2 = 1.75s remains on each side.
+    double sq  = 3.5 * s;   // baffle side length
+    double gap = 1.5 * s;   // clear space between wall face and nearest baffle edge
+
+    // centre helper: places a sq×sq obstacle centred at (cx, cy)
+    auto baffle = [&](double cx, double cy) {
+        fill_rect(cx - sq / 2.0, cy - sq / 2.0, sq, sq);
+    };
+
+    // H-wall baffles — lower room (y < Y1) and upper room (y > Y1+t)
+    double by_lo = Y1 - gap - sq / 2.0;         // centre y in lower room
+    double by_hi = Y1 + t + gap + sq / 2.0;     // centre y in upper room
+    baffle(hd0, by_lo);  baffle(hd0, by_hi);    // col-0 door
+    baffle(hd1, by_lo);  baffle(hd1, by_hi);    // col-1 door
+    baffle(hd2, by_lo);  baffle(hd2, by_hi);    // col-2 door
+
+    // V-wall 1 baffles — left room (x < X1) and right room (x > X1+t)
+    double bx1_lo = X1 - gap - sq / 2.0;        // centre x in left room
+    double bx1_hi = X1 + t + gap + sq / 2.0;    // centre x in right room
+    baffle(bx1_lo, vd1_bot);  baffle(bx1_hi, vd1_bot);   // bottom row door
+    baffle(bx1_lo, vd1_top);  baffle(bx1_hi, vd1_top);   // top row door
+
+    // V-wall 2 baffles — left room (x < X2) and right room (x > X2+t)
+    double bx2_lo = X2 - gap - sq / 2.0;
+    double bx2_hi = X2 + t + gap + sq / 2.0;
+    baffle(bx2_lo, vd2_bot);  baffle(bx2_hi, vd2_bot);   // bottom row door
+    baffle(bx2_lo, vd2_top);  baffle(bx2_hi, vd2_top);   // top row door
+
+    cloudMap.width = cloudMap.points.size();
+    cloudMap.height = 1; cloudMap.is_dense = true; _has_map = true;
+    pcl::toROSMsg(cloudMap, globalMap_pcd);
+    globalMap_pcd.header.frame_id = "map";
+    ROS_INFO("Generated Type4 Rooms map with %zu points.", cloudMap.points.size());
+}
+
+// -----------------------------------------------------------------------
+// Type5: Blobs
+// Matches image: 9 large filled circular blobs spread across the map in a
+// 3×3 grid pattern, with each blob offset from its grid centre to break
+// regularity.  Corridors between blobs are always ≥ 8 units wide.
+// -----------------------------------------------------------------------
+void GenerateType5_Blobs()
+{
+    cloudMap.points.clear();
+    pcl::PointXYZ pt;
+
+    double s   = (_x_h - _x_l) / 100.0;
+    double res = _resolution;
+
+    // 9 blobs in a 3×3 arrangement; offsets break grid regularity.
+    // Positions in normalised units (map spans −50…+50 before scaling).
+    struct Blob { double cx, cy, r; };
+    std::vector<Blob> blobs = {
+        // bottom row
+        { -33, -35,  9 },
+        {   2, -38,  8 },
+        {  36, -33,  9 },
+        // middle row
+        { -38,   0,  8 },
+        {  -5,   5,  7 },
+        {  35,   2,  8 },
+        // top row
+        { -32,  34,  9 },
+        {   5,  37,  8 },
+        {  34,  33,  9 },
+    };
+
+    for (auto& b : blobs) {
+        double cx = b.cx * s, cy = b.cy * s, R = b.r * s;
+        for (double x = cx - R; x <= cx + R; x += res)
+            for (double y = cy - R; y <= cy + R; y += res) {
+                if ((x-cx)*(x-cx) + (y-cy)*(y-cy) > R*R) continue;
+                for (double z = -1.0; z < _h_h; z += res) {
+                    pt.x = x; pt.y = y; pt.z = z;
+                    cloudMap.points.push_back(pt);
+                }
+            }
+    }
+
+    cloudMap.width = cloudMap.points.size();
+    cloudMap.height = 1; cloudMap.is_dense = true; _has_map = true;
+    pcl::toROSMsg(cloudMap, globalMap_pcd);
+    globalMap_pcd.header.frame_id = "map";
+    ROS_INFO("Generated Type5 Blobs map with %zu points.", cloudMap.points.size());
+}
+
+// -----------------------------------------------------------------------
+// Type6: Flappy style
+// 4 full-height vertical barriers (like Flappy Bird pipes) spanning the
+// entire map height, each with one opening flush to the map boundary.
+// Openings alternate strictly bottom / top / bottom / top so a single
+// zigzag path threads through all 4 barriers.
+// -----------------------------------------------------------------------
+void GenerateType6_Flappy()
+{
+    cloudMap.points.clear();
+    pcl::PointXYZ pt;
+
+    double s      = (_x_h - _x_l) / 100.0;
+    double res    = _resolution;
+    double pipe_w = 12.0 * s;   // barrier width ≈ 12% of map
+    double gap_h  = 35.0 * s;   // opening height ≈ 35% of map (flush to edge)
+
+    // 4 evenly-spaced barriers
+    int    n_pipes = 4;
+    double spacing = (_x_h - _x_l) / (n_pipes + 1);
+
+    for (int p = 0; p < n_pipes; ++p) {
+        double pipe_x = _x_l + spacing * (p + 1) - pipe_w / 2.0;
+
+        // Opening flush to bottom edge (even pipes) or top edge (odd pipes)
+        double gap_lo, gap_hi;
+        if (p % 2 == 0) {
+            gap_lo = _y_l;
+            gap_hi = _y_l + gap_h;
+        } else {
+            gap_lo = _y_h - gap_h;
+            gap_hi = _y_h;
+        }
+
+        for (double x = pipe_x; x < pipe_x + pipe_w; x += res)
+            for (double y = _y_l; y < _y_h; y += res) {
+                if (y >= gap_lo && y < gap_hi) continue;
+                for (double z = -1.0; z < _h_h; z += res) {
+                    pt.x = x; pt.y = y; pt.z = z;
+                    cloudMap.points.push_back(pt);
+                }
+            }
+    }
+
+    // Small square obstacles scattered in the gap openings and entry/exit
+    // corridors.  Coordinates are in normalised units (map spans -50..+50),
+    // scaled by s.  hw = half-width of each square pillar.
+    struct SmObs { double cx, cy, hw; };
+    const std::vector<SmObs> extras = {
+        // entry corridor (before pipe 0, x ≈ -44)
+        { -43,  22, 2.0 }, { -44, -30, 2.0 },
+        // pipe 0 bottom opening (x ≈ -30, y: -50 to -15)
+        { -30, -42, 2.0 }, { -30, -23, 2.0 },
+        // pipe 1 top opening (x ≈ -10, y: +15 to +50)
+        { -10,  27, 2.0 }, { -10,  43, 2.0 },
+        // pipe 2 bottom opening (x ≈ +10, y: -50 to -15)
+        {  10, -38, 2.0 }, {  10, -21, 2.0 },
+        // pipe 3 top opening (x ≈ +30, y: +15 to +50)
+        {  30,  24, 2.0 }, {  30,  43, 2.0 },
+        // exit corridor (after pipe 3, x ≈ +44)
+        {  43, -22, 2.0 }, {  44,  30, 2.0 },
+    };
+    for (const auto& o : extras) {
+        double cx = o.cx * s, cy = o.cy * s, hw = o.hw * s;
+        for (double x = cx - hw; x < cx + hw; x += res)
+            for (double y = cy - hw; y < cy + hw; y += res)
+                for (double z = -1.0; z < _h_h; z += res) {
+                    pt.x = x; pt.y = y; pt.z = z;
+                    cloudMap.points.push_back(pt);
+                }
+    }
+
+    cloudMap.width = cloudMap.points.size();
+    cloudMap.height = 1; cloudMap.is_dense = true; _has_map = true;
+    pcl::toROSMsg(cloudMap, globalMap_pcd);
+    globalMap_pcd.header.frame_id = "map";
+    ROS_INFO("Generated Type6 Flappy map with %zu points.", cloudMap.points.size());
+}
+
+// -----------------------------------------------------------------------
+// Type7: U-shaped obstacles
+// Matches image: mix of small, medium, and large U-shapes at fixed
+// positions and orientations scattered across the map.  The U openings
+// face various directions so a planner must navigate around or through
+// them.  Corridors between shapes are always ≥ 6 units wide.
+// -----------------------------------------------------------------------
+void GenerateType7_UShaped()
+{
+    cloudMap.points.clear();
+    pcl::PointXYZ pt;
+
+    double s   = (_x_h - _x_l) / 100.0;
+    double res = _resolution;
+
+    auto fill_rect = [&](double cx, double cy, double w, double h) {
+        for (double x = cx - w/2.0; x < cx + w/2.0; x += res)
+            for (double y = cy - h/2.0; y < cy + h/2.0; y += res)
+                for (double z = -1.0; z < _h_h; z += res) {
+                    pt.x = x; pt.y = y; pt.z = z;
+                    cloudMap.points.push_back(pt);
+                }
+    };
+
+    // Draw one U-shape: cx,cy = centre, L = arm length, W = opening width,
+    // t = wall thickness, opening: 0=right 1=left 2=up 3=down
+    auto draw_u = [&](double cx, double cy, double L, double W, double t, int opening) {
+        switch (opening) {
+        case 0: // open right: base on left, two arms extend right
+            fill_rect(cx - L/2.0, cy,            t, W    );   // base (left)
+            fill_rect(cx,          cy + W/2.0 - t/2.0, L, t);   // top arm
+            fill_rect(cx,          cy - W/2.0 + t/2.0, L, t);   // bottom arm
+            break;
+        case 1: // open left: base on right
+            fill_rect(cx + L/2.0, cy,            t, W    );
+            fill_rect(cx,          cy + W/2.0 - t/2.0, L, t);
+            fill_rect(cx,          cy - W/2.0 + t/2.0, L, t);
+            break;
+        case 2: // open up: base on bottom
+            fill_rect(cx, cy - L/2.0,            W, t    );
+            fill_rect(cx + W/2.0 - t/2.0, cy,    t, L    );
+            fill_rect(cx - W/2.0 + t/2.0, cy,    t, L    );
+            break;
+        default: // open down: base on top
+            fill_rect(cx, cy + L/2.0,            W, t    );
+            fill_rect(cx + W/2.0 - t/2.0, cy,    t, L    );
+            fill_rect(cx - W/2.0 + t/2.0, cy,    t, L    );
+            break;
+        }
+    };
+
+    // Fixed layout — (cx, cy) in normalised ±50 coords, then scaled.
+    // Columns: small (S), medium (M), large (L) U-shapes mixed in.
+    // opening: 0=right 1=left 2=up 3=down
+    struct UDef { double cx, cy, arm_len, width, thick; int opening; };
+    std::vector<UDef> defs = {
+        // top-left cluster
+        { -38,  38,  12, 10, 2.0, 0 },   // large, open right
+        { -18,  40,   7,  6, 1.5, 3 },   // small, open down
+        { -38,  18,   8,  7, 1.5, 2 },   // medium, open up
+        { -20,  22,  10,  8, 2.0, 1 },   // medium, open left
+
+        // top-right cluster
+        {  38,  38,  12, 10, 2.0, 1 },   // large, open left
+        {  18,  40,   7,  6, 1.5, 3 },   // small, open down
+        {  38,  18,   8,  7, 1.5, 2 },   // medium, open up
+        {  20,  22,  10,  8, 2.0, 0 },   // medium, open right
+
+        // bottom-left cluster
+        { -38, -38,  12, 10, 2.0, 0 },   // large, open right
+        { -18, -40,   7,  6, 1.5, 2 },   // small, open up
+        { -38, -18,   8,  7, 1.5, 3 },   // medium, open down
+        { -20, -22,  10,  8, 2.0, 1 },   // medium, open left
+
+        // bottom-right cluster
+        {  38, -38,  12, 10, 2.0, 1 },   // large, open left
+        {  18, -40,   7,  6, 1.5, 2 },   // small, open up
+        {  38, -18,   8,  7, 1.5, 3 },   // medium, open down
+        {  20, -22,  10,  8, 2.0, 0 },   // medium, open right
+    };
+
+    for (auto& d : defs)
+        draw_u(d.cx * s, d.cy * s, d.arm_len * s, d.width * s, d.thick * s, d.opening);
+
+    cloudMap.width = cloudMap.points.size();
+    cloudMap.height = 1; cloudMap.is_dense = true; _has_map = true;
+    pcl::toROSMsg(cloudMap, globalMap_pcd);
+    globalMap_pcd.header.frame_id = "map";
+    ROS_INFO("Generated Type7 U-Shaped map with %zu points.", cloudMap.points.size());
+}
+
 void pubSensedPoints()
 {
    if (!_has_map)
@@ -1276,7 +1732,7 @@ int main(int argc, char **argv)
    else if (map_type == "env_c") {
       GenerateEnvC_Maze();
    }
-   else if (map_type == "env_d") {
+   else if (map_type == "narrow_map") {
       GenerateEnvD_Narrow();
    }
    else if (map_type == "l_shape_grid") {
@@ -1312,6 +1768,21 @@ int main(int argc, char **argv)
    }
    else if (map_type == "clutter_trap") {
       GenerateClutterTrap();
+   }
+   else if (map_type == "narrow") {
+      GenerateType3_Narrow();
+   }
+   else if (map_type == "rooms") {
+      GenerateType4_Rooms();
+   }
+   else if (map_type == "blobs") {
+      GenerateType5_Blobs();
+   }
+   else if (map_type == "flappy") {
+      GenerateType6_Flappy();
+   }
+   else if (map_type == "u_shaped") {
+      GenerateType7_UShaped();
    }
    else
    {

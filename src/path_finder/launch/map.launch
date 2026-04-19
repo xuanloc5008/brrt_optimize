@@ -6,9 +6,19 @@
   <arg name="simulation" default="true"/>
   <arg name="drone_number" default="1"/>
 
-  <arg name="map_size_x" value="100.0"/>
-  <arg name="map_size_y" value="100.0"/>
-  <arg name="map_size_z" value="1.5"/>
+  <arg name="map_size_x" default="1000.0"/>
+  <arg name="map_size_y" default="1000.0"/>
+  <arg name="map_size_z" default="1.5"/>
+  <arg name="obs_num" default="5000"/>
+  <arg name="circle_num" default="5000"/>
+  <!-- Map types: random_large, narrow, rooms, blobs, flappy, u_shaped,
+                  maze_dfs, l_shape_grid, random_narrow, env_v_shape, etc. -->
+  <arg name="map_type" default="random_large"/>
+  <!-- map_resolution: point-cloud density fed to the occupancy grid.
+       0.5 matches the occupancy grid resolution — no information is lost
+       and the point count stays manageable even on large maps.
+       Use 0.1 only for very small maps or when you need high visual detail. -->
+  <arg name="map_resolution" default="0.5"/>
 
   <arg name="init_x" value="0.0"/>
   <arg name="init_y" value="0.0"/>
@@ -25,9 +35,10 @@
     <param name="map/x_size" value="$(arg map_size_x)" />
     <param name="map/y_size" value="$(arg map_size_y)" />
     <param name="map/z_size" value="$(arg map_size_z)" />
-    <param name="map/obs_num" value="1000"/>
-    <param name="map/circle_num" value="1000"/>
-    <param name="map/resolution" value="0.1"/>
+    <param name="map/obs_num" value="$(arg obs_num)"/>
+    <param name="map/circle_num" value="$(arg circle_num)"/>
+    <param name="map/map_type" value="$(arg map_type)"/>
+    <param name="map/resolution" value="$(arg map_resolution)"/>
     <param name="ObstacleShape/lower_rad" value="0.4"/>
     <param name="ObstacleShape/upper_rad" value="2.5"/>
     <param name="ObstacleShape/lower_hei" value="0.5"/>

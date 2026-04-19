@@ -1,19 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <launch>
-  <include file="$(find path_finder)/launch/map.launch"/>
   <arg name="global_env_pcd2_topic" value="/random_forest/all_map" />
-  <arg name="map_size_x" value="100.0" />
-  <arg name="map_size_y" value="100.0" />
-  <arg name="map_size_z" value="1.5" />
-  <arg name="origin_x" value=" -50.0" />
-  <arg name="origin_y" value=" -50.0" />
+  <arg name="map_size_x" default="1000.0" />
+  <arg name="map_size_y" default="1000.0" />
+  <arg name="map_size_z" default="1.5" />
+  <arg name="origin_x" default="-500.0" />
+  <arg name="origin_y" default="-500.0" />
+  <arg name="obs_num" default="5000" />
+  <arg name="circle_num" default="5000" />
+  <arg name="map_type" default="random_large" />
+  <!-- map_resolution: 0.5 matches occupancy grid → 125× fewer points than 0.1,
+       no planning information lost. Override to 0.1 only for tiny debug maps. -->
+  <arg name="map_resolution" default="0.5" />
+  <include file="$(find path_finder)/launch/map.launch">
+    <arg name="map_size_x" value="$(arg map_size_x)"/>
+    <arg name="map_size_y" value="$(arg map_size_y)"/>
+    <arg name="map_size_z" value="$(arg map_size_z)"/>
+    <arg name="obs_num" value="$(arg obs_num)"/>
+    <arg name="circle_num" value="$(arg circle_num)"/>
+    <arg name="map_type" value="$(arg map_type)"/>
+    <arg name="map_resolution" value="$(arg map_resolution)"/>
+  </include>
   <arg name="origin_z" value=" -1.0" />
   <arg name="resolution" value="0.5" />
 
-  <arg name="steer_length" value="1.0" />
+  <!-- ── Parameters scaled for 1000×1000 map (steer/step ×10, time ×10, nodes ×2.5) ── -->
+  <!-- <arg name="steer_length"       default="1.0" />
+  <arg name="search_radius"      default="200.0" />
+  <arg name="search_time"        default="10" />
+  <arg name="max_tree_node_nums" default="500000" />
+  <arg name="use_informed_sampling" value="true" />
+  <arg name="use_GUILD_sampling"    value="false" />
+  <arg name="run_rrt"           value="false" />
+  <arg name="run_rrt_star"      value="false" />
+  <arg name="run_rrt_sharp"     value="false" />
+  <arg name="run_brrt"          value="true" />
+  <arg name="run_brrt_star"     value="false" />
+  <arg name="run_brrt_optimize" value="true" /> -->
+  <arg name="steer_length" value="1" />
   <arg name="search_radius" value="60.0" />
-  <arg name="search_time" value="1" />
-  <arg name="max_tree_node_nums" value="200000" />
+  <arg name="search_time" value="5.0" />
+  <arg name="max_tree_node_nums" value="500000" />
   <arg name="use_informed_sampling" value="true" />
   <arg name="use_GUILD_sampling" value="false" />
   <arg name="run_rrt" value="false" />
@@ -23,18 +50,22 @@
   <arg name="run_brrt_star" value="false" />
   <arg name="run_brrt_optimize" value="true" />
 
-  <arg name="brrt_optimize_p3" value="0.1" />
-  <arg name="brrt_optimize_u_p" value="0.5" />
-  <arg name="brrt_optimize_p1" value="1.0" />
-  <arg name="brrt_step" value="0.5" />
+  <arg name="brrt_optimize_p3"  default="0.1" />
+  <arg name="brrt_optimize_u_p" default="0.5" />
+  <arg name="brrt_optimize_p1"  default="1.0" />
+  <arg name="brrt_step"         default="5.0" />
 
-  <arg name="brrt_alpha" value="8.0" />
-  <arg name="brrt_beta" value="1.0" />
-  <arg name="brrt_gamma" value="1.0" />
-  <arg name="brrt_max_iteration" value="100000" />
+  <arg name="brrt_alpha"         default="7.0" />
+  <arg name="brrt_beta"          default="1.0" />
+  <arg name="brrt_gamma"         default="1.0" />
+  <arg name="brrt_max_iteration" default="200000" />
+
+  <!-- Step-by-step visualization for BRRT_Optimize_case3 (DEBUG mode only) -->
+  <arg name="step_by_step_vis" default="false" />
+  <arg name="step_delay_ms"    default="100" />
 
   <arg name="input_param" default="/home/xuanloc/DACN/ICIT/brrt_optimize/brrt_input.json" />
-  <arg name="output_result" default="/home/xuanloc/DACN/ICIT/brrt_optimize/eval/invert/50_1.json" />
+  <arg name="output_result" default="/home/xuanloc/DACN/ICIT/brrt_optimize/eval/invert/1000x1000/40.json" />
 
   <node pkg="path_finder" type="path_finder" name="path_finder_node" output="screen" required="true">
     <remap from="/global_cloud" to="$(arg global_env_pcd2_topic)"/>
@@ -98,7 +129,9 @@
     <param name="BRRT_Optimize/beta" value="$(arg brrt_beta)" type="double"/>
     <param name="BRRT_Optimize/gamma" value="$(arg brrt_gamma)" type="double"/>
     <param name="BRRT_Optimize/max_iteration" value="$(arg brrt_max_iteration)" type="int"/>
-    
+    <param name="BRRT_Optimize/step_by_step_vis" value="$(arg step_by_step_vis)" type="bool"/>
+    <param name="BRRT_Optimize/step_delay_ms"    value="$(arg step_delay_ms)"    type="int"/>
+
   </node>
 
 </launch>

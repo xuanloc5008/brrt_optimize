@@ -211,21 +211,21 @@ namespace path_plan
     //---------------------------------SOF-RRT----------------------------------
     double sigmoid(double x) { return 1.0 / (1.0 + std::exp(-x)); }
 
-    double rayCast(const Eigen::Vector3d &start, double angle) {
-        Eigen::Vector3d dir(cos(angle), sin(angle), 0.0);
-        double dist = 0.0;
-        double step = map_ptr_->getResolution();
-        if (step <= 0.001) step = 0.1; 
-
-        Eigen::Vector3d current = start;
-        while (dist < lidar_radius_) {
-            current = start + dir * dist;
-            if (!map_ptr_->isStateValid(current)) return dist;
-            dist += step;
-        }
-        return lidar_radius_;
+    double rayCast(const Eigen::Vector3d &start, double angle)
+    {
+      Eigen::Vector3d dir(cos(angle), sin(angle), 0.0);
+      double dist = 0.0;
+ 
+      while (dist < lidar_radius_)
+      {
+        dist += steer_length_;
+        if (dist > lidar_radius_) dist = lidar_radius_;  // clamp tại max range
+ 
+        Eigen::Vector3d current = start + dir * dist;
+        if (!map_ptr_->isStateValid(current)) return dist;
+      }
+      return lidar_radius_;
     }
-
     Eigen::Vector3d weightSample(TreeNode* root_node, const Eigen::Vector3d& target_point, kdtree* tree, bool rand_sampling) {
         epsilon_ = std::max(epsilon_ * gamma_, epsilon_floor_);
 
@@ -317,63 +317,85 @@ namespace path_plan
     } 
 
     Eigen::Vector3d AFBGSteer(const Eigen::Vector3d &x_near,
-                           const Eigen::Vector3d &x_rand,
-                           const Eigen::Vector3d &x_target,
-                           double steer_length_)
+                              const Eigen::Vector3d &x_rand,
+                              const Eigen::Vector3d &x_target,
+                              double steer_length_)
     {
-        Eigen::Vector3d diff = x_rand - x_near;
-        if (diff.norm() < 1e-6) return x_near;
-
-        Eigen::Vector3d v_expand = diff.normalized();
-
-        using dispair = std::pair<double, Eigen::Vector3d>;
-        struct MinFirst {
-            bool operator()(const dispair &a, const dispair &b) { return a.first > b.first; }
-        };
-        std::priority_queue<dispair, std::vector<dispair>, MinFirst> pqueue;
-
-        for (int i = 0; i < n_blocks_; ++i) {
-            double ang = i * (2.0 * M_PI / n_blocks_);
-            double d   = rayCast(x_near, ang);
-            if (d < lidar_radius_) {
-                pqueue.push({d, Eigen::Vector3d(cos(ang), sin(ang), 0.0) * d});
-            }
+      // ── hướng mở rộng gốc ──────────────────────────────────────────────
+      Eigen::Vector3d diff = x_rand - x_near;
+      if (diff.norm() < 1e-6) return x_near;
+      Eigen::Vector3d v_expand = diff.normalized();
+ 
+      // ── dist(q_nearest, Obstacle) theo paper ───────────────────────────
+      // Phát n_blocks_ tia từ x_near, mỗi tia bước theo steer_length_
+      // đến max lidar_radius_. Tia nào chạm obstacle → push distance vào
+      // min-heap. top() = khoảng cách đến obstacle gần nhất = obsDist
+      // trong eq.(10). Lưu thêm ray_dir để tính tangential vector.
+      using dispair = std::pair<double, Eigen::Vector3d>;
+      struct MinFirst
+      {
+        bool operator()(const dispair &a, const dispair &b)
+        {
+          return a.first > b.first;  // min-heap: nhỏ nhất nổi lên top
         }
-
-        double          min_obs_dist = DBL_MAX;
-        Eigen::Vector3d obs_vec(0, 0, 0);
-        if (!pqueue.empty()) {
-            min_obs_dist = pqueue.top().first;
-            obs_vec      = pqueue.top().second;
+      };
+      std::priority_queue<dispair, std::vector<dispair>, MinFirst> pqueue;
+ 
+      for (int i = 0; i < n_blocks_; ++i)
+      {
+        double ang = i * (2.0 * M_PI / n_blocks_);
+        double d   = rayCast(x_near, ang);
+        if (d < lidar_radius_)  // chỉ push tia chạm obstacle
+        {
+          Eigen::Vector3d ray_dir(cos(ang), sin(ang), 0.0);
+          pqueue.push({d, ray_dir});
         }
-
-        // Goal-bias factor φ
-        double dist_to_target = calDist(x_near, x_target);
-        double max_dist       = map_ptr_->getMapSize()(0);
-        double phi = steer_length_ * sigmoid((dist_to_target / max_dist) * 5.0);
-        Eigen::Vector3d v_target = (x_target - x_near).normalized();
-
-        // Obstacle tangential-bias factor η
-        double          eta = 0.0;
-        Eigen::Vector3d v_tangent(0, 0, 0);
-
-        if (min_obs_dist < 2.0 * steer_length_) {
-            eta = steer_length_ * sigmoid((min_obs_dist / (2.0 * steer_length_)) * 5.0);
-
-            Eigen::Vector3d t1(-v_expand[1],  v_expand[0], 0.0);
-            Eigen::Vector3d t2( v_expand[1], -v_expand[0], 0.0);
-
-            Eigen::Vector3d v_goal_dir = (x_target - x_near).normalized();
-            v_tangent = (t1.dot(v_goal_dir) >= t2.dot(v_goal_dir)) ? t1 : t2;
-        }
-
-        Eigen::Vector3d total_vec = steer_length_ * v_expand
-                                  + phi            * v_target
-                                  + eta            * v_tangent;
-
-        if (total_vec.norm() < 1e-6) return x_near;
-
-        return x_near + total_vec;
+      }
+ 
+      // pop top = tia ngắn nhất = obstacle gần nhất
+      double min_obs_dist = lidar_radius_;
+      Eigen::Vector3d obs_dir(0.0, 0.0, 0.0);  // hướng từ x_near → obstacle gần nhất
+      if (!pqueue.empty())
+      {
+        min_obs_dist = pqueue.top().first;
+        obs_dir      = pqueue.top().second;
+      }
+ 
+      // ── Goal-bias factor φ — eq.(9) ────────────────────────────────────
+      // φ = δ · Sigmoid(goalDist / maxDist · 5)
+      double dist_to_target = calDist(x_near, x_target);
+      double max_dist       = map_ptr_->getMapSize()(0);
+      double phi = steer_length_ * sigmoid((dist_to_target / max_dist) * 5.0);
+      Eigen::Vector3d v_target = (x_target - x_near).normalized();
+ 
+      // ── Obstacle tangential-bias factor η — eq.(10) ────────────────────
+      // η = δ · Sigmoid(obsDist / (2δ) · 5)
+      // T(·) = perpendicular của obs_dir (hướng tia đến obstacle gần nhất)
+      // → tangent thực sự song song với bề mặt obstacle tại điểm gần nhất
+      double eta = 0.0;
+      Eigen::Vector3d v_tangent(0.0, 0.0, 0.0);
+ 
+      if (min_obs_dist < 2.0 * steer_length_ && obs_dir.norm() > 1e-6)
+      {
+        eta = steer_length_ * sigmoid((min_obs_dist / (2.0 * steer_length_)) * 5.0);
+ 
+        // obs_dir = (a, b, 0) → t1 = (-b, a, 0), t2 = (b, -a, 0)
+        Eigen::Vector3d t1(-obs_dir[1],  obs_dir[0], 0.0);
+        Eigen::Vector3d t2( obs_dir[1], -obs_dir[0], 0.0);
+ 
+        // Chọn chiều nào hướng về đích hơn
+        Eigen::Vector3d v_goal_dir = (x_target - x_near).normalized();
+        v_tangent = (t1.dot(v_goal_dir) >= t2.dot(v_goal_dir)) ? t1 : t2;
+      }
+ 
+      // ── Tổng hợp — eq.(8) ──────────────────────────────────────────────
+      // q_new = q_nearest + δ·v_expand + φ·v_target + η·T(obs_dir)
+      Eigen::Vector3d total_vec = steer_length_ * v_expand
+                                + phi            * v_target
+                                + eta            * v_tangent;
+ 
+      if (total_vec.norm() < 1e-6) return x_near;
+      return x_near + total_vec;
     }
     //----------------------------------------------------------------------------------------------------------
     RRTNode3DPtr addTreeNode(RRTNode3DPtr &parent, const Eigen::Vector3d &state,
@@ -733,12 +755,12 @@ namespace path_plan
             // 1. Sample: attempt guided (biased) path first; if the step is blocked,
             //    fall through to uniform-random sampling in the SAME iteration so no
             //    budget is wasted on swap-only cycles.
-            bool use_bias = (random01 >= pbias);
+            bool use_bias = (random01 > pbias);
             if (use_bias)
             {
               x_rand     = weightSample(selected_SI, selected_GI->x, treeA, false);
               nearest_nodeA = selected_SI;
-              x_new      = AFBGSteer(nearest_nodeA->x, x_rand, selected_GI->x, steer_length_);
+              x_new      = AFBGSteer(nearest_nodeA->x, x_rand, goal_node_->x, steer_length_);
               if ((!map_ptr_->isStateValid(x_new)) || (!map_ptr_->isSegmentValid(nearest_nodeA->x, x_new)))
               {
                 use_bias = false;  // biased step blocked — fall through to random
