@@ -49,41 +49,64 @@ namespace env
   }
 
   void OccMap::globalCloudCallback(const sensor_msgs::PointCloud2ConstPtr &msg)
-  {
+{
     if (is_global_map_valid_)
-      return;
+        return;
 
     pcl::PointCloud<pcl::PointXYZ> global_cloud;
     pcl::fromROSMsg(*msg, global_cloud);
-    // ROS_ERROR_STREAM(", global_cloud.points.size(): " << global_cloud.points.size());
+
+    // ==================== DOWNSAMPLE POINT CLOUD (giảm RAM mạnh) ====================
+    {
+        double leaf_size = 0.5;                     // ← Bạn có thể chỉnh: 0.4 = chi tiết, 0.5 = khuyến nghị, 0.6 = tiết kiệm RAM cực mạnh
+        node_.param("/path_finder_node/voxel_leaf_size", leaf_size, 0.5);
+
+        if (!global_cloud.points.empty()) {
+            pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_in(new pcl::PointCloud<pcl::PointXYZ>(global_cloud));
+            pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_filtered(new pcl::PointCloud<pcl::PointXYZ>());
+
+            pcl::VoxelGrid<pcl::PointXYZ> sor;
+            sor.setInputCloud(cloud_in);
+            sor.setLeafSize(leaf_size, leaf_size, leaf_size);
+            sor.filter(*cloud_filtered);
+
+            global_cloud = *cloud_filtered;   // thay thế cloud gốc bằng cloud đã downsample
+
+            ROS_INFO("[Downsample] Original: %lu points → After: %lu points (leaf=%.2f m)",
+                     cloud_in->size(), global_cloud.size(), leaf_size);
+        }
+    }
+    // ================================================================================
 
     if (global_cloud.points.size() == 0)
-      return;
+        return;
 
     pcl::PointXYZ pt;
     Eigen::Vector3d p3d;
     for (size_t i = 0; i < global_cloud.points.size(); ++i)
     {
-      pt = global_cloud.points[i];
-      p3d(0) = pt.x;
-      p3d(1) = pt.y;
-      p3d(2) = pt.z;
-      this->setOccupancy(p3d);
+        pt = global_cloud.points[i];
+        p3d(0) = pt.x;
+        p3d(1) = pt.y;
+        p3d(2) = pt.z;
+        this->setOccupancy(p3d);
     }
-    is_global_map_valid_ = true;
 
+    is_global_map_valid_ = true;
     glb_cloud_ptr_->points.clear();
+
     for (int x = 0; x < grid_size_[0]; ++x)
-      for (int y = 0; y < grid_size_[1]; ++y)
-        for (int z = 0; z < grid_size_[2]; ++z)
+    for (int y = 0; y < grid_size_[1]; ++y)
+    for (int z = 0; z < grid_size_[2]; ++z)
+    {
+        if (occupancy_buffer_[idxToAddress(x, y, z)] == true)
         {
-          if (occupancy_buffer_[idxToAddress(x, y, z)] == true)
-          {
             Eigen::Vector3d pos;
             indexToPos(x, y, z, pos);
             glb_cloud_ptr_->points.emplace_back(pos[0], pos[1], pos[2]);
-          }
         }
+    }
+
     glb_cloud_ptr_->width = glb_cloud_ptr_->points.size();
     glb_cloud_ptr_->height = 1;
     glb_cloud_ptr_->is_dense = true;
@@ -91,7 +114,7 @@ namespace env
 
     cout << "glb occ set" << endl;
     global_cloud_sub_.shutdown();
-  }
+}
 
   void OccMap::init(const ros::NodeHandle &nh)
   {

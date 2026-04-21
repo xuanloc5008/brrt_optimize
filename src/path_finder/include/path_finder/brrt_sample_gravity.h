@@ -25,9 +25,10 @@ namespace path_plan
     BRRT_Optimize() {};
     BRRT_Optimize(const ros::NodeHandle &nh, const env::OccMap::Ptr &mapPtr) : nh_(nh), map_ptr_(mapPtr)
     {
-      nh_.param("BRRT/steer_length", steer_length_, 0.0);
-      nh_.param("BRRT/search_time", search_time_, 0.0);
-      nh_.param("BRRT/max_tree_node_nums", max_tree_node_nums_, 0);
+      // Read params with conservative defaults to avoid zero or invalid values
+      nh_.param("BRRT/steer_length", steer_length_, 1.0);   // default to 1.0m
+      nh_.param("BRRT/search_time", search_time_, 5.0);     // default to 5s
+      nh_.param("BRRT/max_tree_node_nums", max_tree_node_nums_, 10000); // default to 10k nodes
 
       nh_.param("BRRT_Optimize/p1", brrt_optimize_p1_, 0.8);
       nh_.param("BRRT_Optimize/u_p", brrt_optimize_u_p, 2.0);
@@ -48,6 +49,51 @@ namespace path_plan
       nh_.param("BRRT/lidar_radius", lidar_radius_, 5.0);
       // ---------------------
 
+      // Fallback: if BRRT params are missing or invalid, try the RRT namespace used by launch files
+      double tmp_d;
+      int tmp_i;
+      if (steer_length_ <= 0.0)
+      {
+        if (nh_.getParam("RRT/steer_length", tmp_d) && tmp_d > 0.0)
+        {
+          ROS_WARN_STREAM("[BRRT_Optimize] BRRT/steer_length missing or invalid. Using fallback RRT/steer_length: " << tmp_d);
+          steer_length_ = tmp_d;
+        }
+      }
+      if (search_time_ <= 0.0)
+      {
+        if (nh_.getParam("RRT/search_time", tmp_d) && tmp_d > 0.0)
+        {
+          ROS_WARN_STREAM("[BRRT_Optimize] BRRT/search_time missing or invalid. Using fallback RRT/search_time: " << tmp_d);
+          search_time_ = tmp_d;
+        }
+      }
+      if (max_tree_node_nums_ <= 2)
+      {
+        if (nh_.getParam("RRT/max_tree_node_nums", tmp_i) && tmp_i > 2)
+        {
+          ROS_WARN_STREAM("[BRRT_Optimize] BRRT/max_tree_node_nums missing or invalid. Using fallback RRT/max_tree_node_nums: " << tmp_i);
+          max_tree_node_nums_ = tmp_i;
+        }
+      }
+
+      // Defensive checks: ensure sensible values so we never create a zero-sized pool
+      if (steer_length_ <= 0.0)
+      {
+        ROS_WARN_STREAM("[BRRT_Optimize] invalid steer_length (<=0). Setting to default 1.0");
+        steer_length_ = 1.0;
+      }
+      if (search_time_ <= 0.0)
+      {
+        ROS_WARN_STREAM("[BRRT_Optimize] invalid search_time (<=0). Setting to default 5.0");
+        search_time_ = 5.0;
+      }
+      if (max_tree_node_nums_ <= 2)
+      {
+        ROS_WARN_STREAM("[BRRT_Optimize] invalid max_tree_node_nums (<=2). Setting to default 10000");
+        max_tree_node_nums_ = 10000;
+      }
+
       ROS_WARN_STREAM("[BRRT_Optimize] param: steer_length: " << steer_length_);
       ROS_WARN_STREAM("[BRRT_Optimize] param: search_time: " << search_time_);
       ROS_WARN_STREAM("[BRRT_Optimize] param: max_tree_node_nums: " << max_tree_node_nums_);
@@ -55,11 +101,15 @@ namespace path_plan
       sampler_.setSamplingRange(mapPtr->getOrigin(), mapPtr->getMapSize());
 
       valid_tree_node_nums_ = 0;
+      nodes_pool_.clear();
       nodes_pool_.resize(max_tree_node_nums_);
       for (int i = 0; i < max_tree_node_nums_; ++i)
       {
         nodes_pool_[i] = new TreeNode;
       }
+
+      // ensure the member max_tree_node_nums_ accurately reflects the actual pool size
+      max_tree_node_nums_ = static_cast<int>(nodes_pool_.size());
 
       std::random_device rd;
       gen_ = std::mt19937(rd());
@@ -139,8 +189,11 @@ namespace path_plan
       path_list_.clear();
       cost_best_ = DBL_MAX;
       solution_cost_time_pair_list_.clear();
-      for (int i = 0; i < max_tree_node_nums_; i++)
+      // Iterate over actual pool size and null-check entries
+      for (size_t i = 0; i < nodes_pool_.size(); ++i)
       {
+        if (!nodes_pool_[i])
+          continue;
         nodes_pool_[i]->parent = nullptr;
         nodes_pool_[i]->children.clear();
         nodes_pool_[i]->cost_from_start = 0.0;
@@ -452,7 +505,8 @@ namespace path_plan
     RRTNode3DPtr addTreeNode(RRTNode3DPtr &parent, const Eigen::Vector3d &state,
                              const double &cost_from_start, const double &cost_from_parent)
     {
-      if (valid_tree_node_nums_ >= max_tree_node_nums_)
+      size_t pool_size = nodes_pool_.size();
+      if (valid_tree_node_nums_ >= static_cast<int>(pool_size))
         return nullptr;
       RRTNode3DPtr new_node_ptr = nodes_pool_[valid_tree_node_nums_];
       valid_tree_node_nums_++;

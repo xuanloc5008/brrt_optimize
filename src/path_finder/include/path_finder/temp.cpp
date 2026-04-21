@@ -43,6 +43,34 @@ namespace path_plan
       nh_.param("BRRT/search_time", search_time_, 0.0);
       nh_.param("BRRT/max_tree_node_nums", max_tree_node_nums_, 0);
 
+      // Fallback: if BRRT params missing or invalid, try the RRT namespace used by launch files
+      {
+        double tmp_d; int tmp_i;
+        if (steer_length_ <= 0.0) {
+          if (nh_.getParam("RRT/steer_length", tmp_d) && tmp_d > 0.0) {
+            ROS_WARN_STREAM("[BRRT] BRRT/steer_length missing or invalid. Using fallback RRT/steer_length: " << tmp_d);
+            steer_length_ = tmp_d;
+          }
+        }
+        if (search_time_ <= 0.0) {
+          if (nh_.getParam("RRT/search_time", tmp_d) && tmp_d > 0.0) {
+            ROS_WARN_STREAM("[BRRT] BRRT/search_time missing or invalid. Using fallback RRT/search_time: " << tmp_d);
+            search_time_ = tmp_d;
+          }
+        }
+        if (max_tree_node_nums_ <= 2) {
+          if (nh_.getParam("RRT/max_tree_node_nums", tmp_i) && tmp_i > 2) {
+            ROS_WARN_STREAM("[BRRT] BRRT/max_tree_node_nums missing or invalid. Using fallback RRT/max_tree_node_nums: " << tmp_i);
+            max_tree_node_nums_ = tmp_i;
+          }
+        }
+
+        // Defensive defaults
+        if (steer_length_ <= 0.0) { ROS_WARN_STREAM("[BRRT] invalid steer_length (<=0). Setting to default 1.0"); steer_length_ = 1.0; }
+        if (search_time_ <= 0.0) { ROS_WARN_STREAM("[BRRT] invalid search_time (<=0). Setting to default 5.0"); search_time_ = 5.0; }
+        if (max_tree_node_nums_ <= 2) { ROS_WARN_STREAM("[BRRT] invalid max_tree_node_nums (<=2). Setting to default 10000"); max_tree_node_nums_ = 10000; }
+      }
+
       nh_.param("BRRT_Optimize/p1", brrt_optimize_p1_, 0.8);
       nh_.param("BRRT_Optimize/u_p", brrt_optimize_u_p, 2.0);
       nh_.param("BRRT_Optimize/step", brrt_optimize_step_, 0.1);

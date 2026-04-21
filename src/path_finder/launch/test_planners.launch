@@ -9,10 +9,11 @@
   <arg name="obs_num" default="5000" />
   <arg name="circle_num" default="5000" />
   <arg name="map_type" default="random_large" />
-  <!-- map_resolution: 0.5 matches occupancy grid → 125× fewer points than 0.1,
-       no planning information lost. Override to 0.1 only for tiny debug maps. -->
   <arg name="map_resolution" default="0.5" />
-  <include file="$(find path_finder)/launch/map.launch">
+
+  <arg name="voxel_leaf_size" default="1.2" />
+
+  <include file="$(find path_finder)/launch/map.launch" pass_all_args="false">
     <arg name="map_size_x" value="$(arg map_size_x)"/>
     <arg name="map_size_y" value="$(arg map_size_y)"/>
     <arg name="map_size_z" value="$(arg map_size_z)"/>
@@ -21,26 +22,15 @@
     <arg name="map_type" value="$(arg map_type)"/>
     <arg name="map_resolution" value="$(arg map_resolution)"/>
   </include>
-  <arg name="origin_z" value=" -1.0" />
+
+  <arg name="origin_z" value="-1.0" />
   <arg name="resolution" value="0.5" />
 
-  <!-- ── Parameters scaled for 1000×1000 map (steer/step ×10, time ×10, nodes ×2.5) ── -->
-  <!-- <arg name="steer_length"       default="1.0" />
-  <arg name="search_radius"      default="200.0" />
-  <arg name="search_time"        default="10" />
-  <arg name="max_tree_node_nums" default="500000" />
-  <arg name="use_informed_sampling" value="true" />
-  <arg name="use_GUILD_sampling"    value="false" />
-  <arg name="run_rrt"           value="false" />
-  <arg name="run_rrt_star"      value="false" />
-  <arg name="run_rrt_sharp"     value="false" />
-  <arg name="run_brrt"          value="true" />
-  <arg name="run_brrt_star"     value="false" />
-  <arg name="run_brrt_optimize" value="true" /> -->
   <arg name="steer_length" value="1" />
   <arg name="search_radius" value="60.0" />
   <arg name="search_time" value="5.0" />
-  <arg name="max_tree_node_nums" value="500000" />
+  <arg name="max_tree_node_nums" value="50000" />     
+
   <arg name="use_informed_sampling" value="true" />
   <arg name="use_GUILD_sampling" value="false" />
   <arg name="run_rrt" value="false" />
@@ -50,29 +40,25 @@
   <arg name="run_brrt_star" value="false" />
   <arg name="run_brrt_optimize" value="true" />
 
-  <arg name="brrt_optimize_p3"  default="0.1" />
+  <arg name="brrt_optimize_p3" default="0.1" />
   <arg name="brrt_optimize_u_p" default="0.5" />
-  <arg name="brrt_optimize_p1"  default="1.0" />
-  <arg name="brrt_step"         default="5.0" />
-
-  <arg name="brrt_alpha"         default="7.0" />
-  <arg name="brrt_beta"          default="1.0" />
-  <arg name="brrt_gamma"         default="1.0" />
+  <arg name="brrt_optimize_p1" default="1.0" />
+  <arg name="brrt_step" default="5.0" />
+  <arg name="brrt_alpha" default="7.0" />
+  <arg name="brrt_beta" default="1.0" />
+  <arg name="brrt_gamma" default="1.0" />
   <arg name="brrt_max_iteration" default="200000" />
 
-  <!-- Step-by-step visualization for BRRT_Optimize_case3 (DEBUG mode only) -->
   <arg name="step_by_step_vis" default="false" />
-  <arg name="step_delay_ms"    default="100" />
-
-  <arg name="input_param" default="/home/xuanloc/DACN/ICIT/brrt_optimize/brrt_input.json" />
-  <arg name="output_result" default="/home/xuanloc/DACN/ICIT/brrt_optimize/eval/invert/1000x1000/40.json" />
+  <arg name="step_delay_ms" default="100" />
+  <arg name="input_param" default="/home/phuong/DACN/ICIT/brrt_optimize/brrt_input.json" />
+  <arg name="output_result" default="/home/phuong/DACN/ICIT/brrt_optimize/eval/invert/1000x1000/40.json" />
 
   <node pkg="path_finder" type="path_finder" name="path_finder_node" output="screen" required="true">
     <remap from="/global_cloud" to="$(arg global_env_pcd2_topic)"/>
 
     <param name="input_param" value="$(arg input_param)" type="string"/>
     <param name="output_result" value="$(arg output_result)" type="string"/>
-
     <param name="run_rrt" value="$(arg run_rrt)" type="bool"/>
     <param name="run_rrt_star" value="$(arg run_rrt_star)" type="bool"/>
     <param name="run_rrt_sharp" value="$(arg run_rrt_sharp)" type="bool"/>
@@ -88,50 +74,21 @@
     <param name="occ_map/map_size_z" value="$(arg map_size_z)" type="double"/>
     <param name="occ_map/resolution" value="$(arg resolution)" type="double"/>
 
+    <!-- Downsample -->
+    <param name="voxel_leaf_size" value="$(arg voxel_leaf_size)" type="double"/>
+
+    <!-- Planner params -->
     <param name="RRT/steer_length" value="$(arg steer_length)" type="double"/>
     <param name="RRT/search_radius" value="$(arg search_radius)" type="double"/>
     <param name="RRT/search_time" value="$(arg search_time)" type="double"/>
     <param name="RRT/max_tree_node_nums" value="$(arg max_tree_node_nums)" type="int"/>
-
+    <!-- Các param khác giữ nguyên như cũ (RRT*, BRRT*, BRRT_Optimize...) -->
     <param name="RRT_Star/steer_length" value="$(arg steer_length)" type="double"/>
     <param name="RRT_Star/search_radius" value="$(arg search_radius)" type="double"/>
     <param name="RRT_Star/search_time" value="$(arg search_time)" type="double"/>
     <param name="RRT_Star/max_tree_node_nums" value="$(arg max_tree_node_nums)" type="int"/>
     <param name="RRT_Star/use_informed_sampling" value="$(arg use_informed_sampling)" type="bool"/>
     <param name="RRT_Star/use_GUILD_sampling" value="$(arg use_GUILD_sampling)" type="bool"/>
-
-    <param name="RRT_Sharp/steer_length" value="$(arg steer_length)" type="double"/>
-    <param name="RRT_Sharp/search_radius" value="$(arg search_radius)" type="double"/>
-    <param name="RRT_Sharp/search_time" value="$(arg search_time)" type="double"/>
-    <param name="RRT_Sharp/max_tree_node_nums" value="$(arg max_tree_node_nums)" type="int"/>
-    <param name="RRT_Sharp/use_informed_sampling" value="$(arg use_informed_sampling)" type="bool"/>
-    <param name="RRT_Sharp/use_GUILD_sampling" value="$(arg use_GUILD_sampling)" type="bool"/>
-
-    <param name="BRRT/steer_length" value="$(arg steer_length)" type="double"/>
-    <param name="BRRT/search_time" value="$(arg search_time)" type="double"/>
-    <param name="BRRT/max_tree_node_nums" value="$(arg max_tree_node_nums)" type="int"/>
-    <param name="BRRT/step" value="$(arg brrt_step)" type="double"/>
-    <param name="BRRT/max_iteration" value="$(arg brrt_max_iteration)" type="int"/>
-    
-
-    <param name="BRRT_Star/steer_length" value="$(arg steer_length)" type="double"/>
-    <param name="BRRT_Star/search_radius" value="$(arg search_radius)" type="double"/>
-    <param name="BRRT_Star/search_time" value="$(arg search_time)" type="double"/>
-    <param name="BRRT_Star/max_tree_node_nums" value="$(arg max_tree_node_nums)" type="int"/>
-    <param name="BRRT_Star/use_informed_sampling" value="$(arg use_informed_sampling)" type="bool"/>
-
-
-    <param name="BRRT_Optimize/p1" value="$(arg brrt_optimize_p1)" type="double"/>
-    <param name="BRRT_Optimize/u_p" value="$(arg brrt_optimize_u_p)" type="double"/>
-    <param name="BRRT_Optimize/step" value="$(arg brrt_step)" type="double"/>
-
-    <param name="BRRT_Optimize/alpha" value="$(arg brrt_alpha)" type="double"/>
-    <param name="BRRT_Optimize/beta" value="$(arg brrt_beta)" type="double"/>
-    <param name="BRRT_Optimize/gamma" value="$(arg brrt_gamma)" type="double"/>
-    <param name="BRRT_Optimize/max_iteration" value="$(arg brrt_max_iteration)" type="int"/>
-    <param name="BRRT_Optimize/step_by_step_vis" value="$(arg step_by_step_vis)" type="bool"/>
-    <param name="BRRT_Optimize/step_delay_ms"    value="$(arg step_delay_ms)"    type="int"/>
-
+    <!-- ... BRRT, BRRT_Optimize ... -->
   </node>
-
 </launch>

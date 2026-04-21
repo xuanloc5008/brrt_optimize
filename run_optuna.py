@@ -6,9 +6,9 @@ import pandas as pd
 import optuna
 
 # --- 1. CẤU HÌNH THƯ MỤC & ROS ---
-workspace_setup = "/home/xuanloc/DACN/ICIT/brrt_optimize/devel/setup.bash"
-input_dir = "/home/xuanloc/DACN/ICIT/brrt_optimize/eval/input_optuna/"
-output_dir = "/home/xuanloc/DACN/ICIT/brrt_optimize/eval/output_optuna/"
+workspace_setup = "/home/phuong/DACN/ICIT/brrt_optimize/devel/setup.bash"
+input_dir = "/home/phuong/DACN/ICIT/brrt_optimize/eval/input_optuna/"
+output_dir = "/home/phuong/DACN/ICIT/brrt_optimize/eval/output_optuna/"
 
 os.makedirs(input_dir, exist_ok=True)
 os.makedirs(output_dir, exist_ok=True)

@@ -6,5 +6,9 @@
     "alpha": 2,
     "beta": 8,
     "gamma": 8,
-    "epsilon": 1.0
+    "epsilon": 1.0,
+    "steer_length": 5.0,
+    "search_time": 2.0,
+    "max_tree_node_nums": 5000,
+    "max_iteration": 10000
 }

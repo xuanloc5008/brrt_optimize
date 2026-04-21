@@ -8,11 +8,11 @@ from itables import show
 
 # --- 1. CẤU HÌNH THƯ MỤC ---
 # Đường dẫn gốc của workspace
-workspace_setup = "/home/xuanloc/DACN/ICIT/brrt_optimize/devel/setup.bash"
+workspace_setup = "/home/phuong/DACN/ICIT/brrt_optimize/devel/setup.bash"
 
 # Thư mục chứa file json
-input_dir = "/home/xuanloc/DACN/ICIT/brrt_optimize/eval/input_case3/"
-output_dir = "/home/xuanloc/DACN/ICIT/brrt_optimize/eval/output_case3/"
+input_dir = "/home/phuong/DACN/ICIT/brrt_optimize/eval/input_case3/"
+output_dir = "/home/phuong/DACN/ICIT/brrt_optimize/eval/output_case3/"
 
 os.makedirs(input_dir, exist_ok=True)
 os.makedirs(output_dir, exist_ok=True)
