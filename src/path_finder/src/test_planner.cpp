@@ -35,7 +35,7 @@ OF SUCH DAMAGE.
 #include <ros/ros.h>
 #include <geometry_msgs/PoseStamped.h>
 
-#define NUMBER_TEST_TIMES 100
+#define NUMBER_TEST_TIMES 1
 class TesterPathFinder
 {
 private:
@@ -170,7 +170,9 @@ public:
 
         if (run_rrt_)
         {
+            ROS_WARN("Starting RRT");
             bool rrt_res = rrt_ptr_->plan(start_, goal_);
+            ROS_WARN("Finished RRT");
             if (rrt_res)
             {
                 vector<Eigen::Vector3d> final_path = rrt_ptr_->getPath();
@@ -183,7 +185,9 @@ public:
 
         if (run_rrt_star_)
         {
+            ROS_WARN("Starting RRT*");
             bool rrt_star_res = rrt_star_ptr_->plan(start_, goal_);
+            ROS_WARN("Finished RRT*");
             if (rrt_star_res)
             {
                 vector<vector<Eigen::Vector3d>> routes = rrt_star_ptr_->getAllPaths();
@@ -198,7 +202,9 @@ public:
 
         if (run_rrt_sharp_)
         {
+            ROS_WARN("Starting RRT#");
             bool rrt_sharp_res = rrt_sharp_ptr_->plan(start_, goal_);
+            ROS_WARN("Finished RRT#");
             if (rrt_sharp_res)
             {
                 vector<Eigen::Vector3d> final_path = rrt_sharp_ptr_->getPath();
@@ -211,7 +217,9 @@ public:
 
         if (run_brrt_)
         {
+            ROS_WARN("Starting BRRT");
             bool brrt_res = brrt_ptr_->plan(start_, goal_);
+            ROS_WARN("Finished BRRT");
             {
                 int num_nodes = brrt_ptr_->get_valid_tree_node_nums();
                 int num_iterations = brrt_ptr_->get_number_of_iteration();
@@ -229,7 +237,9 @@ public:
 
         if (run_brrt_star_)
         {
+            ROS_WARN("Starting BRRT*");
             bool brrt_star_res = brrt_star_ptr_->plan(start_, goal_);
+            ROS_WARN("Finished BRRT*");
             if (brrt_star_res)
             {
                 vector<Eigen::Vector3d> final_path = brrt_star_ptr_->getPath();
@@ -306,11 +316,13 @@ public:
         Eigen::Vector3d x_rand;
         sampler_.setSamplingRange(env_ptr_->getOrigin(), env_ptr_->getMapSize());
         sampler_.samplingOnce(x_rand);
-        // samplingOnce(x_rand);
-        // map_ptr_->isStateValid(g)
+        long int count = 0;
         while (!env_ptr_->isStateValid(x_rand))
         {
             sampler_.samplingOnce(x_rand);
+            if (++count % 1000000 == 0) {
+                ROS_WARN("get_sample_valid stuck! x_rand=(%f, %f, %f)", x_rand(0), x_rand(1), x_rand(2));
+            }
         }
         return x_rand;
     }
@@ -341,9 +353,13 @@ public:
         ROS_INFO("Running Test %d", input.trial);
         for (int i = 0; i < NUMBER_TEST_TIMES; ++i)
         {
-            ROS_INFO("Running Test %d of %d", i + 1, NUMBER_TEST_TIMES);
-
-            goal_ = get_sample_valid();
+            double dist = (start_ - goal_).norm();
+            while (dist < 5)
+            {
+                start_ = get_sample_valid();
+                goal_ = get_sample_valid();
+                dist = (start_ - goal_).norm();
+            }
             print_vector3d("start", start_);
             print_vector3d("goal", goal_);
             std::map<std::string, AlgoResult> algo_outputs;

@@ -1,0 +1,162 @@
+[  0%] Built target std_msgs_generate_messages_eus
+[  0%] Built target _self_msgs_and_srvs_generate_messages_check_deps_GlbObsRcv
+[  0%] Built target geometry_msgs_generate_messages_eus
+[  0%] Built target _self_msgs_and_srvs_generate_messages_check_deps_output_point
+[  0%] Built target _self_msgs_and_srvs_generate_messages_check_deps_LearningSampler
+[  0%] Built target geometry_msgs_generate_messages_nodejs
+[  0%] Built target std_msgs_generate_messages_nodejs
+[  0%] Built target _self_msgs_and_srvs_generate_messages_check_deps_input_point
+[  0%] Built target geometry_msgs_generate_messages_py
+[  0%] Built target std_msgs_generate_messages_lisp
+[  0%] Built target geometry_msgs_generate_messages_lisp
+[  0%] Built target geometry_msgs_generate_messages_cpp
+[  0%] Built target std_msgs_generate_messages_cpp
+[  0%] Built target std_msgs_generate_messages_py
+[  0%] Built target rosgraph_msgs_generate_messages_py
+[  0%] Built target sensor_msgs_generate_messages_py
+[  0%] Built target rosgraph_msgs_generate_messages_lisp
+[  0%] Built target rosgraph_msgs_generate_messages_eus
+[  0%] Built target roscpp_generate_messages_nodejs
+[  0%] Built target rosgraph_msgs_generate_messages_nodejs
+[  0%] Built target rosgraph_msgs_generate_messages_cpp
+[  0%] Built target roscpp_generate_messages_lisp
+[  0%] Built target roscpp_generate_messages_py
+[  0%] Built target roscpp_generate_messages_eus
+[  0%] Built target roscpp_generate_messages_cpp
+[  0%] Built target sensor_msgs_generate_messages_eus
+[  0%] Built target pcl_msgs_generate_messages_cpp
+[  0%] Built target sensor_msgs_generate_messages_cpp
+[  0%] Built target pcl_msgs_generate_messages_py
+[  0%] Built target pcl_msgs_generate_messages_lisp
+[  0%] Built target pcl_msgs_generate_messages_eus
+[  0%] Built target sensor_msgs_generate_messages_lisp
+[  0%] Built target pcl_msgs_generate_messages_nodejs
+[  0%] Built target tf_generate_messages_cpp
+[  0%] Built target sensor_msgs_generate_messages_nodejs
+[  0%] Built target tf2_msgs_generate_messages_py
+[  7%] Built target occ_grid
+[  7%] Built target tf2_msgs_generate_messages_lisp
+[  7%] Built target actionlib_msgs_generate_messages_lisp
+[  7%] Built target actionlib_msgs_generate_messages_eus
+[  7%] Built target actionlib_generate_messages_py
+[  7%] Built target actionlib_generate_messages_lisp
+[  7%] Built target actionlib_msgs_generate_messages_nodejs
+[  7%] Built target actionlib_msgs_generate_messages_cpp
+[  7%] Built target actionlib_generate_messages_eus
+[  7%] Built target actionlib_msgs_generate_messages_py
+[  7%] Built target tf_generate_messages_nodejs
+[  7%] Built target actionlib_generate_messages_cpp
+[  7%] Built target nodelet_generate_messages_lisp
+[  7%] Built target bond_generate_messages_lisp
+[  7%] Built target nodelet_generate_messages_py
+[  7%] Built target nodelet_generate_messages_eus
+[  7%] Built target pcl_ros_gencfg
+[  7%] Built target std_srvs_generate_messages_lisp
+[  7%] Built target dynamic_reconfigure_generate_messages_lisp
+[  7%] Built target topic_tools_generate_messages_cpp
+[  7%] Built target actionlib_generate_messages_nodejs
+[  7%] Built target topic_tools_generate_messages_py
+[  7%] Built target tf_generate_messages_py
+[  7%] Built target dynamic_reconfigure_gencfg
+[  7%] Built target dynamic_reconfigure_generate_messages_py
+[  7%] Built target nodelet_generate_messages_cpp
+[  7%] Built target dynamic_reconfigure_generate_messages_eus
+[  7%] Built target tf2_msgs_generate_messages_cpp
+[  7%] Built target tf_generate_messages_eus
+[  7%] Built target std_srvs_generate_messages_cpp
+[  7%] Built target bond_generate_messages_eus
+[  7%] Built target nodelet_generate_messages_nodejs
+[  7%] Built target bond_generate_messages_cpp
+[  7%] Built target tf2_msgs_generate_messages_nodejs
+[  7%] Built target bond_generate_messages_nodejs
+[  7%] Built target bond_generate_messages_py
+[  7%] Built target topic_tools_generate_messages_lisp
+[  7%] Built target dynamic_reconfigure_generate_messages_nodejs
+[  7%] Built target tf_generate_messages_lisp
+[  7%] Built target dynamic_reconfigure_generate_messages_cpp
+[  7%] Built target nodelet_topic_tools_gencfg
+[  7%] Built target std_srvs_generate_messages_nodejs
+[  7%] Built target topic_tools_generate_messages_eus
+[  7%] Built target std_srvs_generate_messages_eus
+[  7%] Built target std_srvs_generate_messages_py
+[  7%] Built target tf2_msgs_generate_messages_eus
+[  7%] Built target topic_tools_generate_messages_nodejs
+[ 19%] Built target self_msgs_and_srvs_generate_messages_eus
+[ 31%] Built target rviz_plugins
+[ 41%] Built target self_msgs_and_srvs_generate_messages_nodejs
+[ 51%] Built target self_msgs_and_srvs_generate_messages_lisp
+[ 65%] Built target self_msgs_and_srvs_generate_messages_py
+[ 75%] Built target self_msgs_and_srvs_generate_messages_cpp
+[ 82%] Built target path_finder
+[ 82%] Built target self_msgs_and_srvs_generate_messages
+[ 97%] Built target random_forest
+[100%] Built target mockamap_node
+Base path: /home/xuanloc/DACN/brrt_optimize
+Source space: /home/xuanloc/DACN/brrt_optimize/src
+Build space: /home/xuanloc/DACN/brrt_optimize/build
+Devel space: /home/xuanloc/DACN/brrt_optimize/devel
+Install space: /home/xuanloc/DACN/brrt_optimize/install
+####
+#### Running command: "make cmake_check_build_system" in "/home/xuanloc/DACN/brrt_optimize/build"
+####
+####
+#### Running command: "make -j6 -l6" in "/home/xuanloc/DACN/brrt_optimize/build"
+####
+map initialized: 
+[33m[WARN] [1782621940.773531864]: [RRT#] param: steer_length: 0[0m
+[33m[WARN] [1782621940.773887728]: [RRT#] param: search_radius: 0[0m
+[33m[WARN] [1782621940.773906147]: [RRT#] param: search_time: 0[0m
+[33m[WARN] [1782621940.773916898]: [RRT#] param: max_tree_node_nums: 0[0m
+[33m[WARN] [1782621940.773922440]: [RRT#] param: use_informed_sampling: 1[0m
+[33m[WARN] [1782621940.773934858]: [RRT#] param: use_GUILD_sampling: 1[0m
+[33m[WARN] [1782621940.775865275]: [RRT*] param: steer_length: 1[0m
+[33m[WARN] [1782621940.775894570]: [RRT*] param: search_radius: 60[0m
+[33m[WARN] [1782621940.775905612]: [RRT*] param: search_time: 5[0m
+[33m[WARN] [1782621940.775915780]: [RRT*] param: max_tree_node_nums: 50000[0m
+[33m[WARN] [1782621940.775925156]: [RRT*] param: use_informed_sampling: 1[0m
+[33m[WARN] [1782621940.775934240]: [RRT*] param: use_GUILD_sampling: 0[0m
+[33m[WARN] [1782621940.779389165]: [SOF-RRT*] param: steer_length: 1[0m
+[33m[WARN] [1782621940.779418876]: [SOF-RRT*] param: search_radius: 60[0m
+[33m[WARN] [1782621940.779425001]: [SOF-RRT*] param: search_time: 5[0m
+[33m[WARN] [1782621940.779430210]: [SOF-RRT*] param: max_tree_node_nums: 50000[0m
+[33m[WARN] [1782621940.782289584]: [BRRT] BRRT/steer_length missing or invalid. Using fallback RRT/steer_length: 1[0m
+[33m[WARN] [1782621940.782537314]: [BRRT] BRRT/search_time missing or invalid. Using fallback RRT/search_time: 5[0m
+[33m[WARN] [1782621940.782740373]: [BRRT] BRRT/max_tree_node_nums missing or invalid. Using fallback RRT/max_tree_node_nums: 50000[0m
+[33m[WARN] [1782621940.803034928]: [BRRT*] param: steer_length: 0[0m
+[33m[WARN] [1782621940.803103309]: [BRRT*] param: search_radius: 0[0m
+[33m[WARN] [1782621940.803112977]: [BRRT*] param: search_time: 0[0m
+[33m[WARN] [1782621940.803118477]: [BRRT*] param: max_tree_node_nums: 0[0m
+[33m[WARN] [1782621940.803123436]: [BRRT*] param: use_informed_sampling: 0[0m
+[33m[WARN] [1782621940.808691253]: [BRRT_Optimize] param: steer_length: 1[0m
+[33m[WARN] [1782621940.808719922]: [BRRT_Optimize] param: search_time: 5[0m
+[33m[WARN] [1782621940.808731924]: [BRRT_Optimize] param: max_tree_node_nums: 10000[0m
+[33m[WARN] [1782621940.812795485]: [BRRT] BRRT/steer_length missing or invalid. Using fallback RRT/steer_length: 1[0m
+[33m[WARN] [1782621940.812937789]: [BRRT] BRRT/search_time missing or invalid. Using fallback RRT/search_time: 5[0m
+[33m[WARN] [1782621940.813119680]: [BRRT] BRRT/max_tree_node_nums missing or invalid. Using fallback RRT/max_tree_node_nums: 50000[0m
+[33m[WARN] [1782621940.814163146]: [BRRT_Optimize_case1] param: steer_length: 1[0m
+[33m[WARN] [1782621940.814185814]: [BRRT_Optimize_case1] param: search_time: 5[0m
+[33m[WARN] [1782621940.814198107]: [BRRT_Optimize_case1] param: max_tree_node_nums: 50000[0m
+[33m[WARN] [1782621940.819648539]: [BRRT] BRRT/steer_length missing or invalid. Using fallback RRT/steer_length: 1[0m
+[33m[WARN] [1782621940.819936022]: [BRRT] BRRT/search_time missing or invalid. Using fallback RRT/search_time: 5[0m
+[33m[WARN] [1782621940.820041323]: [BRRT] BRRT/max_tree_node_nums missing or invalid. Using fallback RRT/max_tree_node_nums: 50000[0m
+[33m[WARN] [1782621940.820658793]: [BRRT_Optimize_case2] param: steer_length: 1[0m
+[33m[WARN] [1782621940.820759802]: [BRRT_Optimize_case2] param: search_time: 5[0m
+[33m[WARN] [1782621940.820817349]: [BRRT_Optimize_case2] param: max_tree_node_nums: 50000[0m
+[33m[WARN] [1782621940.823222683]: [BRRT_Optimize_case3] BRRT/steer_length missing or invalid. Using fallback RRT/steer_length: 1[0m
+[33m[WARN] [1782621940.823354569]: [BRRT_Optimize_case3] BRRT/search_time missing or invalid. Using fallback RRT/search_time: 5[0m
+[33m[WARN] [1782621940.823498499]: [BRRT_Optimize_case3] BRRT/max_tree_node_nums missing or invalid. Using fallback RRT/max_tree_node_nums: 50000[0m
+[33m[WARN] [1782621940.827212280]: [BRRT_Optimize_case3] param: steer_length: 1[0m
+[33m[WARN] [1782621940.827257367]: [BRRT_Optimize_case3] param: search_time: 5[0m
+[33m[WARN] [1782621940.827268785]: [BRRT_Optimize_case3] param: max_tree_node_nums: 50000[0m
+input_param: /home/phuong/DACN/ICIT/brrt_optimize/brrt_input.json
+output_result: /home/phuong/DACN/ICIT/brrt_optimize/eval/invert/1000x1000/40.json
+Failed to open input JSON file: /home/phuong/DACN/ICIT/brrt_optimize/brrt_input.json
+[0m[INFO] [1782621940.809274929]: Selected map type: random_large[0m
+number of ostacle6250cloudMap.points.size() = 6809656
+[0m[INFO] [1782621941.833606937]: no map rcved yet.[0m
+glb occ set
+[33m[WARN] [1782621942.833361768]: Timer tick[0m
+[33m[WARN] [1782622174.923064861]: Shutdown request received.[0m
+[33m[WARN] [1782622174.923224079]: Reason given for shutdown: [[/path_finder_node] Reason: new node registered with same name][0m
+[33m[WARN] [1782622174.923519806]: Shutdown request received.[0m
+[33m[WARN] [1782622174.923625146]: Reason given for shutdown: [[/random_forest] Reason: new node registered with same name][0m

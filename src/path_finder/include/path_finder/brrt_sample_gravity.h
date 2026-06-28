@@ -37,7 +37,7 @@ namespace path_plan
       nh_.param("BRRT_Optimize/alpha", brrt_optimize_alpha_, 0.5);
       nh_.param("BRRT_Optimize/beta", brrt_optimize_beta_, 0.3);
       nh_.param("BRRT_Optimize/gamma", brrt_optimize_gamma_, 0.5);
-      nh_.param("BRRT_Optimize/max_iteration", max_iteration_, 0);
+      nh_.param("BRRT_Optimize/max_iteration", max_iteration_, 200000);
       nh_.param("BRRT_Optimize/enable2d", brrt_enable_2d, true);
 
       // --- Case 3 Params ---

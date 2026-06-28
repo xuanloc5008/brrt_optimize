@@ -154,7 +154,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/start
           Name: start
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Class: rviz/Marker
@@ -162,7 +162,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/goal
           Name: goal
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Class: rviz/MarkerArray
@@ -365,7 +365,7 @@ Visualization Manager:
           Buffer Length: 1
           Class: rviz/Path
           Color: 255; 255; 255
-          Enabled: false
+          Enabled: true
           Head Diameter: 0.30000001192092896
           Head Length: 0.20000000298023224
           Length: 0.30000001192092896
@@ -384,23 +384,23 @@ Visualization Manager:
           Shaft Length: 0.10000000149011612
           Topic: /path_finder_node/brrt_final_path
           Unreliable: false
-          Value: false
+          Value: true
         - Class: rviz/Marker
-          Enabled: false
+          Enabled: true
           Marker Topic: /path_finder_node/brrt/tree_edges
           Name: BRRT_Tree
           Namespaces:
             {}
           Queue Size: 100
-          Value: false
+          Value: true
         - Class: rviz/MarkerArray
-          Enabled: false
+          Enabled: true
           Marker Topic: /path_finder_node/brrt/tree_vertice
           Name: BRRT_Edge
           Namespaces:
             {}
           Queue Size: 100
-          Value: false
+          Value: true
         - Alpha: 1
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
@@ -413,7 +413,7 @@ Visualization Manager:
           Color: 0; 85; 255
           Color Transformer: FlatColor
           Decay Time: 0
-          Enabled: false
+          Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
           Min Color: 0; 0; 0
@@ -428,7 +428,7 @@ Visualization Manager:
           Unreliable: false
           Use Fixed Frame: true
           Use rainbow: true
-          Value: false
+          Value: true
         - Alpha: 1
           Buffer Length: 1
           Class: rviz/Path
@@ -910,7 +910,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/case3/tree_edges
           Name: tree-node
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Class: rviz/MarkerArray
@@ -918,7 +918,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/case3/tree_vertice
           Name: tree-edge
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Alpha: 1
@@ -1076,7 +1076,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 122.13987731933594
+      Distance: 159.0695343017578
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -1084,17 +1084,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: -28.587860107421875
-        Y: -11.258646965026855
-        Z: 7.644754805369303e-05
+        X: -35.139923095703125
+        Y: -89.13916015625
+        Z: -0.00013274324010126293
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.5697963237762451
+      Pitch: 0.6047971844673157
       Target Frame: map
-      Yaw: 3.144329071044922
+      Yaw: 5.410706520080566
     Saved: ~
 Window Geometry:
   Displays:

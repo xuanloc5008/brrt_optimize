@@ -215,20 +215,27 @@ class HeuristicCache {
             minHeap = decltype(minHeap)();
         }
     
-        bool getMinByTree(void* treeA, void* treeB, TreeNode*& a, TreeNode*& b, double& outH) {
-            TreeNode *minA, *minB;
-            void *minTreeA, *minTreeB;
-            double minH;
-            while (getMin(minA, minTreeA, minB, minTreeB, minH)) {
-                if ((minTreeA == treeA && minTreeB == treeB) || (minTreeA == treeB && minTreeB == treeA)) {
-                    bool is_direct = (minTreeA == treeA);
-                    a = is_direct ? minA : minB;
-                    b = is_direct ? minB : minA;
-                    outH = minH;
+        bool getMinByTree(void* treeA, void* treeB, TreeNode*& outA, TreeNode*& outB, double& outH) {
+            while (!minHeap.empty()) {
+                const HeapEntry& top = minHeap.top();
+                const NodePairKey& key = top.key;
+                auto it = cache.find(key);
+                if (it == cache.end() || it->second != top.heuristic) {
+                    minHeap.pop();
+                    continue;
+                }
+                if ((key.tree1 == treeA && key.tree2 == treeB) || (key.tree1 == treeB && key.tree2 == treeA)) {
+                    bool is_direct = (key.tree1 == treeA);
+                    outA = is_direct ? key.node1 : key.node2;
+                    outB = is_direct ? key.node2 : key.node1;
+                    outH = top.heuristic;
+                    cache.erase(key);
+                    minHeap.pop();
+                    unindexTree(key.tree1, key.tree2, key);
                     return true;
                 }
+                minHeap.pop();
             }
-            a = b = nullptr;
             outH = std::numeric_limits<double>::infinity();
             return false;
         }

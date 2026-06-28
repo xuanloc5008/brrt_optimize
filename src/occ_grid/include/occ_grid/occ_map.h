@@ -22,7 +22,7 @@ OF SUCH DAMAGE.
 #define _OCC_MAP_H
 
 #include "raycast.h"
-#include <pcl/filters/voxel_grid.h>
+
 #include <pcl/point_types.h>
 #include <pcl_conversions/pcl_conversions.h>
 #include <Eigen/Eigen>

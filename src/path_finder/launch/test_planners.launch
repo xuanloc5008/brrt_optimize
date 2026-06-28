@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <launch>
   <arg name="global_env_pcd2_topic" value="/random_forest/all_map" />
-  <arg name="map_size_x" default="1000.0" />
-  <arg name="map_size_y" default="1000.0" />
-  <arg name="map_size_z" default="1.5" />
-  <arg name="origin_x" default="-500.0" />
-  <arg name="origin_y" default="-500.0" />
-  <arg name="obs_num" default="5000" />
-  <arg name="circle_num" default="5000" />
-  <arg name="map_type" default="random_large" />
+  <arg name="map_size_x" default="500.0" />
+  <arg name="map_size_y" default="500.0" />
+  <arg name="map_size_z" default="10.5" />
+  <arg name="origin_x" value="$(eval -arg('map_size_x') / 2.0)" />
+  <arg name="origin_y" value="$(eval -arg('map_size_y') / 2.0)" />
+  <arg name="obs_density" default="0.03" />
+  <arg name="obs_num" value="$(eval int(arg('map_size_x') * arg('map_size_y') * arg('obs_density')))" />
+  <arg name="circle_num" value="$(eval int(arg('map_size_x') * arg('map_size_y') * arg('obs_density')))" />
+  <arg name="map_type" default="robot_arm" />
   <arg name="map_resolution" default="0.5" />
 
   <arg name="voxel_leaf_size" default="1.2" />
@@ -51,8 +52,8 @@
 
   <arg name="step_by_step_vis" default="false" />
   <arg name="step_delay_ms" default="100" />
-  <arg name="input_param" default="/home/phuong/DACN/ICIT/brrt_optimize/brrt_input.json" />
-  <arg name="output_result" default="/home/phuong/DACN/ICIT/brrt_optimize/eval/invert/1000x1000/40.json" />
+  <arg name="input_param" default="/home/xuanloc/DACN/brrt_optimize/brrt_input.json" />
+  <arg name="output_result" default="/home/xuanloc/DACN/brrt_optimize/eval/invert/1000x1000/40.json" />
 
   <node pkg="path_finder" type="path_finder" name="path_finder_node" output="screen" required="true">
     <remap from="/global_cloud" to="$(arg global_env_pcd2_topic)"/>

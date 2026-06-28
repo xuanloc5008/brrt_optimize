@@ -188,6 +188,248 @@ void RandomBRRTGenerate_Large(double size = 4)
    pcl::toROSMsg(cloudMap, globalMap_pcd);
    globalMap_pcd.header.frame_id = "map";
 }
+
+void RandomBRRTGenerate_Buildings(double size = 4)
+{
+   pcl::PointXYZ pt_random;
+   random_device rd;
+   // float ramdom_ratio = 0.4; // Original
+   float ramdom_ratio = 0.4;
+   int number_ostacle = (_x_h - _x_l) * (_y_h - _y_l) / (size * size) * ramdom_ratio;
+   std::cout << "number of ostacle" << number_ostacle;
+
+   std::mt19937 gen(rd()); 
+
+   std::uniform_real_distribution<> dis_x(_x_l, _x_h);
+   std::uniform_real_distribution<> dis_y(_y_l, _y_h);
+   std::uniform_real_distribution<> dis_h(-1.0, _h_h); // Random height between floor (-1.0) and ceiling (_h_h)
+   
+   // --- Define the Center Void Area ---
+   // Obstacles will not be spawned if their center is within this distance from (0,0)
+   double clear_zone_radius = 2.0; 
+
+   double half_size = size / 2;
+   for (int i = 0; i < number_ostacle; i++)
+   {
+      double random_x = dis_x(gen);
+      double random_y = dis_y(gen);
+      double random_height = dis_h(gen);
+
+      // --- SKIP LOGIC FOR CENTER ---
+      // Checks if the sampled obstacle center falls within the clear zone
+      if (std::abs(random_x) < clear_zone_radius && std::abs(random_y) < clear_zone_radius)
+      {
+         continue; 
+      }
+
+      for (double i_x = random_x - half_size; i_x < random_x + half_size; i_x += 0.5)
+      {
+         for (double i_y = random_y - half_size; i_y < random_y + half_size; i_y += 0.5)
+         {
+            for (float k = -1; k < random_height; k += 0.5)
+            {
+               pt_random.x = i_x;
+               pt_random.y = i_y;
+               pt_random.z = k;
+               cloudMap.points.push_back(pt_random);
+            }
+         }
+      }
+   }
+
+   cloudMap.width = cloudMap.points.size();
+   cloudMap.height = 1;
+   cloudMap.is_dense = true;
+   std::cout << "cloudMap.points.size() = " << cloudMap.points.size() << std::endl;
+   _has_map = true;
+
+   pcl::toROSMsg(cloudMap, globalMap_pcd);
+   globalMap_pcd.header.frame_id = "map";
+}
+
+void RandomBRRTGenerate_Cubes(double size = 4)
+{
+   pcl::PointXYZ pt_random;
+   random_device rd;
+   float ramdom_ratio = 0.4;
+   double z_min = -1.0;
+   
+   // Adjust obstacle count for 3D volume
+   int number_ostacle = (_x_h - _x_l) * (_y_h - _y_l) * (_h_h - z_min) / (size * size * size) * ramdom_ratio;
+   std::cout << "number of ostacle: " << number_ostacle << std::endl;
+
+   std::mt19937 gen(rd()); 
+
+   std::uniform_real_distribution<> dis_x(_x_l, _x_h);
+   std::uniform_real_distribution<> dis_y(_y_l, _y_h);
+   std::uniform_real_distribution<> dis_z(z_min, _h_h);
+   
+   // --- Define the Center Void Area ---
+   double clear_zone_radius = 2.0; 
+
+   double half_size = size / 2;
+   for (int i = 0; i < number_ostacle; i++)
+   {
+      double random_x = dis_x(gen);
+      double random_y = dis_y(gen);
+      double random_z = dis_z(gen);
+
+      // --- SKIP LOGIC FOR CENTER ---
+      if (std::abs(random_x) < clear_zone_radius && std::abs(random_y) < clear_zone_radius && std::abs(random_z) < clear_zone_radius)
+      {
+         continue; 
+      }
+
+      for (double i_x = random_x - half_size; i_x < random_x + half_size; i_x += 0.5)
+      {
+         for (double i_y = random_y - half_size; i_y < random_y + half_size; i_y += 0.5)
+         {
+            for (double i_z = random_z - half_size; i_z < random_z + half_size; i_z += 0.5)
+            {
+               pt_random.x = i_x;
+               pt_random.y = i_y;
+               pt_random.z = i_z;
+               cloudMap.points.push_back(pt_random);
+            }
+         }
+      }
+   }
+
+   cloudMap.width = cloudMap.points.size();
+   cloudMap.height = 1;
+   cloudMap.is_dense = true;
+   std::cout << "cloudMap.points.size() = " << cloudMap.points.size() << std::endl;
+   _has_map = true;
+
+   pcl::toROSMsg(cloudMap, globalMap_pcd);
+   globalMap_pcd.header.frame_id = "map";
+}
+
+void RobotArmMapGenerate()
+{
+   ROS_INFO("Generating Robot Arm Testing Map");
+   cloudMap.points.clear();
+   pcl::PointXYZ pt;
+
+   auto add_box = [&](double x_min, double x_max, double y_min, double y_max, double z_min, double z_max) {
+      for (double x = x_min; x <= x_max; x += _resolution) {
+         for (double y = y_min; y <= y_max; y += _resolution) {
+            for (double z = z_min; z <= z_max; z += _resolution) {
+               pt.x = x; pt.y = y; pt.z = z;
+               cloudMap.points.push_back(pt);
+            }
+         }
+      }
+   };
+
+   auto add_table = [&](double cx, double cy, double cz, double w, double l, double h) {
+      double t_thickness = 0.2;
+      double leg_w = 0.2;
+      add_box(cx - w/2, cx + w/2, cy - l/2, cy + l/2, cz + h - t_thickness, cz + h); // tabletop
+      add_box(cx - w/2, cx - w/2 + leg_w, cy - l/2, cy - l/2 + leg_w, cz, cz + h - t_thickness); // leg 1
+      add_box(cx + w/2 - leg_w, cx + w/2, cy - l/2, cy - l/2 + leg_w, cz, cz + h - t_thickness); // leg 2
+      add_box(cx - w/2, cx - w/2 + leg_w, cy + l/2 - leg_w, cy + l/2, cz, cz + h - t_thickness); // leg 3
+      add_box(cx + w/2 - leg_w, cx + w/2, cy + l/2 - leg_w, cy + l/2, cz, cz + h - t_thickness); // leg 4
+   };
+
+   auto add_chair = [&](double cx, double cy, double cz, double w, double l, double h) {
+      double t_thickness = 0.2;
+      double leg_w = 0.2;
+      add_box(cx - w/2, cx + w/2, cy - l/2, cy + l/2, cz + h/2 - t_thickness, cz + h/2); // seat
+      add_box(cx - w/2, cx - w/2 + leg_w, cy - l/2, cy - l/2 + leg_w, cz, cz + h/2 - t_thickness); // leg 1
+      add_box(cx + w/2 - leg_w, cx + w/2, cy - l/2, cy - l/2 + leg_w, cz, cz + h/2 - t_thickness); // leg 2
+      add_box(cx - w/2, cx - w/2 + leg_w, cy + l/2 - leg_w, cy + l/2, cz, cz + h/2 - t_thickness); // leg 3
+      add_box(cx + w/2 - leg_w, cx + w/2, cy + l/2 - leg_w, cy + l/2, cz, cz + h/2 - t_thickness); // leg 4
+      add_box(cx - w/2, cx - w/2 + leg_w, cy - l/2, cy + l/2, cz + h/2, cz + h); // backrest
+   };
+
+   auto add_cave = [&](double cx, double cy, double cz, double w, double l, double h) {
+      double wall_t = 1.0;
+      add_box(cx - w/2, cx - w/2 + wall_t, cy - l/2, cy + l/2, cz, cz + h); // left wall
+      add_box(cx + w/2 - wall_t, cx + w/2, cy - l/2, cy + l/2, cz, cz + h); // right wall
+      add_box(cx - w/2, cx + w/2, cy - l/2, cy + l/2, cz + h - wall_t, cz + h); // roof
+   };
+
+   auto add_flying_obj = [&](double cx, double cy, double cz, double w, double l, double h) {
+      add_box(cx - w, cx + w, cy - l, cy + l, cz, cz + h); // floating box
+   };
+
+   auto add_wall_with_hole = [&](double cx, double cy, double cz, double w, double l, double h, double hole_w, double hole_h) {
+      double wall_t = w;
+      add_box(cx - wall_t/2, cx + wall_t/2, cy - l/2, cy + l/2, cz, cz + (h - hole_h)/2); // bottom wall
+      add_box(cx - wall_t/2, cx + wall_t/2, cy - l/2, cy + l/2, cz + (h + hole_h)/2, cz + h); // top wall
+      add_box(cx - wall_t/2, cx + wall_t/2, cy - l/2, cy - hole_w/2, cz + (h - hole_h)/2, cz + (h + hole_h)/2); // left side
+      add_box(cx - wall_t/2, cx + wall_t/2, cy + hole_w/2, cy + l/2, cz + (h - hole_h)/2, cz + (h + hole_h)/2); // right side
+   };
+
+   // --- Original Robot Arm Map Elements ---
+   // 1. Table (The floor/surface the robot is mounted on, slightly below 0 so the base is free)
+   add_box(-20.0, 20.0, -20.0, 20.0, -1.0, -0.5);
+
+   // 2. A "shelf" in front of the robot (to test reaching into/around)
+   add_box(5.0, 8.0, -10.0, 10.0, 1.0, 1.5); // Shelf 1
+   add_box(5.0, 8.0, -10.0, 10.0, 3.5, 4.0); // Shelf 2
+   add_box(5.0, 8.0, -10.0, -9.0, 1.0, 8.0); // Left side panel
+   add_box(5.0, 8.0,  9.0, 10.0, 1.0, 8.0);  // Right side panel
+
+   // 3. A tall pillar blocking direct curved paths
+   add_box(-2.0, 2.0, 4.0, 8.0, 0.0, 10.0);
+
+   // 4. A ceiling obstacle (forces ducking or staying low)
+   add_box(-10.0, 10.0, -10.0, 10.0, 8.0, 10.0);
+
+   // 5. Some scattered blocks to simulate other equipment
+   add_box(-10.0, -6.0, -10.0, -6.0, 0.0, 5.0);
+   add_box(-8.0, -4.0,  6.0, 10.0, 0.0, 4.0);
+   
+   // 6. A "window" wall behind the robot (x = -15)
+   add_box(-16.0, -14.0, -20.0, 20.0, 0.0, 2.0); // bottom wall
+   add_box(-16.0, -14.0, -20.0, -5.0, 2.0, 8.0); // left wall
+   add_box(-16.0, -14.0,  5.0,  20.0, 2.0, 8.0); // right wall
+
+   // --- Random New Obstacles ---
+   random_device rd;
+   std::mt19937 gen(rd());
+   int num_random_obs = _obs_num; // Uses obs_num parameter (controlled by obs_density in launch)
+
+   std::uniform_real_distribution<> dis_x(_x_l, _x_h);
+   std::uniform_real_distribution<> dis_y(_y_l, _y_h);
+   std::uniform_int_distribution<> dis_type(0, 4); // 5 types of objects
+
+   for (int i = 0; i < num_random_obs; ++i) {
+      double cx = dis_x(gen);
+      double cy = dis_y(gen);
+      
+      // Avoid spawning right around the robot base core (0,0)
+      if (std::abs(cx) < 15.0 && std::abs(cy) < 15.0) {
+         continue; 
+      }
+
+      int type = dis_type(gen);
+      if (type == 0) {
+         add_table(cx, cy, -0.5, 3.0, 5.0, 1.5);
+      } else if (type == 1) {
+         add_chair(cx, cy, -0.5, 1.5, 1.5, 2.5);
+      } else if (type == 2) {
+         add_cave(cx, cy, -0.5, 8.0, 8.0, 6.0);
+      } else if (type == 3) {
+         std::uniform_real_distribution<> dis_z(3.0, _h_h - 2.0);
+         add_flying_obj(cx, cy, dis_z(gen), 2.0, 2.0, 2.0);
+      } else if (type == 4) {
+         add_wall_with_hole(cx, cy, -0.5, 1.0, 10.0, 8.0, 3.0, 3.0); // wall with 3x3 hole
+      }
+   }
+
+   cloudMap.width = cloudMap.points.size();
+   cloudMap.height = 1;
+   cloudMap.is_dense = true;
+   std::cout << "Robot Arm map points size: " << cloudMap.points.size() << std::endl;
+   _has_map = true;
+
+   pcl::toROSMsg(cloudMap, globalMap_pcd);
+   globalMap_pcd.header.frame_id = "map";
+}
+
 void RandomBRRTGenerate()
 {
    random_device rd;
@@ -758,13 +1000,17 @@ void RandomMapGenerate()
 
       double x, y, z;
       Vector3d pt3, pt3_rot;
-      for (double theta = -M_PI; theta < M_PI; theta += 0.025)
+      for (double theta = -M_PI; theta < M_PI; theta += 0.1)
       {
-         x = a * cos(theta) * R;
-         y = b * sin(theta) * R;
-         z = 0;
-         pt3 << x, y, z;
-         circle_set.push_back(pt3);
+         for (double dr = -0.4; dr <= 0.4; dr += 0.4) {
+            for (double dz = -0.4; dz <= 0.4; dz += 0.4) {
+               x = a * cos(theta) * (R + dr);
+               y = b * sin(theta) * (R + dr);
+               z = dz;
+               pt3 << x, y, z;
+               circle_set.push_back(pt3);
+            }
+         }
       }
       // Define a random 3d rotation matrix
       Matrix3d Rot;
@@ -1745,6 +1991,18 @@ int main(int argc, char **argv)
    {
       RandomBRRTGenerate_Large();
    }
+   else if (map_type == "random_buildings")
+   {
+      RandomBRRTGenerate_Buildings();
+   }
+   else if (map_type == "random_cubes")
+   {
+      RandomBRRTGenerate_Cubes();
+   }
+   else if (map_type == "robot_arm")
+   {
+      RobotArmMapGenerate();
+   }
    else if (map_type == "multipe"){
       FixedMapGenerate();
    }
@@ -1754,6 +2012,19 @@ int main(int argc, char **argv)
    }
    else if (map_type == "random")
    {
+      RandomMapGenerate();
+   }
+   else if (map_type == "zju_sample")
+   {
+      ROS_INFO("Generating ZJU-FAST-Lab sample map with specific parameters scaled to map size.");
+      // Maintain the ZJU map density (120 obs and 100 circles per 50x50 area)
+      double area = _x_size * _y_size;
+      _obs_num = static_cast<int>(area * 0.048); // reasonable density
+      _cir_num = static_cast<int>(area * 0.040); // reasonable density
+      
+      _w_l = 2.0; _w_h = 10.0;
+      _h_l = 3.0; _h_h = 15.0;
+      _w_c_l = 4.0; _w_c_h = 10.0;
       RandomMapGenerate();
    }
    else if (map_type == "random_brrt")
