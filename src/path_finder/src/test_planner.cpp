@@ -56,6 +56,7 @@ private:
     shared_ptr<path_plan::BRRT_Simple_Case2> brrt_simple_case2_ptr_;
     shared_ptr<path_plan::BRRT_Simple_case3> brrt_optimize_case3_ptr;
     Eigen::Vector3d start_, goal_;
+    double start_z_, goal_z_;
 
     bool run_rrt_, run_rrt_star_, run_rrt_sharp_;
     bool run_brrt_, run_brrt_star_, run_brrt_optimize_;
@@ -126,6 +127,11 @@ public:
         rcv_glb_obs_client_ = nh_.serviceClient<self_msgs_and_srvs::GlbObsRcv>("/pub_glb_obs");
 
         start_.setZero();
+        
+        nh_.param("start_z", start_z_, 5.0);
+        nh_.param("goal_z", goal_z_, 5.0);
+        
+        start_[2] = start_z_; // Start at a tunable flying altitude
 
         nh_.param("run_rrt", run_rrt_, true);
         nh_.param("run_rrt_star", run_rrt_star_, true);
@@ -151,6 +157,12 @@ public:
         goal_[0] = goal_msg->pose.position.x;
         goal_[1] = goal_msg->pose.position.y;
         goal_[2] = goal_msg->pose.position.z;
+        
+        // If the goal was set using RViz's 2D Nav Goal, force the tunable flying altitude
+        if (std::abs(goal_[2]) < 0.01) {
+            goal_[2] = goal_z_;
+        }
+
         ROS_INFO_STREAM("\n-----------------------------\ngoal rcved at " << goal_.transpose());
         vis_ptr_->visualize_a_ball(start_, 0.3, "start", visualization::Color::pink);
         vis_ptr_->visualize_a_ball(goal_, 0.3, "goal", visualization::Color::steelblue);

@@ -98,12 +98,13 @@ namespace path_plan
       gen_ = std::mt19937(std::random_device{}());
       rand01_ = std::uniform_real_distribution<double>(0.0, 1.0);
 
-      cached_cos_.resize(n_blocks_);
-      cached_sin_.resize(n_blocks_);
+      cached_dir_.resize(n_blocks_);
+      double golden_angle = M_PI * (3.0 - std::sqrt(5.0));
       for (int i = 0; i < n_blocks_; ++i) {
-          double ang = i * (2.0 * M_PI / n_blocks_);
-          cached_cos_[i] = std::cos(ang);
-          cached_sin_[i] = std::sin(ang);
+          double z = 1.0 - (i / double(n_blocks_ - 1)) * 2.0; 
+          double radius = std::sqrt(1.0 - z * z);
+          double theta = golden_angle * i;
+          cached_dir_[i] = Eigen::Vector3d(radius * std::cos(theta), radius * std::sin(theta), z).normalized();
       }
 
       valid_tree_node_nums_ = 0;
@@ -226,8 +227,7 @@ namespace path_plan
     std::vector<double> cached_ray_dists_;
     Eigen::Vector3d cached_ray_origin_;
     bool has_cached_rays_ = false;
-    std::vector<double> cached_cos_;
-    std::vector<double> cached_sin_;
+    std::vector<Eigen::Vector3d> cached_dir_;
 
     void reset()
     {
@@ -258,7 +258,7 @@ namespace path_plan
 
     double rayCast(const Eigen::Vector3d &start, int dir_idx)
     {
-      Eigen::Vector3d dir(cached_cos_[dir_idx], cached_sin_[dir_idx], 0.0);
+      Eigen::Vector3d dir = cached_dir_[dir_idx];
       double dist = 0.0;
       double step = map_ptr_->getResolution();
       if (step <= 0.001) step = 0.1;
@@ -306,16 +306,14 @@ namespace path_plan
 
         if (!chosen_node) chosen_node = root_node; // 
         if (!chosen_node) return target_point;     
-        struct Sector { double min_a, max_a, r, w; };
+        struct Sector { int dir_idx; double r, w; };
         std::vector<Sector> blocks;
-        double angle_step = 2.0 * M_PI / n_blocks_;
         double sum_weight = 0.0;
 
         if (has_cached_rays_ && (chosen_node->x - cached_ray_origin_).norm() < 1e-6 && cached_ray_dists_.size() == n_blocks_) {
             for (int i = 0; i < n_blocks_; ++i) {
                 Sector s;
-                s.min_a = i * angle_step;
-                s.max_a = (i + 1) * angle_step;
+                s.dir_idx = i;
                 s.r = cached_ray_dists_[i];
                 s.w = std::pow(s.r, weight_grade_);
                 sum_weight += s.w;
@@ -329,8 +327,7 @@ namespace path_plan
 
             for (int i = 0; i < n_blocks_; ++i) {
                 Sector s;
-                s.min_a = i * angle_step;
-                s.max_a = (i + 1) * angle_step;
+                s.dir_idx = i;
                 s.r = rayCast(chosen_node->x, i);
                 cached_ray_dists_.push_back(s.r);
                 s.w = std::pow(s.r, weight_grade_);
@@ -341,28 +338,29 @@ namespace path_plan
 
         double rand_val = rand01_(gen_) * sum_weight;
         double cur_sum = 0.0;
-        Sector selected = blocks.empty() ? Sector{0,0,0,0} : blocks.back();
+        Sector selected = blocks.empty() ? Sector{0,0,0} : blocks.back();
         
         for (const auto& b : blocks) {
             cur_sum += b.w;
             if (rand_val <= cur_sum) { selected = b; break; }
         }
 
-        Eigen::Vector3d final_point;
-        {
-          double r = rand01_(gen_) * selected.r;
-          double theta = selected.min_a + rand01_(gen_) * (selected.max_a - selected.min_a);
-          final_point = Eigen::Vector3d(chosen_node->x[0] + r*cos(theta), chosen_node->x[1] + r*sin(theta), 0.0);
-        }
+        auto samplePoint = [&]() -> Eigen::Vector3d {
+            double r = rand01_(gen_) * selected.r;
+            Eigen::Vector3d dir = cached_dir_[selected.dir_idx];
+            Eigen::Vector3d noise(rand01_(gen_)-0.5, rand01_(gen_)-0.5, rand01_(gen_)-0.5);
+            dir = (dir + noise * 0.1).normalized();
+            return chosen_node->x + r * dir;
+        };
+
+        Eigen::Vector3d final_point = samplePoint();
 
         // FIX: Add retry limit to prevent infinite loop when sector is fully blocked
         int retries = 0;
         const int max_retries = 100;
         while (!map_ptr_->isStateValid(final_point) && retries < max_retries)
         {
-            double r = rand01_(gen_) * selected.r;
-            double theta = selected.min_a + rand01_(gen_) * (selected.max_a - selected.min_a);
-            final_point = Eigen::Vector3d(chosen_node->x[0] + r*cos(theta), chosen_node->x[1] + r*sin(theta), 0.0);
+            final_point = samplePoint();
             ++retries;
         }
         // Exhausted retries: the chosen node is surrounded by obstacles in the
@@ -390,11 +388,6 @@ namespace path_plan
       if (diff.norm() < 1e-6) return x_near;
       Eigen::Vector3d v_expand = diff.normalized();
  
-      // ── dist(q_nearest, Obstacle) theo paper ───────────────────────────
-      // Phát n_blocks_ tia từ x_near, mỗi tia bước theo steer_length_
-      // đến max lidar_radius_. Tia nào chạm obstacle → push distance vào
-      // min-heap. top() = khoảng cách đến obstacle gần nhất = obsDist
-      // trong eq.(10). Lưu thêm ray_dir để tính tangential vector.
       using dispair = std::pair<double, Eigen::Vector3d>;
       struct MinFirst
       {
@@ -415,7 +408,7 @@ namespace path_plan
         }
         if (d < lidar_radius_)  // chỉ push tia chạm obstacle
         {
-          Eigen::Vector3d ray_dir(cached_cos_[i], cached_sin_[i], 0.0);
+          Eigen::Vector3d ray_dir = cached_dir_[i];
           pqueue.push({d, ray_dir});
         }
       }
@@ -436,24 +429,23 @@ namespace path_plan
       double phi = steer_length_ * sigmoid((dist_to_target / max_dist) * 5.0);
       Eigen::Vector3d v_target = (x_target - x_near).normalized();
  
-      // ── Obstacle tangential-bias factor η — eq.(10) ────────────────────
-      // η = δ · Sigmoid(obsDist / (2δ) · 5)
-      // T(·) = perpendicular của obs_dir (hướng tia đến obstacle gần nhất)
-      // → tangent thực sự song song với bề mặt obstacle tại điểm gần nhất
       double eta = 0.0;
       Eigen::Vector3d v_tangent(0.0, 0.0, 0.0);
- 
       if (min_obs_dist < 2.0 * steer_length_ && obs_dir.norm() > 1e-6)
       {
         eta = steer_length_ * sigmoid((min_obs_dist / (2.0 * steer_length_)) * 5.0);
- 
-        // obs_dir = (a, b, 0) → t1 = (-b, a, 0), t2 = (b, -a, 0)
-        Eigen::Vector3d t1(-obs_dir[1],  obs_dir[0], 0.0);
-        Eigen::Vector3d t2( obs_dir[1], -obs_dir[0], 0.0);
- 
-        // Chọn chiều nào hướng về đích hơn
+        obs_dir.normalize();
+        
         Eigen::Vector3d v_goal_dir = (x_target - x_near).normalized();
-        v_tangent = (t1.dot(v_goal_dir) >= t2.dot(v_goal_dir)) ? t1 : t2;
+        Eigen::Vector3d v_perp = v_goal_dir - v_goal_dir.dot(obs_dir) * obs_dir;
+        
+        if (v_perp.norm() > 1e-6) {
+            v_tangent = v_perp.normalized();
+        } else {
+            Eigen::Vector3d up(0.0, 0.0, 1.0);
+            if (std::abs(obs_dir.dot(up)) > 0.99) up = Eigen::Vector3d(1.0, 0.0, 0.0);
+            v_tangent = obs_dir.cross(up).normalized();
+        }
       }
  
       // ── Tổng hợp — eq.(8) ──────────────────────────────────────────────

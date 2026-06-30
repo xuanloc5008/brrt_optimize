@@ -138,7 +138,7 @@ void RandomBRRTGenerate_Large(double size = 4)
    pcl::PointXYZ pt_random;
    random_device rd;
    // float ramdom_ratio = 0.4; // Original
-   float ramdom_ratio = 0.4;
+   float ramdom_ratio = 0.6;
    int number_ostacle = (_x_h - _x_l) * (_y_h - _y_l) / (size * size) * ramdom_ratio;
    std::cout << "number of ostacle" << number_ostacle;
 
@@ -168,11 +168,11 @@ void RandomBRRTGenerate_Large(double size = 4)
       {
          for (double i_y = random_y - half_size; i_y < random_y + half_size; i_y += 0.5)
          {
-            for (float k = -1; k < _h_h; k += 0.5)
+            for (float k = -1; k < _h_h; k += 0.1)
             {
                pt_random.x = i_x;
                pt_random.y = i_y;
-               pt_random.z = k;
+               pt_random.z = k+1.0;
                cloudMap.points.push_back(pt_random);
             }
          }
@@ -394,6 +394,7 @@ void RobotArmMapGenerate()
 
    std::uniform_real_distribution<> dis_x(_x_l, _x_h);
    std::uniform_real_distribution<> dis_y(_y_l, _y_h);
+   std::uniform_real_distribution<> dis_z(1.0, _h_h - 4.0); // For floating objects
    std::uniform_int_distribution<> dis_type(0, 4); // 5 types of objects
 
    for (int i = 0; i < num_random_obs; ++i) {
@@ -407,16 +408,25 @@ void RobotArmMapGenerate()
 
       int type = dis_type(gen);
       if (type == 0) {
-         add_table(cx, cy, -0.5, 3.0, 5.0, 1.5);
+         // Tall Pillar / Tree
+         std::uniform_real_distribution<> height(5.0, 15.0);
+         add_box(cx - 0.5, cx + 0.5, cy - 0.5, cy + 0.5, -0.5, height(gen));
       } else if (type == 1) {
-         add_chair(cx, cy, -0.5, 1.5, 1.5, 2.5);
+         // Floating Window Gate
+         double cz = dis_z(gen);
+         add_wall_with_hole(cx, cy, cz, 1.0, 10.0, 8.0, 4.0, 4.0); 
       } else if (type == 2) {
-         add_cave(cx, cy, -0.5, 8.0, 8.0, 6.0);
+         // Floating Tunnel / Cave
+         double cz = dis_z(gen);
+         add_cave(cx, cy, cz, 10.0, 10.0, 6.0);
       } else if (type == 3) {
-         std::uniform_real_distribution<> dis_z(3.0, _h_h - 2.0);
-         add_flying_obj(cx, cy, dis_z(gen), 2.0, 2.0, 2.0);
+         // Flying blocks
+         std::uniform_real_distribution<> fly_z(1.0, _h_h - 2.0);
+         add_flying_obj(cx, cy, fly_z(gen), 3.0, 3.0, 3.0);
       } else if (type == 4) {
-         add_wall_with_hole(cx, cy, -0.5, 1.0, 10.0, 8.0, 3.0, 3.0); // wall with 3x3 hole
+         // Floating partial wall
+         double cz = dis_z(gen);
+         add_box(cx - 0.5, cx + 0.5, cy - 8.0, cy + 8.0, cz, cz + 8.0);
       }
    }
 

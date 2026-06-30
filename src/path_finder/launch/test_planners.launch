@@ -3,13 +3,13 @@
   <arg name="global_env_pcd2_topic" value="/random_forest/all_map" />
   <arg name="map_size_x" default="500.0" />
   <arg name="map_size_y" default="500.0" />
-  <arg name="map_size_z" default="10.5" />
+  <arg name="map_size_z" default="15.5" />
   <arg name="origin_x" value="$(eval -arg('map_size_x') / 2.0)" />
   <arg name="origin_y" value="$(eval -arg('map_size_y') / 2.0)" />
-  <arg name="obs_density" default="0.03" />
+  <arg name="obs_density" default="0.01" />
   <arg name="obs_num" value="$(eval int(arg('map_size_x') * arg('map_size_y') * arg('obs_density')))" />
   <arg name="circle_num" value="$(eval int(arg('map_size_x') * arg('map_size_y') * arg('obs_density')))" />
-  <arg name="map_type" default="robot_arm" />
+  <arg name="map_type" default="random_cubes" />
   <arg name="map_resolution" default="0.5" />
 
   <arg name="voxel_leaf_size" default="1.2" />
@@ -55,8 +55,14 @@
   <arg name="input_param" default="/home/xuanloc/DACN/brrt_optimize/brrt_input.json" />
   <arg name="output_result" default="/home/xuanloc/DACN/brrt_optimize/eval/invert/1000x1000/40.json" />
 
+  <arg name="start_z" default="5.0" />
+  <arg name="goal_z" default="5.0" />
+
   <node pkg="path_finder" type="path_finder" name="path_finder_node" output="screen" required="true">
     <remap from="/global_cloud" to="$(arg global_env_pcd2_topic)"/>
+
+    <param name="start_z" value="$(arg start_z)" type="double"/>
+    <param name="goal_z" value="$(arg goal_z)" type="double"/>
 
     <param name="input_param" value="$(arg input_param)" type="string"/>
     <param name="output_result" value="$(arg output_result)" type="string"/>
