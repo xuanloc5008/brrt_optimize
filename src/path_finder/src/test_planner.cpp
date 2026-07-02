@@ -35,7 +35,7 @@ OF SUCH DAMAGE.
 #include <ros/ros.h>
 #include <geometry_msgs/PoseStamped.h>
 
-#define NUMBER_TEST_TIMES 1
+#define NUMBER_TEST_TIMES 300
 class TesterPathFinder
 {
 private:
@@ -54,7 +54,7 @@ private:
     shared_ptr<path_plan::BRRT_Optimize> brrt_optimize_ptr_;
     shared_ptr<path_plan::BRRT_Simple_Case1> brrt_simple_case1_ptr_;
     shared_ptr<path_plan::BRRT_Simple_Case2> brrt_simple_case2_ptr_;
-    shared_ptr<path_plan::BRRT_Simple_case3> brrt_optimize_case3_ptr;
+    shared_ptr<path_plan::BRRT_Simple_Case3> brrt_optimize_case3_ptr;
     Eigen::Vector3d start_, goal_;
     double start_z_, goal_z_;
 
@@ -117,7 +117,7 @@ public:
         vis_ptr_->registe<nav_msgs::Path>("brrt_case2_final_path");
         vis_ptr_->registe<sensor_msgs::PointCloud2>("brrt_case2_final_wpts");
 
-        brrt_optimize_case3_ptr = std::make_shared<path_plan::BRRT_Simple_case3>(nh_, env_ptr_);
+        brrt_optimize_case3_ptr = std::make_shared<path_plan::BRRT_Simple_Case3>(nh_, env_ptr_);
         brrt_optimize_case3_ptr->setVisualizer(vis_ptr_);
         vis_ptr_->registe<nav_msgs::Path>("brrt_case3_final_path");
         vis_ptr_->registe<sensor_msgs::PointCloud2>("brrt_case3_final_wpts");
@@ -359,12 +359,13 @@ public:
     };
     void experiment_test()
     {
-        start_ = get_sample_valid();
         const auto &input = manager->get_input();
         
         ROS_INFO("Running Test %d", input.trial);
         for (int i = 0; i < NUMBER_TEST_TIMES; ++i)
         {
+            start_ = get_sample_valid();
+            goal_ = get_sample_valid();
             double dist = (start_ - goal_).norm();
             while (dist < 5)
             {
@@ -473,7 +474,6 @@ public:
             // {
             //     algo_outputs["BRRT_Optimize"] = {false, 0.0, 0.0, 0, 0, start_, goal_};
             // }
-            start_ = goal_;
             // std::cout << "Run " << i + 1 << " completed." << std::endl;
             manager->store_output_for_run(algo_outputs);
         }

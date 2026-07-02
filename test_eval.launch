@@ -1,0 +1,5 @@
+<launch>
+  <arg name="obs_density_percentage" default="70.0" />
+  <arg name="test" value="$(eval (lambda p: p + 0.5*p**2 + 0.333*p**3 + 0.25*p**4 + 0.2*p**5)(min(arg('obs_density_percentage')/100.0, 0.99)))" />
+  <param name="test" value="$(arg test)" />
+</launch>

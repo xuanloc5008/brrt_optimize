@@ -38,7 +38,7 @@ namespace path_plan
       nh_.param("BRRT_Optimize/beta", brrt_optimize_beta_, 0.3);
       nh_.param("BRRT_Optimize/gamma", brrt_optimize_gamma_, 0.5);
       nh_.param("BRRT_Optimize/max_iteration", max_iteration_, 200000);
-      nh_.param("BRRT_Optimize/enable2d", brrt_enable_2d, true);
+      nh_.param("BRRT_Optimize/enable2d", brrt_enable_2d, false);
 
       // --- Case 3 Params ---
       nh_.param("BRRT/epsilon", epsilon_, 1.0);
@@ -305,6 +305,19 @@ namespace path_plan
       if (!chosen_node)
         chosen_node = root_node;
 
+      if (!brrt_enable_2d)
+      {
+        Eigen::Vector3d final_point;
+        sampler_.samplingOnce(final_point);
+        int retries = 0;
+        while (!map_ptr_->isStateValid(final_point) && retries < 1000)
+        {
+          sampler_.samplingOnce(final_point);
+          ++retries;
+        }
+        return map_ptr_->isStateValid(final_point) ? final_point : target_point;
+      }
+
       struct Sector
       {
         double min_a, max_a, r, w;
@@ -400,6 +413,11 @@ namespace path_plan
 
     Eigen::Vector3d AFBGSteer(const Eigen::Vector3d &x_near, const Eigen::Vector3d &x_rand, const Eigen::Vector3d &x_target, double /*steer_length_ ignored*/)
     {
+      if (!brrt_enable_2d)
+      {
+        return steer(x_near, x_rand, steer_length_);
+      }
+
       double adaptive_len = getAdaptiveSteerLength(x_near); // ← adaptive
 
       // [FIX] Avoid NaN division by zero

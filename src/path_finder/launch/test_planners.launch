@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <launch>
   <arg name="global_env_pcd2_topic" value="/random_forest/all_map" />
-  <arg name="map_size_x" default="500.0" />
-  <arg name="map_size_y" default="500.0" />
-  <arg name="map_size_z" default="15.5" />
+  <arg name="map_size_x" default="300.0" />
+  <arg name="map_size_y" default="300.0" />
+  <arg name="map_size_z" default="30.5" />
   <arg name="origin_x" value="$(eval -arg('map_size_x') / 2.0)" />
   <arg name="origin_y" value="$(eval -arg('map_size_y') / 2.0)" />
-  <arg name="obs_density" default="0.01" />
-  <arg name="obs_num" value="$(eval int(arg('map_size_x') * arg('map_size_y') * arg('obs_density')))" />
-  <arg name="circle_num" value="$(eval int(arg('map_size_x') * arg('map_size_y') * arg('obs_density')))" />
-  <arg name="map_type" default="random_cubes" />
+  <!-- Set obstacle density as a percentage (e.g. 60.0 for 60%) -->
+  <arg name="obs_density_percentage" default="60.0" />
+  <!-- Calculate number of obstacles using Poisson statistics for true visual coverage (average footprint 112 sq meters) -->
+  <arg name="obs_num" value="$(eval int( (arg('map_size_x') * arg('map_size_y') / 112.0) * (lambda p: p + 0.5*p**2 + 0.333*p**3 + 0.25*p**4 + 0.2*p**5)(min(arg('obs_density_percentage')/100.0, 0.99)) ))" />
+  <arg name="circle_num" value="$(arg obs_num)" />
+  <arg name="ground_obstacle_probability" default="0.3" />
+  <arg name="map_type" default="blob_map" />
   <arg name="map_resolution" default="0.5" />
 
   <arg name="voxel_leaf_size" default="1.2" />
@@ -20,6 +23,7 @@
     <arg name="map_size_z" value="$(arg map_size_z)"/>
     <arg name="obs_num" value="$(arg obs_num)"/>
     <arg name="circle_num" value="$(arg circle_num)"/>
+    <arg name="ground_obstacle_probability" value="$(arg ground_obstacle_probability)"/>
     <arg name="map_type" value="$(arg map_type)"/>
     <arg name="map_resolution" value="$(arg map_resolution)"/>
   </include>
@@ -49,14 +53,15 @@
   <arg name="brrt_beta" default="1.0" />
   <arg name="brrt_gamma" default="1.0" />
   <arg name="brrt_max_iteration" default="200000" />
+  <arg name="brrt_enable_2d" default="false" />
 
   <arg name="step_by_step_vis" default="false" />
   <arg name="step_delay_ms" default="100" />
   <arg name="input_param" default="/home/xuanloc/DACN/brrt_optimize/brrt_input.json" />
-  <arg name="output_result" default="/home/xuanloc/DACN/brrt_optimize/eval/invert/1000x1000/40.json" />
+  <arg name="output_result" default="/home/xuanloc/DACN/brrt_optimize/eval/50.json" />
 
-  <arg name="start_z" default="5.0" />
-  <arg name="goal_z" default="5.0" />
+  <arg name="start_z" default="2.0" />
+  <arg name="goal_z" default="2.0" />
 
   <node pkg="path_finder" type="path_finder" name="path_finder_node" output="screen" required="true">
     <remap from="/global_cloud" to="$(arg global_env_pcd2_topic)"/>
@@ -72,6 +77,7 @@
     <param name="run_brrt" value="$(arg run_brrt)" type="bool"/>
     <param name="run_brrt_star" value="$(arg run_brrt_star)" type="bool"/>
     <param name="run_brrt_optimize" value="$(arg run_brrt_optimize)" type="bool"/>
+    <param name="BRRT_Optimize/enable2d" value="$(arg brrt_enable_2d)" type="bool"/>
 
     <param name="occ_map/origin_x" value="$(arg origin_x)" type="double"/>
     <param name="occ_map/origin_y" value="$(arg origin_y)" type="double"/>

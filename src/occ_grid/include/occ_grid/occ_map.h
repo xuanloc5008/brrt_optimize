@@ -54,7 +54,22 @@ namespace env
       Eigen::Vector3i idx = posToIndex(pos);
       if (!isInMap(idx))
         return false;
-      return (occupancy_buffer_[idxToAddress(idx)] == false);
+      if (occupancy_buffer_[idxToAddress(idx)])
+        return false;
+
+      // Check adjacent cells for safety inflation to avoid grazing
+      for (int dx = -1; dx <= 1; ++dx) {
+        for (int dy = -1; dy <= 1; ++dy) {
+          for (int dz = -1; dz <= 1; ++dz) {
+            if (dx == 0 && dy == 0 && dz == 0) continue;
+            Eigen::Vector3i nIdx = idx + Eigen::Vector3i(dx, dy, dz);
+            if (isInMap(nIdx) && occupancy_buffer_[idxToAddress(nIdx)]) {
+              return false;
+            }
+          }
+        }
+      }
+      return true;
     };
     bool isSegmentValid(const Eigen::Vector3d &p0, const Eigen::Vector3d &p1, double max_dist = DBL_MAX) const
     {

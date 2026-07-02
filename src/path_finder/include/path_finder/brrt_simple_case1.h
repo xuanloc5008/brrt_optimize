@@ -79,7 +79,7 @@ namespace path_plan
       nh_.param("BRRT_Optimize/beta", brrt_optimize_beta_, 0.3);
       nh_.param("BRRT_Optimize/gamma", brrt_optimize_gamma_, 0.5);
       nh_.param("BRRT_Optimize/max_iteration", max_iteration_, 0);
-      nh_.param("BRRT_Optimize/enable2d", brrt_enable_2d, true);
+      nh_.param("BRRT_Optimize/enable2d", brrt_enable_2d, false);
 
       ROS_WARN_STREAM("[BRRT_Optimize_case1] param: steer_length: " << steer_length_);
       ROS_WARN_STREAM("[BRRT_Optimize_case1] param: search_time: " << search_time_);

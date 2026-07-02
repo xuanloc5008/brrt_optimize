@@ -390,7 +390,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/brrt/tree_edges
           Name: BRRT_Tree
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Class: rviz/MarkerArray
@@ -398,7 +398,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/brrt/tree_vertice
           Name: BRRT_Edge
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Alpha: 1
@@ -766,7 +766,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/case1/tree_vertice
           Name: tree-edge
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Class: rviz/Marker
@@ -774,7 +774,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/case1/tree_edges
           Name: tree-node
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Alpha: 1
@@ -838,7 +838,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/case2/tree_edges
           Name: tree-node
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Class: rviz/MarkerArray
@@ -846,7 +846,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/case2/tree_vertice
           Name: tree-edge
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Alpha: 1
@@ -910,7 +910,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/case3/tree_edges
           Name: tree-node
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Class: rviz/MarkerArray
@@ -918,7 +918,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/case3/tree_vertice
           Name: tree-edge
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
         - Alpha: 1
@@ -1076,7 +1076,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 155.7963104248047
+      Distance: 459.8097229003906
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -1084,17 +1084,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: -27.16307830810547
-        Y: 27.667221069335938
-        Z: 0
+        X: 89.04952239990234
+        Y: -1.2154361009597778
+        Z: 3.594812369556166e-05
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.0564137697219849
+      Pitch: 1.4947962760925293
       Target Frame: map
-      Yaw: 2.343566656112671
+      Yaw: 6.276749610900879
     Saved: ~
 Window Geometry:
   Displays:

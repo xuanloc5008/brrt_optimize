@@ -47,7 +47,7 @@ ros::Subscriber _odom_sub;
 
 int _obs_num, _cir_num;
 double _x_size, _y_size, _z_size, _init_x, _init_y, _resolution, _sense_rate;
-double _x_l, _x_h, _y_l, _y_h, _w_l, _w_h, _h_l, _h_h, _w_c_l, _w_c_h;
+double _x_l, _x_h, _y_l, _y_h, _w_l, _w_h, _h_l, _h_h, _w_c_l, _w_c_h, _ground_obstacle_probability;
 
 bool _has_map = false;
 
@@ -137,9 +137,7 @@ void RandomBRRTGenerate_Large(double size = 4)
 {
    pcl::PointXYZ pt_random;
    random_device rd;
-   // float ramdom_ratio = 0.4; // Original
-   float ramdom_ratio = 0.6;
-   int number_ostacle = (_x_h - _x_l) * (_y_h - _y_l) / (size * size) * ramdom_ratio;
+   int number_ostacle = _obs_num;
    std::cout << "number of ostacle" << number_ostacle;
 
    std::mt19937 gen(rd()); 
@@ -168,7 +166,7 @@ void RandomBRRTGenerate_Large(double size = 4)
       {
          for (double i_y = random_y - half_size; i_y < random_y + half_size; i_y += 0.5)
          {
-            for (float k = -1; k < _h_h; k += 0.1)
+            for (float k = -1; k < _h_h; k += 0.5)
             {
                pt_random.x = i_x;
                pt_random.y = i_y;
@@ -193,27 +191,28 @@ void RandomBRRTGenerate_Buildings(double size = 4)
 {
    pcl::PointXYZ pt_random;
    random_device rd;
-   // float ramdom_ratio = 0.4; // Original
-   float ramdom_ratio = 0.4;
-   int number_ostacle = (_x_h - _x_l) * (_y_h - _y_l) / (size * size) * ramdom_ratio;
+   int number_ostacle = _obs_num;
    std::cout << "number of ostacle" << number_ostacle;
 
    std::mt19937 gen(rd()); 
 
    std::uniform_real_distribution<> dis_x(_x_l, _x_h);
    std::uniform_real_distribution<> dis_y(_y_l, _y_h);
-   std::uniform_real_distribution<> dis_h(-1.0, _h_h); // Random height between floor (-1.0) and ceiling (_h_h)
+   std::uniform_real_distribution<> dis_h(_z_size / 3.0, _z_size);
+   std::uniform_real_distribution<> dis_size_scale(1.0, 4.0);
    
    // --- Define the Center Void Area ---
    // Obstacles will not be spawned if their center is within this distance from (0,0)
    double clear_zone_radius = 2.0; 
 
-   double half_size = size / 2;
    for (int i = 0; i < number_ostacle; i++)
    {
       double random_x = dis_x(gen);
       double random_y = dis_y(gen);
-      double random_height = dis_h(gen);
+      double random_size = size * dis_size_scale(gen);
+      double half_size = random_size / 2.0;
+      double random_z_min = 0.0;
+      double random_z_max = dis_h(gen);
 
       // --- SKIP LOGIC FOR CENTER ---
       // Checks if the sampled obstacle center falls within the clear zone
@@ -226,7 +225,73 @@ void RandomBRRTGenerate_Buildings(double size = 4)
       {
          for (double i_y = random_y - half_size; i_y < random_y + half_size; i_y += 0.5)
          {
-            for (float k = -1; k < random_height; k += 0.5)
+            for (float k = random_z_min; k < random_z_max; k += 0.5)
+            {
+               pt_random.x = i_x;
+               pt_random.y = i_y;
+               pt_random.z = k;
+               cloudMap.points.push_back(pt_random);
+            }
+         }
+      }
+   }
+
+   cloudMap.width = cloudMap.points.size();
+   cloudMap.height = 1;
+   cloudMap.is_dense = true;
+   std::cout << "cloudMap.points.size() = " << cloudMap.points.size() << std::endl;
+   _has_map = true;
+
+   pcl::toROSMsg(cloudMap, globalMap_pcd);
+   globalMap_pcd.header.frame_id = "map";
+}
+
+void RandomBRRTGenerate_Buildings_MixedZ(double size = 4)
+{
+   pcl::PointXYZ pt_random;
+   random_device rd;
+   int number_ostacle = _obs_num;
+   std::cout << "number of ostacle" << number_ostacle;
+
+   std::mt19937 gen(rd());
+
+   std::uniform_real_distribution<> dis_x(_x_l, _x_h);
+   std::uniform_real_distribution<> dis_y(_y_l, _y_h);
+   std::uniform_real_distribution<> dis_h(_z_size / 3.0, _z_size);
+   std::uniform_real_distribution<> dis_size_scale(1.0, 4.0);
+   std::uniform_real_distribution<> dis_probability(0.0, 1.0);
+
+   double clear_zone_radius = 2.0;
+
+
+   for (int i = 0; i < number_ostacle; i++)
+   {
+      double random_x = dis_x(gen);
+      double random_y = dis_y(gen);
+      double random_size = size * dis_size_scale(gen);
+      double half_size = random_size / 2.0;
+      double random_height = dis_h(gen);
+
+      bool on_ground = dis_probability(gen) < _ground_obstacle_probability;
+      double random_z_min = 0.0;
+      if (!on_ground)
+      {
+         double max_ground_distance = std::max(0.0, _z_size - random_height);
+         std::uniform_real_distribution<> dis_ground_distance(0.0, max_ground_distance);
+         random_z_min = dis_ground_distance(gen);
+      }
+      double random_z_max = random_z_min + random_height;
+
+      if (std::abs(random_x) < clear_zone_radius && std::abs(random_y) < clear_zone_radius)
+      {
+         continue;
+      }
+
+      for (double i_x = random_x - half_size; i_x < random_x + half_size; i_x += 0.5)
+      {
+         for (double i_y = random_y - half_size; i_y < random_y + half_size; i_y += 0.5)
+         {
+            for (float k = random_z_min; k < random_z_max; k += 0.5)
             {
                pt_random.x = i_x;
                pt_random.y = i_y;
@@ -251,11 +316,8 @@ void RandomBRRTGenerate_Cubes(double size = 4)
 {
    pcl::PointXYZ pt_random;
    random_device rd;
-   float ramdom_ratio = 0.4;
    double z_min = -1.0;
-   
-   // Adjust obstacle count for 3D volume
-   int number_ostacle = (_x_h - _x_l) * (_y_h - _y_l) * (_h_h - z_min) / (size * size * size) * ramdom_ratio;
+   int number_ostacle = _obs_num;
    std::cout << "number of ostacle: " << number_ostacle << std::endl;
 
    std::mt19937 gen(rd()); 
@@ -323,8 +385,8 @@ void RobotArmMapGenerate()
    };
 
    auto add_table = [&](double cx, double cy, double cz, double w, double l, double h) {
-      double t_thickness = 0.2;
-      double leg_w = 0.2;
+      double t_thickness = 0.4;
+      double leg_w = 0.4;
       add_box(cx - w/2, cx + w/2, cy - l/2, cy + l/2, cz + h - t_thickness, cz + h); // tabletop
       add_box(cx - w/2, cx - w/2 + leg_w, cy - l/2, cy - l/2 + leg_w, cz, cz + h - t_thickness); // leg 1
       add_box(cx + w/2 - leg_w, cx + w/2, cy - l/2, cy - l/2 + leg_w, cz, cz + h - t_thickness); // leg 2
@@ -333,7 +395,7 @@ void RobotArmMapGenerate()
    };
 
    auto add_chair = [&](double cx, double cy, double cz, double w, double l, double h) {
-      double t_thickness = 0.2;
+      double t_thickness = 0.8;
       double leg_w = 0.2;
       add_box(cx - w/2, cx + w/2, cy - l/2, cy + l/2, cz + h/2 - t_thickness, cz + h/2); // seat
       add_box(cx - w/2, cx - w/2 + leg_w, cy - l/2, cy - l/2 + leg_w, cz, cz + h/2 - t_thickness); // leg 1
@@ -348,10 +410,6 @@ void RobotArmMapGenerate()
       add_box(cx - w/2, cx - w/2 + wall_t, cy - l/2, cy + l/2, cz, cz + h); // left wall
       add_box(cx + w/2 - wall_t, cx + w/2, cy - l/2, cy + l/2, cz, cz + h); // right wall
       add_box(cx - w/2, cx + w/2, cy - l/2, cy + l/2, cz + h - wall_t, cz + h); // roof
-   };
-
-   auto add_flying_obj = [&](double cx, double cy, double cz, double w, double l, double h) {
-      add_box(cx - w, cx + w, cy - l, cy + l, cz, cz + h); // floating box
    };
 
    auto add_wall_with_hole = [&](double cx, double cy, double cz, double w, double l, double h, double hole_w, double hole_h) {
@@ -394,12 +452,18 @@ void RobotArmMapGenerate()
 
    std::uniform_real_distribution<> dis_x(_x_l, _x_h);
    std::uniform_real_distribution<> dis_y(_y_l, _y_h);
-   std::uniform_real_distribution<> dis_z(1.0, _h_h - 4.0); // For floating objects
-   std::uniform_int_distribution<> dis_type(0, 4); // 5 types of objects
+   std::uniform_real_distribution<> dis_size_scale(1.0, 4.0);
+   std::uniform_real_distribution<> dis_h(_z_size / 3.0, _z_size);
+   std::uniform_int_distribution<> dis_type(0, 3); // 4 types of objects
 
    for (int i = 0; i < num_random_obs; ++i) {
       double cx = dis_x(gen);
       double cy = dis_y(gen);
+      double scale = dis_size_scale(gen);
+      double random_height = dis_h(gen);
+      double max_z_min = std::max(0.0, _z_size - random_height);
+      std::uniform_real_distribution<> dis_z_min(0.0, max_z_min);
+      double floating_z_min = dis_z_min(gen);
       
       // Avoid spawning right around the robot base core (0,0)
       if (std::abs(cx) < 15.0 && std::abs(cy) < 15.0) {
@@ -409,24 +473,24 @@ void RobotArmMapGenerate()
       int type = dis_type(gen);
       if (type == 0) {
          // Tall Pillar / Tree
-         std::uniform_real_distribution<> height(5.0, 15.0);
-         add_box(cx - 0.5, cx + 0.5, cy - 0.5, cy + 0.5, -0.5, height(gen));
+         double half_width = 0.5 * scale;
+         add_box(cx - half_width, cx + half_width, cy - half_width, cy + half_width, 0.0, random_height);
       } else if (type == 1) {
          // Floating Window Gate
-         double cz = dis_z(gen);
-         add_wall_with_hole(cx, cy, cz, 1.0, 10.0, 8.0, 4.0, 4.0); 
+         double wall_thickness = 1.0 * scale;
+         double wall_length = 10.0 * scale;
+         double hole_w = std::min(4.0 * scale, wall_length * 0.6);
+         double hole_h = std::min(4.0 * scale, random_height * 0.6);
+         add_wall_with_hole(cx, cy, floating_z_min, wall_thickness, wall_length, random_height, hole_w, hole_h); 
       } else if (type == 2) {
          // Floating Tunnel / Cave
-         double cz = dis_z(gen);
-         add_cave(cx, cy, cz, 10.0, 10.0, 6.0);
+         add_cave(cx, cy, floating_z_min, 10.0 * scale, 10.0 * scale, random_height);
       } else if (type == 3) {
-         // Flying blocks
-         std::uniform_real_distribution<> fly_z(1.0, _h_h - 2.0);
-         add_flying_obj(cx, cy, fly_z(gen), 3.0, 3.0, 3.0);
-      } else if (type == 4) {
          // Floating partial wall
-         double cz = dis_z(gen);
-         add_box(cx - 0.5, cx + 0.5, cy - 8.0, cy + 8.0, cz, cz + 8.0);
+         double half_thickness = 0.5 * scale;
+         double half_length = 8.0 * scale;
+         add_box(cx - half_thickness, cx + half_thickness, cy - half_length, cy + half_length,
+                 floating_z_min, floating_z_min + random_height);
       }
    }
 
@@ -1951,6 +2015,7 @@ int main(int argc, char **argv)
    n.param("map/z_size", _z_size, 5.0);
 
    n.param("map/obs_num", _obs_num, 30);
+  n.param("map/ground_obstacle_probability", _ground_obstacle_probability, 0.5);
    n.param("map/circle_num", _cir_num, 30);
    n.param("map/resolution", _resolution, 0.2);
 
@@ -2005,11 +2070,15 @@ int main(int argc, char **argv)
    {
       RandomBRRTGenerate_Buildings();
    }
+   else if (map_type == "blob_map")
+   {
+      RandomBRRTGenerate_Buildings_MixedZ();
+   }
    else if (map_type == "random_cubes")
    {
       RandomBRRTGenerate_Cubes();
    }
-   else if (map_type == "robot_arm")
+   else if (map_type == "room_map" || map_type == "robot_arm_flying_objects")
    {
       RobotArmMapGenerate();
    }

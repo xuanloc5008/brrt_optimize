@@ -11,6 +11,7 @@
   <arg name="map_size_z" default="1.5"/>
   <arg name="obs_num" default="5000"/>
   <arg name="circle_num" default="5000"/>
+  <arg name="ground_obstacle_probability" default="0.5"/>
   <!-- Map types: random_large, narrow, rooms, blobs, flappy, u_shaped,
                   maze_dfs, l_shape_grid, random_narrow, env_v_shape, etc. -->
   <arg name="map_type" default="random_large"/>
@@ -36,6 +37,7 @@
     <param name="map/y_size" value="$(arg map_size_y)" />
     <param name="map/z_size" value="$(arg map_size_z)" />
     <param name="map/obs_num" value="$(arg obs_num)"/>
+    <param name="map/ground_obstacle_probability" value="$(arg ground_obstacle_probability)"/>
     <param name="map/circle_num" value="$(arg circle_num)"/>
     <param name="map/map_type" value="$(arg map_type)"/>
     <param name="map/resolution" value="$(arg map_resolution)"/>
