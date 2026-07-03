@@ -123,7 +123,36 @@ namespace path_plan
     {
       return path_list_;
     }
-
+   Eigen::Vector3d randomPointInCylinder(const Eigen::Vector3d& A, const Eigen::Vector3d& B, double height_range) {
+       // height_range: khối trụ mở rộng bao xa dọc theo trục normal (ví dụ +/- height_range/2)
+       
+       Eigen::Vector3d normal = (B - A).normalized();
+       double radius = (B - A).norm();
+   
+       // Tạo hệ trục trực chuẩn (u, v) trên mặt phẳng vuông góc với normal
+       Eigen::Vector3d u;
+       if (std::abs(normal.x()) < 1e-6 && std::abs(normal.y()) < 1e-6) {
+           u = Eigen::Vector3d(0, 1, 0).cross(normal).normalized();
+       } else {
+           u = Eigen::Vector3d(0, 0, 1).cross(normal).normalized();
+       }
+       Eigen::Vector3d v = normal.cross(u);
+   
+       std::random_device rd;
+       std::mt19937 gen(rd());
+       std::uniform_real_distribution<> dist_angle(0, 2 * M_PI);
+       std::uniform_real_distribution<> dist_radius(0, 1);
+       std::uniform_real_distribution<> dist_height(-height_range / 2.0, height_range / 2.0); // sample thêm theo trục normal
+   
+       double theta = dist_angle(gen);
+       double r = radius * std::sqrt(dist_radius(gen));   // toạ độ (x, y) trong mặt phẳng đĩa - GIỮ NGUYÊN như cũ
+       double h = dist_height(gen);                        // toạ độ "chiều cao" dọc theo trục normal - THÊM MỚI
+   
+       // Điểm cuối = tâm A + phần bù trong mặt phẳng (u,v) + phần dịch dọc theo normal
+       Eigen::Vector3d point = A + r * std::cos(theta) * u + r * std::sin(theta) * v + h * normal;
+   
+       return point;
+   }
     vector<std::pair<double, double>> getSolutions()
     {
       return solution_cost_time_pair_list_;
