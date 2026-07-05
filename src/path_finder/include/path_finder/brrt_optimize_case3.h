@@ -525,79 +525,72 @@ namespace path_plan
         return max_dist;
     }
 
-    Eigen::Vector3d AFBGSteer(const Eigen::Vector3d &x_near, const Eigen::Vector3d &x_rand, const Eigen::Vector3d &x_target, double steer_length_)
-    {
-        Eigen::Vector3d v_expand = (x_rand - x_near).normalized();
-        
-        using dispair = std::pair<double, Eigen::Vector3d>;
-        struct DistCompare {
-            bool operator()(const dispair& a, const dispair& b) {
-                return a.first > b.first; 
-            }
-        };
-
-        std::priority_queue<dispair, std::vector<dispair>, DistCompare> pqueue;
-
-        double min_obs_dist = DBL_MAX;
-        Eigen::Vector3d obs_vec(0,0,0);
-        
-        int num_rays = 32; // Number of rays for 3D sphere scanning
-        double lidar_radius = 30.0; // Reduced to 5.0 for straighter paths (less conservative obstacle avoidance)
-
-        // 3D raycasting using Fibonacci sphere
-        for(int i = 0; i < num_rays; ++i) {
-            double phi = acos(1.0 - 2.0 * (i + 0.5) / num_rays);
-            double theta = M_PI * (1.0 + sqrt(5.0)) * (i + 0.5);
-            Eigen::Vector3d dir(sin(phi)*cos(theta), sin(phi)*sin(theta), cos(phi));
-            
-            double d = rayCast3D(x_near, dir, lidar_radius);
-            if(d < lidar_radius) {
-              Eigen::Vector3d vec = dir * d;
-              pqueue.push({d, vec});
-            }
-        }
-
-        if (!pqueue.empty()) {
-            min_obs_dist = pqueue.top().first;
-            obs_vec = pqueue.top().second;
-        }
-
-        Eigen::Vector3d total_vec(0,0,0);
-
-        double dist_to_target = calDist(x_near, x_target);
-        double max_dist = map_ptr_->getMapSize()(0);
-        
-        double phi_val = steer_length_ * sigmoid((dist_to_target / max_dist) * 5.0); // Increased multiplier for stronger target attraction 
-        Eigen::Vector3d v_target = (x_target - x_near).normalized();
-
-        double eta = 0.0;
-        Eigen::Vector3d v_tangent(0,0,0);
-
-        if (min_obs_dist < 2.0 * steer_length_) {
-             eta = steer_length_ * sigmoid((min_obs_dist / (2.0 * steer_length_)) * 5.0);
-             
-             Eigen::Vector3d v_obs_dir = obs_vec.normalized(); 
-             
-             // 3D tangent logic: project v_expand onto the plane orthogonal to v_obs_dir
-             Eigen::Vector3d proj = v_expand - v_expand.dot(v_obs_dir) * v_obs_dir;
-             if (proj.norm() > 1e-6) {
-                 v_tangent = proj.normalized();
-             } else {
-                 // Fallback if v_expand is parallel to v_obs_dir
-                 Eigen::Vector3d arbitrary(1, 0, 0);
-                 if (std::abs(v_obs_dir.x()) > 0.9) arbitrary = Eigen::Vector3d(0, 1, 0);
-                 v_tangent = v_obs_dir.cross(arbitrary).normalized();
-             }
-             
-             total_vec = v_expand + phi_val * v_target + eta * v_tangent;
-        } 
-        else {
-             total_vec = v_expand + phi_val * v_target;
-        }
-        
-        double step_size = std::min(steer_length_, dist_to_target);
-        return x_near + total_vec.normalized() * step_size;
-    }
+      Eigen::Vector3d AFBGSteer(
+          const Eigen::Vector3d &x_near,
+          const Eigen::Vector3d &x_rand,
+          const Eigen::Vector3d &x_target,
+          double steer_length_)
+      {
+          Eigen::Vector3d v_expand = (x_rand - x_near).normalized();
+          Eigen::Vector3d v_target = (x_target - x_near).normalized();
+      
+          double dist_to_target = calDist(x_near, x_target);
+          double step_size = std::min(steer_length_, dist_to_target);
+      
+          double min_obs_dist = DBL_MAX;
+          Eigen::Vector3d r_obs(0.0, 0.0, 0.0);
+      
+          int num_rays = 32;
+          double lidar_radius = 30.0;
+      
+          // 1. Cast rays uniformly on 3D sphere
+          for (int i = 0; i < num_rays; ++i) {
+              double z = 1.0 - 2.0 * (i + 0.5) / num_rays;
+              double radius = std::sqrt(1.0 - z * z);
+              double theta = M_PI * (1.0 + std::sqrt(5.0)) * (i + 0.5);
+      
+              Eigen::Vector3d dir(
+                  radius * std::cos(theta),
+                  radius * std::sin(theta),
+                  z
+              );
+      
+              double d = rayCast3D(x_near, dir, lidar_radius);
+      
+              if (d < min_obs_dist) {
+                  min_obs_dist = d;
+                  r_obs = dir.normalized();
+              }
+          }
+      
+          // 2. Goal bias
+          double max_dist = map_ptr_->getMapSize().maxCoeff();
+          double phi = sigmoid((dist_to_target / max_dist) * 5.0);
+      
+          Eigen::Vector3d total_vec = v_expand + phi * v_target;
+      
+          // 3. Obstacle tangential bias
+          double influence_radius = 2.0 * steer_length_;
+      
+          if (min_obs_dist < influence_radius) {
+              Eigen::Vector3d n = v_expand.cross(v_target).normalized();
+      
+              Eigen::Vector3d r_proj =
+                  (r_obs - r_obs.dot(n) * n).normalized();
+      
+              Eigen::Vector3d T1 = n.cross(r_proj).normalized();
+              Eigen::Vector3d T2 = -T1;
+      
+              Eigen::Vector3d v_tangent =
+                  (T1.dot(v_target) >= T2.dot(v_target)) ? T1 : T2;
+      
+              double eta = std::max(0.0, 1.0 - min_obs_dist / influence_radius);
+      
+              total_vec += eta * v_tangent;
+          }
+      
+          return x_near + total_vec.normalized() * step_size;
+      }
     //-------------------------------------------------------------------------
     bool brrt_optimize(const Eigen::Vector3d &s, const Eigen::Vector3d &g)
     {
