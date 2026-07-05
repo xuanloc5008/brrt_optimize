@@ -54,7 +54,7 @@ private:
     shared_ptr<path_plan::BRRT_Optimize> brrt_optimize_ptr_;
     shared_ptr<path_plan::BRRT_Simple_Case1> brrt_simple_case1_ptr_;
     shared_ptr<path_plan::BRRT_Simple_Case2> brrt_simple_case2_ptr_;
-    shared_ptr<path_plan::BRRT_Simple_case3> brrt_optimize_case3_ptr;
+    shared_ptr<path_plan::BRRT_Simple_Case3> brrt_optimize_case3_ptr;
     Eigen::Vector3d start_, goal_;
     double start_z_, goal_z_;
 
@@ -117,7 +117,7 @@ public:
         vis_ptr_->registe<nav_msgs::Path>("brrt_case2_final_path");
         vis_ptr_->registe<sensor_msgs::PointCloud2>("brrt_case2_final_wpts");
 
-        brrt_optimize_case3_ptr = std::make_shared<path_plan::BRRT_Simple_case3>(nh_, env_ptr_);
+        brrt_optimize_case3_ptr = std::make_shared<path_plan::BRRT_Simple_Case3>(nh_, env_ptr_);
         brrt_optimize_case3_ptr->setVisualizer(vis_ptr_);
         vis_ptr_->registe<nav_msgs::Path>("brrt_case3_final_path");
         vis_ptr_->registe<sensor_msgs::PointCloud2>("brrt_case3_final_wpts");
