@@ -82,6 +82,13 @@ namespace path_plan
       nh_.param("BRRT_Optimize/max_iteration", max_iteration_, 0);
       nh_.param("BRRT_Optimize/enable2d", brrt_enable_2d, false);
 
+      // Fixed-size heuristic cache: keeps only the N best (smallest-h) pairs.
+      int heuristic_cache_size = 5000;
+      nh_.param("BRRT_Optimize/heuristic_cache_size", heuristic_cache_size, heuristic_cache_size);
+      if (heuristic_cache_size < 0) heuristic_cache_size = 0;
+      cache.setMaxSize((std::size_t)heuristic_cache_size);
+      ROS_WARN_STREAM("[BRRT_Optimize_case3] param: heuristic_cache_size: " << heuristic_cache_size);
+
       ROS_WARN_STREAM("[BRRT_Optimize_case3] param: steer_length: " << steer_length_);
       ROS_WARN_STREAM("[BRRT_Optimize_case3] param: search_time: " << search_time_);
       ROS_WARN_STREAM("[BRRT_Optimize_case3] param: max_tree_node_nums: " << max_tree_node_nums_);
@@ -138,6 +145,13 @@ namespace path_plan
       brrt_optimize_gamma_ = gamma;
       steer_length_  = steer_length;
     }
+    void set_physical_param(double weight_grade, double lidar_radius, int n_blocks, double steer_length)
+    {
+      weight_grade_ = weight_grade;
+      lidar_radius_ = lidar_radius;
+      n_blocks_ = n_blocks;
+      steer_length_ = steer_length;
+    }
     void setVisualizer(const std::shared_ptr<visualization::Visualization> &visPtr)
     {
       vis_ptr_ = visPtr;
@@ -153,6 +167,10 @@ namespace path_plan
     double get_final_path_use_time_()
     {
       return final_path_use_time_;
+    }
+    const std::vector<std::pair<int,double>>& get_pbias_history() const
+    {
+      return pbias_history_;
     }
   private:
     // nodehandle params
@@ -176,6 +194,14 @@ namespace path_plan
     double final_path_use_time_;
     bool brrt_enable_2d;
 
+    // Physical parameters (for tuning experiments)
+    double weight_grade_ = 3.0;
+    double lidar_radius_ = 15.0;
+    int n_blocks_ = 16;
+
+    // pbias tracking
+    std::vector<std::pair<int,double>> pbias_history_; // (iteration, p_bias)
+
     double cost_best_;
     std::vector<TreeNode *> nodes_pool_;
     TreeNode *start_node_;
@@ -195,6 +221,7 @@ namespace path_plan
       cost_best_ = DBL_MAX;
 
       solution_cost_time_pair_list_.clear();
+      pbias_history_.clear();
       for (int i = 0; i < valid_tree_node_nums_; i++)
       {
         nodes_pool_[i]->parent = nullptr;
@@ -525,42 +552,36 @@ namespace path_plan
         return max_dist;
     }
 
+    Eigen::Vector3d randomPointInCylinder(const Eigen::Vector3d& A, const Eigen::Vector3d& B, double height_range) {
+        
+        Eigen::Vector3d normal = (B - A).normalized();
+        double radius = (B - A).norm();
+    
+        Eigen::Vector3d u;
+        if (std::abs(normal.x()) < 1e-6 && std::abs(normal.y()) < 1e-6) {
+            u = Eigen::Vector3d(0, 1, 0).cross(normal).normalized();
+        } else {
+            u = Eigen::Vector3d(0, 0, 1).cross(normal).normalized();
+        }
+        Eigen::Vector3d v = normal.cross(u);
+    
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_real_distribution<> dist_angle(0, 2 * M_PI);
+        std::uniform_real_distribution<> dist_radius(0, 1);
+        std::uniform_real_distribution<> dist_height(-height_range / 2.0, height_range / 2.0); // sample thêm theo trục normal
+    
+        double theta = dist_angle(gen);
+        double r = radius * std::sqrt(dist_radius(gen)); 
+        double h = dist_height(gen);                        
+    
+        Eigen::Vector3d point = A + r * std::cos(theta) * u + r * std::sin(theta) * v + h * normal;
+    
+        return point;
+    }
     Eigen::Vector3d AFBGSteer(const Eigen::Vector3d &x_near, const Eigen::Vector3d &x_rand, const Eigen::Vector3d &x_target, double steer_length_)
     {
         Eigen::Vector3d v_expand = (x_rand - x_near).normalized();
-        
-        using dispair = std::pair<double, Eigen::Vector3d>;
-        struct DistCompare {
-            bool operator()(const dispair& a, const dispair& b) {
-                return a.first > b.first; 
-            }
-        };
-
-        std::priority_queue<dispair, std::vector<dispair>, DistCompare> pqueue;
-
-        double min_obs_dist = DBL_MAX;
-        Eigen::Vector3d obs_vec(0,0,0);
-        
-        int num_rays = 32; // Number of rays for 3D sphere scanning
-        double lidar_radius = 30.0; // Reduced to 5.0 for straighter paths (less conservative obstacle avoidance)
-
-        // 3D raycasting using Fibonacci sphere
-        for(int i = 0; i < num_rays; ++i) {
-            double phi = acos(1.0 - 2.0 * (i + 0.5) / num_rays);
-            double theta = M_PI * (1.0 + sqrt(5.0)) * (i + 0.5);
-            Eigen::Vector3d dir(sin(phi)*cos(theta), sin(phi)*sin(theta), cos(phi));
-            
-            double d = rayCast3D(x_near, dir, lidar_radius);
-            if(d < lidar_radius) {
-              Eigen::Vector3d vec = dir * d;
-              pqueue.push({d, vec});
-            }
-        }
-
-        if (!pqueue.empty()) {
-            min_obs_dist = pqueue.top().first;
-            obs_vec = pqueue.top().second;
-        }
 
         Eigen::Vector3d total_vec(0,0,0);
 
@@ -570,30 +591,7 @@ namespace path_plan
         double phi_val = steer_length_ * sigmoid((dist_to_target / max_dist) * 5.0); // Increased multiplier for stronger target attraction 
         Eigen::Vector3d v_target = (x_target - x_near).normalized();
 
-        double eta = 0.0;
-        Eigen::Vector3d v_tangent(0,0,0);
-
-        if (min_obs_dist < 2.0 * steer_length_) {
-             eta = steer_length_ * sigmoid((min_obs_dist / (2.0 * steer_length_)) * 5.0);
-             
-             Eigen::Vector3d v_obs_dir = obs_vec.normalized(); 
-             
-             // 3D tangent logic: project v_expand onto the plane orthogonal to v_obs_dir
-             Eigen::Vector3d proj = v_expand - v_expand.dot(v_obs_dir) * v_obs_dir;
-             if (proj.norm() > 1e-6) {
-                 v_tangent = proj.normalized();
-             } else {
-                 // Fallback if v_expand is parallel to v_obs_dir
-                 Eigen::Vector3d arbitrary(1, 0, 0);
-                 if (std::abs(v_obs_dir.x()) > 0.9) arbitrary = Eigen::Vector3d(0, 1, 0);
-                 v_tangent = v_obs_dir.cross(arbitrary).normalized();
-             }
-             
-             total_vec = v_expand + phi_val * v_target + eta * v_tangent;
-        } 
-        else {
-             total_vec = v_expand + phi_val * v_target;
-        }
+        total_vec = v_expand + phi_val * v_target;
         
         double step_size = std::min(steer_length_, dist_to_target);
         return x_near + total_vec.normalized() * step_size;
@@ -631,20 +629,33 @@ namespace path_plan
 #endif
       cache.insert(start_node_, treeA, goal_node_, treeB, h_start_goal); // insert start and goal node to cache
 
-      // Adaptive bias params
-      int window_W = 30;
-      double rho_min = 0.05, rho_max = 0.90;
-      double eps_min = 1e-4, eps_max = 1e-3;
-      double L_min = 3, L_max = 20;
-      double mu_min = 2, mu_max = 8;
-      double eta = 1e-6;
+      // ===================== Adaptive p_bias params (2-mode hard-reset scheme) =====================
+      // p_bias in [p_min, p_max], initialized at p_bias0.
+      //   deltaH_k = (h_{k-1} - h_k) / (h_{k-1} + eps_h)   -- relative heuristic improvement
+      //   f_trap_k = trap ratio over the last N_{k-1} outcomes (lagged window)
+      //   theta_k  = min(theta_max_, theta0 * (1 + lambda_t * f_trap_k))
+      //   N_k      = clip(N_min + (N_max - N_min) * f_trap_k, N_min, N_max)   -- window size for NEXT iter
+      // Update:
+      //   if deltaH_k <= theta_k  (not improving enough) -> p_bias = p_min                 (hard reset)
+      //   else                    (clearly improving)    -> p_bias = min(p_max, p_bias + eta_p*(deltaH_k - theta_k))
+      const double p_min    = 0.05;
+      const double p_max    = 0.90;
+      const double p_bias0  = 0.50;
+      const double eta_p    = 10.0;   // sensitivity of the incremental increase (mode 2)
+      const double theta0   = 0.03;   // base improvement threshold
+      const double lambda_t = 2.0;    // amplification of threshold by recent trap ratio
+      const double theta_max_ = 0.25; // upper clip for the threshold
+      const int    N_min    = 10;     // min size of the trapped-history window
+      const int    N_max    = 50;     // max size of the trapped-history window
+      const double eps_h    = 1e-6;   // guards against division by ~0 in deltaH
 
-      std::deque<bool> trapped_window;
-      std::deque<double> h_star_history;
-      double h_star = h_start_goal;
-      h_star_history.push_back(h_star);
-      int c_k = 0;
-      for (number_of_iterations_ = 0; number_of_iterations_ < 150000; ++number_of_iterations_)
+      std::deque<bool> trapped_window;   // sliding window of recent trap outcomes (size = N_{k-1})
+      int N_prev = N_min;                // window size used to compute f_trap for THIS iteration
+      double p_bias = p_bias0;           // current p_bias value (p_bias_0)
+      double h_prev = h_start_goal;      // h_{k-1}, initialized from h(q_start, q_goal)
+      // =================================================================================================
+
+      for (number_of_iterations_ = 0; number_of_iterations_ < 200000; ++number_of_iterations_)
       {
         /* random sampling */
         
@@ -654,68 +665,60 @@ namespace path_plan
         RRTNode3DPtr nearest_nodeA, nearest_nodeB;
         double h_tmp;
         bool has_heuristic = cache.getMinByTree(treeA, treeB, selected_SI, selected_GI, h_tmp);
-        
-        // 1. Calculate h_k
-        double h_k = has_heuristic ? h_tmp : h_start_goal;
-        
-        // 2. Update h_k^*
-        h_star = std::min(h_star, h_k);
-        h_star_history.push_back(h_star);
-        if (h_star_history.size() > window_W + 1) {
-            h_star_history.pop_front();
+
+        // h_k: current heuristic value h(s_guide, t_guide) for this iteration
+        double h_curr = has_heuristic ? h_tmp : h_start_goal;
+
+        // ---- 1. f_trap_k: trap ratio over the last N_{k-1} outcomes (lagged window, avoids circular dependency) ----
+        double f_trap = 0.0;
+        if (!trapped_window.empty())
+        {
+          int window_size = std::min((int)trapped_window.size(), N_prev);
+          int trapped_count = 0;
+          // trapped_window is ordered oldest->newest; take the last `window_size` entries
+          for (int i = (int)trapped_window.size() - window_size; i < (int)trapped_window.size(); ++i)
+            if (trapped_window[i]) trapped_count++;
+          f_trap = (double)trapped_count / (double)window_size;
         }
-        
-        // 3. Compute phi_k
-        double phi_k = 0.0;
-        if (!trapped_window.empty()) {
-            int trapped_count = 0;
-            for (bool trapped : trapped_window) {
-                if (trapped) trapped_count++;
-            }
-            phi_k = (double)trapped_count / trapped_window.size();
+
+        // ---- 2. theta_k: improvement threshold, amplified by recent trap ratio, clipped at theta_max_ ----
+        double theta_k = std::min(theta_max_, theta0 * (1.0 + lambda_t * f_trap));
+
+        // ---- 3. deltaH_k: relative heuristic improvement vs previous iteration ----
+        double delta_H = (h_prev - h_curr) / (h_prev + eps_h);
+
+        // ---- 4. p_bias_k: 2-mode hard-reset update ----
+        if (delta_H <= theta_k)
+        {
+          // Not improving enough (or environment locally too obstacle-dense / too many recent traps)
+          p_bias = p_min;
         }
-        
-        // 4. Calculate r_k and bar_r_k
-        double h_star_kW = h_star_history.front();
-        double r_k = (h_star_kW - h_star) / (window_W * h_start_goal + eta);
-        double bar_r_k = window_W * r_k;
-        
-        // 5. Calculate thresholds
-        double eps_stall = eps_min + (eps_max - eps_min) * phi_k;
-        double L_phi = std::ceil(std::max(L_min, L_max * (1.0 - phi_k)));
-        double mu_phi = mu_min + (mu_max - mu_min) * phi_k;
-        
-        // 6. Update c_k
-        if (r_k < eps_stall) {
-            c_k++;
-        } else {
-            c_k = 0;
+        else
+        {
+          // Clearly improving: increase incrementally, clipped at p_max
+          p_bias = std::min(p_max, p_bias + eta_p * (delta_H - theta_k));
         }
-        
-        // 7. Calculate rho_bias (pbias)
-        // double pbias = computePbias(
-        //     brrt_optimize_p1_,
-        //     h_start_goal,
-        //     selected_SI->x,
-        //     selected_GI->x);
-        double pbias = 0.0;
-        if (c_k >= L_phi) {
-            pbias = rho_min;
-        } else {
-            pbias = rho_min + (rho_max - rho_min) * (1.0 - std::exp(-mu_phi * bar_r_k));
-        }
-        pbias = std::max(rho_min, std::min(rho_max, pbias));
-        
+        p_bias = std::max(p_min, std::min(p_max, p_bias)); // safety clamp
+
+        // ---- 5. N_k: next window size, grows with recent trap ratio (applied AFTER this iteration's outcome) ----
+        int N_k = (int)std::floor(N_min + (N_max - N_min) * f_trap);
+        N_k = std::max(N_min, std::min(N_max, N_k));
+
+        double pbias = p_bias; // kept as `pbias` to match the rest of the function below
+        pbias_history_.emplace_back(number_of_iterations_, pbias); // track pbias
+
         if (random01 < pbias)
         {
           TreeNode* rootOther = path_reverse ? start_node_ : goal_node_;
-          Eigen::Vector3d x_tmp = randomPointInCircle(selected_SI->x, selected_GI->x);
+          Eigen::Vector3d x_tmp = randomPointInCylinder(selected_SI->x, selected_GI->x, map_ptr_->getMapSize()(2));
           nearest_nodeA = selected_SI;
           x_new = AFBGSteer(nearest_nodeA->x, x_tmp, rootOther->x, steer_length_);
           if ((!map_ptr_->isStateValid(x_new)) || (!map_ptr_->isSegmentValid(nearest_nodeA->x, x_new)))
           {
             trapped_window.push_back(true);
-            if(trapped_window.size() > window_W) trapped_window.pop_front();
+            while ((int)trapped_window.size() > N_k) trapped_window.pop_front();
+            N_prev = N_k;
+            h_prev = h_curr;
             std::swap(treeA, treeB);
             path_reverse = !path_reverse;
             continue;
@@ -747,7 +750,9 @@ namespace path_plan
           if ((!map_ptr_->isStateValid(x_new)) || (!map_ptr_->isSegmentValid(nearest_nodeA->x, x_new)))
           {
             trapped_window.push_back(true);
-            if(trapped_window.size() > window_W) trapped_window.pop_front();
+            while ((int)trapped_window.size() > N_k) trapped_window.pop_front();
+            N_prev = N_k;
+            h_prev = h_curr;
             std::swap(treeA, treeB);
             path_reverse = !path_reverse;
             continue;
@@ -766,7 +771,9 @@ namespace path_plan
         }
 
         trapped_window.push_back(false);
-        if(trapped_window.size() > window_W) trapped_window.pop_front();
+        while ((int)trapped_window.size() > N_k) trapped_window.pop_front();
+        N_prev = N_k;
+        h_prev = h_curr;
 
         double dist_from_A = nearest_nodeA->cost_from_start + steer_length_;
         RRTNode3DPtr new_nodeA(nullptr);

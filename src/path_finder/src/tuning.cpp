@@ -54,7 +54,7 @@ private:
     shared_ptr<path_plan::BRRT_Optimize> brrt_optimize_ptr_;
     shared_ptr<path_plan::BRRT_Simple_Case1> brrt_simple_case1_ptr_;
     shared_ptr<path_plan::BRRT_Simple_Case2> brrt_simple_case2_ptr_;
-    shared_ptr<path_plan::BRRT_Simple_case3> brrt_optimize_case3_ptr;
+    shared_ptr<path_plan::BRRT_Simple_Case3> brrt_optimize_case3_ptr;
     Eigen::Vector3d start_, goal_;
 
     bool run_rrt_, run_rrt_star_, run_rrt_sharp_;
@@ -116,7 +116,7 @@ public:
         vis_ptr_->registe<nav_msgs::Path>("brrt_case2_final_path");
         vis_ptr_->registe<sensor_msgs::PointCloud2>("brrt_case2_final_wpts");
 
-        brrt_optimize_case3_ptr = std::make_shared<path_plan::BRRT_Simple_case3>(nh_, env_ptr_);
+        brrt_optimize_case3_ptr = std::make_shared<path_plan::BRRT_Simple_Case3>(nh_, env_ptr_);
         brrt_optimize_case3_ptr->setVisualizer(vis_ptr_);
         vis_ptr_->registe<nav_msgs::Path>("brrt_case3_final_path");
         vis_ptr_->registe<sensor_msgs::PointCloud2>("brrt_case3_final_wpts");
@@ -458,13 +458,13 @@ public:
                 vector<std::pair<double, double>> slns = brrt_optimize_case3_ptr->getSolutions();
                 int num_nodes = brrt_optimize_case3_ptr->get_valid_tree_node_nums();
                 int num_iterations = brrt_optimize_case3_ptr->get_number_of_iteration();
-                algo_outputs["BRRT_Case3"] = {true, slns.back().second, slns.back().first, num_nodes, num_iterations, start_, goal_};
+                algo_outputs["BRRT_Case3"] = AlgoResult{true, slns.back().second, slns.back().first, num_nodes, num_iterations, start_, goal_};
             }
             else
             {
                 int num_nodes = brrt_optimize_case3_ptr->get_valid_tree_node_nums();
                 int num_iterations = brrt_optimize_case3_ptr->get_number_of_iteration();
-                algo_outputs["BRRT_Case3"] = {false, brrt_optimize_case3_ptr->get_final_path_use_time_(), DBL_MAX, num_nodes, num_iterations, start_, goal_};
+                algo_outputs["BRRT_Case3"] = AlgoResult{false, brrt_optimize_case3_ptr->get_final_path_use_time_(), DBL_MAX, num_nodes, num_iterations, start_, goal_};
             }
 
             start_ = goal_;

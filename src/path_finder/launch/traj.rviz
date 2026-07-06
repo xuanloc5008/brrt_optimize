@@ -11,6 +11,9 @@ Panels:
         - /Mapping1/global_occ1
         - /Mapping1/global_occ1/Autocompute Value Bounds1
         - /Planning1
+        - /Planning1/BRRT_Tree1
+        - /Planning1/BRRT_Edge1
+        - /Planning1/BRRT_wpts1
         - /BRRT_Optimize1/BRRT_Optimize_Points1
         - /BRRT_Optimize1/BRRT_Optimize_Path1
         - /BRRT_Optimize1/BRRT_Optimize_Node1
@@ -27,6 +30,9 @@ Panels:
         - /brrt_star1/tree-node1
         - /brrt_star1/Path1
         - /brrt_star1/PointCloud21
+        - /BG_BRRT1
+        - /BG_BRRT1/BG_BRRT_Path1
+        - /BG_BRRT1/BG_BRRT_wpts1
       Splitter Ratio: 0.6735293865203857
     Tree Height: 781
   - Class: rviz/Selection
@@ -410,7 +416,7 @@ Visualization Manager:
           Axis: Z
           Channel Name: intensity
           Class: rviz/PointCloud2
-          Color: 0; 85; 255
+          Color: 255; 255; 255
           Color Transformer: FlatColor
           Decay Time: 0
           Enabled: true
@@ -766,7 +772,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/case1/tree_vertice
           Name: tree-edge
           Namespaces:
-            "": true
+            {}
           Queue Size: 100
           Value: true
         - Class: rviz/Marker
@@ -774,7 +780,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/case1/tree_edges
           Name: tree-node
           Namespaces:
-            "": true
+            {}
           Queue Size: 100
           Value: true
         - Alpha: 1
@@ -838,7 +844,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/case2/tree_edges
           Name: tree-node
           Namespaces:
-            "": true
+            {}
           Queue Size: 100
           Value: true
         - Class: rviz/MarkerArray
@@ -846,7 +852,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/case2/tree_vertice
           Name: tree-edge
           Namespaces:
-            "": true
+            {}
           Queue Size: 100
           Value: true
         - Alpha: 1
@@ -1047,6 +1053,78 @@ Visualization Manager:
           Value: true
       Enabled: false
       Name: brrt_star
+    - Class: rviz/Group
+      Displays:
+        - Alpha: 1
+          Buffer Length: 1
+          Class: rviz/Path
+          Color: 0; 85; 255
+          Enabled: true
+          Head Diameter: 0.30000001192092896
+          Head Length: 0.20000000298023224
+          Length: 0.30000001192092896
+          Line Style: Billboards
+          Line Width: 0.5
+          Name: BG_BRRT_Path
+          Offset:
+            X: 0
+            Y: 0
+            Z: 0
+          Pose Color: 255; 85; 255
+          Pose Style: None
+          Queue Size: 10
+          Radius: 0.029999999329447746
+          Shaft Diameter: 0.10000000149011612
+          Shaft Length: 0.10000000149011612
+          Topic: /path_finder_node/bg_brrt_final_path
+          Unreliable: false
+          Value: true
+        - Alpha: 1
+          Autocompute Intensity Bounds: true
+          Autocompute Value Bounds:
+            Max Value: 10
+            Min Value: -10
+            Value: true
+          Axis: Z
+          Channel Name: intensity
+          Class: rviz/PointCloud2
+          Color: 0; 85; 255
+          Color Transformer: FlatColor
+          Decay Time: 0
+          Enabled: true
+          Invert Rainbow: false
+          Max Color: 255; 255; 255
+          Min Color: 0; 0; 0
+          Name: BG_BRRT_wpts
+          Position Transformer: XYZ
+          Queue Size: 10
+          Selectable: true
+          Size (Pixels): 3
+          Size (m): 0.5
+          Style: Spheres
+          Topic: /path_finder_node/bg_brrt_final_wpts
+          Unreliable: false
+          Use Fixed Frame: true
+          Use rainbow: true
+          Value: true
+        - Class: rviz/Marker
+          Enabled: true
+          Marker Topic: /path_finder_node/bg_brrt/tree_edges
+          Name: BG_BRRT_Tree
+          Namespaces:
+            "": true
+          Queue Size: 100
+          Value: true
+        - Class: rviz/MarkerArray
+          Enabled: true
+          Marker Topic: /path_finder_node/bg_brrt/tree_vertice
+          Name: BG_BRRT_Vertice
+          Namespaces:
+            "": true
+          Queue Size: 100
+          Value: true
+      Enabled: true
+      Name: BG_BRRT
   Enabled: true
   Global Options:
     Background Color: 46; 52; 54
@@ -1076,7 +1154,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 459.8097229003906
+      Distance: 270.7728576660156
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -1084,17 +1162,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: 89.04952239990234
-        Y: -1.2154361009597778
-        Z: 3.594812369556166e-05
+        X: -16.294692993164062
+        Y: 34.77055358886719
+        Z: 9.868824236036744e-06
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.4947962760925293
+      Pitch: 0.8147979974746704
       Target Frame: map
-      Yaw: 6.276749610900879
+      Yaw: 1.4673882722854614
     Saved: ~
 Window Geometry:
   Displays:

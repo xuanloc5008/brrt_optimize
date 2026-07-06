@@ -32,6 +32,7 @@ include_directories(
 )
 
 add_executable(${PROJECT_NAME}
+  # src/tuning.cpp
   src/test_planner.cpp
   src/kdtree.c
 )

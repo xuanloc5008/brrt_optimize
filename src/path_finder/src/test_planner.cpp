@@ -24,10 +24,7 @@ OF SUCH DAMAGE.
 #include "path_finder/rrt_star.h"
 #include "path_finder/rrt.h"
 #include "path_finder/brrt.h"
-#include "path_finder/brrt_star.h"
-#include "path_finder/brrt_sample_gravity.h"
-#include "path_finder/brrt_simple_case1.h"
-#include "path_finder/brrt_simple_case2.h"
+#include "path_finder/bg_brrt.h"
 #include "path_finder/brrt_optimize_case3.h"
 #include "path_finder/testcase.h"
 #include "visualization/visualization.hpp"
@@ -35,7 +32,7 @@ OF SUCH DAMAGE.
 #include <ros/ros.h>
 #include <geometry_msgs/PoseStamped.h>
 
-#define NUMBER_TEST_TIMES 300
+#define NUMBER_TEST_TIMES 100
 class TesterPathFinder
 {
 private:
@@ -46,20 +43,13 @@ private:
 
     env::OccMap::Ptr env_ptr_;
     std::shared_ptr<visualization::Visualization> vis_ptr_;
-    shared_ptr<path_plan::RRTSharp> rrt_sharp_ptr_;
-    shared_ptr<path_plan::RRTStar> rrt_star_ptr_;
-    shared_ptr<path_plan::RRT> rrt_ptr_;
     shared_ptr<path_plan::BRRT> brrt_ptr_;
-    shared_ptr<path_plan::BRRTStar> brrt_star_ptr_;
-    shared_ptr<path_plan::BRRT_Optimize> brrt_optimize_ptr_;
-    shared_ptr<path_plan::BRRT_Simple_Case1> brrt_simple_case1_ptr_;
-    shared_ptr<path_plan::BRRT_Simple_Case2> brrt_simple_case2_ptr_;
+    shared_ptr<path_plan::BG_BRRT> bg_brrt_ptr_;
     shared_ptr<path_plan::BRRT_Simple_Case3> brrt_optimize_case3_ptr;
     Eigen::Vector3d start_, goal_;
     double start_z_, goal_z_;
 
-    bool run_rrt_, run_rrt_star_, run_rrt_sharp_;
-    bool run_brrt_, run_brrt_star_, run_brrt_optimize_;
+    bool run_brrt_, run_bg_brrt_, run_brrt_case3_;
     // Implement for testing path planning algorithms
     BiasSampler sampler_;
     BRRTExperimentMultiAlgo *manager;
@@ -71,81 +61,52 @@ public:
     {
         env_ptr_ = std::make_shared<env::OccMap>();
         env_ptr_->init(nh_);
-      
+
         vis_ptr_ = std::make_shared<visualization::Visualization>(nh_);
         vis_ptr_->registe<visualization_msgs::Marker>("start");
         vis_ptr_->registe<visualization_msgs::Marker>("goal");
 
-        rrt_sharp_ptr_ = std::make_shared<path_plan::RRTSharp>(nh_, env_ptr_);
-        rrt_sharp_ptr_->setVisualizer(vis_ptr_);
-        vis_ptr_->registe<nav_msgs::Path>("rrt_sharp_final_path");
-        vis_ptr_->registe<sensor_msgs::PointCloud2>("rrt_sharp_final_wpts");
-
-        rrt_star_ptr_ = std::make_shared<path_plan::RRTStar>(nh_, env_ptr_);
-        rrt_star_ptr_->setVisualizer(vis_ptr_);
-        vis_ptr_->registe<nav_msgs::Path>("rrt_star_final_path");
-        vis_ptr_->registe<sensor_msgs::PointCloud2>("rrt_star_final_wpts");
-        vis_ptr_->registe<visualization_msgs::MarkerArray>("rrt_star_paths");
-
-        rrt_ptr_ = std::make_shared<path_plan::RRT>(nh_, env_ptr_);
-        rrt_ptr_->setVisualizer(vis_ptr_);
-        vis_ptr_->registe<nav_msgs::Path>("rrt_final_path");
-        vis_ptr_->registe<sensor_msgs::PointCloud2>("rrt_final_wpts");
-
+        // --- BRRT (vanilla bidirectional RRT) ---
         brrt_ptr_ = std::make_shared<path_plan::BRRT>(nh_, env_ptr_);
         brrt_ptr_->setVisualizer(vis_ptr_);
         vis_ptr_->registe<nav_msgs::Path>("brrt_final_path");
         vis_ptr_->registe<sensor_msgs::PointCloud2>("brrt_final_wpts");
 
-        brrt_star_ptr_ = std::make_shared<path_plan::BRRTStar>(nh_, env_ptr_);
-        brrt_star_ptr_->setVisualizer(vis_ptr_);
-        vis_ptr_->registe<nav_msgs::Path>("brrt_star_final_path");
-        vis_ptr_->registe<sensor_msgs::PointCloud2>("brrt_star_final_wpts");
+        // --- BG_BRRT (biased-goal BRRT) ---
+        bg_brrt_ptr_ = std::make_shared<path_plan::BG_BRRT>(nh_, env_ptr_);
+        bg_brrt_ptr_->setVisualizer(vis_ptr_);
+        vis_ptr_->registe<nav_msgs::Path>("bg_brrt_final_path");
+        vis_ptr_->registe<sensor_msgs::PointCloud2>("bg_brrt_final_wpts");
 
-        brrt_optimize_ptr_ = std::make_shared<path_plan::BRRT_Optimize>(nh_, env_ptr_);
-        brrt_optimize_ptr_->setVisualizer(vis_ptr_);
-        vis_ptr_->registe<nav_msgs::Path>("brrt_optimize_final_path");
-        vis_ptr_->registe<sensor_msgs::PointCloud2>("brrt_optimize_final_wpts");
-
-        brrt_simple_case1_ptr_ = std::make_shared<path_plan::BRRT_Simple_Case1>(nh_, env_ptr_);
-        brrt_simple_case1_ptr_->setVisualizer(vis_ptr_);
-        vis_ptr_->registe<nav_msgs::Path>("brrt_case1_final_path");
-        vis_ptr_->registe<sensor_msgs::PointCloud2>("brrt_case1_final_wpts");
-
-        brrt_simple_case2_ptr_ = std::make_shared<path_plan::BRRT_Simple_Case2>(nh_, env_ptr_);
-        brrt_simple_case2_ptr_->setVisualizer(vis_ptr_);
-        vis_ptr_->registe<nav_msgs::Path>("brrt_case2_final_path");
-        vis_ptr_->registe<sensor_msgs::PointCloud2>("brrt_case2_final_wpts");
-
+        // --- BRRT_Case3 (heuristic-cache optimized) ---
         brrt_optimize_case3_ptr = std::make_shared<path_plan::BRRT_Simple_Case3>(nh_, env_ptr_);
         brrt_optimize_case3_ptr->setVisualizer(vis_ptr_);
         vis_ptr_->registe<nav_msgs::Path>("brrt_case3_final_path");
         vis_ptr_->registe<sensor_msgs::PointCloud2>("brrt_case3_final_wpts");
+
         goal_ = get_sample_valid();
         goal_sub_ = nh_.subscribe("/goal", 1, &TesterPathFinder::goalCallback, this);
         execution_timer_ = nh_.createTimer(ros::Duration(1), &TesterPathFinder::executionCallback, this);
         rcv_glb_obs_client_ = nh_.serviceClient<self_msgs_and_srvs::GlbObsRcv>("/pub_glb_obs");
 
         start_.setZero();
-        
+
         nh_.param("start_z", start_z_, 5.0);
         nh_.param("goal_z", goal_z_, 5.0);
-        
+
         start_[2] = start_z_; // Start at a tunable flying altitude
 
-        nh_.param("run_rrt", run_rrt_, true);
-        nh_.param("run_rrt_star", run_rrt_star_, true);
-        nh_.param("run_rrt_sharp", run_rrt_sharp_, true);
-        nh_.param("run_brrt", run_brrt_, false);
-        nh_.param("run_brrt_star", run_brrt_star_, false);
-        nh_.param("run_brrt_optimize", run_brrt_optimize_, false);
-        nh_.param("input_param", input_param_, std::string("/home/phuong/DACN/ICIT/brrt_optimize/brrt_input.json"));
+        nh_.param("run_brrt",       run_brrt_,       true);
+        nh_.param("run_bg_brrt",    run_bg_brrt_,    true);
+        nh_.param("run_brrt_case3", run_brrt_case3_, true);
+
+        nh_.param("input_param",   input_param_,   std::string("/home/phuong/DACN/ICIT/brrt_optimize/brrt_input.json"));
         nh_.param("output_result", output_result_, std::string("/home/phuong/DACN/ICIT/brrt_optimize/evaluation/"));
-        std::cout <<"input_param: " << input_param_ << std::endl;
-        std::cout <<"output_result: " << output_result_ << std::endl;
+        std::cout << "input_param: "   << input_param_   << std::endl;
+        std::cout << "output_result: " << output_result_ << std::endl;
         manager = new BRRTExperimentMultiAlgo(
-        input_param_,
-        output_result_);
+            input_param_,
+            output_result_);
     }
     ~TesterPathFinder()
     {
@@ -180,53 +141,6 @@ public:
         // rrt_star_ptr_->setPreserveSamples(preserved_samples);
         // rrt_sharp_ptr_->setPreserveSamples(preserved_samples);
 
-        if (run_rrt_)
-        {
-            ROS_WARN("Starting RRT");
-            bool rrt_res = rrt_ptr_->plan(start_, goal_);
-            ROS_WARN("Finished RRT");
-            if (rrt_res)
-            {
-                vector<Eigen::Vector3d> final_path = rrt_ptr_->getPath();
-                vis_ptr_->visualize_path(final_path, "rrt_final_path");
-                vis_ptr_->visualize_pointcloud(final_path, "rrt_final_wpts");
-                vector<std::pair<double, double>> slns = rrt_ptr_->getSolutions();
-                ROS_INFO_STREAM("[RRT] final path len: " << slns.back().first);
-            }
-        }
-
-        if (run_rrt_star_)
-        {
-            ROS_WARN("Starting RRT*");
-            bool rrt_star_res = rrt_star_ptr_->plan(start_, goal_);
-            ROS_WARN("Finished RRT*");
-            if (rrt_star_res)
-            {
-                vector<vector<Eigen::Vector3d>> routes = rrt_star_ptr_->getAllPaths();
-                vis_ptr_->visualize_path_list(routes, "rrt_star_paths", visualization::blue);
-                vector<Eigen::Vector3d> final_path = rrt_star_ptr_->getPath();
-                vis_ptr_->visualize_path(final_path, "rrt_star_final_path");
-                vis_ptr_->visualize_pointcloud(final_path, "rrt_star_final_wpts");
-                vector<std::pair<double, double>> slns = rrt_star_ptr_->getSolutions();
-                ROS_INFO_STREAM("[RRT*] final path len: " << slns.back().first);
-            }
-        }
-
-        if (run_rrt_sharp_)
-        {
-            ROS_WARN("Starting RRT#");
-            bool rrt_sharp_res = rrt_sharp_ptr_->plan(start_, goal_);
-            ROS_WARN("Finished RRT#");
-            if (rrt_sharp_res)
-            {
-                vector<Eigen::Vector3d> final_path = rrt_sharp_ptr_->getPath();
-                vis_ptr_->visualize_path(final_path, "rrt_sharp_final_path");
-                vis_ptr_->visualize_pointcloud(final_path, "rrt_sharp_final_wpts");
-                vector<std::pair<double, double>> slns = rrt_sharp_ptr_->getSolutions();
-                ROS_INFO_STREAM("[RRT#] final path len: " << slns.back().first);
-            }
-        }
-
         if (run_brrt_)
         {
             ROS_WARN("Starting BRRT");
@@ -247,60 +161,28 @@ public:
             }
         }
 
-        if (run_brrt_star_)
+        if (run_bg_brrt_)
         {
-            ROS_WARN("Starting BRRT*");
-            bool brrt_star_res = brrt_star_ptr_->plan(start_, goal_);
-            ROS_WARN("Finished BRRT*");
-            if (brrt_star_res)
+            ROS_WARN("Starting BG_BRRT");
+            bool bg_brrt_res = bg_brrt_ptr_->plan(start_, goal_);
+            ROS_WARN("Finished BG_BRRT");
             {
-                vector<Eigen::Vector3d> final_path = brrt_star_ptr_->getPath();
-                vis_ptr_->visualize_path(final_path, "brrt_star_final_path");
-                vis_ptr_->visualize_pointcloud(final_path, "brrt_star_final_wpts");
-                vector<std::pair<double, double>> slns = brrt_star_ptr_->getSolutions();
-                ROS_INFO_STREAM("[BRRT*] final path len: " << slns.back().first);
+                int num_nodes = bg_brrt_ptr_->get_valid_tree_node_nums();
+                int num_iterations = bg_brrt_ptr_->get_number_of_iteration();
+                if (bg_brrt_res)
+                {
+                    vector<Eigen::Vector3d> final_path = bg_brrt_ptr_->getPath();
+                    vis_ptr_->visualize_path(final_path, "bg_brrt_final_path");
+                    vis_ptr_->visualize_pointcloud(final_path, "bg_brrt_final_wpts");
+                    vector<std::pair<double, double>> slns = bg_brrt_ptr_->getSolutions();
+                    ROS_INFO_STREAM("[BG_BRRT] final path len: " << slns.back().first);
+                }
+                ROS_INFO("[BG_BRRT]    nodes: %d, iters: %d, %s", num_nodes, num_iterations, bg_brrt_res ? "SUCCESS" : "FAILED");
             }
         }
-        if (run_brrt_optimize_)
-        {
-            // bool brrt_optimize_res = brrt_optimize_ptr_->plan(start_, goal_);
-            // if (brrt_optimize_res)
-            // {
-            //     vector<Eigen::Vector3d> final_path = brrt_optimize_ptr_->getPath();
-            //     vis_ptr_->visualize_path(final_path, "brrt_optimize_final_path");
-            //     vis_ptr_->visualize_pointcloud(final_path, "brrt_optimize_final_wpts");
-            //     vector<std::pair<double, double>> slns = brrt_optimize_ptr_->getSolutions();
-            //     ROS_INFO_STREAM("[BRRTOpitmize*] final path len: " << slns.back().first);
-            // }
 
-            bool brrt_optimize_case1_res = brrt_simple_case1_ptr_->plan(start_, goal_);
-            {
-                int num_nodes = brrt_simple_case1_ptr_->get_valid_tree_node_nums();
-                int num_iterations = brrt_simple_case1_ptr_->get_number_of_iteration();
-                if (brrt_optimize_case1_res)
-                {
-                    vector<Eigen::Vector3d> final_path = brrt_simple_case1_ptr_->getPath();
-                    vis_ptr_->visualize_path(final_path, "brrt_case1_final_path");
-                    vis_ptr_->visualize_pointcloud(final_path, "brrt_case1_final_wpts");
-                    vector<std::pair<double, double>> slns = brrt_simple_case1_ptr_->getSolutions();
-                    ROS_INFO_STREAM("[BRRTOpitmize1] final path len: " << slns.back().first);
-                }
-                ROS_INFO("[BRRT_Case1] nodes: %d, iters: %d, %s", num_nodes, num_iterations, brrt_optimize_case1_res ? "SUCCESS" : "FAILED");
-            }
-            bool brrt_optimize_case2_res = brrt_simple_case2_ptr_->plan(start_, goal_);
-            {
-                int num_nodes = brrt_simple_case2_ptr_->get_valid_tree_node_nums();
-                int num_iterations = brrt_simple_case2_ptr_->get_number_of_iteration();
-                if (brrt_optimize_case2_res)
-                {
-                    vector<Eigen::Vector3d> final_path = brrt_simple_case2_ptr_->getPath();
-                    vis_ptr_->visualize_path(final_path, "brrt_case2_final_path");
-                    vis_ptr_->visualize_pointcloud(final_path, "brrt_case2_final_wpts");
-                    vector<std::pair<double, double>> slns = brrt_simple_case2_ptr_->getSolutions();
-                    ROS_INFO_STREAM("[BRRTOpitmize2] final path len: " << slns.back().first);
-                }
-                ROS_INFO("[BRRT_Case2] nodes: %d, iters: %d, %s", num_nodes, num_iterations, brrt_optimize_case2_res ? "SUCCESS" : "FAILED");
-            }
+        if (run_brrt_case3_)
+        {
             bool brrt_optimize_case3_res = brrt_optimize_case3_ptr->plan(start_, goal_);
             {
                 int num_nodes = brrt_optimize_case3_ptr->get_valid_tree_node_nums();
@@ -311,7 +193,7 @@ public:
                     vis_ptr_->visualize_path(final_path, "brrt_case3_final_path");
                     vis_ptr_->visualize_pointcloud(final_path, "brrt_case3_final_wpts");
                     vector<std::pair<double, double>> slns = brrt_optimize_case3_ptr->getSolutions();
-                    ROS_INFO_STREAM("[BRRTOpitmize3] final path len: " << slns.back().first);
+                    ROS_INFO_STREAM("[BRRT_Case3] final path len: " << slns.back().first);
                 }
                 ROS_INFO("[BRRT_Case3] nodes: %d, iters: %d, %s", num_nodes, num_iterations, brrt_optimize_case3_res ? "SUCCESS" : "FAILED");
             }
@@ -377,23 +259,7 @@ public:
             print_vector3d("goal", goal_);
             std::map<std::string, AlgoResult> algo_outputs;
 
-            // Simulate BRRT
-            // brrt_star_ptr_->set_test_param(input.epsilon);
-            // bool brrt_star_res = brrt_star_ptr_->plan(start_, goal_);
-            // if (brrt_star_res)
-            // {
-            //     vector<std::pair<double, double>> slns = brrt_star_ptr_->getSolutions();
-            //     int num_nodes = brrt_star_ptr_->get_valid_tree_node_nums();
-            //     int num_iterations = brrt_star_ptr_->get_number_of_iteration();
-            //     algo_outputs["BRRT star"] = {true, slns.back().second, slns.back().first, num_nodes, num_iterations, start_, goal_};
-            // }
-            // else
-            // {
-            //     int num_nodes = brrt_star_ptr_->get_valid_tree_node_nums();
-            //     int num_iterations = brrt_star_ptr_->get_number_of_iteration();
-            //     algo_outputs["BRRT star"] = {false, brrt_star_ptr_->get_final_path_use_time_(), DBL_MAX, num_nodes, num_iterations, start_, goal_};
-            // }
-            //BRRT*
+            // --- BRRT (vanilla bidirectional RRT) ---
             brrt_ptr_->set_test_param(input.epsilon);
             bool brrt_res = brrt_ptr_->plan(start_, goal_);
             {
@@ -410,42 +276,27 @@ public:
                 }
                 ROS_INFO("[BRRT]       nodes: %d, iters: %d, %s", num_nodes, num_iterations, brrt_res ? "SUCCESS" : "FAILED");
             }
-            // Simulate BRRT Optimize
-            brrt_simple_case1_ptr_->set_heuristic_param(input.p1, input.u_p, input.alpha, input.beta, input.gamma,input.epsilon);
-            bool brrt_simple_case1_res = brrt_simple_case1_ptr_->plan(start_, goal_);
+
+            // --- BG_BRRT (biased-goal BRRT) ---
+            bg_brrt_ptr_->set_test_param(input.epsilon);
+            bool bg_brrt_res = bg_brrt_ptr_->plan(start_, goal_);
             {
-                int num_nodes = brrt_simple_case1_ptr_->get_valid_tree_node_nums();
-                int num_iterations = brrt_simple_case1_ptr_->get_number_of_iteration();
-                if (brrt_simple_case1_res)
+                int num_nodes = bg_brrt_ptr_->get_valid_tree_node_nums();
+                int num_iterations = bg_brrt_ptr_->get_number_of_iteration();
+                if (bg_brrt_res)
                 {
-                    vector<std::pair<double, double>> slns = brrt_simple_case1_ptr_->getSolutions();
-                    algo_outputs["BRRT_Case1"] = {true, slns.back().second, slns.back().first, num_nodes, num_iterations, start_, goal_};
+                    vector<std::pair<double, double>> slns = bg_brrt_ptr_->getSolutions();
+                    algo_outputs["BG_BRRT"] = {true, slns.back().second, slns.back().first, num_nodes, num_iterations, start_, goal_};
                 }
                 else
                 {
-                    algo_outputs["BRRT_Case1"] = {false, brrt_simple_case1_ptr_->get_final_path_use_time_(), DBL_MAX, num_nodes, num_iterations, start_, goal_};
+                    algo_outputs["BG_BRRT"] = {false, bg_brrt_ptr_->get_final_path_use_time_(), DBL_MAX, num_nodes, num_iterations, start_, goal_};
                 }
-                ROS_INFO("[BRRT_Case1] nodes: %d, iters: %d, %s", num_nodes, num_iterations, brrt_simple_case1_res ? "SUCCESS" : "FAILED");
+                ROS_INFO("[BG_BRRT]    nodes: %d, iters: %d, %s", num_nodes, num_iterations, bg_brrt_res ? "SUCCESS" : "FAILED");
             }
 
-            brrt_simple_case2_ptr_->set_heuristic_param(input.p1, input.u_p, input.alpha, input.beta, input.gamma,input.epsilon);
-            bool brrt_simple_case2_res = brrt_simple_case2_ptr_->plan(start_, goal_);
-            {
-                int num_nodes = brrt_simple_case2_ptr_->get_valid_tree_node_nums();
-                int num_iterations = brrt_simple_case2_ptr_->get_number_of_iteration();
-                if (brrt_simple_case2_res)
-                {
-                    vector<std::pair<double, double>> slns = brrt_simple_case2_ptr_->getSolutions();
-                    algo_outputs["BRRT_Case2"] = {true, slns.back().second, slns.back().first, num_nodes, num_iterations, start_, goal_};
-                }
-                else
-                {
-                    algo_outputs["BRRT_Case2"] = {false, brrt_simple_case2_ptr_->get_final_path_use_time_(), DBL_MAX, num_nodes, num_iterations, start_, goal_};
-                }
-                ROS_INFO("[BRRT_Case2] nodes: %d, iters: %d, %s", num_nodes, num_iterations, brrt_simple_case2_res ? "SUCCESS" : "FAILED");
-            }
-
-            brrt_optimize_case3_ptr->set_heuristic_param(input.p1, input.u_p, input.alpha, input.beta, input.gamma,input.epsilon);
+            // --- BRRT_Case3 (heuristic-cache optimized) ---
+            brrt_optimize_case3_ptr->set_heuristic_param(input.p1, input.u_p, input.alpha, input.beta, input.gamma, input.epsilon);
             bool brrt_optimize_case3_res = brrt_optimize_case3_ptr->plan(start_, goal_);
             {
                 int num_nodes = brrt_optimize_case3_ptr->get_valid_tree_node_nums();
@@ -461,20 +312,7 @@ public:
                 }
                 ROS_INFO("[BRRT_Case3] nodes: %d, iters: %d, %s", num_nodes, num_iterations, brrt_optimize_case3_res ? "SUCCESS" : "FAILED");
             }
-            // brrt_optimize_ptr_->set_heuristic_param(input.p1, input.u_p, input.alpha, input.beta, input.gamma,input.epsilon);
-            // bool brrt_optimize_res = brrt_optimize_ptr_->plan(start_, goal_);
-            // if (brrt_optimize_res)
-            // {
-            //     vector<std::pair<double, double>> slns = brrt_optimize_ptr_->getSolutions();
-            //     int num_nodes = brrt_optimize_ptr_->get_valid_tree_node_nums();
-            //     int num_iterations = brrt_optimize_ptr_->get_number_of_iteration();
-            //     algo_outputs["BRRT_Optimize"] = {true, slns.back().second, slns.back().first, num_nodes, num_iterations, start_, goal_};
-            // }
-            // else
-            // {
-            //     algo_outputs["BRRT_Optimize"] = {false, 0.0, 0.0, 0, 0, start_, goal_};
-            // }
-            // std::cout << "Run " << i + 1 << " completed." << std::endl;
+
             manager->store_output_for_run(algo_outputs);
         }
         manager->save_json();
