@@ -138,7 +138,7 @@ void RandomBRRTGenerate_Large(double size = 4)
    pcl::PointXYZ pt_random;
    random_device rd;
    int number_ostacle = _obs_num;
-   std::cout << "number of ostacle" << number_ostacle;
+   std::cout << "number of obstacle: " << number_ostacle << std::endl;
 
    std::mt19937 gen(rd()); 
 
@@ -192,7 +192,7 @@ void RandomBRRTGenerate_Buildings(double size = 4)
    pcl::PointXYZ pt_random;
    random_device rd;
    int number_ostacle = _obs_num;
-   std::cout << "number of ostacle" << number_ostacle;
+   std::cout << "number of obstacle: " << number_ostacle << std::endl;
 
    std::mt19937 gen(rd()); 
 
@@ -251,7 +251,7 @@ void RandomBRRTGenerate_Buildings_MixedZ(double size = 4)
    pcl::PointXYZ pt_random;
    random_device rd;
    int number_ostacle = _obs_num;
-   std::cout << "number of ostacle" << number_ostacle;
+   std::cout << "number of obstacle: " << number_ostacle << std::endl;
 
    std::mt19937 gen(rd());
 
@@ -318,7 +318,7 @@ void RandomBRRTGenerate_Cubes(double size = 4)
    random_device rd;
    double z_min = -1.0;
    int number_ostacle = _obs_num;
-   std::cout << "number of ostacle: " << number_ostacle << std::endl;
+   std::cout << "number of obstacle: " << number_ostacle << std::endl;
 
    std::mt19937 gen(rd()); 
 

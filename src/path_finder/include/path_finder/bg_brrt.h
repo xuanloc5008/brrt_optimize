@@ -410,6 +410,9 @@ namespace path_plan
         ROS_ERROR_STREAM("[BG_BRRT]: NOT CONNECTED TO GOAL after " << (ros::Time::now() - rrt_start_time).toSec() << " seconds" << " number_of_iterations_ " << number_of_iterations_);
       }
 #endif
+
+      kd_free(kdtree_1);
+      kd_free(kdtree_2);
       return tree_connected;
     }
 

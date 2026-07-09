@@ -133,7 +133,7 @@ public:
         nh_.param("run_brrt", run_brrt_, false);
         nh_.param("run_brrt_star", run_brrt_star_, false);
         nh_.param("run_brrt_optimize", run_brrt_optimize_, false);
-        nh_.param("input_param", input_param_, std::string("/home/phuong/DACN/ICIT/brrt_optimize/brrt_input.json"));
+        nh_.param("input_param", input_param_, std::string("brrt_input.json"));
         nh_.param("output_result", output_result_, std::string("/home/phuong/DACN/ICIT/brrt_optimize/evaluation/"));
         std::cout <<"input_param: " << input_param_ << std::endl;
         std::cout <<"output_result: " << output_result_ << std::endl;

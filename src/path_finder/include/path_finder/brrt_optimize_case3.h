@@ -222,10 +222,13 @@ namespace path_plan
 
       solution_cost_time_pair_list_.clear();
       pbias_history_.clear();
-      for (int i = 0; i < valid_tree_node_nums_; i++)
+      // Clear entire pool to avoid dangling parent/children from previous runs (major source of corruption on reuse)
+      for (int i = 0; i < (int)nodes_pool_.size(); i++)
       {
-        nodes_pool_[i]->parent = nullptr;
-        nodes_pool_[i]->children.clear();
+        if (nodes_pool_[i]) {
+          nodes_pool_[i]->parent = nullptr;
+          nodes_pool_[i]->children.clear();
+        }
       }
       valid_tree_node_nums_ = 0;
     }
@@ -481,6 +484,7 @@ namespace path_plan
     void rewire(RRTNode3DPtr &new_node, kdtree *tree_ptr)
     {
         int tree_size = kd_res_size(kd_nearest_range3(tree_ptr, new_node->x[0], new_node->x[1], new_node->x[2], DBL_MAX));
+        (void)tree_size; // used for potential adaptive logic; suppress warning
         double r_near = getAdaptiveRewireRadius(valid_tree_node_nums_);
         struct kdres *neighbors = kd_nearest_range3(tree_ptr, new_node->x[0], new_node->x[1], new_node->x[2], r_near);
         
@@ -552,32 +556,55 @@ namespace path_plan
         return max_dist;
     }
 
-    Eigen::Vector3d randomPointInCylinder(const Eigen::Vector3d& A, const Eigen::Vector3d& B, double height_range) {
-        
-        Eigen::Vector3d normal = (B - A).normalized();
-        double radius = (B - A).norm();
-    
-        Eigen::Vector3d u;
-        if (std::abs(normal.x()) < 1e-6 && std::abs(normal.y()) < 1e-6) {
-            u = Eigen::Vector3d(0, 1, 0).cross(normal).normalized();
-        } else {
-            u = Eigen::Vector3d(0, 0, 1).cross(normal).normalized();
-        }
-        Eigen::Vector3d v = normal.cross(u);
-    
+    // Sample uniformly inside a finite cylinder (tube):
+    //   - Bases centered at s_guide and t_guide
+    //   - Axis length = ||t_guide - s_guide||
+    //   - Circular radius given by `radius` (call site: 10 * steer_length_)
+    Eigen::Vector3d randomPointInCylinder(const Eigen::Vector3d& s_guide,
+                                          const Eigen::Vector3d& t_guide,
+                                          double radius)
+    {
+        Eigen::Vector3d axis = t_guide - s_guide;
+        double length = axis.norm();
+
         std::random_device rd;
         std::mt19937 gen(rd());
         std::uniform_real_distribution<> dist_angle(0, 2 * M_PI);
-        std::uniform_real_distribution<> dist_radius(0, 1);
-        std::uniform_real_distribution<> dist_height(-height_range / 2.0, height_range / 2.0); // sample thêm theo trục normal
-    
+        std::uniform_real_distribution<> dist_unit(0, 1);
+
+        // Degenerate: s_guide ≈ t_guide → sample in a disk/ball of given radius around s_guide
+        if (length < 1e-9)
+        {
+            // isotropic direction on unit sphere * uniform radius in ball of `radius`
+            std::normal_distribution<> dist_n(0.0, 1.0);
+            Eigen::Vector3d dir(dist_n(gen), dist_n(gen), dist_n(gen));
+            double nrm = dir.norm();
+            if (nrm < 1e-12)
+                return s_guide;
+            double r = radius * std::cbrt(dist_unit(gen)); // uniform in ball volume
+            return s_guide + (r / nrm) * dir;
+        }
+
+        Eigen::Vector3d normal = axis / length;
+
+        // Orthonormal basis (u, v) in the plane perpendicular to the cylinder axis
+        Eigen::Vector3d u;
+        if (std::abs(normal.x()) < 1e-6 && std::abs(normal.y()) < 1e-6)
+            u = Eigen::Vector3d(0, 1, 0).cross(normal).normalized();
+        else
+            u = Eigen::Vector3d(0, 0, 1).cross(normal).normalized();
+        Eigen::Vector3d v = normal.cross(u);
+
+        // Axial coordinate: uniform along [0, length]  (from s_guide toward t_guide)
+        double axial = length * dist_unit(gen);
+
+        // Cross-section: uniform in disk of radius `radius`  (sqrt for area uniformity)
         double theta = dist_angle(gen);
-        double r = radius * std::sqrt(dist_radius(gen)); 
-        double h = dist_height(gen);                        
-    
-        Eigen::Vector3d point = A + r * std::cos(theta) * u + r * std::sin(theta) * v + h * normal;
-    
-        return point;
+        double r = radius * std::sqrt(dist_unit(gen));
+
+        return s_guide + axial * normal
+             + r * std::cos(theta) * u
+             + r * std::sin(theta) * v;
     }
     Eigen::Vector3d AFBGSteer(const Eigen::Vector3d &x_near, const Eigen::Vector3d &x_rand, const Eigen::Vector3d &x_target, double steer_length_)
     {
@@ -710,7 +737,8 @@ namespace path_plan
         if (random01 < pbias)
         {
           TreeNode* rootOther = path_reverse ? start_node_ : goal_node_;
-          Eigen::Vector3d x_tmp = randomPointInCylinder(selected_SI->x, selected_GI->x, map_ptr_->getMapSize()(2));
+          // Tube: bases centered at (s_guide, t_guide), radius = 10 * stepsize, length = ||s_guide - t_guide||
+          Eigen::Vector3d x_tmp = randomPointInCylinder(selected_SI->x, selected_GI->x, 10.0 * steer_length_);
           nearest_nodeA = selected_SI;
           x_new = AFBGSteer(nearest_nodeA->x, x_tmp, rootOther->x, steer_length_);
           if ((!map_ptr_->isStateValid(x_new)) || (!map_ptr_->isSegmentValid(nearest_nodeA->x, x_new)))
@@ -885,6 +913,11 @@ namespace path_plan
         ROS_ERROR_STREAM("[BRRT_Optimize_case3]: NOT CONNECTED TO GOAL after " << (ros::Time::now() - rrt_start_time).toSec() << " seconds");
       }
 #endif
+
+      /* Free kd-trees (leaked on every plan() before; caused OOM / corruption after many trials) */
+      kd_free(kdtree_1);
+      kd_free(kdtree_2);
+
       return tree_connected;
     }
 

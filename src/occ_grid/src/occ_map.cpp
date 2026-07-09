@@ -20,6 +20,7 @@ OF SUCH DAMAGE.
 */
 #include "occ_grid/occ_map.h"
 #include "occ_grid/raycast.h"
+#include <pcl/filters/voxel_grid.h>
 #include <visualization_msgs/Marker.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <tf2_ros/static_transform_broadcaster.h>
@@ -59,6 +60,20 @@ namespace env
 
     if (global_cloud.points.size() == 0)
       return;
+
+    // Optional downsampling (voxel_leaf_size set from path_finder_node)
+    double leaf = 0.0;
+    node_.param("voxel_leaf_size", leaf, 0.0);
+    if (leaf > 1e-6)
+    {
+      pcl::PointCloud<pcl::PointXYZ> filtered;
+      pcl::VoxelGrid<pcl::PointXYZ> sor;
+      sor.setInputCloud(global_cloud.makeShared());
+      sor.setLeafSize(leaf, leaf, leaf);
+      sor.filter(filtered);
+      global_cloud = filtered;
+      ROS_INFO_STREAM("[OccMap] Downsampled cloud to " << global_cloud.points.size() << " points (leaf=" << leaf << ")");
+    }
 
     pcl::PointXYZ pt;
     Eigen::Vector3d p3d;

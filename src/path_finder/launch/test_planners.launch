@@ -56,8 +56,8 @@
 
   <arg name="step_by_step_vis" default="false" />
   <arg name="step_delay_ms" default="100" />
-  <arg name="input_param" default="/home/xuanloc/DACN/brrt_optimize/brrt_input.json" />
-  <arg name="output_result" default="/home/xuanloc/DACN/brrt_optimize/eval/random_blobs/50.json" />
+  <arg name="input_param" default="$(find path_finder)/../../brrt_input.json" />
+  <arg name="output_result" default="/tmp/brrt_result.json" />
 
   <arg name="start_z" default="1.5" />
   <arg name="goal_z" default="1.5" />
@@ -76,9 +76,26 @@
     <param name="run_brrt" value="$(arg run_brrt)" type="bool"/>
     <param name="run_brrt_star" value="$(arg run_brrt_star)" type="bool"/>
     <param name="run_brrt_optimize" value="$(arg run_brrt_optimize)" type="bool"/>
+    <param name="run_brrt_case3" value="$(arg run_brrt_optimize)" type="bool"/>
     <param name="run_bg_brrt" value="$(arg run_bg_brrt)" type="bool"/>
     <param name="BRRT_Optimize/enable2d" value="$(arg brrt_enable_2d)" type="bool"/>
-    
+
+    <!-- BRRT params (used by vanilla BRRT and some optimize paths) -->
+    <param name="BRRT/steer_length" value="$(arg steer_length)" type="double"/>
+    <param name="BRRT/search_time" value="$(arg search_time)" type="double"/>
+    <param name="BRRT/max_tree_node_nums" value="$(arg max_tree_node_nums)" type="int"/>
+    <param name="BRRT/search_radius" value="$(arg search_radius)" type="double"/>
+    <param name="BRRT/epsilon" value="1.0" type="double"/>
+
+    <!-- BRRT_Optimize / Case3 specific -->
+    <param name="BRRT_Optimize/p1" value="$(arg brrt_optimize_p1)" type="double"/>
+    <param name="BRRT_Optimize/u_p" value="$(arg brrt_optimize_u_p)" type="double"/>
+    <param name="BRRT_Optimize/step" value="$(arg brrt_step)" type="double"/>
+    <param name="BRRT_Optimize/alpha" value="$(arg brrt_alpha)" type="double"/>
+    <param name="BRRT_Optimize/beta" value="$(arg brrt_beta)" type="double"/>
+    <param name="BRRT_Optimize/gamma" value="$(arg brrt_gamma)" type="double"/>
+    <param name="BRRT_Optimize/max_iteration" value="$(arg brrt_max_iteration)" type="int"/>
+
     <param name="BPBG_RRT/steer_length" value="$(arg steer_length)" type="double"/>
     <param name="BPBG_RRT/search_time" value="$(arg search_time)" type="double"/>
     <param name="BPBG_RRT/max_tree_node_nums" value="$(arg max_tree_node_nums)" type="int"/>

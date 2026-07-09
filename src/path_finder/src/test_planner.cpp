@@ -99,9 +99,12 @@ public:
         nh_.param("run_brrt",       run_brrt_,       true);
         nh_.param("run_bg_brrt",    run_bg_brrt_,    true);
         nh_.param("run_brrt_case3", run_brrt_case3_, true);
+        if (!run_brrt_case3_) {
+            nh_.param("run_brrt_optimize", run_brrt_case3_, false);
+        }
 
-        nh_.param("input_param",   input_param_,   std::string("/home/phuong/DACN/ICIT/brrt_optimize/brrt_input.json"));
-        nh_.param("output_result", output_result_, std::string("/home/phuong/DACN/ICIT/brrt_optimize/evaluation/"));
+        nh_.param("input_param",   input_param_,   std::string("brrt_input.json"));
+        nh_.param("output_result", output_result_, std::string("/tmp/brrt_result.json"));
         std::cout << "input_param: "   << input_param_   << std::endl;
         std::cout << "output_result: " << output_result_ << std::endl;
         manager = new BRRTExperimentMultiAlgo(
@@ -260,57 +263,63 @@ public:
             std::map<std::string, AlgoResult> algo_outputs;
 
             // --- BRRT (vanilla bidirectional RRT) ---
-            brrt_ptr_->set_test_param(input.epsilon);
-            bool brrt_res = brrt_ptr_->plan(start_, goal_);
-            {
-                int num_nodes = brrt_ptr_->get_valid_tree_node_nums();
-                int num_iterations = brrt_ptr_->get_number_of_iteration();
-                if (brrt_res)
+            if (run_brrt_) {
+                brrt_ptr_->set_test_param(input.epsilon);
+                bool brrt_res = brrt_ptr_->plan(start_, goal_);
                 {
-                    vector<std::pair<double, double>> slns = brrt_ptr_->getSolutions();
-                    algo_outputs["BRRT"] = {true, slns.back().second, slns.back().first, num_nodes, num_iterations, start_, goal_};
+                    int num_nodes = brrt_ptr_->get_valid_tree_node_nums();
+                    int num_iterations = brrt_ptr_->get_number_of_iteration();
+                    if (brrt_res)
+                    {
+                        vector<std::pair<double, double>> slns = brrt_ptr_->getSolutions();
+                        algo_outputs["BRRT"] = {true, slns.back().second, slns.back().first, num_nodes, num_iterations, start_, goal_};
+                    }
+                    else
+                    {
+                        algo_outputs["BRRT"] = {false, brrt_ptr_->get_final_path_use_time_(), DBL_MAX, num_nodes, num_iterations, start_, goal_};
+                    }
+                    ROS_INFO("[BRRT]       nodes: %d, iters: %d, %s", num_nodes, num_iterations, brrt_res ? "SUCCESS" : "FAILED");
                 }
-                else
-                {
-                    algo_outputs["BRRT"] = {false, brrt_ptr_->get_final_path_use_time_(), DBL_MAX, num_nodes, num_iterations, start_, goal_};
-                }
-                ROS_INFO("[BRRT]       nodes: %d, iters: %d, %s", num_nodes, num_iterations, brrt_res ? "SUCCESS" : "FAILED");
             }
 
             // --- BG_BRRT (biased-goal BRRT) ---
-            bg_brrt_ptr_->set_test_param(input.epsilon);
-            bool bg_brrt_res = bg_brrt_ptr_->plan(start_, goal_);
-            {
-                int num_nodes = bg_brrt_ptr_->get_valid_tree_node_nums();
-                int num_iterations = bg_brrt_ptr_->get_number_of_iteration();
-                if (bg_brrt_res)
+            if (run_bg_brrt_) {
+                bg_brrt_ptr_->set_test_param(input.epsilon);
+                bool bg_brrt_res = bg_brrt_ptr_->plan(start_, goal_);
                 {
-                    vector<std::pair<double, double>> slns = bg_brrt_ptr_->getSolutions();
-                    algo_outputs["BG_BRRT"] = {true, slns.back().second, slns.back().first, num_nodes, num_iterations, start_, goal_};
+                    int num_nodes = bg_brrt_ptr_->get_valid_tree_node_nums();
+                    int num_iterations = bg_brrt_ptr_->get_number_of_iteration();
+                    if (bg_brrt_res)
+                    {
+                        vector<std::pair<double, double>> slns = bg_brrt_ptr_->getSolutions();
+                        algo_outputs["BG_BRRT"] = {true, slns.back().second, slns.back().first, num_nodes, num_iterations, start_, goal_};
+                    }
+                    else
+                    {
+                        algo_outputs["BG_BRRT"] = {false, bg_brrt_ptr_->get_final_path_use_time_(), DBL_MAX, num_nodes, num_iterations, start_, goal_};
+                    }
+                    ROS_INFO("[BG_BRRT]    nodes: %d, iters: %d, %s", num_nodes, num_iterations, bg_brrt_res ? "SUCCESS" : "FAILED");
                 }
-                else
-                {
-                    algo_outputs["BG_BRRT"] = {false, bg_brrt_ptr_->get_final_path_use_time_(), DBL_MAX, num_nodes, num_iterations, start_, goal_};
-                }
-                ROS_INFO("[BG_BRRT]    nodes: %d, iters: %d, %s", num_nodes, num_iterations, bg_brrt_res ? "SUCCESS" : "FAILED");
             }
 
             // --- BRRT_Case3 (heuristic-cache optimized) ---
-            brrt_optimize_case3_ptr->set_heuristic_param(input.p1, input.u_p, input.alpha, input.beta, input.gamma, input.epsilon);
-            bool brrt_optimize_case3_res = brrt_optimize_case3_ptr->plan(start_, goal_);
-            {
-                int num_nodes = brrt_optimize_case3_ptr->get_valid_tree_node_nums();
-                int num_iterations = brrt_optimize_case3_ptr->get_number_of_iteration();
-                if (brrt_optimize_case3_res)
+            if (run_brrt_case3_) {
+                brrt_optimize_case3_ptr->set_heuristic_param(input.p1, input.u_p, input.alpha, input.beta, input.gamma, input.epsilon);
+                bool brrt_optimize_case3_res = brrt_optimize_case3_ptr->plan(start_, goal_);
                 {
-                    vector<std::pair<double, double>> slns = brrt_optimize_case3_ptr->getSolutions();
-                    algo_outputs["BRRT_Case3"] = {true, slns.back().second, slns.back().first, num_nodes, num_iterations, start_, goal_};
+                    int num_nodes = brrt_optimize_case3_ptr->get_valid_tree_node_nums();
+                    int num_iterations = brrt_optimize_case3_ptr->get_number_of_iteration();
+                    if (brrt_optimize_case3_res)
+                    {
+                        vector<std::pair<double, double>> slns = brrt_optimize_case3_ptr->getSolutions();
+                        algo_outputs["BRRT_Case3"] = {true, slns.back().second, slns.back().first, num_nodes, num_iterations, start_, goal_};
+                    }
+                    else
+                    {
+                        algo_outputs["BRRT_Case3"] = {false, brrt_optimize_case3_ptr->get_final_path_use_time_(), DBL_MAX, num_nodes, num_iterations, start_, goal_};
+                    }
+                    ROS_INFO("[BRRT_Case3] nodes: %d, iters: %d, %s", num_nodes, num_iterations, brrt_optimize_case3_res ? "SUCCESS" : "FAILED");
                 }
-                else
-                {
-                    algo_outputs["BRRT_Case3"] = {false, brrt_optimize_case3_ptr->get_final_path_use_time_(), DBL_MAX, num_nodes, num_iterations, start_, goal_};
-                }
-                ROS_INFO("[BRRT_Case3] nodes: %d, iters: %d, %s", num_nodes, num_iterations, brrt_optimize_case3_res ? "SUCCESS" : "FAILED");
             }
 
             manager->store_output_for_run(algo_outputs);
@@ -328,7 +337,8 @@ int main(int argc, char **argv)
 
     TesterPathFinder tester(nh);
 
-    ros::AsyncSpinner spinner(0);
+    // Use single-threaded spinner to avoid data races on planner objects when experiment + goal callbacks interleave
+    ros::AsyncSpinner spinner(1);
     spinner.start();
     ros::waitForShutdown();
     return 0;

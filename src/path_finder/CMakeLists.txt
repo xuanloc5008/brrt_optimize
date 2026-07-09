@@ -22,7 +22,7 @@ catkin_package(
   CATKIN_DEPENDS occ_grid
 #  DEPENDS system_lib
 )
-add_definitions(-DDEBUG) # debug mode
+# add_definitions(-DDEBUG) # uncomment for debug/single-goal mode (disables auto experiment_test)
 
 include_directories(
   include
