@@ -88,10 +88,10 @@ namespace path_plan
       // rho switches between target-biased cylinder sampling and standard uniform sampling.
       nh_.param("BRRT_Optimize/rho_min", rho_min_, 0.05);
       nh_.param("BRRT_Optimize/rho_max", rho_max_, 0.90);
-      nh_.param("BRRT_Optimize/rho_init", rho_init_, rho_min_);
-      nh_.param("BRRT_Optimize/epsilon_h", epsilon_h_, 0.01);
-      nh_.param("BRRT_Optimize/stagnation_window_N", stagnation_window_N_, 20);
-      nh_.param("BRRT_Optimize/eta_stagn", eta_stagn_, 0.60);
+      nh_.param("BRRT_Optimize/rho_init", rho_init_, 0.50);
+      nh_.param("BRRT_Optimize/epsilon_h", epsilon_h_, 0.02);
+      nh_.param("BRRT_Optimize/stagnation_window_N", stagnation_window_N_, 100);
+      nh_.param("BRRT_Optimize/eta_stagn", eta_stagn_, 0.50);
       nh_.param("BRRT_Optimize/cylinder_radius_factor", cylinder_radius_factor_, 10.0);
 
       if (rho_min_ < 0.0) rho_min_ = 0.0;
