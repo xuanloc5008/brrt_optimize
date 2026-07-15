@@ -1987,6 +1987,188 @@ void GenerateType7_UShaped()
     ROS_INFO("Generated Type7 U-Shaped map with %zu points.", cloudMap.points.size());
 }
 
+// -----------------------------------------------------------------------
+// Halton helper: n-th term of the base-b Halton sequence (deterministic,
+// low-discrepancy, maps i → (0,1) with excellent uniformity).
+// -----------------------------------------------------------------------
+static double halton(int i, int base)
+{
+    double f = 1.0, r = 0.0;
+    while (i > 0) { f /= base; r += f * (i % base); i /= base; }
+    return r;
+}
+
+// -----------------------------------------------------------------------
+// Fixed Buildings Map  — density driven, deterministic
+//
+// Number of obstacles  = _obs_num  (set by obs_density_percentage in launch)
+// Position             = Halton(2,3) sequence → always same pattern, more
+//                        obstacles simply fill in more of the map evenly
+// Footprint (w × d)    = cycles through a fixed table (metres) — fixed
+// Height               = _h_l + hf × (_h_h - _h_l)  where hf cycles
+//                        through a bell-shaped table that clusters heights
+//                        in the middle range (simulates normal distribution)
+// -----------------------------------------------------------------------
+void GenerateFixed_Buildings()
+{
+    cloudMap.points.clear();
+    pcl::PointXYZ pt;
+
+    int N    = _obs_num;      // from obs_density_percentage formula in launch
+    double res = _resolution;
+    double map_w = _x_h - _x_l;   // real map width  (metres)
+    double map_d = _y_h - _y_l;   // real map depth  (metres)
+
+    // Building footprint sizes (metres).  Cycling through these gives a
+    // mix of small/medium/large buildings without any randomness.
+    // Arranged so the distribution is roughly normal (more medium values).
+    static const double fw_table[] = { 6, 10, 12,  8, 15, 10,  7, 11,  9, 13,
+                                       10,  8, 14,  9, 11,  6, 12,  8, 10, 10 };
+    static const double fd_table[] = { 9, 12,  8, 11,  7, 10, 13,  9, 12,  8,
+                                       10,  6, 11,  8, 10, 14,  9, 12,  7, 10 };
+    static const int N_SIZE = 20;
+
+    // Height fractions — bell-shaped table so most buildings are at
+    // mid-height with fewer at the extremes  (simulates normal distribution).
+    // hf maps into [h_min, h_max] = [_z_size/2, _z_size]:
+    //   hf=0.0 → z_size/2  (shortest allowed)
+    //   hf=1.0 → z_size    (full map height)
+    static const double hf_table[] = { 0.40, 0.55, 0.65, 0.70, 0.75,
+                                       0.80, 0.80, 0.85, 0.85, 0.90,
+                                       0.90, 0.90, 0.85, 0.85, 0.80,
+                                       0.75, 0.70, 0.65, 0.55, 1.00 };
+    static const int N_HF = 20;
+
+    // Height range: half map height → full map height
+    double h_min = _z_size / 2.0;
+    double h_max = _z_size;
+
+    // Clear zone around (0,0) — keep start/goal area free
+    double clear_r = std::max(5.0, 0.05 * std::min(map_w, map_d));
+
+    int placed = 0;
+    for (int i = 1; placed < N && i <= N * 20; ++i)
+    {
+        // Halton(2) → x ∈ (0,1),  Halton(3) → y ∈ (0,1)
+        double hx = halton(i, 2);
+        double hy = halton(i, 3);
+
+        double cx = _x_l + hx * map_w;
+        double cy = _y_l + hy * map_d;
+
+        if (std::sqrt(cx*cx + cy*cy) < clear_r) continue;
+
+        double fw   = fw_table[placed % N_SIZE];
+        double fd   = fd_table[placed % N_SIZE];
+        double hf   = hf_table[placed % N_HF];
+        double z_hi = h_min + hf * (h_max - h_min);
+
+        double hw = fw / 2.0;
+        double hd = fd / 2.0;
+
+        for (double x = cx - hw; x < cx + hw; x += res)
+            for (double y = cy - hd; y < cy + hd; y += res)
+                for (double z = 0.0; z < z_hi; z += res) {
+                    pt.x = x; pt.y = y; pt.z = z;
+                    cloudMap.points.push_back(pt);
+                }
+        ++placed;
+    }
+
+    cloudMap.width = cloudMap.points.size();
+    cloudMap.height = 1; cloudMap.is_dense = true; _has_map = true;
+    pcl::toROSMsg(cloudMap, globalMap_pcd);
+    globalMap_pcd.header.frame_id = "map";
+    ROS_INFO("Generated Fixed Buildings map: %d/%d obstacles placed, %zu points "
+             "(h: %.1f..%.1fm = z_size/2..z_size, clear_r=%.1fm).",
+             placed, N, cloudMap.points.size(), h_min, h_max, clear_r);
+}
+
+// -----------------------------------------------------------------------
+// Fixed Blob Map  — density driven, deterministic
+//
+// Number of blobs = _obs_num  (set by obs_density_percentage in launch)
+// Position        = Halton(2,3) — deterministic, well-distributed
+// Radius          = cycles through a fixed table (in absolute metres)
+// Height range    = z_lo / z_hi from fixed tables, fraction of _h_h
+//                   Bell-shaped distribution: mostly full-height ground
+//                   blobs with some shorter or floating ones
+// -----------------------------------------------------------------------
+void GenerateFixed_BlobMap()
+{
+    cloudMap.points.clear();
+    pcl::PointXYZ pt;
+
+    int N    = _obs_num;
+    double res = _resolution;
+    double map_w = _x_h - _x_l;
+    double map_d = _y_h - _y_l;
+    // Height range: blobs span from _z_size/2 (shortest) to _z_size (tallest).
+    // z_lo_frac is a small ground-offset fraction of _z_size (0 = on ground).
+    // z_hi_frac maps into [h_min, h_max] via:  z_hi = h_min + hi_frac*(h_max-h_min)
+    double h_min = _z_size / 2.0;
+    double h_max = _z_size;
+
+    // Blob radii (metres) — cycling table, mostly medium with some large/small
+    static const double r_table[] = { 9, 12,  8, 10, 11,  7, 13,  9, 10,  8,
+                                      12,  9, 11,  8, 10,  9, 12,  7, 10, 11 };
+    static const int N_R = 20;
+
+    // Height range fractions for blobs.
+    // lo = ground-lift fraction of _z_size (0=on ground, small=slight float)
+    // hi = fraction within [h_min, h_max] → z_hi = h_min + hi*(h_max-h_min)
+    // Bell-shaped hi distribution: most blobs reach near full height.
+    struct HFrac { double lo, hi; };
+    static const HFrac hf_table[] = {
+        {0.00, 1.00}, {0.00, 0.90}, {0.00, 0.85}, {0.00, 0.80}, {0.00, 0.85},
+        {0.00, 0.90}, {0.02, 0.80}, {0.00, 0.75}, {0.03, 0.85}, {0.00, 0.70},
+        {0.04, 0.90}, {0.00, 0.80}, {0.05, 0.85}, {0.00, 0.65}, {0.00, 0.90},
+        {0.06, 0.80}, {0.00, 1.00}, {0.03, 0.75}, {0.00, 0.85}, {0.07, 0.90}
+    };
+    static const int N_HF = 20;
+
+    // Clear zone
+    double clear_r = std::max(5.0, 0.05 * std::min(map_w, map_d));
+
+    int placed = 0;
+    for (int i = 1; placed < N && i <= N * 20; ++i)
+    {
+        double hx = halton(i, 2);
+        double hy = halton(i, 3);
+
+        double cx = _x_l + hx * map_w;
+        double cy = _y_l + hy * map_d;
+
+        if (std::sqrt(cx*cx + cy*cy) < clear_r) continue;
+
+        double R    = r_table[placed % N_R];
+        // Ground lift (small absolute offset) + height in [h_min, h_max]
+        double z_lo = hf_table[placed % N_HF].lo * _z_size;  // small float offset
+        double z_hi = h_min + hf_table[placed % N_HF].hi * (h_max - h_min);
+
+        for (double x = cx - R; x <= cx + R; x += res)
+            for (double y = cy - R; y <= cy + R; y += res) {
+                if ((x-cx)*(x-cx) + (y-cy)*(y-cy) > R*R) continue;
+                for (double z = z_lo; z < z_hi; z += res) {
+                    pt.x = x; pt.y = y; pt.z = z;
+                    cloudMap.points.push_back(pt);
+                }
+            }
+        ++placed;
+    }
+
+    cloudMap.width = cloudMap.points.size();
+    cloudMap.height = 1; cloudMap.is_dense = true; _has_map = true;
+    pcl::toROSMsg(cloudMap, globalMap_pcd);
+    globalMap_pcd.header.frame_id = "map";
+    ROS_INFO("Generated Fixed Blob Map: %d/%d blobs placed, %zu points "
+             "(h: %.1f..%.1fm = z_size/2..z_size, clear_r=%.1fm).",
+             placed, N, cloudMap.points.size(), h_min, h_max, clear_r);
+}
+
+
+
+
 void pubSensedPoints()
 {
    if (!_has_map)
@@ -2068,11 +2250,19 @@ int main(int argc, char **argv)
    }
    else if (map_type == "random_buildings")
    {
-      RandomBRRTGenerate_Buildings();
+      GenerateFixed_Buildings();              // fixed percentage-based layout
+   }
+   else if (map_type == "random_buildings_random")
+   {
+      RandomBRRTGenerate_Buildings();          // original fully-random version
    }
    else if (map_type == "blob_map")
    {
-      RandomBRRTGenerate_Buildings_MixedZ();
+      GenerateFixed_BlobMap();                // fixed percentage-based blobs
+   }
+   else if (map_type == "blob_map_random")
+   {
+      RandomBRRTGenerate_Buildings_MixedZ();  // original fully-random version
    }
    else if (map_type == "random_cubes")
    {

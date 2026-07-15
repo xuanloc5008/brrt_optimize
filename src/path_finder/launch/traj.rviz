@@ -160,7 +160,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/start
           Name: start
           Namespaces:
-            "": true
+            {}
           Queue Size: 100
           Value: true
         - Class: rviz/Marker
@@ -168,7 +168,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/goal
           Name: goal
           Namespaces:
-            "": true
+            {}
           Queue Size: 100
           Value: true
         - Class: rviz/MarkerArray
@@ -396,7 +396,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/brrt/tree_edges
           Name: BRRT_Tree
           Namespaces:
-            "": true
+            {}
           Queue Size: 100
           Value: true
         - Class: rviz/MarkerArray
@@ -404,7 +404,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/brrt/tree_vertice
           Name: BRRT_Edge
           Namespaces:
-            "": true
+            {}
           Queue Size: 100
           Value: true
         - Alpha: 1
@@ -916,7 +916,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/case3/tree_edges
           Name: tree-node
           Namespaces:
-            "": true
+            {}
           Queue Size: 100
           Value: true
         - Class: rviz/MarkerArray
@@ -924,7 +924,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/case3/tree_vertice
           Name: tree-edge
           Namespaces:
-            "": true
+            {}
           Queue Size: 100
           Value: true
         - Alpha: 1
@@ -1112,7 +1112,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/bg_brrt/tree_edges
           Name: BG_BRRT_Tree
           Namespaces:
-            "": true
+            {}
           Queue Size: 100
           Value: true
         - Class: rviz/MarkerArray
@@ -1120,7 +1120,7 @@ Visualization Manager:
           Marker Topic: /path_finder_node/bg_brrt/tree_vertice
           Name: BG_BRRT_Vertice
           Namespaces:
-            "": true
+            {}
           Queue Size: 100
           Value: true
       Enabled: true
@@ -1162,17 +1162,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: -16.294692993164062
-        Y: 34.77055358886719
-        Z: 9.868824236036744e-06
+        X: -11.298949241638184
+        Y: 76.18890380859375
+        Z: 2.4828539608279243e-05
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.8147979974746704
+      Pitch: 1.5697963237762451
       Target Frame: map
-      Yaw: 1.4673882722854614
+      Yaw: 1.6923874616622925
     Saved: ~
 Window Geometry:
   Displays:

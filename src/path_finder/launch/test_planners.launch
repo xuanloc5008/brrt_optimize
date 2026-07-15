@@ -6,7 +6,7 @@
   <arg name="map_size_z" default="50.0" />
   <arg name="origin_x" value="$(eval -arg('map_size_x') / 2.0)" />
   <arg name="origin_y" value="$(eval -arg('map_size_y') / 2.0)" />
-  <arg name="obs_density_percentage" default="40.0" />
+  <arg name="obs_density_percentage" default="20.0" />
   <arg name="obs_num" value="$(eval int( (arg('map_size_x') * arg('map_size_y') / 112.0) * (lambda p: p + 0.5*p**2 + 0.333*p**3 + 0.25*p**4 + 0.2*p**5)(min(arg('obs_density_percentage')/100.0, 0.99)) ))" />
   <arg name="circle_num" value="$(arg obs_num)" />
   <arg name="ground_obstacle_probability" default="0.3" />
@@ -48,16 +48,25 @@
   <arg name="brrt_optimize_u_p" default="0.5" />
   <arg name="brrt_optimize_p1" default="1.0" />
   <arg name="brrt_step" default="5.0" />
-  <arg name="brrt_alpha" default="7.0" />
+  <arg name="brrt_alpha" default="0.5" />
   <arg name="brrt_beta" default="1.0" />
   <arg name="brrt_gamma" default="1.0" />
   <arg name="brrt_max_iteration" default="200000" />
   <arg name="brrt_enable_2d" default="false" />
 
+  <!-- BRRT_Optimize tuning parameters (swept by run_param_sweep.sh) -->
+  <arg name="brrt_eta_stagn"            default="0.50" />
+  <arg name="brrt_cylinder_radius"      default="10.0" />
+  <arg name="brrt_epsilon_h"            default="0.02" />
+  <arg name="brrt_rho_min"              default="0.05" />
+  <arg name="brrt_rho_max"              default="0.90" />
+  <arg name="brrt_rho_init"             default="0.50" />
+  <arg name="brrt_heuristic_cache_size" default="5000" />
+
   <arg name="step_by_step_vis" default="false" />
   <arg name="step_delay_ms" default="100" />
   <arg name="input_param" default="/home/xuanloc/DACN/brrt_optimize/brrt_input.json" />
-  <arg name="output_result" default="/home/xuanloc/DACN/brrt_optimize/eval/random_blobs/50.json" />
+  <arg name="output_result" default="/home/xuanloc/DACN/brrt_optimize/evaluation/40_buildings.json" />
 
   <arg name="start_z" default="1.5" />
   <arg name="goal_z" default="1.5" />
@@ -109,6 +118,15 @@
     <param name="RRT_Star/max_tree_node_nums" value="$(arg max_tree_node_nums)" type="int"/>
     <param name="RRT_Star/use_informed_sampling" value="$(arg use_informed_sampling)" type="bool"/>
     <param name="RRT_Star/use_GUILD_sampling" value="$(arg use_GUILD_sampling)" type="bool"/>
-    <!-- ... BRRT, BRRT_Optimize ... -->
+
+    <!-- BRRT_Optimize tuning parameters -->
+    <param name="BRRT_Optimize/alpha"               value="$(arg brrt_alpha)"               type="double"/>
+    <param name="BRRT_Optimize/eta_stagn"            value="$(arg brrt_eta_stagn)"           type="double"/>
+    <param name="BRRT_Optimize/cylinder_radius_factor" value="$(arg brrt_cylinder_radius)"  type="double"/>
+    <param name="BRRT_Optimize/epsilon_h"            value="$(arg brrt_epsilon_h)"           type="double"/>
+    <param name="BRRT_Optimize/rho_min"              value="$(arg brrt_rho_min)"             type="double"/>
+    <param name="BRRT_Optimize/rho_max"              value="$(arg brrt_rho_max)"             type="double"/>
+    <param name="BRRT_Optimize/rho_init"             value="$(arg brrt_rho_init)"            type="double"/>
+    <param name="BRRT_Optimize/heuristic_cache_size" value="$(arg brrt_heuristic_cache_size)" type="int"/>
   </node>
 </launch>

@@ -32,6 +32,8 @@ OF SUCH DAMAGE.
 #include <queue>
 #include <algorithm>
 #include <deque>
+#include <random>
+#include <cmath>
 namespace path_plan
 {
   class BRRT_Simple_Case3
@@ -81,6 +83,26 @@ namespace path_plan
       nh_.param("BRRT_Optimize/gamma", brrt_optimize_gamma_, 0.5);
       nh_.param("BRRT_Optimize/max_iteration", max_iteration_, 0);
       nh_.param("BRRT_Optimize/enable2d", brrt_enable_2d, false);
+
+      // Paper-style adaptive heuristic-bias probability control
+      // rho switches between target-biased cylinder sampling and standard uniform sampling.
+      nh_.param("BRRT_Optimize/rho_min", rho_min_, 0.05);
+      nh_.param("BRRT_Optimize/rho_max", rho_max_, 0.90);
+      nh_.param("BRRT_Optimize/rho_init", rho_init_, 0.50);
+      nh_.param("BRRT_Optimize/epsilon_h", epsilon_h_, 0.02);
+      nh_.param("BRRT_Optimize/stagnation_window_N", stagnation_window_N_, 100);
+      nh_.param("BRRT_Optimize/eta_stagn", eta_stagn_, 0.50);
+      nh_.param("BRRT_Optimize/cylinder_radius_factor", cylinder_radius_factor_, 10.0);
+
+      if (rho_min_ < 0.0) rho_min_ = 0.0;
+      if (rho_max_ > 1.0) rho_max_ = 1.0;
+      if (rho_min_ > rho_max_) std::swap(rho_min_, rho_max_);
+      rho_init_ = std::max(rho_min_, std::min(rho_max_, rho_init_));
+      if (epsilon_h_ < 0.0) epsilon_h_ = 0.0;
+      if (stagnation_window_N_ < 1) stagnation_window_N_ = 1;
+      if (eta_stagn_ < 0.0) eta_stagn_ = 0.0;
+      if (eta_stagn_ > 1.0) eta_stagn_ = 1.0;
+      if (cylinder_radius_factor_ <= 0.0) cylinder_radius_factor_ = 10.0;
 
       // Fixed-size heuristic cache: keeps only the N best (smallest-h) pairs.
       int heuristic_cache_size = 5000;
@@ -198,6 +220,15 @@ namespace path_plan
     double weight_grade_ = 3.0;
     double lidar_radius_ = 15.0;
     int n_blocks_ = 16;
+
+    // Paper-style adaptive heuristic-bias probability parameters
+    double rho_min_ = 0.05;
+    double rho_max_ = 0.90;
+    double rho_init_ = 0.05;
+    double epsilon_h_ = 0.01;
+    double eta_stagn_ = 0.60;
+    double cylinder_radius_factor_ = 10.0;
+    int stagnation_window_N_ = 20;
 
     // pbias tracking
     std::vector<std::pair<int,double>> pbias_history_; // (iteration, p_bias)
@@ -552,33 +583,41 @@ namespace path_plan
         return max_dist;
     }
 
-    Eigen::Vector3d randomPointInCylinder(const Eigen::Vector3d& A, const Eigen::Vector3d& B, double height_range) {
-        
-        Eigen::Vector3d normal = (B - A).normalized();
-        double radius = (B - A).norm();
-    
-        Eigen::Vector3d u;
-        if (std::abs(normal.x()) < 1e-6 && std::abs(normal.y()) < 1e-6) {
-            u = Eigen::Vector3d(0, 1, 0).cross(normal).normalized();
-        } else {
-            u = Eigen::Vector3d(0, 0, 1).cross(normal).normalized();
+    Eigen::Vector3d randomPointInCylinder(const Eigen::Vector3d& A, const Eigen::Vector3d& B, double radius) {
+        // Paper version:
+        //   Axis   : A -> B
+        //   Length : L = ||B - A||
+        //   Radius : R = radius, normally R = 10 * delta where delta is steer_length_
+        // Sampling:
+        //   a ~ U[0, L] along the axis, then a point uniformly inside the
+        //   perpendicular disk of radius R.
+        Eigen::Vector3d axis = B - A;
+        double L = axis.norm();
+
+        if (L < 1e-9 || radius <= 0.0)
+        {
+            return A;
         }
-        Eigen::Vector3d v = normal.cross(u);
-    
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_real_distribution<> dist_angle(0, 2 * M_PI);
-        std::uniform_real_distribution<> dist_radius(0, 1);
-        std::uniform_real_distribution<> dist_height(-height_range / 2.0, height_range / 2.0); // sample thêm theo trục normal
-    
+
+        Eigen::Vector3d w = axis / L;
+
+        // Build an orthonormal basis (u, v) for the plane perpendicular to the axis.
+        Eigen::Vector3d tmp = (std::abs(w.z()) < 0.9) ? Eigen::Vector3d::UnitZ()
+                                                       : Eigen::Vector3d::UnitY();
+        Eigen::Vector3d u = tmp.cross(w).normalized();
+        Eigen::Vector3d v = w.cross(u).normalized();
+
+        static thread_local std::mt19937 gen(std::random_device{}());
+        std::uniform_real_distribution<double> dist01(0.0, 1.0);
+        std::uniform_real_distribution<double> dist_angle(0.0, 2.0 * M_PI);
+
+        double a = L * dist01(gen);
         double theta = dist_angle(gen);
-        double r = radius * std::sqrt(dist_radius(gen)); 
-        double h = dist_height(gen);                        
-    
-        Eigen::Vector3d point = A + r * std::cos(theta) * u + r * std::sin(theta) * v + h * normal;
-    
-        return point;
+        double r = radius * std::sqrt(dist01(gen));  // sqrt gives uniform area in disk
+
+        return A + a * w + r * std::cos(theta) * u + r * std::sin(theta) * v;
     }
+
     Eigen::Vector3d AFBGSteer(const Eigen::Vector3d &x_near, const Eigen::Vector3d &x_rand, const Eigen::Vector3d &x_target, double steer_length_)
     {
         Eigen::Vector3d v_expand = (x_rand - x_near).normalized();
@@ -629,31 +668,26 @@ namespace path_plan
 #endif
       cache.insert(start_node_, treeA, goal_node_, treeB, h_start_goal); // insert start and goal node to cache
 
-      // ===================== Adaptive p_bias params (2-mode hard-reset scheme) =====================
-      // p_bias in [p_min, p_max], initialized at p_bias0.
-      //   deltaH_k = (h_{k-1} - h_k) / (h_{k-1} + eps_h)   -- relative heuristic improvement
-      //   f_trap_k = trap ratio over the last N_{k-1} outcomes (lagged window)
-      //   theta_k  = min(theta_max_, theta0 * (1 + lambda_t * f_trap_k))
-      //   N_k      = clip(N_min + (N_max - N_min) * f_trap_k, N_min, N_max)   -- window size for NEXT iter
-      // Update:
-      //   if deltaH_k <= theta_k  (not improving enough) -> p_bias = p_min                 (hard reset)
-      //   else                    (clearly improving)    -> p_bias = min(p_max, p_bias + eta_p*(deltaH_k - theta_k))
-      const double p_min    = 0.05;
-      const double p_max    = 0.90;
-      const double p_bias0  = 0.50;
-      const double eta_p    = 10.0;   // sensitivity of the incremental increase (mode 2)
-      const double theta0   = 0.03;   // base improvement threshold
-      const double lambda_t = 2.0;    // amplification of threshold by recent trap ratio
-      const double theta_max_ = 0.25; // upper clip for the threshold
-      const int    N_min    = 10;     // min size of the trapped-history window
-      const int    N_max    = 50;     // max size of the trapped-history window
-      const double eps_h    = 1e-6;   // guards against division by ~0 in deltaH
-
-      std::deque<bool> trapped_window;   // sliding window of recent trap outcomes (size = N_{k-1})
-      int N_prev = N_min;                // window size used to compute f_trap for THIS iteration
-      double p_bias = p_bias0;           // current p_bias value (p_bias_0)
-      double h_prev = h_start_goal;      // h_{k-1}, initialized from h(q_start, q_goal)
-      // =================================================================================================
+      // ===================== Paper-style adaptive bias probability =====================
+      // rho_k is the probability of Branch 1: target-biased cylinder sampling.
+      // Branch 2 is standard uniform exploration.
+      //
+      // DeltaH_k = (h_{k-1} - h_k) / h_{k-1}
+      // I_k      = 1 if DeltaH_k < epsilon_h, else 0
+      // D_k      = mean(I_i) over the last N iterations
+      //
+      // rho update:
+      //   if D_k > eta_stagn:
+      //       rho_{k+1} = rho_min
+      //   else:
+      //       rho_{k+1} = min(rho_max, rho_k + (rho_max - rho_min) / N)
+      std::deque<int> stagnation_window;
+      double p_bias = rho_init_;
+      double h_prev = h_start_goal;
+      double h_star = h_start_goal;
+      const double eps_h_den = 1e-9;
+      const double rho_step = (rho_max_ - rho_min_) / (double)stagnation_window_N_;
+      // ================================================================================
 
       for (number_of_iterations_ = 0; number_of_iterations_ < 200000; ++number_of_iterations_)
       {
@@ -666,59 +700,56 @@ namespace path_plan
         double h_tmp;
         bool has_heuristic = cache.getMinByTree(treeA, treeB, selected_SI, selected_GI, h_tmp);
 
-        // h_k: current heuristic value h(s_guide, t_guide) for this iteration
+        // h_k: current heuristic value h(q^S_guide,k, q^G_guide,k)
         double h_curr = has_heuristic ? h_tmp : h_start_goal;
+        h_star = std::min(h_star, h_curr);
 
-        // ---- 1. f_trap_k: trap ratio over the last N_{k-1} outcomes (lagged window, avoids circular dependency) ----
-        double f_trap = 0.0;
-        if (!trapped_window.empty())
+        // Relative heuristic improvement, Eq. (4)
+        double delta_H = 0.0;
+        if (std::abs(h_prev) > eps_h_den)
         {
-          int window_size = std::min((int)trapped_window.size(), N_prev);
-          int trapped_count = 0;
-          // trapped_window is ordered oldest->newest; take the last `window_size` entries
-          for (int i = (int)trapped_window.size() - window_size; i < (int)trapped_window.size(); ++i)
-            if (trapped_window[i]) trapped_count++;
-          f_trap = (double)trapped_count / (double)window_size;
+          delta_H = (h_prev - h_curr) / h_prev;
         }
 
-        // ---- 2. theta_k: improvement threshold, amplified by recent trap ratio, clipped at theta_max_ ----
-        double theta_k = std::min(theta_max_, theta0 * (1.0 + lambda_t * f_trap));
-
-        // ---- 3. deltaH_k: relative heuristic improvement vs previous iteration ----
-        double delta_H = (h_prev - h_curr) / (h_prev + eps_h);
-
-        // ---- 4. p_bias_k: 2-mode hard-reset update ----
-        if (delta_H <= theta_k)
+        // Inefficient-growth indicator, Eq. (5)
+        int I_k = (delta_H < epsilon_h_) ? 1 : 0;
+        stagnation_window.push_back(I_k);
+        while ((int)stagnation_window.size() > stagnation_window_N_)
         {
-          // Not improving enough (or environment locally too obstacle-dense / too many recent traps)
-          p_bias = p_min;
+          stagnation_window.pop_front();
+        }
+
+        // Localized stagnation density, Eq. (6)
+        double D_k = 0.0;
+        for (int val : stagnation_window)
+        {
+          D_k += (double)val;
+        }
+        D_k /= (double)stagnation_window.size();
+
+        // Adaptive bias probability, Eq. (7)
+        if (D_k > eta_stagn_)
+        {
+          p_bias = rho_min_;
         }
         else
         {
-          // Clearly improving: increase incrementally, clipped at p_max
-          p_bias = std::min(p_max, p_bias + eta_p * (delta_H - theta_k));
+          p_bias = std::min(rho_max_, p_bias + rho_step);
         }
-        p_bias = std::max(p_min, std::min(p_max, p_bias)); // safety clamp
+        p_bias = std::max(rho_min_, std::min(rho_max_, p_bias));
 
-        // ---- 5. N_k: next window size, grows with recent trap ratio (applied AFTER this iteration's outcome) ----
-        int N_k = (int)std::floor(N_min + (N_max - N_min) * f_trap);
-        N_k = std::max(N_min, std::min(N_max, N_k));
-
-        double pbias = p_bias; // kept as `pbias` to match the rest of the function below
-        pbias_history_.emplace_back(number_of_iterations_, pbias); // track pbias
+        double pbias = p_bias;
+        pbias_history_.emplace_back(number_of_iterations_, pbias);
+        h_prev = h_curr;
 
         if (random01 < pbias)
         {
           TreeNode* rootOther = path_reverse ? start_node_ : goal_node_;
-          Eigen::Vector3d x_tmp = randomPointInCylinder(selected_SI->x, selected_GI->x, map_ptr_->getMapSize()(2));
+          Eigen::Vector3d x_tmp = randomPointInCylinder(selected_SI->x, selected_GI->x, cylinder_radius_factor_ * steer_length_);
           nearest_nodeA = selected_SI;
           x_new = AFBGSteer(nearest_nodeA->x, x_tmp, rootOther->x, steer_length_);
           if ((!map_ptr_->isStateValid(x_new)) || (!map_ptr_->isSegmentValid(nearest_nodeA->x, x_new)))
           {
-            trapped_window.push_back(true);
-            while ((int)trapped_window.size() > N_k) trapped_window.pop_front();
-            N_prev = N_k;
-            h_prev = h_curr;
             std::swap(treeA, treeB);
             path_reverse = !path_reverse;
             continue;
@@ -749,10 +780,6 @@ namespace path_plan
           x_new = AFBGSteer(nearest_nodeA->x, x_rand, rootOther->x, steer_length_);
           if ((!map_ptr_->isStateValid(x_new)) || (!map_ptr_->isSegmentValid(nearest_nodeA->x, x_new)))
           {
-            trapped_window.push_back(true);
-            while ((int)trapped_window.size() > N_k) trapped_window.pop_front();
-            N_prev = N_k;
-            h_prev = h_curr;
             std::swap(treeA, treeB);
             path_reverse = !path_reverse;
             continue;
@@ -769,11 +796,6 @@ namespace path_plan
           nearest_nodeB = (RRTNode3DPtr)kd_res_item_data(p_nearestB);
           kd_res_free(p_nearestB);
         }
-
-        trapped_window.push_back(false);
-        while ((int)trapped_window.size() > N_k) trapped_window.pop_front();
-        N_prev = N_k;
-        h_prev = h_curr;
 
         double dist_from_A = nearest_nodeA->cost_from_start + steer_length_;
         RRTNode3DPtr new_nodeA(nullptr);
