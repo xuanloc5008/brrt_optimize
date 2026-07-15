@@ -13,6 +13,8 @@ path_finder/CMakeFiles/path_finder.dir/src/test_planner.cpp.o: /home/phuong/Down
 path_finder/CMakeFiles/path_finder.dir/src/test_planner.cpp.o: /home/phuong/Downloads/brrt_optimize/src/path_finder/include/path_finder/bg_brrt.h
 path_finder/CMakeFiles/path_finder.dir/src/test_planner.cpp.o: /home/phuong/Downloads/brrt_optimize/src/path_finder/include/path_finder/brrt.h
 path_finder/CMakeFiles/path_finder.dir/src/test_planner.cpp.o: /home/phuong/Downloads/brrt_optimize/src/path_finder/include/path_finder/brrt_optimize_case3.h
+path_finder/CMakeFiles/path_finder.dir/src/test_planner.cpp.o: /home/phuong/Downloads/brrt_optimize/src/path_finder/include/path_finder/brrt_simple_case1.h
+path_finder/CMakeFiles/path_finder.dir/src/test_planner.cpp.o: /home/phuong/Downloads/brrt_optimize/src/path_finder/include/path_finder/brrt_simple_case2.h
 path_finder/CMakeFiles/path_finder.dir/src/test_planner.cpp.o: /home/phuong/Downloads/brrt_optimize/src/path_finder/include/path_finder/kdtree.h
 path_finder/CMakeFiles/path_finder.dir/src/test_planner.cpp.o: /home/phuong/Downloads/brrt_optimize/src/path_finder/include/path_finder/node.h
 path_finder/CMakeFiles/path_finder.dir/src/test_planner.cpp.o: /home/phuong/Downloads/brrt_optimize/src/path_finder/include/path_finder/rrt.h

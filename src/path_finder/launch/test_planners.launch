@@ -6,7 +6,7 @@
   <arg name="map_size_z" default="50.0" />
   <arg name="origin_x" value="$(eval -arg('map_size_x') / 2.0)" />
   <arg name="origin_y" value="$(eval -arg('map_size_y') / 2.0)" />
-  <arg name="obs_density_percentage" default="40.0" />
+  <arg name="obs_density_percentage" default="20.0" />
   <arg name="obs_num" value="$(eval int( (arg('map_size_x') * arg('map_size_y') / 112.0) * (lambda p: p + 0.5*p**2 + 0.333*p**3 + 0.25*p**4 + 0.2*p**5)(min(arg('obs_density_percentage')/100.0, 0.99)) ))" />
   <arg name="circle_num" value="$(arg obs_num)" />
   <arg name="ground_obstacle_probability" default="0.3" />
@@ -39,10 +39,15 @@
   <arg name="run_rrt" value="false" />
   <arg name="run_rrt_star" value="false" />
   <arg name="run_rrt_sharp" value="false" />
+  <!-- Comparison suite: BRRT / BG_BRRT / Case1 / Case2 / Case3(main) -->
   <arg name="run_brrt" value="true" />
   <arg name="run_brrt_star" value="false" />
-  <arg name="run_brrt_optimize" value="true" />
   <arg name="run_bg_brrt" value="true" />
+  <arg name="run_brrt_case1" value="true" />
+  <arg name="run_brrt_case2" value="true" />
+  <arg name="run_brrt_case3" value="true" />
+  <!-- alias: keep run_brrt_optimize as Case3 for backward compatibility -->
+  <arg name="run_brrt_optimize" value="$(arg run_brrt_case3)" />
 
   <arg name="brrt_optimize_p3" default="0.1" />
   <arg name="brrt_optimize_u_p" default="0.5" />
@@ -75,9 +80,11 @@
     <param name="run_rrt_sharp" value="$(arg run_rrt_sharp)" type="bool"/>
     <param name="run_brrt" value="$(arg run_brrt)" type="bool"/>
     <param name="run_brrt_star" value="$(arg run_brrt_star)" type="bool"/>
-    <param name="run_brrt_optimize" value="$(arg run_brrt_optimize)" type="bool"/>
-    <param name="run_brrt_case3" value="$(arg run_brrt_optimize)" type="bool"/>
     <param name="run_bg_brrt" value="$(arg run_bg_brrt)" type="bool"/>
+    <param name="run_brrt_case1" value="$(arg run_brrt_case1)" type="bool"/>
+    <param name="run_brrt_case2" value="$(arg run_brrt_case2)" type="bool"/>
+    <param name="run_brrt_case3" value="$(arg run_brrt_case3)" type="bool"/>
+    <param name="run_brrt_optimize" value="$(arg run_brrt_optimize)" type="bool"/>
     <param name="BRRT_Optimize/enable2d" value="$(arg brrt_enable_2d)" type="bool"/>
 
     <!-- BRRT params (used by vanilla BRRT and some optimize paths) -->
