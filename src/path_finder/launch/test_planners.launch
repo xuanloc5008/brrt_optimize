@@ -65,17 +65,39 @@
 
   <arg name="step_by_step_vis" default="false" />
   <arg name="step_delay_ms" default="100" />
-  <arg name="input_param" default="/home/xuanloc/DACN/brrt_optimize/brrt_input.json" />
-  <arg name="output_result" default="/home/xuanloc/DACN/brrt_optimize/evaluation/40_buildings.json" />
+  <arg name="input_param" default="$(find path_finder)/../../brrt_input.json" />
+  <arg name="output_result" default="$(find path_finder)/../../evaluation/result.json" />
 
+  <!-- use_fixed_start_goal:=false  → sample random free points with min distance -->
+  <arg name="use_fixed_start_goal" default="true" />
+  <arg name="start_x" default="-80.0" />
+  <arg name="start_y" default="-80.0" />
   <arg name="start_z" default="1.5" />
-  <arg name="goal_z" default="1.5" />
+  <arg name="goal_x"  default="80.0" />
+  <arg name="goal_y"  default="80.0" />
+  <arg name="goal_z"  default="1.5" />
+  <!-- Reject (or re-sample in random mode) if ||goal-start|| < this -->
+  <arg name="min_start_goal_dist" default="50.0" />
+  <!-- With fixed start/goal, 1 trial is enough for visual check; raise for stats -->
+  <arg name="number_test_times" default="1" />
+  <arg name="visualize_paths" default="true" />
+  <!-- Keep node alive after planning so RViz can show start/goal/paths -->
+  <arg name="hold_after_test_sec" default="30.0" />
 
   <node pkg="path_finder" type="path_finder" name="path_finder_node" output="screen" required="true">
     <remap from="/global_cloud" to="$(arg global_env_pcd2_topic)"/>
 
+    <param name="use_fixed_start_goal" value="$(arg use_fixed_start_goal)" type="bool"/>
+    <param name="start_x" value="$(arg start_x)" type="double"/>
+    <param name="start_y" value="$(arg start_y)" type="double"/>
     <param name="start_z" value="$(arg start_z)" type="double"/>
-    <param name="goal_z" value="$(arg goal_z)" type="double"/>
+    <param name="goal_x"  value="$(arg goal_x)"  type="double"/>
+    <param name="goal_y"  value="$(arg goal_y)"  type="double"/>
+    <param name="goal_z"  value="$(arg goal_z)"  type="double"/>
+    <param name="min_start_goal_dist" value="$(arg min_start_goal_dist)" type="double"/>
+    <param name="number_test_times" value="$(arg number_test_times)" type="int"/>
+    <param name="visualize_paths" value="$(arg visualize_paths)" type="bool"/>
+    <param name="hold_after_test_sec" value="$(arg hold_after_test_sec)" type="double"/>
 
     <param name="input_param" value="$(arg input_param)" type="string"/>
     <param name="output_result" value="$(arg output_result)" type="string"/>
@@ -85,6 +107,7 @@
     <param name="run_brrt" value="$(arg run_brrt)" type="bool"/>
     <param name="run_brrt_star" value="$(arg run_brrt_star)" type="bool"/>
     <param name="run_brrt_optimize" value="$(arg run_brrt_optimize)" type="bool"/>
+    <param name="run_brrt_case3" value="$(arg run_brrt_optimize)" type="bool"/>
     <param name="run_bg_brrt" value="$(arg run_bg_brrt)" type="bool"/>
     <param name="BRRT_Optimize/enable2d" value="$(arg brrt_enable_2d)" type="bool"/>
     

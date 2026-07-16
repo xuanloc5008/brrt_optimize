@@ -1,0 +1,5618 @@
+{
+    "environment": "1.0|0.7-0|2-8-8",
+    "parameters": {
+        "alpha": 2.0,
+        "beta": 8.0,
+        "epsilon": 1.0,
+        "gamma": 8.0,
+        "lidar_radius": 15.0,
+        "n_blocks": 16,
+        "p1": 0.7,
+        "steer_length": 5.0,
+        "u_p": 0.0,
+        "weight_grade": 3.0
+    },
+    "results": [
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 412,
+                    "num_iterations": 393,
+                    "path_length": 250.48355381329816,
+                    "search_time": 0.001240458,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 338,
+                    "num_iterations": 243,
+                    "path_length": 254.9095830642089,
+                    "search_time": 0.0008387500000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 47,
+                    "num_iterations": 44,
+                    "path_length": 17.73750277352635,
+                    "search_time": 0.000207209,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 1
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 404,
+                    "num_iterations": 498,
+                    "path_length": 255.44832323021706,
+                    "search_time": 0.0010978750000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 667,
+                    "num_iterations": 1093,
+                    "path_length": 322.0038007656221,
+                    "search_time": 0.00270775,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 25,
+                    "num_iterations": 14,
+                    "path_length": 5.607154520334458,
+                    "search_time": 6.1083e-05,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 2
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 411,
+                    "num_iterations": 575,
+                    "path_length": 272.14447936059054,
+                    "search_time": 0.0013251670000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 353,
+                    "num_iterations": 236,
+                    "path_length": 260.15376140487643,
+                    "search_time": 0.000637375,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 574,
+                    "num_iterations": 727,
+                    "path_length": 251.4878408565344,
+                    "search_time": 0.010040208,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 3
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 609,
+                    "num_iterations": 927,
+                    "path_length": 302.03352129347985,
+                    "search_time": 0.001556583,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 365,
+                    "num_iterations": 399,
+                    "path_length": 262.51550426901326,
+                    "search_time": 0.000653083,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 644,
+                    "num_iterations": 1015,
+                    "path_length": 248.81660947030636,
+                    "search_time": 0.008772750000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 4
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 324,
+                    "num_iterations": 231,
+                    "path_length": 253.26100941147703,
+                    "search_time": 0.000439958,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 680,
+                    "num_iterations": 961,
+                    "path_length": 324.7314478909294,
+                    "search_time": 0.001312917,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 740,
+                    "num_iterations": 1113,
+                    "path_length": 256.9154265061828,
+                    "search_time": 0.008859083,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 5
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 550,
+                    "num_iterations": 945,
+                    "path_length": 288.6837714984972,
+                    "search_time": 0.0010060000000000002,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 622,
+                    "num_iterations": 722,
+                    "path_length": 326.737225732092,
+                    "search_time": 0.0012330420000000002,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 30,
+                    "num_iterations": 38,
+                    "path_length": 7.820799723133363,
+                    "search_time": 5.9083e-05,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 6
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 771,
+                    "num_iterations": 1538,
+                    "path_length": 304.8658354331913,
+                    "search_time": 0.001777958,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 470,
+                    "num_iterations": 543,
+                    "path_length": 274.43034430854,
+                    "search_time": 0.000726417,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 559,
+                    "num_iterations": 1195,
+                    "path_length": 246.94177529994587,
+                    "search_time": 0.004486875,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 7
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 382,
+                    "num_iterations": 407,
+                    "path_length": 261.9726258169964,
+                    "search_time": 0.000539333,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 490,
+                    "num_iterations": 533,
+                    "path_length": 262.01411122455806,
+                    "search_time": 0.0007683750000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 23,
+                    "num_iterations": 2,
+                    "path_length": 2.3685784406181396,
+                    "search_time": 1.7667000000000002e-05,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 8
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 1296,
+                    "num_iterations": 3507,
+                    "path_length": 373.8268076433649,
+                    "search_time": 0.003901625,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 363,
+                    "num_iterations": 259,
+                    "path_length": 263.3847226349279,
+                    "search_time": 0.0006286660000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 631,
+                    "num_iterations": 1092,
+                    "path_length": 250.85710389208785,
+                    "search_time": 0.006333458,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 9
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 1152,
+                    "num_iterations": 3218,
+                    "path_length": 274.3013731933585,
+                    "search_time": 0.0031208330000000004,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 690,
+                    "num_iterations": 1034,
+                    "path_length": 328.2017856363011,
+                    "search_time": 0.0012272090000000002,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 593,
+                    "num_iterations": 872,
+                    "path_length": 244.289223862757,
+                    "search_time": 0.005000708,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 10
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 352,
+                    "num_iterations": 373,
+                    "path_length": 259.2803856807269,
+                    "search_time": 0.00047783300000000004,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 438,
+                    "num_iterations": 458,
+                    "path_length": 265.03323500130256,
+                    "search_time": 0.000548333,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 34,
+                    "num_iterations": 63,
+                    "path_length": 5.135769219042801,
+                    "search_time": 8.837500000000001e-05,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 11
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 614,
+                    "num_iterations": 960,
+                    "path_length": 292.9012228010369,
+                    "search_time": 0.001369875,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 377,
+                    "num_iterations": 281,
+                    "path_length": 260.49114303754857,
+                    "search_time": 0.000780959,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 31,
+                    "num_iterations": 32,
+                    "path_length": 25.78912426197535,
+                    "search_time": 5.4958000000000005e-05,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 12
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 377,
+                    "num_iterations": 403,
+                    "path_length": 262.8435267672595,
+                    "search_time": 0.000504,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 613,
+                    "num_iterations": 595,
+                    "path_length": 294.40709588439347,
+                    "search_time": 0.001083542,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 821,
+                    "num_iterations": 1446,
+                    "path_length": 254.37168935491252,
+                    "search_time": 0.009390709,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 13
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 409,
+                    "num_iterations": 326,
+                    "path_length": 255.64441350685425,
+                    "search_time": 0.000505708,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 556,
+                    "num_iterations": 803,
+                    "path_length": 331.25015905887466,
+                    "search_time": 0.000797417,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 646,
+                    "num_iterations": 1069,
+                    "path_length": 265.2456157773924,
+                    "search_time": 0.006639791000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 14
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 413,
+                    "num_iterations": 497,
+                    "path_length": 266.6016275464687,
+                    "search_time": 0.00045725000000000003,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 1295,
+                    "num_iterations": 2775,
+                    "path_length": 396.6385366551872,
+                    "search_time": 0.003968208,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 29,
+                    "num_iterations": 15,
+                    "path_length": 5.273760072126608,
+                    "search_time": 4.6042000000000004e-05,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 15
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 451,
+                    "num_iterations": 661,
+                    "path_length": 276.8122669655129,
+                    "search_time": 0.0007527500000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 328,
+                    "num_iterations": 209,
+                    "path_length": 255.35331539401346,
+                    "search_time": 0.0005568750000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 26,
+                    "num_iterations": 13,
+                    "path_length": 5.323205190490392,
+                    "search_time": 2.6125e-05,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 16
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 354,
+                    "num_iterations": 269,
+                    "path_length": 258.10811025413534,
+                    "search_time": 0.000432084,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 781,
+                    "num_iterations": 1110,
+                    "path_length": 349.6162224505108,
+                    "search_time": 0.001248542,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 441,
+                    "num_iterations": 574,
+                    "path_length": 246.72136850842324,
+                    "search_time": 0.0024156250000000002,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 17
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 326,
+                    "num_iterations": 241,
+                    "path_length": 256.25547094700266,
+                    "search_time": 0.00039312500000000003,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 410,
+                    "num_iterations": 373,
+                    "path_length": 259.2279518907646,
+                    "search_time": 0.0005094170000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 509,
+                    "num_iterations": 847,
+                    "path_length": 248.14626208725358,
+                    "search_time": 0.00375675,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 18
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 649,
+                    "num_iterations": 1204,
+                    "path_length": 296.1689653727075,
+                    "search_time": 0.001067667,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 625,
+                    "num_iterations": 817,
+                    "path_length": 338.92676291055795,
+                    "search_time": 0.0007970840000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 625,
+                    "num_iterations": 1358,
+                    "path_length": 254.9117201568358,
+                    "search_time": 0.0058975,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 19
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 670,
+                    "num_iterations": 889,
+                    "path_length": 332.1711864163822,
+                    "search_time": 0.000988917,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 352,
+                    "num_iterations": 201,
+                    "path_length": 253.21504878343174,
+                    "search_time": 0.00032412500000000003,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 467,
+                    "num_iterations": 610,
+                    "path_length": 254.7745581879721,
+                    "search_time": 0.003313542,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 20
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 562,
+                    "num_iterations": 789,
+                    "path_length": 276.7680259619152,
+                    "search_time": 0.0007665840000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 663,
+                    "num_iterations": 729,
+                    "path_length": 303.8962983082343,
+                    "search_time": 0.0008820000000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 594,
+                    "num_iterations": 1077,
+                    "path_length": 262.36573604170076,
+                    "search_time": 0.0051986670000000006,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 21
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 405,
+                    "num_iterations": 442,
+                    "path_length": 254.51057908266202,
+                    "search_time": 0.00038175000000000004,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 407,
+                    "num_iterations": 557,
+                    "path_length": 271.86300360532874,
+                    "search_time": 0.000507417,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 731,
+                    "num_iterations": 1393,
+                    "path_length": 268.1788443012656,
+                    "search_time": 0.007111958000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 22
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 703,
+                    "num_iterations": 922,
+                    "path_length": 299.3220281489429,
+                    "search_time": 0.0010749590000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 964,
+                    "num_iterations": 1611,
+                    "path_length": 302.1410691081583,
+                    "search_time": 0.0018842910000000002,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 23,
+                    "num_iterations": 7,
+                    "path_length": 2.0,
+                    "search_time": 2.7541000000000003e-05,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 23
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 523,
+                    "num_iterations": 875,
+                    "path_length": 292.3273705273153,
+                    "search_time": 0.001018166,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 662,
+                    "num_iterations": 862,
+                    "path_length": 287.48890596662665,
+                    "search_time": 0.001285209,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 628,
+                    "num_iterations": 1025,
+                    "path_length": 258.81153289912646,
+                    "search_time": 0.004331708,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 24
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 326,
+                    "num_iterations": 234,
+                    "path_length": 254.74988403215963,
+                    "search_time": 0.00032366700000000003,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 827,
+                    "num_iterations": 1256,
+                    "path_length": 353.63272434848204,
+                    "search_time": 0.0013049580000000002,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 546,
+                    "num_iterations": 818,
+                    "path_length": 253.04149798068627,
+                    "search_time": 0.005082542000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 25
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 343,
+                    "num_iterations": 294,
+                    "path_length": 254.3613860303202,
+                    "search_time": 0.000448583,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 495,
+                    "num_iterations": 749,
+                    "path_length": 278.9686986700874,
+                    "search_time": 0.0008003750000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 595,
+                    "num_iterations": 748,
+                    "path_length": 250.29096607335384,
+                    "search_time": 0.021040542000000002,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 26
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 684,
+                    "num_iterations": 1283,
+                    "path_length": 315.72823805998837,
+                    "search_time": 0.0009760000000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 549,
+                    "num_iterations": 675,
+                    "path_length": 280.60322483775025,
+                    "search_time": 0.0006475420000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 603,
+                    "num_iterations": 834,
+                    "path_length": 256.29180721590166,
+                    "search_time": 0.004888666000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 27
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 460,
+                    "num_iterations": 669,
+                    "path_length": 267.70825853477504,
+                    "search_time": 0.00058925,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 377,
+                    "num_iterations": 305,
+                    "path_length": 253.7689804603166,
+                    "search_time": 0.000588125,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 672,
+                    "num_iterations": 1057,
+                    "path_length": 252.40405463989347,
+                    "search_time": 0.0073342500000000005,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 28
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 390,
+                    "num_iterations": 457,
+                    "path_length": 262.16223898741976,
+                    "search_time": 0.00034104100000000004,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 373,
+                    "num_iterations": 335,
+                    "path_length": 269.39909701522294,
+                    "search_time": 0.00048425000000000003,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 658,
+                    "num_iterations": 1055,
+                    "path_length": 249.3596288066056,
+                    "search_time": 0.010822625,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 29
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 718,
+                    "num_iterations": 1156,
+                    "path_length": 328.2058285883639,
+                    "search_time": 0.001113,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 405,
+                    "num_iterations": 347,
+                    "path_length": 265.47124409980216,
+                    "search_time": 0.00042950000000000003,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 639,
+                    "num_iterations": 969,
+                    "path_length": 255.34566615826728,
+                    "search_time": 0.0063576660000000005,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 30
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 426,
+                    "num_iterations": 551,
+                    "path_length": 264.8389693888256,
+                    "search_time": 0.0004890830000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 429,
+                    "num_iterations": 387,
+                    "path_length": 264.9118518995878,
+                    "search_time": 0.000573667,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 616,
+                    "num_iterations": 1066,
+                    "path_length": 247.4360209815862,
+                    "search_time": 0.006620125,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 31
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 783,
+                    "num_iterations": 1652,
+                    "path_length": 263.84718945433576,
+                    "search_time": 0.001593416,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 430,
+                    "num_iterations": 407,
+                    "path_length": 283.5592763692568,
+                    "search_time": 0.00042304200000000005,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 612,
+                    "num_iterations": 775,
+                    "path_length": 250.5765698666222,
+                    "search_time": 0.003979666000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 32
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 352,
+                    "num_iterations": 196,
+                    "path_length": 256.6970282728459,
+                    "search_time": 0.000438292,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 638,
+                    "num_iterations": 731,
+                    "path_length": 303.03976824976667,
+                    "search_time": 0.000785333,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 50,
+                    "num_iterations": 101,
+                    "path_length": 37.95829954487566,
+                    "search_time": 0.000365167,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 33
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 387,
+                    "num_iterations": 348,
+                    "path_length": 257.4110363587108,
+                    "search_time": 0.0005380000000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 396,
+                    "num_iterations": 475,
+                    "path_length": 282.4107811381007,
+                    "search_time": 0.00047645900000000004,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 24,
+                    "num_iterations": 6,
+                    "path_length": 2.0,
+                    "search_time": 2.1958000000000002e-05,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 34
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 2035,
+                    "num_iterations": 6721,
+                    "path_length": 387.33503016758186,
+                    "search_time": 0.007613583,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 393,
+                    "num_iterations": 355,
+                    "path_length": 261.22074271048785,
+                    "search_time": 0.000572583,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 429,
+                    "num_iterations": 449,
+                    "path_length": 246.61679176707807,
+                    "search_time": 0.0021758330000000003,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 35
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 1103,
+                    "num_iterations": 2523,
+                    "path_length": 346.93267784255715,
+                    "search_time": 0.002529667,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 370,
+                    "num_iterations": 297,
+                    "path_length": 256.3299748600113,
+                    "search_time": 0.00029195800000000004,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 23,
+                    "num_iterations": 5,
+                    "path_length": 4.83801284037515,
+                    "search_time": 3.1334e-05,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 36
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 370,
+                    "num_iterations": 307,
+                    "path_length": 251.279550973871,
+                    "search_time": 0.000507458,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 609,
+                    "num_iterations": 762,
+                    "path_length": 320.07070714938874,
+                    "search_time": 0.001121667,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 745,
+                    "num_iterations": 893,
+                    "path_length": 268.61824504675053,
+                    "search_time": 0.005020167000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 37
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 392,
+                    "num_iterations": 444,
+                    "path_length": 255.9102909704788,
+                    "search_time": 0.00045366700000000005,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 777,
+                    "num_iterations": 1184,
+                    "path_length": 343.15156574537355,
+                    "search_time": 0.00126025,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 29,
+                    "num_iterations": 27,
+                    "path_length": 5.180006572878273,
+                    "search_time": 3.9500000000000005e-05,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 38
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 735,
+                    "num_iterations": 1246,
+                    "path_length": 342.7912838820955,
+                    "search_time": 0.001352459,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 384,
+                    "num_iterations": 251,
+                    "path_length": 261.1644983561687,
+                    "search_time": 0.000739625,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 556,
+                    "num_iterations": 846,
+                    "path_length": 246.21105534110723,
+                    "search_time": 0.0052667090000000005,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 39
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 555,
+                    "num_iterations": 985,
+                    "path_length": 299.9416626140725,
+                    "search_time": 0.000966417,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 404,
+                    "num_iterations": 352,
+                    "path_length": 268.3241473612887,
+                    "search_time": 0.000482334,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 26,
+                    "num_iterations": 14,
+                    "path_length": 2.0,
+                    "search_time": 2.9125000000000003e-05,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 40
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 489,
+                    "num_iterations": 861,
+                    "path_length": 284.3695940274042,
+                    "search_time": 0.000768083,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 803,
+                    "num_iterations": 1247,
+                    "path_length": 325.36529180207896,
+                    "search_time": 0.001664125,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 600,
+                    "num_iterations": 879,
+                    "path_length": 264.6144028734891,
+                    "search_time": 0.005272042,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 41
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 531,
+                    "num_iterations": 744,
+                    "path_length": 298.40221207391727,
+                    "search_time": 0.0007946660000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 469,
+                    "num_iterations": 396,
+                    "path_length": 262.3896505006146,
+                    "search_time": 0.0006874590000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 24,
+                    "num_iterations": 10,
+                    "path_length": 2.9999999999999982,
+                    "search_time": 2.0917e-05,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 42
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 417,
+                    "num_iterations": 372,
+                    "path_length": 254.22146267946263,
+                    "search_time": 0.00046095900000000004,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 791,
+                    "num_iterations": 1166,
+                    "path_length": 385.7910067348872,
+                    "search_time": 0.0015732090000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 650,
+                    "num_iterations": 887,
+                    "path_length": 249.47307018473228,
+                    "search_time": 0.005841416,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 43
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 351,
+                    "num_iterations": 351,
+                    "path_length": 261.1255601879877,
+                    "search_time": 0.000342584,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 705,
+                    "num_iterations": 938,
+                    "path_length": 341.80962569907615,
+                    "search_time": 0.001145917,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 842,
+                    "num_iterations": 2178,
+                    "path_length": 267.7905928174497,
+                    "search_time": 0.008365334,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 44
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 369,
+                    "num_iterations": 353,
+                    "path_length": 258.12478778486445,
+                    "search_time": 0.000343625,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 542,
+                    "num_iterations": 657,
+                    "path_length": 272.9382633855375,
+                    "search_time": 0.000646959,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 25,
+                    "num_iterations": 5,
+                    "path_length": 3.000000000000001,
+                    "search_time": 2.4917000000000002e-05,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 45
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 646,
+                    "num_iterations": 1119,
+                    "path_length": 330.10898694695584,
+                    "search_time": 0.001084708,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 672,
+                    "num_iterations": 718,
+                    "path_length": 328.747042699903,
+                    "search_time": 0.001285834,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 810,
+                    "num_iterations": 2052,
+                    "path_length": 264.0064988885523,
+                    "search_time": 0.008269375,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 46
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 682,
+                    "num_iterations": 1067,
+                    "path_length": 320.7075007301297,
+                    "search_time": 0.001042917,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 399,
+                    "num_iterations": 551,
+                    "path_length": 272.23650503465996,
+                    "search_time": 0.0005625410000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 604,
+                    "num_iterations": 973,
+                    "path_length": 246.5655508924976,
+                    "search_time": 0.005400458,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 47
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 519,
+                    "num_iterations": 795,
+                    "path_length": 291.69144489143537,
+                    "search_time": 0.0009474580000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 683,
+                    "num_iterations": 926,
+                    "path_length": 304.8037064038099,
+                    "search_time": 0.001106875,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 411,
+                    "num_iterations": 482,
+                    "path_length": 251.6720486057324,
+                    "search_time": 0.002526,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 48
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 411,
+                    "num_iterations": 403,
+                    "path_length": 254.9721208118629,
+                    "search_time": 0.0005667500000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 409,
+                    "num_iterations": 446,
+                    "path_length": 254.80504456212168,
+                    "search_time": 0.000381959,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 569,
+                    "num_iterations": 1121,
+                    "path_length": 244.4313798154086,
+                    "search_time": 0.004762000000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 49
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 595,
+                    "num_iterations": 766,
+                    "path_length": 304.57812585466695,
+                    "search_time": 0.0013431250000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 629,
+                    "num_iterations": 837,
+                    "path_length": 303.3351354207073,
+                    "search_time": 0.0015439170000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 696,
+                    "num_iterations": 1231,
+                    "path_length": 251.65925477064948,
+                    "search_time": 0.008458750000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 50
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 391,
+                    "num_iterations": 254,
+                    "path_length": 259.11201336465996,
+                    "search_time": 0.000310375,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 453,
+                    "num_iterations": 866,
+                    "path_length": 301.9981230355043,
+                    "search_time": 0.00045412500000000005,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 622,
+                    "num_iterations": 630,
+                    "path_length": 247.40617430123123,
+                    "search_time": 0.005672917,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 51
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 370,
+                    "num_iterations": 317,
+                    "path_length": 253.48488302891636,
+                    "search_time": 0.000366958,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 371,
+                    "num_iterations": 265,
+                    "path_length": 259.9817959318658,
+                    "search_time": 0.00038333400000000004,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 757,
+                    "num_iterations": 1163,
+                    "path_length": 252.3259784814434,
+                    "search_time": 0.008657625,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 52
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 362,
+                    "num_iterations": 294,
+                    "path_length": 253.33414276059443,
+                    "search_time": 0.000367666,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 694,
+                    "num_iterations": 904,
+                    "path_length": 360.27022568433614,
+                    "search_time": 0.0012369590000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 478,
+                    "num_iterations": 625,
+                    "path_length": 247.4401107995227,
+                    "search_time": 0.003703792,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 53
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 535,
+                    "num_iterations": 825,
+                    "path_length": 271.08689140580003,
+                    "search_time": 0.000786166,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 617,
+                    "num_iterations": 1035,
+                    "path_length": 278.5115631194665,
+                    "search_time": 0.0012555840000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 691,
+                    "num_iterations": 977,
+                    "path_length": 263.5719737369042,
+                    "search_time": 0.007149208000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 54
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 431,
+                    "num_iterations": 361,
+                    "path_length": 256.11246678602424,
+                    "search_time": 0.000554542,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 632,
+                    "num_iterations": 795,
+                    "path_length": 301.0014644548586,
+                    "search_time": 0.0009998750000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 47,
+                    "num_iterations": 136,
+                    "path_length": 10.537968523630001,
+                    "search_time": 0.000115916,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 55
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 360,
+                    "num_iterations": 261,
+                    "path_length": 257.9667686492206,
+                    "search_time": 0.00040658400000000004,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 781,
+                    "num_iterations": 1313,
+                    "path_length": 355.96084277802294,
+                    "search_time": 0.001749417,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 703,
+                    "num_iterations": 1425,
+                    "path_length": 263.5705397958554,
+                    "search_time": 0.007241375,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 56
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 447,
+                    "num_iterations": 640,
+                    "path_length": 279.1367176914236,
+                    "search_time": 0.0007792910000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 329,
+                    "num_iterations": 215,
+                    "path_length": 252.74597859297575,
+                    "search_time": 0.000447791,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 591,
+                    "num_iterations": 988,
+                    "path_length": 245.79662006401847,
+                    "search_time": 0.004689459,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 57
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 475,
+                    "num_iterations": 645,
+                    "path_length": 286.80176718650074,
+                    "search_time": 0.0005626250000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 614,
+                    "num_iterations": 717,
+                    "path_length": 310.227484291664,
+                    "search_time": 0.0009107090000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 610,
+                    "num_iterations": 927,
+                    "path_length": 244.6179920019989,
+                    "search_time": 0.006917667000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 58
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 472,
+                    "num_iterations": 706,
+                    "path_length": 266.08784715211993,
+                    "search_time": 0.000652167,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 607,
+                    "num_iterations": 791,
+                    "path_length": 303.82657739729416,
+                    "search_time": 0.000955917,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 755,
+                    "num_iterations": 1448,
+                    "path_length": 248.74999900376667,
+                    "search_time": 0.007665417000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 59
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 430,
+                    "num_iterations": 669,
+                    "path_length": 265.7819340382298,
+                    "search_time": 0.000535,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 1019,
+                    "num_iterations": 1729,
+                    "path_length": 346.4301860135008,
+                    "search_time": 0.0018468750000000002,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 517,
+                    "num_iterations": 787,
+                    "path_length": 247.49862814622756,
+                    "search_time": 0.00500975,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 60
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 336,
+                    "num_iterations": 288,
+                    "path_length": 252.85695198495904,
+                    "search_time": 0.00033141700000000003,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 364,
+                    "num_iterations": 260,
+                    "path_length": 254.7819296602661,
+                    "search_time": 0.00041175,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 26,
+                    "num_iterations": 24,
+                    "path_length": 4.8659215572205685,
+                    "search_time": 4.2666e-05,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 61
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 748,
+                    "num_iterations": 1456,
+                    "path_length": 354.72980976958354,
+                    "search_time": 0.0017585,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 661,
+                    "num_iterations": 902,
+                    "path_length": 313.9556648811192,
+                    "search_time": 0.001348084,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 605,
+                    "num_iterations": 691,
+                    "path_length": 260.46651799768597,
+                    "search_time": 0.0053928330000000005,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 62
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 636,
+                    "num_iterations": 898,
+                    "path_length": 325.40191446919965,
+                    "search_time": 0.000876625,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 344,
+                    "num_iterations": 253,
+                    "path_length": 256.5333608406187,
+                    "search_time": 0.0003435,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 744,
+                    "num_iterations": 1376,
+                    "path_length": 261.96195113607746,
+                    "search_time": 0.008384833000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 63
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 486,
+                    "num_iterations": 650,
+                    "path_length": 266.5613706237875,
+                    "search_time": 0.0007422080000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 388,
+                    "num_iterations": 241,
+                    "path_length": 261.42770284049897,
+                    "search_time": 0.0005290000000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 641,
+                    "num_iterations": 864,
+                    "path_length": 250.2178248343995,
+                    "search_time": 0.005740208,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 64
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 365,
+                    "num_iterations": 372,
+                    "path_length": 270.2596218103156,
+                    "search_time": 0.00030825000000000004,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 561,
+                    "num_iterations": 577,
+                    "path_length": 271.6202404521055,
+                    "search_time": 0.0007039590000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 560,
+                    "num_iterations": 736,
+                    "path_length": 249.81012671582508,
+                    "search_time": 0.005299583,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 65
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 442,
+                    "num_iterations": 579,
+                    "path_length": 280.61452803673154,
+                    "search_time": 0.000554041,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 352,
+                    "num_iterations": 219,
+                    "path_length": 251.6247528923517,
+                    "search_time": 0.000319334,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 41,
+                    "num_iterations": 2,
+                    "path_length": 38.93374700450454,
+                    "search_time": 0.000382,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 66
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 1080,
+                    "num_iterations": 2443,
+                    "path_length": 365.5391782260099,
+                    "search_time": 0.0026068330000000002,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 493,
+                    "num_iterations": 541,
+                    "path_length": 269.58012499795774,
+                    "search_time": 0.0008036250000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 25,
+                    "num_iterations": 12,
+                    "path_length": 10.125721798534281,
+                    "search_time": 1.9833e-05,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 67
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 631,
+                    "num_iterations": 1072,
+                    "path_length": 307.0159029715872,
+                    "search_time": 0.001152917,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 1356,
+                    "num_iterations": 2923,
+                    "path_length": 276.15348550891287,
+                    "search_time": 0.003403792,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 666,
+                    "num_iterations": 1018,
+                    "path_length": 250.68899505917253,
+                    "search_time": 0.006276625,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 68
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 318,
+                    "num_iterations": 275,
+                    "path_length": 257.5652696170742,
+                    "search_time": 0.00033266700000000003,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 648,
+                    "num_iterations": 810,
+                    "path_length": 347.3523491434414,
+                    "search_time": 0.0008632080000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 479,
+                    "num_iterations": 750,
+                    "path_length": 247.97487737391322,
+                    "search_time": 0.004319750000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 69
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 549,
+                    "num_iterations": 974,
+                    "path_length": 286.60910455426927,
+                    "search_time": 0.000879292,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 475,
+                    "num_iterations": 593,
+                    "path_length": 287.98406206803304,
+                    "search_time": 0.000595458,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 35,
+                    "num_iterations": 33,
+                    "path_length": 17.596990958733215,
+                    "search_time": 4.5458000000000004e-05,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 70
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 711,
+                    "num_iterations": 1134,
+                    "path_length": 333.1627886379687,
+                    "search_time": 0.001015083,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 664,
+                    "num_iterations": 891,
+                    "path_length": 288.8270800151338,
+                    "search_time": 0.001032333,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 27,
+                    "num_iterations": 14,
+                    "path_length": 5.015903663677027,
+                    "search_time": 2.9500000000000002e-05,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 71
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 568,
+                    "num_iterations": 800,
+                    "path_length": 302.57573215397406,
+                    "search_time": 0.0010877500000000002,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 361,
+                    "num_iterations": 313,
+                    "path_length": 259.8943124524167,
+                    "search_time": 0.000375916,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 535,
+                    "num_iterations": 712,
+                    "path_length": 249.12079055581498,
+                    "search_time": 0.004722041000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 72
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 794,
+                    "num_iterations": 1678,
+                    "path_length": 312.1269223862308,
+                    "search_time": 0.0013882500000000002,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 524,
+                    "num_iterations": 645,
+                    "path_length": 275.0039860711285,
+                    "search_time": 0.0006915000000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 43,
+                    "num_iterations": 5,
+                    "path_length": 40.8865255744917,
+                    "search_time": 0.00029970800000000004,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 73
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 614,
+                    "num_iterations": 1009,
+                    "path_length": 311.6113873140446,
+                    "search_time": 0.001115708,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 348,
+                    "num_iterations": 279,
+                    "path_length": 261.6543982956662,
+                    "search_time": 0.00032675,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 527,
+                    "num_iterations": 792,
+                    "path_length": 272.56623232730027,
+                    "search_time": 0.0034286250000000002,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 74
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 750,
+                    "num_iterations": 1317,
+                    "path_length": 340.00299937042223,
+                    "search_time": 0.0016727920000000002,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 524,
+                    "num_iterations": 649,
+                    "path_length": 295.1678505672283,
+                    "search_time": 0.000650542,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 1819,
+                    "num_iterations": 5522,
+                    "path_length": 293.99768994061014,
+                    "search_time": 0.029280667000000003,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 75
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 486,
+                    "num_iterations": 811,
+                    "path_length": 278.2757660588831,
+                    "search_time": 0.0006630000000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 384,
+                    "num_iterations": 329,
+                    "path_length": 261.8638723580089,
+                    "search_time": 0.000422875,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 445,
+                    "num_iterations": 575,
+                    "path_length": 242.77530220784092,
+                    "search_time": 0.0029110000000000004,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 76
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 401,
+                    "num_iterations": 473,
+                    "path_length": 270.7003489651738,
+                    "search_time": 0.000408208,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 366,
+                    "num_iterations": 236,
+                    "path_length": 256.64116442926496,
+                    "search_time": 0.00041533300000000004,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 590,
+                    "num_iterations": 1143,
+                    "path_length": 252.72687858968294,
+                    "search_time": 0.005261417,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 77
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 803,
+                    "num_iterations": 1626,
+                    "path_length": 332.67752716577104,
+                    "search_time": 0.0016597500000000002,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 354,
+                    "num_iterations": 225,
+                    "path_length": 265.58336018847683,
+                    "search_time": 0.000316333,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 40,
+                    "num_iterations": 10,
+                    "path_length": 39.67133881745302,
+                    "search_time": 0.00028741600000000003,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 78
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 612,
+                    "num_iterations": 1169,
+                    "path_length": 295.5638517159715,
+                    "search_time": 0.0012254170000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 398,
+                    "num_iterations": 331,
+                    "path_length": 253.40704074990379,
+                    "search_time": 0.000482875,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 23,
+                    "num_iterations": 7,
+                    "path_length": 2.0,
+                    "search_time": 1.8667000000000003e-05,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 79
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 357,
+                    "num_iterations": 333,
+                    "path_length": 266.6636094199578,
+                    "search_time": 0.00032741700000000004,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 379,
+                    "num_iterations": 365,
+                    "path_length": 257.2170990344669,
+                    "search_time": 0.000380292,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 56,
+                    "num_iterations": 88,
+                    "path_length": 16.749931189671084,
+                    "search_time": 8.3583e-05,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 80
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 682,
+                    "num_iterations": 1120,
+                    "path_length": 355.62822370326404,
+                    "search_time": 0.001077833,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 342,
+                    "num_iterations": 203,
+                    "path_length": 248.19868169137413,
+                    "search_time": 0.00035525000000000004,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 608,
+                    "num_iterations": 886,
+                    "path_length": 264.542093795308,
+                    "search_time": 0.004166167,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 81
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 497,
+                    "num_iterations": 781,
+                    "path_length": 269.9396070836938,
+                    "search_time": 0.0007094170000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 369,
+                    "num_iterations": 353,
+                    "path_length": 261.24033361043433,
+                    "search_time": 0.00031062500000000003,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 555,
+                    "num_iterations": 755,
+                    "path_length": 248.73877760660667,
+                    "search_time": 0.00483525,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 82
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 328,
+                    "num_iterations": 225,
+                    "path_length": 252.64310577981686,
+                    "search_time": 0.000311167,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 386,
+                    "num_iterations": 226,
+                    "path_length": 259.482368554789,
+                    "search_time": 0.000333708,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 724,
+                    "num_iterations": 1562,
+                    "path_length": 250.1477382612123,
+                    "search_time": 0.007545667000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 83
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 437,
+                    "num_iterations": 625,
+                    "path_length": 287.2839519321091,
+                    "search_time": 0.000485458,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 465,
+                    "num_iterations": 529,
+                    "path_length": 282.0004563345853,
+                    "search_time": 0.0006842920000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 609,
+                    "num_iterations": 1040,
+                    "path_length": 260.65194727297103,
+                    "search_time": 0.005951459,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 84
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 769,
+                    "num_iterations": 1641,
+                    "path_length": 313.22139027631596,
+                    "search_time": 0.001399375,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 459,
+                    "num_iterations": 565,
+                    "path_length": 265.844455179508,
+                    "search_time": 0.0006045,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 533,
+                    "num_iterations": 687,
+                    "path_length": 252.33529161935996,
+                    "search_time": 0.003795834,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 85
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 478,
+                    "num_iterations": 630,
+                    "path_length": 267.2923312976296,
+                    "search_time": 0.000537916,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 412,
+                    "num_iterations": 299,
+                    "path_length": 272.46870251653667,
+                    "search_time": 0.00034295800000000003,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 547,
+                    "num_iterations": 666,
+                    "path_length": 255.25455808554753,
+                    "search_time": 0.004229625,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 86
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 551,
+                    "num_iterations": 779,
+                    "path_length": 284.6723552069092,
+                    "search_time": 0.0009125,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 350,
+                    "num_iterations": 225,
+                    "path_length": 255.56846038752403,
+                    "search_time": 0.000423625,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 1159,
+                    "num_iterations": 3097,
+                    "path_length": 267.292338820367,
+                    "search_time": 0.015342333000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 87
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 400,
+                    "num_iterations": 282,
+                    "path_length": 261.7533519367008,
+                    "search_time": 0.000307583,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 624,
+                    "num_iterations": 690,
+                    "path_length": 338.1689312362857,
+                    "search_time": 0.000798167,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 750,
+                    "num_iterations": 1504,
+                    "path_length": 255.61160662544913,
+                    "search_time": 0.00796725,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 88
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 335,
+                    "num_iterations": 266,
+                    "path_length": 252.99624110544391,
+                    "search_time": 0.000273625,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 499,
+                    "num_iterations": 333,
+                    "path_length": 266.3871639561849,
+                    "search_time": 0.000697792,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 649,
+                    "num_iterations": 988,
+                    "path_length": 253.62107903147404,
+                    "search_time": 0.0060542090000000005,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 89
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 311,
+                    "num_iterations": 163,
+                    "path_length": 251.6671694875507,
+                    "search_time": 0.000282791,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 479,
+                    "num_iterations": 428,
+                    "path_length": 286.4248522477751,
+                    "search_time": 0.000588125,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 40,
+                    "num_iterations": 118,
+                    "path_length": 26.988233190895684,
+                    "search_time": 8.187500000000001e-05,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 90
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 386,
+                    "num_iterations": 438,
+                    "path_length": 258.19538979992683,
+                    "search_time": 0.000430084,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 654,
+                    "num_iterations": 862,
+                    "path_length": 327.51552309260285,
+                    "search_time": 0.001100333,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 430,
+                    "num_iterations": 614,
+                    "path_length": 257.462412785901,
+                    "search_time": 0.002320375,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 91
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 599,
+                    "num_iterations": 1014,
+                    "path_length": 306.6144366690882,
+                    "search_time": 0.000920125,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 641,
+                    "num_iterations": 816,
+                    "path_length": 304.87792711407184,
+                    "search_time": 0.0008942090000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 630,
+                    "num_iterations": 840,
+                    "path_length": 250.78151516043235,
+                    "search_time": 0.005794792,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 92
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 318,
+                    "num_iterations": 215,
+                    "path_length": 250.495206507676,
+                    "search_time": 0.000324,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 448,
+                    "num_iterations": 339,
+                    "path_length": 256.97623267862974,
+                    "search_time": 0.00045241700000000004,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 723,
+                    "num_iterations": 1293,
+                    "path_length": 264.2031392769395,
+                    "search_time": 0.008097083,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 93
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 712,
+                    "num_iterations": 1122,
+                    "path_length": 359.9270352467324,
+                    "search_time": 0.001423208,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 340,
+                    "num_iterations": 187,
+                    "path_length": 256.4817241695346,
+                    "search_time": 0.00030129200000000004,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 641,
+                    "num_iterations": 932,
+                    "path_length": 261.7933791274405,
+                    "search_time": 0.0066430000000000005,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 94
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 1771,
+                    "num_iterations": 4527,
+                    "path_length": 414.1668388879305,
+                    "search_time": 0.005482209,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 672,
+                    "num_iterations": 935,
+                    "path_length": 340.0443635245762,
+                    "search_time": 0.00114875,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 595,
+                    "num_iterations": 924,
+                    "path_length": 258.0414372923561,
+                    "search_time": 0.005646459,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 95
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 296,
+                    "num_iterations": 197,
+                    "path_length": 251.0437010902853,
+                    "search_time": 0.0002335,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 331,
+                    "num_iterations": 189,
+                    "path_length": 251.3676240902741,
+                    "search_time": 0.000299875,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 528,
+                    "num_iterations": 909,
+                    "path_length": 245.82719396108791,
+                    "search_time": 0.0033510410000000003,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 96
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 672,
+                    "num_iterations": 988,
+                    "path_length": 342.67843161020943,
+                    "search_time": 0.0011944170000000001,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 522,
+                    "num_iterations": 675,
+                    "path_length": 274.3188923676497,
+                    "search_time": 0.000730375,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 41,
+                    "num_iterations": 2,
+                    "path_length": 38.6977216016395,
+                    "search_time": 0.0003015,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 97
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 371,
+                    "num_iterations": 283,
+                    "path_length": 255.95702680732305,
+                    "search_time": 0.00044591700000000005,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 329,
+                    "num_iterations": 175,
+                    "path_length": 250.918720061493,
+                    "search_time": 0.00031762500000000004,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 524,
+                    "num_iterations": 682,
+                    "path_length": 248.08368083385662,
+                    "search_time": 0.0041738750000000005,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 98
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 443,
+                    "num_iterations": 426,
+                    "path_length": 249.6312441494026,
+                    "search_time": 0.000516125,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 451,
+                    "num_iterations": 525,
+                    "path_length": 264.87939428722365,
+                    "search_time": 0.000800583,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 751,
+                    "num_iterations": 1170,
+                    "path_length": 260.1739319206839,
+                    "search_time": 0.0077882920000000005,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 99
+        },
+        {
+            "algorithms": {
+                "BG_BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 702,
+                    "num_iterations": 1392,
+                    "path_length": 343.6391287059735,
+                    "search_time": 0.001372125,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 434,
+                    "num_iterations": 347,
+                    "path_length": 266.277191154594,
+                    "search_time": 0.000572917,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                },
+                "BRRT_Case3": {
+                    "goal": [
+                        80.0,
+                        80.0,
+                        1.5
+                    ],
+                    "node_count": 835,
+                    "num_iterations": 1448,
+                    "path_length": 267.44695204052687,
+                    "search_time": 0.010167083,
+                    "start": [
+                        -77.4360136606437,
+                        -82.15589179313966,
+                        1.5
+                    ],
+                    "success": true
+                }
+            },
+            "run": 100
+        }
+    ],
+    "trial": 243
+}

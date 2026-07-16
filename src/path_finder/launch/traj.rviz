@@ -171,6 +171,14 @@ Visualization Manager:
             {}
           Queue Size: 100
           Value: true
+        - Class: rviz/Marker
+          Enabled: true
+          Marker Topic: /path_finder_node/start_goal_line
+          Name: start_goal_line
+          Namespaces:
+            {}
+          Queue Size: 100
+          Value: true
         - Class: rviz/MarkerArray
           Enabled: true
           Marker Topic: /path_finder_node/tree_vertice
